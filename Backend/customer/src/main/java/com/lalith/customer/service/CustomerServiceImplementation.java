@@ -54,13 +54,28 @@ public class CustomerServiceImplementation implements CustomerService {
         if (!customerRepository.existsById(id)) {
             throw new RuntimeException("Customer with id " + id + " not found");
         }
+
         Customer existingCustomer = customerRepository.findByCustomerId(id).orElse(null);
+
         if (existingCustomer != null) {
-            updatedCustomer.setCustomerKey(existingCustomer.getCustomerKey());
-            updatedCustomer.setCustomerId(existingCustomer.getCustomerId());
+            existingCustomer.setFirstName(updatedCustomer.getFirstName());
+            existingCustomer.setLastName(updatedCustomer.getLastName());
+            existingCustomer.setAddressLine1(updatedCustomer.getAddressLine1());
+            existingCustomer.setAddressLine2(updatedCustomer.getAddressLine2());
+            existingCustomer.setCity(updatedCustomer.getCity());
+            existingCustomer.setState(updatedCustomer.getState());
+            existingCustomer.setZipCode(updatedCustomer.getZipCode());
+            existingCustomer.setCountry(updatedCustomer.getCountry());
+            existingCustomer.setPhoneNo(updatedCustomer.getPhoneNo());
+            existingCustomer.setEmailId(updatedCustomer.getEmailId());
+            existingCustomer.setStatus(updatedCustomer.getStatus());
+
+            return customerRepository.save(existingCustomer);
+        } else {
+            throw new RuntimeException("Customer with id " + id + " not found");
         }
-        return customerRepository.save(updatedCustomer);
     }
+
 
     @Override
     public void deleteCustomer(String id) {
