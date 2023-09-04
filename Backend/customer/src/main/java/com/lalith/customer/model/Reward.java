@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -21,6 +21,6 @@ public class Reward {
     private double rewardsEarned;
     private double rewardsRedeemed;
     private double rewardsBalance;
-    private Date rewardsDate;
+    private LocalDateTime rewardsDate;
 }
 
