@@ -54,7 +54,7 @@ public class CustomerServiceImplementation implements CustomerService {
         if (!customerRepository.existsById(id)) {
             throw new RuntimeException("Customer with id " + id + " not found");
         }
-        Customer existingCustomer = customerRepository.findById(id).orElse(null);
+        Customer existingCustomer = customerRepository.findByCustomerId(id).orElse(null);
         if (existingCustomer != null) {
             updatedCustomer.setCustomerKey(existingCustomer.getCustomerKey());
             updatedCustomer.setCustomerId(existingCustomer.getCustomerId());
