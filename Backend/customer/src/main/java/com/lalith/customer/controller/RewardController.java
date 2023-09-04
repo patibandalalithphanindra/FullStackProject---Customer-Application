@@ -12,8 +12,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/rewards")
 public class RewardController {
-
-    @Autowired
     private final RewardService rewardService;
 
     public RewardController(RewardService rewardService) {
