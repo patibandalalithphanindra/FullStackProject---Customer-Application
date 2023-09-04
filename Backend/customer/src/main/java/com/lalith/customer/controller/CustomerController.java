@@ -2,6 +2,7 @@ package com.lalith.customer.controller;
 
 import com.lalith.customer.model.Customer;
 import com.lalith.customer.service.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +14,13 @@ import java.util.Optional;
 @RequestMapping("/customers")
 public class CustomerController {
 
-    private final CustomerService customerService;
+
+   private final CustomerService customerService;
 
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
+
 
     @PostMapping
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {

@@ -1,6 +1,7 @@
 package com.lalith.customer.service;
 
 import com.lalith.customer.model.Order;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

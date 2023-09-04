@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CustomerServiceImplementation {
+public class CustomerServiceImplementation implements CustomerService {
 
     private final CustomerRepository customerRepository;
 
@@ -18,21 +18,22 @@ public class CustomerServiceImplementation {
         this.customerRepository = customerRepository;
     }
 
+    @Override
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
     }
 
-    public Optional<Customer> getCustomerById(String id) {
-        return customerRepository.findById(id);
-    }
-
+    @Override
     public Optional<Customer> getCustomerByStatus(String status) {
         return customerRepository.findByStatus(status);
     }
 
+    @Override
     public Optional<Customer> getCustomerByEmailId(String emailId) {
         return customerRepository.findByEmailId(emailId);
     }
+
+    @Override
     public Customer createCustomer(Customer customer) {
         if (customerRepository.findByCustomerId(customer.getCustomerId()).isPresent()) {
             throw new RuntimeException("Customer with the same id already exists");
@@ -48,6 +49,7 @@ public class CustomerServiceImplementation {
         return customerRepository.save(customer);
     }
 
+    @Override
     public Customer updateCustomer(String id, Customer updatedCustomer) {
         if (!customerRepository.existsById(id)) {
             throw new RuntimeException("Customer with id " + id + " not found");
@@ -60,6 +62,7 @@ public class CustomerServiceImplementation {
         return customerRepository.save(updatedCustomer);
     }
 
+    @Override
     public void deleteCustomer(String id) {
         Optional<Customer> optionalCustomer = customerRepository.findById(id);
         if (optionalCustomer.isPresent()) {

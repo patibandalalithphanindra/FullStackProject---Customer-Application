@@ -10,7 +10,8 @@ import java.util.List;
 @Service
 public class RewardServiceImplementation implements RewardService {
 
-    private final RewardRepository rewardRepository;
+   @Autowired
+   private final RewardRepository rewardRepository;
 
     @Autowired
     public RewardServiceImplementation(RewardRepository rewardRepository) {

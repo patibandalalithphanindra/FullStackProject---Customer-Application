@@ -2,6 +2,7 @@ package com.lalith.customer.controller;
 
 import com.lalith.customer.model.Order;
 import com.lalith.customer.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,8 @@ import java.util.List;
 @RequestMapping("/orders")
 public class OrderController {
 
-    private final OrderService orderService;
+   @Autowired
+   private final OrderService orderService;
 
     public OrderController(OrderService orderService) {
         this.orderService = orderService;

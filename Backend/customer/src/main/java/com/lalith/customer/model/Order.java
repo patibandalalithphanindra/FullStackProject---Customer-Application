@@ -23,4 +23,5 @@ public class Order {
     private double orderTotal;
     private String currency;
     private LocalDateTime lastModifiedTS;
+    private String customerPhoneNo;
 }
