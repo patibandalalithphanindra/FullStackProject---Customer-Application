@@ -64,7 +64,7 @@ public class CustomerServiceImplementation implements CustomerService {
 
     @Override
     public void deleteCustomer(String id) {
-        Optional<Customer> optionalCustomer = customerRepository.findById(id);
+        Optional<Customer> optionalCustomer = customerRepository.findByCustomerId(id);
         if (optionalCustomer.isPresent()) {
             Customer customer = optionalCustomer.get();
             if ("Inactive".equalsIgnoreCase(customer.getStatus())) {
