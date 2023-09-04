@@ -2,7 +2,7 @@ package com.lalith.customer.controller;
 
 import com.lalith.customer.model.Customer;
 import com.lalith.customer.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,15 +15,18 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
-    @Autowired
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
 
     @PostMapping
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
-        Customer createdCustomer = customerService.createCustomer(customer);
-        return ResponseEntity.ok(createdCustomer);
+        try {
+            Customer createdCustomer = customerService.createCustomer(customer);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @GetMapping
@@ -45,20 +48,32 @@ public class CustomerController {
     @GetMapping("/status/{status}")
     public ResponseEntity<Optional<Customer>> getCustomerByStatus(@PathVariable String status) {
         Optional<Customer> customers = customerService.getCustomerByStatus(status);
-        return ResponseEntity.ok(customers);
+        if (!customers.isEmpty()) {
+            return ResponseEntity.ok(customers);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/{customerId}")
     public ResponseEntity<Customer> updateCustomer(
             @PathVariable String customerId,
             @RequestBody Customer updatedCustomer) {
-        Customer updated = customerService.updateCustomer(customerId, updatedCustomer);
-        return ResponseEntity.ok(updated);
+        try {
+            Customer updated = customerService.updateCustomer(customerId, updatedCustomer);
+            return ResponseEntity.ok(updated);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
     @DeleteMapping("/{customerId}")
     public ResponseEntity<String> deleteCustomer(@PathVariable String customerId) {
-        customerService.deleteCustomer(customerId);
-        return ResponseEntity.ok("Customer deleted successfully");
+        try {
+            customerService.deleteCustomer(customerId);
+            return ResponseEntity.ok("Customer deleted successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer not found");
+        }
     }
 }

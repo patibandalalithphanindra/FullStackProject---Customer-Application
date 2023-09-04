@@ -1,4 +1,4 @@
 package com.lalith.customer.service;
 
-public class RewardService {
+public interface RewardService {
 }

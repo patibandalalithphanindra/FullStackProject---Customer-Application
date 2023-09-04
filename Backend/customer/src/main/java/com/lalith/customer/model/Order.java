@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -17,10 +18,10 @@ public class Order {
     @NotNull(message = "orderNo should not be empty!")
     private String orderNo;
     private String customerId;
-    private Date orderDate;
+    private LocalDateTime orderDate;
     private String orderStatus = "Created";
     private int totalItems;
     private double orderTotal;
     private String currency;
-    private Date lastModifiedTS;
+    private LocalDateTime lastModifiedTS;
 }
