@@ -50,45 +50,64 @@ public class CustomerServiceImplementation implements CustomerService {
     }
 
     @Override
-    public Customer updateCustomer(String id, Customer updatedCustomer) {
-        if (!customerRepository.existsById(id)) {
-            throw new RuntimeException("Customer with id " + id + " not found");
-        }
+    public Customer updateCustomer(String customerId, Customer updatedCustomer) {
+        Optional<Customer> optionalExistingCustomer = customerRepository.findByCustomerId(customerId);
 
-        Customer existingCustomer = customerRepository.findByCustomerId(id).orElse(null);
+        if (optionalExistingCustomer.isPresent()) {
+            Customer existingCustomer = optionalExistingCustomer.get();
 
-        if (existingCustomer != null) {
-            existingCustomer.setFirstName(updatedCustomer.getFirstName());
-            existingCustomer.setLastName(updatedCustomer.getLastName());
-            existingCustomer.setAddressLine1(updatedCustomer.getAddressLine1());
-            existingCustomer.setAddressLine2(updatedCustomer.getAddressLine2());
-            existingCustomer.setCity(updatedCustomer.getCity());
-            existingCustomer.setState(updatedCustomer.getState());
-            existingCustomer.setZipCode(updatedCustomer.getZipCode());
-            existingCustomer.setCountry(updatedCustomer.getCountry());
-            existingCustomer.setPhoneNo(updatedCustomer.getPhoneNo());
-            existingCustomer.setEmailId(updatedCustomer.getEmailId());
-            existingCustomer.setStatus(updatedCustomer.getStatus());
+            if (updatedCustomer.getFirstName() != null) {
+                existingCustomer.setFirstName(updatedCustomer.getFirstName());
+            }
+            if (updatedCustomer.getLastName() != null) {
+                existingCustomer.setLastName(updatedCustomer.getLastName());
+            }
+            if (updatedCustomer.getAddressLine1() != null) {
+                existingCustomer.setAddressLine1(updatedCustomer.getAddressLine1());
+            }
+            if (updatedCustomer.getAddressLine2() != null) {
+                existingCustomer.setAddressLine2(updatedCustomer.getAddressLine2());
+            }
+            if (updatedCustomer.getCity() != null) {
+                existingCustomer.setCity(updatedCustomer.getCity());
+            }
+            if (updatedCustomer.getState() != null) {
+                existingCustomer.setState(updatedCustomer.getState());
+            }
+            if (updatedCustomer.getZipCode() != null) {
+                existingCustomer.setZipCode(updatedCustomer.getZipCode());
+            }
+            if (updatedCustomer.getCountry() != null) {
+                existingCustomer.setCountry(updatedCustomer.getCountry());
+            }
+            if (updatedCustomer.getPhoneNo() != null) {
+                existingCustomer.setPhoneNo(updatedCustomer.getPhoneNo());
+            }
+            if (updatedCustomer.getEmailId() != null) {
+                existingCustomer.setEmailId(updatedCustomer.getEmailId());
+            }
+            if (updatedCustomer.getStatus() != null) {
+                existingCustomer.setStatus(updatedCustomer.getStatus());
+            }
 
             return customerRepository.save(existingCustomer);
         } else {
-            throw new RuntimeException("Customer with id " + id + " not found");
+            throw new RuntimeException("Customer with id " + customerId + " not found");
         }
     }
 
-
     @Override
-    public void deleteCustomer(String id) {
-        Optional<Customer> optionalCustomer = customerRepository.findByCustomerId(id);
+    public void deleteCustomer(String customerId) {
+        Optional<Customer> optionalCustomer = customerRepository.findByCustomerId(customerId);
         if (optionalCustomer.isPresent()) {
             Customer customer = optionalCustomer.get();
             if ("Inactive".equalsIgnoreCase(customer.getStatus())) {
-                customerRepository.deleteById(id);
+                customerRepository.deleteById(customerId);
             } else {
                 throw new RuntimeException("Customer is not in Inactive status");
             }
         } else {
-            throw new RuntimeException("Customer with id " + id + " not found");
+            throw new RuntimeException("Customer with id " + customerId + " not found");
         }
     }
 }

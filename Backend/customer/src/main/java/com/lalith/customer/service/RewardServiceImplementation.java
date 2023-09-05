@@ -29,7 +29,6 @@ public class RewardServiceImplementation implements RewardService {
         return rewardRepository.findByCustomerId(customerId);
     }
 
-
     @Override
     public double getRewardBalance(String customerId) {
         List<Reward> rewards = rewardRepository.findByCustomerId(customerId);
@@ -41,7 +40,6 @@ public class RewardServiceImplementation implements RewardService {
             totalEarned += reward.getRewardsEarned();
             totalRedeemed += reward.getRewardsRedeemed();
         }
-
         return totalEarned - totalRedeemed;
     }
 
