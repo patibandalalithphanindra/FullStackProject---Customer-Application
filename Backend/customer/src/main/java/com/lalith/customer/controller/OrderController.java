@@ -5,25 +5,26 @@ import com.lalith.customer.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
-   private final OrderService orderService;
+    private final OrderService orderService;
 
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
+    public ResponseEntity<?> createOrder(@RequestBody Order order) {
         try {
             Order createdOrder = orderService.createOrder(order);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
         }
     }
 
@@ -34,12 +35,12 @@ public class OrderController {
     }
 
     @GetMapping("/byOrder/{orderNo}")
-    public ResponseEntity<Order> getOrderByOrderNo(@PathVariable String orderNo) {
+    public ResponseEntity<?> getOrderByOrderNo(@PathVariable String orderNo) {
         try {
             Order order = orderService.getOrderByOrderNo(orderNo);
             return ResponseEntity.ok(order);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
         }
     }
 
@@ -50,24 +51,24 @@ public class OrderController {
     }
 
     @PutMapping("/{orderNo}")
-    public ResponseEntity<Order> updateOrder(
+    public ResponseEntity<?> updateOrder(
             @PathVariable String orderNo,
             @RequestBody Order updatedOrder) {
         try {
             Order updated = orderService.updateOrder(orderNo, updatedOrder);
             return ResponseEntity.ok(updated);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
         }
     }
 
     @DeleteMapping("/{orderNo}")
-    public ResponseEntity<String> deleteOrder(@PathVariable String orderNo) {
+    public ResponseEntity<?> deleteOrder(@PathVariable String orderNo) {
         try {
             orderService.deleteOrder(orderNo);
-            return ResponseEntity.ok("Order deleted successfully");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found");
+            return ResponseEntity.ok("Order with " + orderNo + " has been deleted successfully");
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
         }
     }
 }

@@ -3,7 +3,9 @@ package com.lalith.customer.service;
 import com.lalith.customer.model.Order;
 import com.lalith.customer.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,7 +14,6 @@ import java.util.Optional;
 @Service
 public class OrderServiceImplementation implements OrderService {
 
-    @Autowired
     private final OrderRepository orderRepository;
 
     @Autowired
@@ -29,7 +30,7 @@ public class OrderServiceImplementation implements OrderService {
     public Order createOrder(Order order) {
         Optional<Order> existingOrder = Optional.ofNullable(orderRepository.findByOrderNo(order.getOrderNo()));
         if (existingOrder.isPresent()) {
-            throw new RuntimeException("An order with the same orderNo already exists.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "An order with the same orderNo already exists.");
         }
 
         order.setOrderDate(LocalDateTime.now());
@@ -45,7 +46,7 @@ public class OrderServiceImplementation implements OrderService {
     public Order updateOrder(String orderNo, Order updatedOrder) {
         Optional<Order> existingOrderOptional = Optional.ofNullable(orderRepository.findByOrderNo(orderNo));
         if (!existingOrderOptional.isPresent()) {
-            throw new RuntimeException("Order with orderNo " + orderNo + " not found.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order with orderNo " + orderNo + " not found.");
         }
 
         Order existingOrder = existingOrderOptional.get();
@@ -65,7 +66,7 @@ public class OrderServiceImplementation implements OrderService {
     public void deleteOrder(String orderNo) {
         Optional<Order> existingOrderOptional = Optional.ofNullable(orderRepository.findByOrderNo(orderNo));
         if (!existingOrderOptional.isPresent()) {
-            throw new RuntimeException("Order with orderNo " + orderNo + " not found.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order with orderNo " + orderNo + " not found.");
         }
 
         Order existingOrder = existingOrderOptional.get();
@@ -78,10 +79,10 @@ public class OrderServiceImplementation implements OrderService {
             if (monthsDifference >= 3) {
                 orderRepository.delete(existingOrder);
             } else {
-                throw new RuntimeException("Order cannot be deleted as it is not in Shipped status or the difference between the current date and last order modified date is less than 3 months.");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order cannot be deleted as it is not in Shipped status or the difference between the current date and last order modified date is less than 3 months.");
             }
         } else {
-            throw new RuntimeException("Order cannot be deleted as it is not in Shipped status.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order cannot be deleted as it is not in Shipped status.");
         }
     }
 
@@ -91,7 +92,7 @@ public class OrderServiceImplementation implements OrderService {
         if (order.isPresent()) {
             return order.get();
         } else {
-            throw new RuntimeException("Order with orderNo " + orderNo + " not found.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order with orderNo " + orderNo + " not found.");
         }
     }
 
