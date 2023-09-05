@@ -21,11 +21,11 @@ public class Order {
     @NotNull(message = "orderNo should not be empty!")
     private String orderNo;
     private String customerId;
-    private LocalDateTime orderDate;
+    private LocalDateTime orderDate = LocalDateTime.now();
     private String orderStatus = "Created";
     private int totalItems;
     private double orderTotal;
     private String currency;
-    private LocalDateTime lastModifiedTS;
+    private LocalDateTime lastModifiedTS = LocalDateTime.now();
     private String customerPhoneNo;
 }

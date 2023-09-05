@@ -38,7 +38,6 @@ public class OrderServiceImplementation implements OrderService {
         if (order.getOrderStatus() == null) {
             order.setOrderStatus("Created");
         }
-
         return orderRepository.save(order);
     }
 
@@ -57,7 +56,6 @@ public class OrderServiceImplementation implements OrderService {
         if ("Shipped".equalsIgnoreCase(updatedOrder.getOrderStatus())) {
             updatedOrder.setOrderStatus("Shipped");
         }
-
         updatedOrder.setLastModifiedTS(LocalDateTime.now());
 
         return orderRepository.save(updatedOrder);
