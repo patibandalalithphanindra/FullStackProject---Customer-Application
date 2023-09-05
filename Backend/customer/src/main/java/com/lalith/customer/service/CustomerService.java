@@ -9,6 +9,6 @@ public interface CustomerService {
     Optional<Customer> getCustomerByStatus(String status);
     Optional<Customer> getCustomerByEmailId(String emailId);
     Customer createCustomer(Customer customer);
-    Customer updateCustomer(String id, Customer updatedCustomer);
-    void deleteCustomer(String id);
+    Customer updateCustomer(String customerId, Customer updatedCustomer);
+    void deleteCustomer(String customerId);
 }
