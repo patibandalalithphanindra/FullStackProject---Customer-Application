@@ -97,17 +97,18 @@ public class CustomerServiceImplementation implements CustomerService {
     }
 
     @Override
-    public void deleteCustomer(String customerId) {
+    public String deleteCustomer(String customerId) {
         Optional<Customer> optionalCustomer = customerRepository.findByCustomerId(customerId);
+
         if (optionalCustomer.isPresent()) {
             Customer customer = optionalCustomer.get();
             if ("Inactive".equalsIgnoreCase(customer.getStatus())) {
-                customerRepository.deleteById(customerId);
+                customerRepository.deleteById(customer.getCustomerKey());
+                return "Customer with id " + customerId + " has been deleted successfully!";
             } else {
-                throw new RuntimeException("Customer is not in Inactive status");
-            }
+                return "Customer is not in Inactive status, Hence it cannot be deleted!";            }
         } else {
-            throw new RuntimeException("Customer with id " + customerId + " not found");
+            return "Customer with id " + customerId + " not found";
         }
     }
 }

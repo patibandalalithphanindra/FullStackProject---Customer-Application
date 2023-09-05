@@ -10,5 +10,5 @@ public interface CustomerService {
     Optional<Customer> getCustomerByEmailId(String emailId);
     Customer createCustomer(Customer customer);
     Customer updateCustomer(String customerId, Customer updatedCustomer);
-    void deleteCustomer(String customerId);
+    String deleteCustomer(String customerId);
 }

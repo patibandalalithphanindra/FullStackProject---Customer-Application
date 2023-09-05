@@ -24,12 +24,9 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<Customer> createCustomer(@Valid @RequestBody Customer customer) {
-        try {
             Customer createdCustomer = customerService.createCustomer(customer);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
+
     }
 
     @GetMapping
@@ -73,10 +70,11 @@ public class CustomerController {
     @DeleteMapping("/{customerId}")
     public ResponseEntity<String> deleteCustomer(@PathVariable String customerId) {
         try {
-            customerService.deleteCustomer(customerId);
-            return ResponseEntity.ok("Customer deleted successfully");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer not found");
+            String response = customerService.deleteCustomer(customerId);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
         }
+
     }
 }
