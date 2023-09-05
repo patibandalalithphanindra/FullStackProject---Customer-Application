@@ -23,7 +23,6 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-
     @PostMapping
     public ResponseEntity<?> createCustomer(@Valid @RequestBody Customer customer) {
         try {
