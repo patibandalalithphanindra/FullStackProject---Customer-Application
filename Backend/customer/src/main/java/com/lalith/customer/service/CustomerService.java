@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface CustomerService {
     List<Customer> getAllCustomers();
-    Optional<Customer> getCustomerByStatus(String status);
+    List<Customer> getAllCustomerByStatus(String status);
     Optional<Customer> getCustomerByEmailId(String emailId);
     Customer createCustomer(Customer customer);
     Customer updateCustomer(String customerId, Customer updatedCustomer);

@@ -3,7 +3,9 @@ package com.lalith.customer.service;
 import com.lalith.customer.model.Customer;
 import com.lalith.customer.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +26,7 @@ public class CustomerServiceImplementation implements CustomerService {
     }
 
     @Override
-    public Optional<Customer> getCustomerByStatus(String status) {
+    public List<Customer> getAllCustomerByStatus(String status) {
         return customerRepository.findByStatus(status);
     }
 
@@ -36,15 +38,15 @@ public class CustomerServiceImplementation implements CustomerService {
     @Override
     public Customer createCustomer(Customer customer) {
         if (customerRepository.findByCustomerId(customer.getCustomerId()).isPresent()) {
-            throw new RuntimeException("Customer with the same id already exists");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Customer with the same id already exists");
         }
 
         if (customerRepository.findByPhoneNo(customer.getPhoneNo()).isPresent()) {
-            throw new RuntimeException("Customer with the same phone number already exists");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Customer with the same phone number already exists");
         }
 
         if (customerRepository.findByEmailId(customer.getEmailId()).isPresent()) {
-            throw new RuntimeException("Customer with the same email address already exists");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Customer with the same email address already exists");
         }
         return customerRepository.save(customer);
     }
@@ -55,6 +57,14 @@ public class CustomerServiceImplementation implements CustomerService {
 
         if (optionalExistingCustomer.isPresent()) {
             Customer existingCustomer = optionalExistingCustomer.get();
+
+            if (updatedCustomer.getCustomerId() != null && !customerId.equals(updatedCustomer.getCustomerId())) {
+                throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Modification of customerId is not allowed.");
+            }
+
+            if (updatedCustomer.getCustomerKey() != null && !existingCustomer.getCustomerKey().equals(updatedCustomer.getCustomerKey())) {
+                throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Modification of customerKey is not allowed.");
+            }
 
             if (updatedCustomer.getFirstName() != null) {
                 existingCustomer.setFirstName(updatedCustomer.getFirstName());
@@ -89,10 +99,9 @@ public class CustomerServiceImplementation implements CustomerService {
             if (updatedCustomer.getStatus() != null) {
                 existingCustomer.setStatus(updatedCustomer.getStatus());
             }
-
             return customerRepository.save(existingCustomer);
         } else {
-            throw new RuntimeException("Customer with id " + customerId + " not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Customer with id " + customerId + " cannot be found");
         }
     }
 
@@ -108,7 +117,7 @@ public class CustomerServiceImplementation implements CustomerService {
             } else {
                 return "Customer is not in Inactive status, Hence it cannot be deleted!";            }
         } else {
-            return "Customer with id " + customerId + " not found";
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer with Id " + customerId + " cannot be found");
         }
     }
 }

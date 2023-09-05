@@ -6,8 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,10 +25,13 @@ public class CustomerController {
 
 
     @PostMapping
-    public ResponseEntity<Customer> createCustomer(@Valid @RequestBody Customer customer) {
+    public ResponseEntity<?> createCustomer(@Valid @RequestBody Customer customer) {
+        try {
             Customer createdCustomer = customerService.createCustomer(customer);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
-
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @GetMapping
@@ -46,8 +51,9 @@ public class CustomerController {
     }
 
     @GetMapping("/status/{status}")
-    public ResponseEntity<Optional<Customer>> getCustomerByStatus(@PathVariable String status) {
-        Optional<Customer> customers = customerService.getCustomerByStatus(status);
+    public ResponseEntity<List<Customer>> getCustomerByStatus(@PathVariable String status) {
+        List<Customer> customers = new ArrayList<>();
+        customers =   customerService.getAllCustomerByStatus(status);
         if (!customers.isEmpty()) {
             return ResponseEntity.ok(customers);
         } else {
@@ -56,14 +62,14 @@ public class CustomerController {
     }
 
     @PutMapping("/{customerId}")
-    public ResponseEntity<Customer> updateCustomer(
+    public ResponseEntity<?> updateCustomer(
             @PathVariable String customerId,
             @RequestBody Customer updatedCustomer) {
         try {
             Customer updated = customerService.updateCustomer(customerId, updatedCustomer);
             return ResponseEntity.ok(updated);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
         }
     }
 
@@ -72,9 +78,8 @@ public class CustomerController {
         try {
             String response = customerService.deleteCustomer(customerId);
             return ResponseEntity.status(HttpStatus.OK).body(response);
-        } catch (RuntimeException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
+        } catch (ResponseStatusException e){
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
         }
-
     }
 }
