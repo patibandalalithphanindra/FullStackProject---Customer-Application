@@ -24,14 +24,14 @@ public class RewardServiceImplementation implements RewardService {
 
     @Override
     public List<Reward> getRewardsByCustomerId(String customerId) {
-        return rewardRepository.findByCustomerId(customerId);
+        List<Reward> rewards = rewardRepository.findByCustomerId(customerId);
+        if (rewards.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No rewards found for customer with ID: " + customerId);
+        }
+        return rewards;
     }
 
     public Reward createReward(String customerId, double orderTotal, String orderNo) {
-//        if (rewardRepository.findByCustomerId(customerId).isPresent()) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A reward for the customer already exists.");
-//        }
-
         double rewardAmount = 0.05 * orderTotal;
 
         Reward reward = new Reward();
