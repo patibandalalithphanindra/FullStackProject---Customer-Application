@@ -10,10 +10,10 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class OrderServiceImplementation implements OrderService {
-
     private final OrderRepository orderRepository;
 
     @Autowired
@@ -28,9 +28,16 @@ public class OrderServiceImplementation implements OrderService {
 
     @Override
     public Order createOrder(Order order) {
-        Optional<Order> existingOrder = Optional.ofNullable(orderRepository.findByOrderNo(order.getOrderNo()));
-        if (existingOrder.isPresent()) {
+        String orderNo = order.getOrderNo();
+
+        Order existingOrder = orderRepository.findByOrderNo(orderNo);
+        if (existingOrder != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "An order with the same orderNo already exists.");
+        }
+
+        if (orderNo == null) {
+            orderNo = generateOrderNo();
+            order.setOrderNo(orderNo);
         }
 
         order.setOrderDate(LocalDateTime.now());
@@ -39,8 +46,17 @@ public class OrderServiceImplementation implements OrderService {
         if (order.getOrderStatus() == null) {
             order.setOrderStatus("Created");
         }
+
         return orderRepository.save(order);
     }
+
+    private String generateOrderNo() {
+        UUID uuid = UUID.randomUUID();
+        String orderNo = "O" + uuid.toString().replace("-", "").substring(0, 3);
+        return orderNo;
+    }
+
+
 
     @Override
     public Order updateOrder(String orderNo, Order updatedOrder) {
@@ -54,9 +70,26 @@ public class OrderServiceImplementation implements OrderService {
         updatedOrder.setOrderKey(existingOrder.getOrderKey());
         updatedOrder.setOrderNo(existingOrder.getOrderNo());
 
-        if ("Shipped".equalsIgnoreCase(updatedOrder.getOrderStatus())) {
-            updatedOrder.setOrderStatus("Shipped");
+        if (updatedOrder.getOrderStatus() == null) {
+            updatedOrder.setOrderStatus(existingOrder.getOrderStatus());
         }
+
+        if (updatedOrder.getOrderDate() == null) {
+            updatedOrder.setOrderDate(existingOrder.getOrderDate());
+        }
+
+        if (updatedOrder.getTotalItems() == 0) {
+            updatedOrder.setTotalItems(existingOrder.getTotalItems());
+        }
+
+        if (updatedOrder.getOrderTotal() == 0.0) {
+            updatedOrder.setOrderTotal(existingOrder.getOrderTotal());
+        }
+
+        if (updatedOrder.getCurrency() == null) {
+            updatedOrder.setCurrency(existingOrder.getCurrency());
+        }
+
         updatedOrder.setLastModifiedTS(LocalDateTime.now());
 
         return orderRepository.save(updatedOrder);
@@ -98,6 +131,10 @@ public class OrderServiceImplementation implements OrderService {
 
     @Override
     public List<Order> getOrdersByPhoneNo(String phoneNo) {
-        return orderRepository.findByCustomerPhoneNo(phoneNo);
+        List<Order> orders = orderRepository.findByCustomerPhoneNo(phoneNo);
+        if (orders.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No orders found for phone number: " + phoneNo);
+        }
+        return orders;
     }
 }

@@ -45,9 +45,13 @@ public class OrderController {
     }
 
     @GetMapping("/byPhone/{phoneNo}")
-    public ResponseEntity<List<Order>> getOrdersByPhoneNo(@PathVariable String phoneNo) {
-        List<Order> orders = orderService.getOrdersByPhoneNo(phoneNo);
-        return ResponseEntity.ok(orders);
+    public ResponseEntity<?> getOrdersByPhoneNo(@PathVariable String phoneNo) {
+        try {
+            List<Order> orders = orderService.getOrdersByPhoneNo(phoneNo);
+            return ResponseEntity.ok(orders);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+        }
     }
 
     @PutMapping("/{orderNo}")
