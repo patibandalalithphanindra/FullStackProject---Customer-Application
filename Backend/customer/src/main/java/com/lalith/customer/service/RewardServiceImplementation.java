@@ -49,5 +49,4 @@ public class RewardServiceImplementation implements RewardService {
         }
         return totalEarned - totalRedeemed;
     }
-
 }
