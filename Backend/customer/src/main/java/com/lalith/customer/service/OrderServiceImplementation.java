@@ -1,6 +1,7 @@
 package com.lalith.customer.service;
 
 import com.lalith.customer.model.Order;
+import com.lalith.customer.model.Reward;
 import com.lalith.customer.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,10 +16,12 @@ import java.util.UUID;
 @Service
 public class OrderServiceImplementation implements OrderService {
     private final OrderRepository orderRepository;
+    private final RewardService rewardService;
 
     @Autowired
-    public OrderServiceImplementation(OrderRepository orderRepository) {
+    public OrderServiceImplementation(OrderRepository orderRepository, RewardService rewardService) {
         this.orderRepository = orderRepository;
+        this.rewardService = rewardService;
     }
 
     @Override
@@ -40,6 +43,9 @@ public class OrderServiceImplementation implements OrderService {
             order.setOrderNo(orderNo);
         }
 
+        Reward reward = rewardService.createReward(order.getCustomerId(), order.getOrderTotal(), order.getOrderNo());
+
+        order.setReward(reward);
         order.setOrderDate(LocalDateTime.now());
         order.setLastModifiedTS(LocalDateTime.now());
 
@@ -52,8 +58,7 @@ public class OrderServiceImplementation implements OrderService {
 
     private String generateOrderNo() {
         UUID uuid = UUID.randomUUID();
-        String orderNo = "O" + uuid.toString().replace("-", "").substring(0, 3);
-        return orderNo;
+        return "O" + uuid.toString().replace("-", "").substring(0, 3);
     }
 
 

@@ -17,19 +17,6 @@ public class RewardController {
         this.rewardService = rewardService;
     }
 
-    @PostMapping
-    public ResponseEntity<Reward> createReward(@RequestBody Reward reward) {
-        try {
-            // Ensure that rewardsBalance is calculated based on rewardsEarned and rewardsRedeemed
-            reward.setRewardsBalance(reward.getRewardsEarned() - reward.getRewardsRedeemed());
-
-            Reward createdReward = rewardService.createReward(reward);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdReward);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-    }
-
     @GetMapping("/{customerId}")
     public ResponseEntity<List<Reward>> getRewardsByCustomerId(@PathVariable String customerId) {
         List<Reward> rewards = rewardService.getRewardsByCustomerId(customerId);
