@@ -60,6 +60,7 @@ public class OrderController {
     }
 
     @PutMapping("/{orderNo}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> updateOrder(
             @PathVariable String orderNo,
             @RequestBody Order updatedOrder) {

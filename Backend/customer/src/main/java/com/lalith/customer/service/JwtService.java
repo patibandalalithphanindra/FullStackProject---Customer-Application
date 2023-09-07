@@ -16,8 +16,7 @@ import java.util.function.Function;
 
 @Component
 public class JwtService {
-    private final Key SECRET = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-
+    public static final String SECRET = "614E645267556B58703273357638792F423F4528482B4D6251655368566D5971";
     public String extractName(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -35,7 +34,7 @@ public class JwtService {
     private Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()
-                .setSigningKey(SECRET)
+                .setSigningKey(getSignKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -52,14 +51,21 @@ public class JwtService {
 
     public String generateToken(String name){
         Map<String,Object> claims = new HashMap<>();
-        return createToken(name,claims);
+        return createToken(claims, name);
     }
 
-    private String createToken(String name, Map<String, Object> claims) {
-       return Jwts.builder().setClaims(claims).setSubject(name).
-               setIssuedAt(new Date(System.currentTimeMillis()))
-               .setExpiration(new Date(System.currentTimeMillis()+1000*60*30))
-               .signWith(SECRET, SignatureAlgorithm.HS256).compact();
+    private String createToken(Map<String, Object> claims, String userName) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(userName)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis()+1000*60*30))
+                .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
+    }
+
+    private Key getSignKey() {
+        byte[] keyBytes= Decoders.BASE64.decode(SECRET);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
 }
