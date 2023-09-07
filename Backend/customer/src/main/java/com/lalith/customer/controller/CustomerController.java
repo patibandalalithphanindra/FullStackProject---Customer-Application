@@ -4,6 +4,7 @@ import com.lalith.customer.model.Customer;
 import com.lalith.customer.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,6 +25,7 @@ public class CustomerController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> createCustomer(@Valid @RequestBody Customer customer) {
         try {
             Customer createdCustomer = customerService.createCustomer(customer);
@@ -34,12 +36,14 @@ public class CustomerController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<Customer>> getAllCustomers() {
         List<Customer> customers = customerService.getAllCustomers();
         return ResponseEntity.ok(customers);
     }
 
     @GetMapping("/email/{emailId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Customer> getCustomerByEmailId(@PathVariable String emailId) {
         Optional<Customer> customer = customerService.getCustomerByEmailId(emailId);
         if (customer.isPresent()) {
@@ -50,6 +54,7 @@ public class CustomerController {
     }
 
     @GetMapping("/status/{status}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<Customer>> getCustomerByStatus(@PathVariable String status) {
         List<Customer> customers = new ArrayList<>();
         customers =   customerService.getAllCustomerByStatus(status);
@@ -61,6 +66,7 @@ public class CustomerController {
     }
 
     @PutMapping("/{customerId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> updateCustomer(
             @PathVariable String customerId,
             @RequestBody Customer updatedCustomer) {
@@ -73,6 +79,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{customerId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<String> deleteCustomer(@PathVariable String customerId) {
         try {
             String response = customerService.deleteCustomer(customerId);

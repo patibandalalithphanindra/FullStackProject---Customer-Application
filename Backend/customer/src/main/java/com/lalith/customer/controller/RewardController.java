@@ -4,6 +4,7 @@ import com.lalith.customer.model.Reward;
 import com.lalith.customer.service.RewardService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,12 +19,14 @@ public class RewardController {
     }
 
     @GetMapping("/{customerId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<Reward>> getRewardsByCustomerId(@PathVariable String customerId) {
         List<Reward> rewards = rewardService.getRewardsByCustomerId(customerId);
         return ResponseEntity.ok(rewards);
     }
 
     @GetMapping("/rewardbalance/{customerId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Double> getRewardBalance(@PathVariable String customerId) {
         double rewardBalance = rewardService.getRewardBalance(customerId);
         return ResponseEntity.ok(rewardBalance);

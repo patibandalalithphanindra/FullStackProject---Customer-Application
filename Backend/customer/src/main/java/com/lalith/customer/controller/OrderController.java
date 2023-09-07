@@ -4,6 +4,7 @@ import com.lalith.customer.model.Order;
 import com.lalith.customer.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -19,6 +20,7 @@ public class OrderController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> createOrder(@RequestBody Order order) {
         try {
             Order createdOrder = orderService.createOrder(order);
@@ -29,12 +31,14 @@ public class OrderController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<Order>> getAllOrders() {
         List<Order> orders = orderService.getAllOrders();
         return ResponseEntity.ok(orders);
     }
 
     @GetMapping("/byOrder/{orderNo}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> getOrderByOrderNo(@PathVariable String orderNo) {
         try {
             Order order = orderService.getOrderByOrderNo(orderNo);
@@ -45,6 +49,7 @@ public class OrderController {
     }
 
     @GetMapping("/byPhone/{phoneNo}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> getOrdersByPhoneNo(@PathVariable String phoneNo) {
         try {
             List<Order> orders = orderService.getOrdersByPhoneNo(phoneNo);
@@ -67,6 +72,7 @@ public class OrderController {
     }
 
     @DeleteMapping("/{orderNo}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteOrder(@PathVariable String orderNo) {
         try {
             orderService.deleteOrder(orderNo);
