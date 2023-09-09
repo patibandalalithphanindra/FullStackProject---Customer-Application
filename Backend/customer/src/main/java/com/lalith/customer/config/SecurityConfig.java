@@ -2,9 +2,11 @@ package com.lalith.customer.config;
 
 import com.lalith.customer.filter.JwtAuthFilter;
 import com.lalith.customer.service.UserInfoUserDetailsService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -22,8 +24,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 
 @Configuration
 @EnableWebSecurity
@@ -36,23 +39,37 @@ public class SecurityConfig {
       return new UserInfoUserDetailsService();
    }
 
-   @Bean
-   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-       return http.csrf(AbstractHttpConfigurer::disable)
-               .authorizeHttpRequests(auth ->
-                       auth.requestMatchers("/user/add", "/user/authenticate")
-                               .permitAll()
-                               .requestMatchers("/customers/**", "/orders/**", "/rewards/**")
-                               .authenticated())
-                               .sessionManagement(session ->
-                                       session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                               )
-                               .authenticationProvider(authenticationProvider())
-                               .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                               .build();
-   }
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return (request, response, ex) -> {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            // You can also send a custom response message if needed.
+            response.getWriter().write("Unauthorized");
+        };
+    }
 
-   @Bean
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth ->
+                        auth.requestMatchers("/user/add", "/user/authenticate")
+                                .permitAll()
+                                .requestMatchers("/customers/**", "/orders/**", "/rewards/**")
+                                .authenticated())
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(config ->
+                        config.accessDeniedHandler(accessDeniedHandler()) // Set custom access denied handler
+                                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)) // Set 401 as the default entry point
+                )
+                .build();
+    }
+
+
+    @Bean
    public PasswordEncoder passwordEncoder(){
       return new BCryptPasswordEncoder();
    }
