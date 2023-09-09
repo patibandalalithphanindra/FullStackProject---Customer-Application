@@ -1,5 +1,6 @@
 package com.lalith.customer.service;
 
+import com.lalith.customer.model.AuthenticationResponse;
 import com.lalith.customer.model.UserInfo;
 import com.lalith.customer.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,13 @@ public class UserAdditionService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtService jwtService;
 
-    public String addUser(UserInfo userInfo) {
+    public AuthenticationResponse addUser(UserInfo userInfo) {
         userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
         repository.save(userInfo);
-        return "User has been added to system";
+        String jwt = jwtService.generateToken(userInfo.getName());
+       return new AuthenticationResponse(jwt,userInfo.getName());
     }
 }
