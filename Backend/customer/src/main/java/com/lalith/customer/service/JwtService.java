@@ -1,5 +1,7 @@
 package com.lalith.customer.service;
 
+import com.lalith.customer.exception.InvalidCredentialsException;
+import com.lalith.customer.exception.TokenExpiredException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -46,9 +48,16 @@ public class JwtService {
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractName(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
-    }
+        final Date expiration = extractExpiration(token);
 
+        if (username.equals(userDetails.getUsername()) && expiration.after(new Date())) {
+            return true;
+        } else if (isTokenExpired(token)) {
+            throw new TokenExpiredException("Token has expired");
+        } else {
+            throw new InvalidCredentialsException("Invalid credentials");
+        }
+    }
     public String generateToken(String name){
         Map<String,Object> claims = new HashMap<>();
         return createToken(claims, name);
