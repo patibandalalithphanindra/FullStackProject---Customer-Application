@@ -17,9 +17,6 @@ function Login({ history }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-console.log("formData",formData)
-
-console.log(formData)
     try {
       const response = await axios.post('http://localhost:8080/user/authenticate', formData);
 
