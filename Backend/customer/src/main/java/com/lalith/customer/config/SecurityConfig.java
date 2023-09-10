@@ -62,8 +62,8 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(config ->
-                        config.accessDeniedHandler(accessDeniedHandler()) // Set custom access denied handler
-                                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)) // Set 401 as the default entry point
+                        config.accessDeniedHandler(accessDeniedHandler())
+                                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
                 )
                 .build();
     }

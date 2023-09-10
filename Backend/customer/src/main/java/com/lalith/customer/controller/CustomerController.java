@@ -14,8 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/customers/")
 @Validated
 public class CustomerController {
    private final CustomerService customerService;
@@ -44,7 +45,7 @@ public class CustomerController {
 
     @GetMapping("/email/{emailId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<Customer> getCustomerByEmailId(@PathVariable String emailId) {
+    public ResponseEntity<Customer> getCustomerByEmailId(@RequestParam String emailId) {
         Optional<Customer> customer = customerService.getCustomerByEmailId(emailId);
         if (customer.isPresent()) {
             return ResponseEntity.ok(customer.get());
@@ -55,7 +56,7 @@ public class CustomerController {
 
     @GetMapping("/status/{status}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<List<Customer>> getCustomerByStatus(@PathVariable String status) {
+    public ResponseEntity<List<Customer>> getCustomerByStatus(@RequestParam String status) {
         List<Customer> customers = new ArrayList<>();
         customers =   customerService.getAllCustomerByStatus(status);
         if (!customers.isEmpty()) {
