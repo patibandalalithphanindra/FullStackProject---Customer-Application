@@ -3,7 +3,7 @@ import { Button, Container, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-function Login({ history }) {
+function Login({ setIsAuthenticated }) {
   const [formData, setFormData] = useState({
     name: '',
     password: ''
@@ -17,12 +17,13 @@ function Login({ history }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     try {
       const response = await axios.post('http://localhost:8080/user/authenticate', formData);
 
       if (response.status === 200) {
-        
-        navigate('/'); // Redirect to the homepage on successful login
+       setIsAuthenticated(true);
+       navigate('/homepage'); // Redirect to the homepage on successful login
       } else {
         // Handle login error
       }

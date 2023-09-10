@@ -1,28 +1,33 @@
-import React from 'react';
-import { Route, Routes,Navigate } from 'react-router-dom';
-import { useAuth } from './service/AuthContext';
-import Login from './components/Login';
-import HomePage from './components/HomePage';
-import Register from './components/Register';
-import CustomersComponent from './components/CustomersComponent';
+import React, { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import HomePage from "./components/HomePage";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import LandingPage from "./components/LandingPage";
+import { Box } from "@mui/material";
+ function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-function App() {
-  const { user } = useAuth();
   return (
-    <div>
+    <Box >
       <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/login"
+          element={<Login setIsAuthenticated={setIsAuthenticated} />}
+        />
         <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
         <Route
-          path="/"
-          element={user ? <HomePage /> : <Navigate to="/login" replace />}
-        />
-        <Route
-          path="/customer"
-          element={user ? <CustomersComponent /> : <Navigate to="/login" replace />}
-        />
+          path="/homepage"
+          element={
+            isAuthenticated ? (
+              <LandingPage />
+            ) : (
+              <Login setIsAuthenticated={setIsAuthenticated} />
+            )
+          }></Route>
       </Routes>
-    </div>
+    </Box>
   );
 }
 
