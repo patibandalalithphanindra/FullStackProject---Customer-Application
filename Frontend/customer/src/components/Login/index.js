@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Button, Container, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import styles from './styles.module.css';
 
-function Login({ setIsAuthenticated }) {
+function Login() {
   const [formData, setFormData] = useState({
     name: '',
     password: ''
@@ -20,22 +21,21 @@ function Login({ setIsAuthenticated }) {
 
     try {
       const response = await axios.post('http://localhost:8080/user/authenticate', formData);
-
       if (response.status === 200) {
-       setIsAuthenticated(true);
-       navigate('/homepage'); // Redirect to the homepage on successful login
-      } else {
-        // Handle login error
-      }
+        console.log(response)
+        localStorage.setItem("jwt",response?.data?.token);
+        localStorage.setItem("name",response?.data?.name);
+        navigate('/homepage');
+      } 
     } catch (error) {
       console.error('Login error:', error);
     }
   };
 
   return (
-    <Container maxWidth="xs">
+    <Container className={styles.container} maxWidth="xs">
       <Typography variant="h4">Login</Typography>
-      <form onSubmit={handleLogin}>
+      <form className={styles.form} onSubmit={handleLogin}>
         <TextField
           label="Username"
           name="name"

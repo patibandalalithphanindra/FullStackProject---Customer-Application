@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Button, Container, TextField, Typography } from '@mui/material';
+import { Alert, Button, Container, Snackbar, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-function Register({ history }) {
+function Register() {
   const [formData, setFormData] = useState({
     name: '',
     email:'',
@@ -21,16 +21,18 @@ function Register({ history }) {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-console.log(formData)
-
+ 
     try {
       const response = await axios.post('http://localhost:8080/user/add', formData);
 
       if (response.status === 200) {
-        
-        navigate('/'); // Redirect to the homepage on successful registration
+        localStorage.setItem("jwt",response?.data?.token);
+        localStorage.setItem("name",response?.data?.name);
+        navigate('/homepage');
       } else {
-        // Handle registration error
+        <Snackbar open={()=>true} autoHideDuration={6000} onClose={()=>true}>    
+          <Alert severity="error">!UnAuthorized</Alert>
+        </Snackbar>
       }
     } catch (error) {
       console.error('Registration error:', error);

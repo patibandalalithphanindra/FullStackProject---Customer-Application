@@ -1,31 +1,49 @@
-import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import LandingPage from "./components/LandingPage";
 import { Box } from "@mui/material";
- function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+function App() {
+  const response = localStorage.getItem("jwt");
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (response && (location.pathname === "/login" ||location.pathname === "/register")) {
+      navigate("/homepage");
+    }
+    else if( !response && (location.pathname === "/login")){
+      navigate("/login")
+    }
+    else if( !response && (location.pathname === "/register")){
+      navigate("/register")
+    } else if(!response&& (location.pathname === "/")) {
+      navigate("/");
+    }
+  }, [response, location.pathname, navigate]);
 
   return (
-    <Box >
+    <Box>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
           path="/login"
-          element={<Login setIsAuthenticated={setIsAuthenticated} />}
+          element={<Login/>}
         />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={ <Register /> } />
         <Route
           path="/homepage"
           element={
-            isAuthenticated ? (
+            response ? (
               <LandingPage />
             ) : (
-              <Login setIsAuthenticated={setIsAuthenticated} />
+              <Login/>
             )
-          }></Route>
+          }
+        />
       </Routes>
     </Box>
   );

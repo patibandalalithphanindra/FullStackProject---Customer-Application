@@ -1,15 +1,21 @@
 import React from 'react';
-import { Card, CardContent, Grid, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
+import { Link,useNavigate } from 'react-router-dom';
 
 function LandingPage() {
   const cardStyle = {
     cursor: 'pointer',
     marginBottom: '20px',
   };
-console.log("Landing page")
-  return (
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  }
+   return (
     <div>
+        <Button onClick={handleLogout}>Logout</Button>
       <Typography variant="h4" align="center" gutterBottom>
         Choose among the below
       </Typography>
