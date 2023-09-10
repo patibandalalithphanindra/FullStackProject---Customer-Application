@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import LandingPage from "./components/LandingPage";
 import { Box } from "@mui/material";
+import Customer from "./components/Customer";
 
 function App() {
   const response = localStorage.getItem("jwt");
@@ -14,6 +15,9 @@ function App() {
   useEffect(() => {
     if (response && (location.pathname === "/login" ||location.pathname === "/register")) {
       navigate("/homepage");
+    }
+    else if (response && (location.pathname === "/customers" )) {
+      navigate("/customers");
     }
     else if( !response && (location.pathname === "/login")){
       navigate("/login")
@@ -39,6 +43,16 @@ function App() {
           element={
             response ? (
               <LandingPage />
+            ) : (
+              <Login/>
+            )
+          }
+        />
+        <Route
+          path="/customers"
+          element={
+            response ? (
+              <Customer />
             ) : (
               <Login/>
             )

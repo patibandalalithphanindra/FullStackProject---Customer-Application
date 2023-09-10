@@ -26,7 +26,7 @@ function LandingPage() {
         </Button>
       </div>
       <div className={styles.cardContainer}>
-        <Link to="/customer" className={styles.cardLink}>
+        <Link to="/customers/" className={styles.cardLink}>
           <Card className={styles.card}>
             <div className={styles.cardContent}>
               <Typography variant="h5">Customer</Typography>
