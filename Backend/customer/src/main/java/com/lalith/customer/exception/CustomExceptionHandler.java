@@ -13,7 +13,6 @@ public class CustomExceptionHandler {
     public ResponseEntity<CustomErrorResponse> handleResponseStatusException(ResponseStatusException ex) {
         String errorMessage = ex.getReason();
 
-        // Customize the error message for specific status codes
         if (ex.getStatusCode() == HttpStatus.NOT_FOUND) {
             errorMessage = "Resource not found! " + errorMessage;
         } else if (ex.getStatusCode() == HttpStatus.UNAUTHORIZED) {

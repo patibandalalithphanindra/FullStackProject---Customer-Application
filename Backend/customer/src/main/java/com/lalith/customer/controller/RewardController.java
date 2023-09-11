@@ -2,7 +2,6 @@ package com.lalith.customer.controller;
 
 import com.lalith.customer.model.Reward;
 import com.lalith.customer.service.RewardService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
