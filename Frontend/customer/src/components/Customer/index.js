@@ -33,6 +33,10 @@ function Customer() {
       });
   }, []);
 
+  const handleAddition = () => {
+
+  };
+
   const handleDelete = async (customerId) => {
     console.log(Headers);
     try {
@@ -40,7 +44,7 @@ function Customer() {
     } catch (error) {
         console.error("Error deleting student:", error);
     }
-}
+};
 
   const handleUpdate = (customerId) => {
    
@@ -53,7 +57,17 @@ function Customer() {
   return (
     <>
     <Navbar/>
-    <h3 className={styles.heading}><b>CUSTOMERS INFORMATION</b></h3>
+    <div className={styles.headingContainer}>
+        <h3 className={styles.heading}><b>CUSTOMERS INFORMATION</b></h3>
+        <Button
+        style={{maxWidth: '200px', maxHeight: '40px', marginTop : '8px'}}
+          variant="contained"
+          className={`${styles.button} ${styles.addCustomerButton}`}
+          onClick={handleAddition}
+        >
+          Add Customer
+        </Button>
+      </div>
     <TableContainer component={Paper} className={styles.container}>
       <Table>
         <TableHead>

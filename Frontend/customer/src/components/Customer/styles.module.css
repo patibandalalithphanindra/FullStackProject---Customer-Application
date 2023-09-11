@@ -1,6 +1,13 @@
+.headingContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .heading {
-    margin-left: 20px;
+    margin-left: 8px;
 }  
+
 
 .tableRow {
     transition: background-color 0.2s ease;

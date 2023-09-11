@@ -31,6 +31,10 @@ function Order() {
         console.error('Error fetching order data:', error);
       });
   }, []);
+
+  const handleAddition = () => {
+
+  };
   
 
 
@@ -45,7 +49,17 @@ function Order() {
   return (
     <>
     <Navbar/>
-    <h3 className={styles.heading}><b>ORDERS INFORMATION</b></h3>
+    <div className={styles.headingContainer}>
+        <h3 className={styles.heading}><b>ORDERS INFORMATION</b></h3>
+        <Button
+        style={{maxWidth: '200px', maxHeight: '40px', marginTop : '8px'}}
+          variant="contained"
+          className={`${styles.button} ${styles.addOrderButton}`}
+          onClick={handleAddition}
+        >
+          Add Order
+        </Button>
+      </div>
     <TableContainer component={Paper} className={styles.container}>
       <Table>
         <TableHead>
