@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/orders")
 public class OrderController {
     private final OrderService orderService;
