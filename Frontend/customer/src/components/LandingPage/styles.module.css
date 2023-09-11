@@ -1,19 +1,8 @@
-/* LandingPage.module.css */
-
 .container {
     padding: 20px;
     text-align: center;
   }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    background-color: #1976D2;
-    padding: 10px;
-    border-radius: 5px;
-  }
+
   
   .cardContainer {
     display: flex;

@@ -10,10 +10,6 @@
   .secondaryButton {
     background-color: green;
   }
-
-  .tertiaryButton {
-    background-color: #f44336;
-  }
   
   .tableRow {
     transition: background-color 0.2s ease;

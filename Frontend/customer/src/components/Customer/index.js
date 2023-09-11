@@ -7,10 +7,11 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Button,
+  Button
 } from '@mui/material';
 import axios from 'axios';
 import styles from './styles.module.css'; 
+import Navbar from '../common/Navbar';
 
 const Customer = () => {
   const [customers, setCustomers] = useState([]);
@@ -32,9 +33,14 @@ const Customer = () => {
       });
   }, []);
 
-  const handleDelete = (customerId) => {
-   
-  };
+  const handleDelete = async (customerId) => {
+    console.log(Headers);
+    try {
+        await axios.delete(`http://localhost:8080/customers/${customerId}`);
+    } catch (error) {
+        console.error("Error deleting student:", error);
+    }
+}
 
   const handleUpdate = (customerId) => {
    
@@ -46,6 +52,7 @@ const Customer = () => {
 
   return (
     <>
+    <Navbar/>
     <h3 className={styles.heading}><b>CUSTOMERS INFORMATION</b></h3>
     <TableContainer component={Paper} className={styles.container}>
       <Table>
@@ -67,7 +74,7 @@ const Customer = () => {
               <TableCell>{customer.phoneNo}</TableCell>
               <TableCell>
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   color="primary"
                   className={`${styles.button} ${styles.primaryButton}`}
                   onClick={() => handleView(customer.customerId)}
@@ -75,20 +82,20 @@ const Customer = () => {
                   View
                 </Button>
                 <Button
-                  variant="outlined"
-                  color="primary"
+                  variant="contained"
+                  color="secondary"
                   className={`${styles.button} ${styles.secondaryButton}`}
                   onClick={() => handleUpdate(customer.customerId)}
                 >
                   Update
                 </Button>
                 <Button
-                  variant="outlined"
-                  color="secondary"
-                  className={`${styles.button} ${styles.tertiaryButton}`}
+                  variant="contained"
+                  color="primary"
+                className={`${styles.button} ${styles.tertiaryButton}`}
                   onClick={() => handleDelete(customer.customerId)}
                 >
-                  Delete
+                Delete
                 </Button>
               </TableCell>
             </TableRow>

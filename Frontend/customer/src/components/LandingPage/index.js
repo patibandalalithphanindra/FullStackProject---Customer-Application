@@ -1,30 +1,13 @@
 import React from 'react';
-import { Button, Card, Typography } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Card, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
+import Navbar from '../common/Navbar';
 
 function LandingPage() {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate('/');
-  };
-
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <Typography variant="h6" style={{ color: '#fff' }}>
-          Customer Management System
-        </Typography>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleLogout}
-        >
-          Logout
-        </Button>
-      </div>
+      <Navbar/>
       <div className={styles.cardContainer}>
         <Link to="/customers/" className={styles.cardLink}>
           <Card className={styles.card}>
@@ -36,7 +19,7 @@ function LandingPage() {
             </div>
           </Card>
         </Link>
-        <Link to="/order" className={styles.cardLink}>
+        <Link to="/orders/" className={styles.cardLink}>
           <Card className={styles.card}>
             <div className={styles.cardContent}>
               <Typography variant="h5">Order</Typography>
