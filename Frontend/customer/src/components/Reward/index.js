@@ -6,8 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
-  Button
+  Paper
 } from '@mui/material';
 import axios from 'axios';
 import styles from './styles.module.css'; 
@@ -26,7 +25,6 @@ function Reward() {
     axios
       .get('http://localhost:8080/rewards', { headers })
       .then((response) => {
-        console.log("Rewards :", response.data);
         setRewards(response.data);
       })
       .catch((error) => {
@@ -34,10 +32,6 @@ function Reward() {
       });
   }, []);
 
-
-  const handleView = (rewardsId) => {
-    
-  };
 
   return (
     <>
@@ -50,26 +44,16 @@ function Reward() {
             <TableCell><b>Reward ID</b></TableCell>
             <TableCell><b>Customer Id</b></TableCell>
             <TableCell><b>Order No</b></TableCell>
-            <TableCell><b>Total Order Amount</b></TableCell>
             <TableCell><b>Rewards Earned</b></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rewards.map((reward) => (
             <TableRow key={reward.rewardsId} className={styles.tableRow}>
+              <TableCell>{reward.rewardsId}</TableCell>
               <TableCell>{reward.customerId}</TableCell>
               <TableCell>{reward.orderNo}</TableCell>
               <TableCell>{reward.rewardsEarned}</TableCell>
-              <TableCell>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={`${styles.button} ${styles.primaryButton}`}
-                  onClick={() => handleView(reward.rewardsId)}
-                >
-                  View
-                </Button>
-              </TableCell>
             </TableRow>
           ))}
         </TableBody>
