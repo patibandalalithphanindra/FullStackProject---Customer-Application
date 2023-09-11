@@ -7,12 +7,10 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
   const login = (userData) => {
-    // Perform login logic and set the user in state
     setUser(userData);
   };
 
   const logout = () => {
-    // Perform logout logic and clear the user from state
     setUser(null);
   };
 

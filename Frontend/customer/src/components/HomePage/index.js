@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import styles from './styles.module.css';
 
-const HomePage = () => {
+function HomePage(){
   return (
     <Grid container justifyContent="center" alignItems="center" height="100vh">
       <Grid item xs={12} sm={6}>

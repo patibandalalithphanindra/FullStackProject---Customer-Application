@@ -3,13 +3,8 @@
 }  
 
   
-  .primaryButton {
-    background-color: #1976d2;
-  }
+
   
-  .secondaryButton {
-    background-color: green;
-  }
   
   .tableRow {
     transition: background-color 0.2s ease;

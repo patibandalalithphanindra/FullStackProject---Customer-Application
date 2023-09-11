@@ -29,7 +29,7 @@ function LandingPage() {
             </div>
           </Card>
         </Link>
-        <Link to="/rewards" className={styles.cardLink}>
+        <Link to="/rewards/" className={styles.cardLink}>
           <Card className={styles.card}>
             <div className={styles.cardContent}>
               <Typography variant="h5">Rewards</Typography>

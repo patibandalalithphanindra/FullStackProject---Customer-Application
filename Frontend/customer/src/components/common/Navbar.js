@@ -3,7 +3,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import styles from './styles.module.css';
 
-function Navbar(){
+function Navbar() {
     const navigate = useNavigate();
     const handleLogout = () => {
         localStorage.clear();

@@ -13,7 +13,7 @@ import axios from 'axios';
 import styles from './styles.module.css'; 
 import Navbar from '../common/Navbar';
 
-const Customer = () => {
+function Customer() {
   const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
@@ -74,6 +74,7 @@ const Customer = () => {
               <TableCell>{customer.phoneNo}</TableCell>
               <TableCell>
                 <Button
+                  sx={{mr:2}}
                   variant="contained"
                   color="primary"
                   className={`${styles.button} ${styles.primaryButton}`}
@@ -82,8 +83,9 @@ const Customer = () => {
                   View
                 </Button>
                 <Button
+                  sx={{mr:2}}
                   variant="contained"
-                  color="secondary"
+                  color="success"
                   className={`${styles.button} ${styles.secondaryButton}`}
                   onClick={() => handleUpdate(customer.customerId)}
                 >
@@ -91,7 +93,7 @@ const Customer = () => {
                 </Button>
                 <Button
                   variant="contained"
-                  color="primary"
+                  color="error"
                 className={`${styles.button} ${styles.tertiaryButton}`}
                   onClick={() => handleDelete(customer.customerId)}
                 >

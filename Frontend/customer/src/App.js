@@ -6,6 +6,8 @@ import Register from "./components/Register";
 import LandingPage from "./components/LandingPage";
 import { Box } from "@mui/material";
 import Customer from "./components/Customer";
+import Order from "./components/Order";
+import Reward from "./components/Reward";
 
 function App() {
   const response = localStorage.getItem("jwt");
@@ -53,6 +55,26 @@ function App() {
           element={
             response ? (
               <Customer />
+            ) : (
+              <Login/>
+            )
+          }
+        />
+         <Route
+          path="/orders"
+          element={
+            response ? (
+              <Order />
+            ) : (
+              <Login/>
+            )
+          }
+        />
+        <Route
+          path="/rewards"
+          element={
+            response ? (
+              <Reward />
             ) : (
               <Login/>
             )

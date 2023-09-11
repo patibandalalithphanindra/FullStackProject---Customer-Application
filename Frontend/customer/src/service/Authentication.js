@@ -3,7 +3,6 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:8080';
 
-// Function to retrieve the CSRF token from cookies
 function getCSRFToken() {
     const cookies = document.cookie.split(';');
     for (const cookie of cookies) {
@@ -15,7 +14,6 @@ function getCSRFToken() {
     return null;
   }
   
-  // Get the CSRF token
   const csrfToken = getCSRFToken();
   
   const headers = {
@@ -28,19 +26,19 @@ function getCSRFToken() {
 export const userRegister = async (userData) => {
     try {
       const response = await axios.post(`${BASE_URL}/user/add`, userData);
-      return response.data; // Return the response data (e.g., success message).
+      return response.data;
     } catch (error) {
-      throw error; // Handle registration error in your component.
+      throw error;
     }
   };
 // Function to authenticate a user.
 export const userLogin = async (loginData) => {
     axios.post(`${BASE_URL}/user/authenticate`, loginData, { headers })
   .then((response) => {
-    // Handle successful login
+
   })
   .catch((error) => {
-    // Handle login error
+
   });
   };
   

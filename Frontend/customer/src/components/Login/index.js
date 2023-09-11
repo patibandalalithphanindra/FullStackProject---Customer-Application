@@ -22,7 +22,6 @@ function Login() {
     try {
       const response = await axios.post('http://localhost:8080/user/authenticate', formData);
       if (response.status === 200) {
-        console.log(response)
         localStorage.setItem("jwt",response?.data?.token);
         localStorage.setItem("name",response?.data?.name);
         navigate('/homepage');
