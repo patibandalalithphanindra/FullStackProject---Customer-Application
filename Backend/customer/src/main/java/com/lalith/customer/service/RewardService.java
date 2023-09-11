@@ -1,5 +1,6 @@
 package com.lalith.customer.service;
 
+import com.lalith.customer.model.Customer;
 import com.lalith.customer.model.Reward;
 import java.util.List;
 
@@ -8,4 +9,5 @@ public interface RewardService {
     List<Reward> getRewardsByCustomerId(String customerId);
     double getRewardBalance(String customerId);
 
+    List<Reward> getAllRewards();
 }

@@ -1,10 +1,13 @@
 package com.lalith.customer.controller;
 
+import com.lalith.customer.exception.CustomErrorResponse;
+import com.lalith.customer.model.Customer;
 import com.lalith.customer.model.Reward;
 import com.lalith.customer.service.RewardService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -16,6 +19,18 @@ public class RewardController {
 
     public RewardController(RewardService rewardService) {
         this.rewardService = rewardService;
+    }
+
+    @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<?> getAllCustomers() {
+        try {
+            List<Reward> customers = rewardService.getAllRewards();
+            return ResponseEntity.ok(customers);
+        } catch (ResponseStatusException e) {
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+        }
     }
 
     @GetMapping("/{customerId}")

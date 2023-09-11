@@ -1,5 +1,6 @@
 package com.lalith.customer.service;
 
+import com.lalith.customer.model.Customer;
 import com.lalith.customer.model.Reward;
 import com.lalith.customer.repository.RewardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ public class RewardServiceImplementation implements RewardService {
     @Autowired
     public RewardServiceImplementation(RewardRepository rewardRepository) {
         this.rewardRepository = rewardRepository;
+    }
+
+    @Override
+    public List<Reward> getAllRewards() {
+        return rewardRepository.findAll();
     }
 
 
