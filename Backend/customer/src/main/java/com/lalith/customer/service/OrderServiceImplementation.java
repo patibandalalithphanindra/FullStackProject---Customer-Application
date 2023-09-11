@@ -61,8 +61,6 @@ public class OrderServiceImplementation implements OrderService {
         return "O" + uuid.toString().replace("-", "").substring(0, 3);
     }
 
-
-
     @Override
     public Order updateOrder(String orderNo, Order updatedOrder) {
         Optional<Order> existingOrderOptional = Optional.ofNullable(orderRepository.findByOrderNo(orderNo));

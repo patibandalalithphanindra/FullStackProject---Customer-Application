@@ -2,15 +2,14 @@ package com.lalith.customer.service;
 
 import com.lalith.customer.model.Customer;
 import com.lalith.customer.repository.CustomerRepository;
-import com.lalith.customer.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CustomerServiceImplementation implements CustomerService {
@@ -39,6 +38,7 @@ public class CustomerServiceImplementation implements CustomerService {
 
     @Override
     public Customer createCustomer(Customer customer) {
+        String customerId = customer.getCustomerId();
         if (customerRepository.findByCustomerId(customer.getCustomerId()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Customer with the same id already exists");
         }
@@ -50,7 +50,16 @@ public class CustomerServiceImplementation implements CustomerService {
         if (customerRepository.findByEmailId(customer.getEmailId()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Customer with the same email address already exists");
         }
+        if (customerId == null) {
+            customerId = generateCustomerId();
+            customer.setCustomerId(customerId);
+        }
         return customerRepository.save(customer);
+    }
+
+    private String generateCustomerId() {
+        UUID uuid = UUID.randomUUID();
+        return "C" + uuid.toString().replace("-", "").substring(0, 3);
     }
 
     @Override
