@@ -6,7 +6,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper
+  Paper,
+  TextField,
 } from '@mui/material';
 import axios from 'axios';
 import styles from './styles.module.css'; 
@@ -14,6 +15,7 @@ import Navbar from '../common/Navbar';
 
 function Reward() {
   const [rewards, setRewards] = useState([]);
+  const [searchCustomerId, setSearchCustomerId] = useState('');
 
   useEffect(() => {
     const response = localStorage.getItem('jwt');
@@ -21,7 +23,7 @@ function Reward() {
       Authorization: `Bearer ${response}`,
       'Content-Type': 'application/json',
     };
-  
+
     axios
       .get('http://localhost:8080/rewards', { headers })
       .then((response) => {
@@ -32,35 +34,51 @@ function Reward() {
       });
   }, []);
 
+  const handleSearch = (e) => {
+    setSearchCustomerId(e.target.value);
+  };
+
+  const filteredRewards = rewards.filter((reward) =>
+    reward.customerId.includes(searchCustomerId)
+  );
 
   return (
     <>
-    <Navbar/>
-    <h3 className={styles.heading}><b>REWARDS INFORMATION</b></h3>
-    <TableContainer component={Paper} className={styles.container}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell><b>Reward ID</b></TableCell>
-            <TableCell><b>Customer Id</b></TableCell>
-            <TableCell><b>Order No</b></TableCell>
-            <TableCell><b>Rewards Earned</b></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rewards.map((reward) => (
-            <TableRow key={reward.rewardsId} className={styles.tableRow}>
-              <TableCell>{reward.rewardsId}</TableCell>
-              <TableCell>{reward.customerId}</TableCell>
-              <TableCell>{reward.orderNo}</TableCell>
-              <TableCell>{reward.rewardsEarned}</TableCell>
+      <Navbar />
+     <div className={styles.headerpart}> 
+     <h3 className={styles.heading}><b>REWARDS INFORMATION</b></h3>
+      <TextField
+        label="Search Customer ID"
+        variant="outlined"
+        value={searchCustomerId}
+        onChange={handleSearch}
+      />
+      </div>
+     
+      <TableContainer component={Paper} className={styles.container}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell><b>Reward ID</b></TableCell>
+              <TableCell><b>Customer Id</b></TableCell>
+              <TableCell><b>Order No</b></TableCell>
+              <TableCell><b>Rewards Earned</b></TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {filteredRewards.map((reward) => (
+              <TableRow key={reward.rewardsId} className={styles.tableRow}>
+                <TableCell>{reward.rewardsId}</TableCell>
+                <TableCell>{reward.customerId}</TableCell>
+                <TableCell>{reward.orderNo}</TableCell>
+                <TableCell>{reward.rewardsEarned}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   );
-};
+}
 
 export default Reward;

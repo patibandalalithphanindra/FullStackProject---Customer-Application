@@ -17,4 +17,8 @@
 .tableRow:hover {
     background-color: #f0f0f0;
   }
+
+.search {
+    margin-bottom: 40px;
+}
   
