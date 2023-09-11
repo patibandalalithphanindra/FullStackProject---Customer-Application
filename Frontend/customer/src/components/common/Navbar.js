@@ -1,6 +1,6 @@
 import { Typography,Button } from '@mui/material'
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './styles.module.css';
 
 function Navbar() {
@@ -12,7 +12,7 @@ function Navbar() {
   return (
     <div className={styles.header}>
     <Typography variant="h6" style={{ color: '#fff' }}>
-      Customer Management System
+    <Link to ="/homepage" style={{textDecoration:'none', color:'white'}}>Customer Management System </Link>
     </Typography>
     <Button
       variant="contained"
