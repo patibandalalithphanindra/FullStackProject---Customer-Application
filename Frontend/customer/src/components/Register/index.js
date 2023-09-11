@@ -31,7 +31,7 @@ function Register() {
         navigate('/homepage');
       } else {
         <Snackbar open={()=>true} autoHideDuration={6000} onClose={()=>true}>    
-          <Alert severity="error">!UnAuthorized</Alert>
+          <Alert severity="error">UnAuthorized!</Alert>
         </Snackbar>
       }
     } catch (error) {

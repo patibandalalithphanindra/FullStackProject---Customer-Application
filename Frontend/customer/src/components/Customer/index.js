@@ -1,34 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+} from '@mui/material';
 import axios from 'axios';
+import styles from './styles.module.css'; 
 
 const Customer = () => {
-  const [customers, setCustomers] = useState([
-    {
-  //   "id":"1",
-  //   "name":"ram",
-  //   "email":"ram@gmail.com",
-  //   "phone":"9182353050"
-  // },
-  // {
-  //   "id":"2",
-  //   "name":"sai",
-  //   "email":"sai@gmail.com",
-  //   "phone":"9172353050"
-  }
-]);
-  
+  const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
-    // Replace 'backend-api-url' with the actual URL to fetch customer data.
-    const response = localStorage.getItem("jwt");
-
+    const response = localStorage.getItem('jwt');
     const headers = {
       Authorization: `Bearer ${response}`,
-     "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     };
 
-    axios.get('http://localhost:8080/customers', { headers })
+    axios
+      .get('http://localhost:8080/customers', { headers })
       .then((response) => {
         setCustomers(response.data);
       })
@@ -38,44 +33,70 @@ const Customer = () => {
   }, []);
 
   const handleDelete = (customerId) => {
-    // Implement the delete logic here, sending a DELETE request to the backend.
+   
   };
 
   const handleUpdate = (customerId) => {
-    // Implement the update logic here, navigate to an update page or show a modal.
+   
   };
 
   const handleView = (customerId) => {
-    // Implement the view logic here, navigate to a customer details page or show a modal.
+    
   };
 
   return (
-    <TableContainer component={Paper}>
+    <>
+    <h3 className={styles.heading}><b>CUSTOMERS INFORMATION</b></h3>
+    <TableContainer component={Paper} className={styles.container}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Phone No</TableCell>
-            <TableCell>Actions</TableCell>
+            <TableCell><b>Customer ID</b></TableCell>
+            <TableCell><b>Name</b></TableCell>
+            <TableCell><b>Email</b></TableCell>
+            <TableCell><b>Phone Number</b></TableCell>
+            <TableCell><b>Actions</b></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {customers.map((customer) => (
-            <TableRow key={customer.customerId}>
+            <TableRow key={customer.customerId} className={styles.tableRow}>
+              <TableCell>{customer.customerId}</TableCell>
               <TableCell>{customer.firstName}</TableCell>
               <TableCell>{customer.emailId}</TableCell>
               <TableCell>{customer.phoneNo}</TableCell>
               <TableCell>
-                <Button variant="outlined" color="primary" onClick={() => handleView(customer.customerId)}>View</Button>
-                <Button variant="outlined" color="secondary" onClick={() => handleDelete(customer.customerId)}>Delete</Button>
-                <Button variant="outlined" color="primary" onClick={() => handleUpdate(customer.customerId)}>Update</Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className={`${styles.button} ${styles.primaryButton}`}
+                  onClick={() => handleView(customer.customerId)}
+                >
+                  View
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className={`${styles.button} ${styles.secondaryButton}`}
+                  onClick={() => handleUpdate(customer.customerId)}
+                >
+                  Update
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  className={`${styles.button} ${styles.tertiaryButton}`}
+                  onClick={() => handleDelete(customer.customerId)}
+                >
+                  Delete
+                </Button>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+    </>
   );
 };
 
