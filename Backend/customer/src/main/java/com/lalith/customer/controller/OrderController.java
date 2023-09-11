@@ -1,5 +1,6 @@
 package com.lalith.customer.controller;
 
+import com.lalith.customer.exception.CustomErrorResponse;
 import com.lalith.customer.model.Order;
 import com.lalith.customer.service.OrderService;
 import org.springframework.http.HttpStatus;
@@ -26,36 +27,44 @@ public class OrderController {
             Order createdOrder = orderService.createOrder(order);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
         } catch (ResponseStatusException e) {
-            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
         }
     }
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<List<Order>> getAllOrders() {
-        List<Order> orders = orderService.getAllOrders();
-        return ResponseEntity.ok(orders);
+    public ResponseEntity<?> getAllOrders() {
+        try {
+            List<Order> orders = orderService.getAllOrders();
+            return ResponseEntity.ok(orders);
+        } catch (ResponseStatusException e) {
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+        }
     }
 
     @GetMapping("/byOrder/{orderNo}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> getOrderByOrderNo(@PathVariable String orderNo) {
+    public ResponseEntity<?> getOrderByOrderNo(@RequestParam String orderNo) {
         try {
             Order order = orderService.getOrderByOrderNo(orderNo);
             return ResponseEntity.ok(order);
         } catch (ResponseStatusException e) {
-            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
         }
     }
 
     @GetMapping("/byPhone/{phoneNo}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> getOrdersByPhoneNo(@PathVariable String phoneNo) {
+    public ResponseEntity<?> getOrdersByPhoneNo(@RequestParam String phoneNo) {
         try {
             List<Order> orders = orderService.getOrdersByPhoneNo(phoneNo);
             return ResponseEntity.ok(orders);
         } catch (ResponseStatusException e) {
-            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
         }
     }
 
@@ -68,7 +77,8 @@ public class OrderController {
             Order updated = orderService.updateOrder(orderNo, updatedOrder);
             return ResponseEntity.ok(updated);
         } catch (ResponseStatusException e) {
-            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
         }
     }
 
@@ -79,7 +89,8 @@ public class OrderController {
             orderService.deleteOrder(orderNo);
             return ResponseEntity.ok("Order with " + orderNo + " has been deleted successfully");
         } catch (ResponseStatusException e) {
-            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.lalith.customer.controller;
 
+import com.lalith.customer.exception.CustomErrorResponse;
 import com.lalith.customer.model.Customer;
 import com.lalith.customer.service.CustomerService;
 import org.springframework.http.HttpStatus;
@@ -14,12 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/customers/")
+@RequestMapping("/customers")
 @Validated
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CustomerController {
-   private final CustomerService customerService;
+    private final CustomerService customerService;
 
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
@@ -32,37 +33,52 @@ public class CustomerController {
             Customer createdCustomer = customerService.createCustomer(customer);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
         } catch (ResponseStatusException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
         }
     }
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<List<Customer>> getAllCustomers() {
-        List<Customer> customers = customerService.getAllCustomers();
-        return ResponseEntity.ok(customers);
-    }
-
-    @GetMapping("/email/{emailId}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<Customer> getCustomerByEmailId(@RequestParam String emailId) {
-        Optional<Customer> customer = customerService.getCustomerByEmailId(emailId);
-        if (customer.isPresent()) {
-            return ResponseEntity.ok(customer.get());
-        } else {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<?> getAllCustomers() {
+        try {
+            List<Customer> customers = customerService.getAllCustomers();
+            return ResponseEntity.ok(customers);
+        } catch (ResponseStatusException e) {
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
         }
     }
 
-    @GetMapping("/status/{status}")
+    @GetMapping("/email")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<List<Customer>> getCustomerByStatus(@RequestParam String status) {
-        List<Customer> customers = new ArrayList<>();
-        customers =   customerService.getAllCustomerByStatus(status);
-        if (!customers.isEmpty()) {
-            return ResponseEntity.ok(customers);
-        } else {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<?> getCustomerByEmailId(@RequestParam String emailId) {
+        try {
+            Optional<Customer> customer = customerService.getCustomerByEmailId(emailId);
+            if (customer.isPresent()) {
+                return ResponseEntity.ok(customer.get());
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (ResponseStatusException e) {
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+        }
+    }
+
+    @GetMapping("/status")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<?> getCustomerByStatus(@RequestParam String status) {
+        try {
+            List<Customer> customers = customerService.getAllCustomerByStatus(status);
+            if (!customers.isEmpty()) {
+                return ResponseEntity.ok(customers);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (ResponseStatusException e) {
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
         }
     }
 
@@ -75,18 +91,20 @@ public class CustomerController {
             Customer updated = customerService.updateCustomer(customerId, updatedCustomer);
             return ResponseEntity.ok(updated);
         } catch (ResponseStatusException e) {
-            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
         }
     }
 
     @DeleteMapping("/{customerId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<String> deleteCustomer(@PathVariable String customerId) {
+    public ResponseEntity<?> deleteCustomer(@PathVariable String customerId) {
         try {
             String response = customerService.deleteCustomer(customerId);
             return ResponseEntity.status(HttpStatus.OK).body(response);
-        } catch (ResponseStatusException e){
-            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+        } catch (ResponseStatusException e) {
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
         }
     }
 }
