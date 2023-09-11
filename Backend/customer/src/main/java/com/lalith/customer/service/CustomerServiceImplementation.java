@@ -63,6 +63,16 @@ public class CustomerServiceImplementation implements CustomerService {
     }
 
     @Override
+    public Optional<Customer> getCustomerByCustomerId(String customerId) {
+        Optional<Optional<Customer>> customer = Optional.ofNullable(customerRepository.findByCustomerId(customerId));
+        if (customer.isPresent()) {
+            return customer.get();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer with customerID : " + customerId + " not found.");
+        }
+    }
+
+    @Override
     public Customer updateCustomer(String customerId, Customer updatedCustomer) {
         Optional<Customer> optionalExistingCustomer = customerRepository.findByCustomerId(customerId);
 

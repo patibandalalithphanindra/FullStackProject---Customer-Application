@@ -2,6 +2,7 @@ package com.lalith.customer.controller;
 
 import com.lalith.customer.exception.CustomErrorResponse;
 import com.lalith.customer.model.Customer;
+import com.lalith.customer.model.Order;
 import com.lalith.customer.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,18 @@ public class CustomerController {
         try {
             List<Customer> customers = customerService.getAllCustomers();
             return ResponseEntity.ok(customers);
+        } catch (ResponseStatusException e) {
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+        }
+    }
+
+    @GetMapping("/customer/{customerId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<?> getCustomerByCustomerId(@PathVariable String customerId) {
+        try {
+            Optional<Customer> customer = customerService.getCustomerByCustomerId(customerId);
+            return ResponseEntity.ok(customer);
         } catch (ResponseStatusException e) {
             CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
             return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
