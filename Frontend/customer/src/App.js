@@ -9,6 +9,7 @@ import Customer from "./components/Customer";
 import Order from "./components/Order";
 import Reward from "./components/Reward";
 import EditCustomer from "./components/Customer/EditCustomer";
+import AddCustomer from "./components/Customer/AddCustomer";
 
 function App() {
   const response = localStorage.getItem("jwt");
@@ -66,6 +67,16 @@ function App() {
           element={
             response ? (
               <EditCustomer/>
+            ) : (
+              <Login />
+            )
+          }
+        />
+         <Route
+          path="/customer/add"
+          element={
+            response ? (
+              <AddCustomer/>
             ) : (
               <Login />
             )

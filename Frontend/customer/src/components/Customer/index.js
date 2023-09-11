@@ -38,7 +38,7 @@ function Customer() {
   }, []);
 
   const handleAddition = () => {
-
+   navigate(`/customer/add`);
   };
   
   const handleView = async (customerId) => {
@@ -50,7 +50,7 @@ function Customer() {
   };
 
   const handleDelete = async (customerId) => {
- 
+  
   };
 
   const handleSearch = (e) => {

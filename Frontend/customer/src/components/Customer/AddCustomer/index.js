@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 import axios from 'axios';
 import styles from './styles.module.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-function EditCustomer() {
+function AddCustomer() {
   const navigate = useNavigate();
-  const { customerId } = useParams(); 
-  console.log(customerId, 'customerId');
   const [customerData, setCustomerData] = useState({
     firstName: '',
     lastName: '',
@@ -21,25 +19,6 @@ function EditCustomer() {
     emailId: '',
     status: 'Active',
   });
-
-  useEffect(() => {
-    const response = localStorage.getItem('jwt');
-    const headers = {
-      Authorization: `Bearer ${response}`,
-      'Content-Type': 'application/json',
-    };
-
-    axios
-      .get(`http://localhost:8080/customers/${customerId}`, { headers })
-      .then((response) => {
-        console.log(response);
-        const { data } = response;
-        setCustomerData(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching customer data:', error);
-      });
-  }, [customerId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -57,22 +36,21 @@ function EditCustomer() {
     };
 
     axios
-      .put(`http://localhost:8080/customers/${customerId}`, customerData, {
+      .post('http://localhost:8080/customers', customerData, {
         headers,
       })
       .then((response) => {
-        console.log('Customer data updated successfully:', response.data);
-        navigate(`/customers/`);
-        
+        console.log('Customer added successfully:', response.data);
+        navigate(`customers/`);
       })
       .catch((error) => {
-        console.error('Error updating customer data:', error);
+        console.error('Error adding customer:', error);
       });
   };
 
   return (
-    <div className={styles.editCustomerContainer}>
-      <h3>Update Customer Information</h3>
+    <div className={styles.addCustomerContainer}>
+      <h3>Add Customer Information</h3>
       <form className={styles.form}>
         <div className={styles.formRow}>
           <div className={styles.formField}>
@@ -187,4 +165,4 @@ function EditCustomer() {
   );
 }
 
-export default EditCustomer;
+export default AddCustomer;
