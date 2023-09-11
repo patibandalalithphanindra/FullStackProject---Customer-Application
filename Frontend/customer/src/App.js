@@ -8,6 +8,7 @@ import { Box } from "@mui/material";
 import Customer from "./components/Customer";
 import Order from "./components/Order";
 import Reward from "./components/Reward";
+import EditCustomer from "./components/Customer/EditCustomer";
 
 function App() {
   const response = localStorage.getItem("jwt");
@@ -57,6 +58,16 @@ function App() {
               <Customer />
             ) : (
               <Login/>
+            )
+          }
+        />
+         <Route
+          path="/customer/:customerId/edit"
+          element={
+            response ? (
+              <EditCustomer/>
+            ) : (
+              <Login />
             )
           }
         />

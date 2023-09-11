@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Table,
   TableBody,
@@ -15,6 +16,7 @@ import styles from './styles.module.css';
 import Navbar from '../common/Navbar';
 
 function Customer() {
+  const navigate = useNavigate();
   const [customers, setCustomers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -44,7 +46,7 @@ function Customer() {
   };
 
   const handleUpdate = async (customerId) => {
-    
+   navigate(`/customer/${customerId}/edit`);
   };
 
   const handleDelete = async (customerId) => {
