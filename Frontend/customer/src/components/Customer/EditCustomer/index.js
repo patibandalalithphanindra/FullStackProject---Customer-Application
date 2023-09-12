@@ -3,6 +3,8 @@ import { TextField, Button, Grid, Paper, Typography, Select, MenuItem, FormContr
 import axios from 'axios';
 import styles from './styles.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function EditCustomer() {
   const navigate = useNavigate();
@@ -59,9 +61,11 @@ function EditCustomer() {
         headers,
       })
       .then((response) => {
+        toast.success('Customer information has been updated successfully!');
         navigate(`/customers/`);
       })
       .catch((error) => {
+        toast.error("Failed to update Customer data. Try again!")
         console.error('Error updating customer data:', error);
       });
   };
@@ -178,15 +182,15 @@ function EditCustomer() {
           </Grid>
         </Grid>
         <div className={styles.saveButtonContainer}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSave}
-          className={styles.saveButton}
-        >
-          Save
-        </Button>
-      </div>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSave}
+            className={styles.saveButton}
+          >
+            Save
+          </Button>
+        </div>
       </Paper>
     </div>
   );
