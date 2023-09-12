@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import { Alert, Button, Container, Snackbar, TextField, Typography } from '@mui/material';
+import { Button, Container, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Register() {
   const [formData, setFormData] = useState({
     name: '',
-    email:'',
+    email: '',
     password: '',
-    roles:'ROLE_ADMIN'
+    roles: 'ROLE_ADMIN',
   });
 
   const navigate = useNavigate();
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,21 +22,18 @@ function Register() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
- 
+
     try {
       const response = await axios.post('http://localhost:8080/user/add', formData);
-
       if (response.status === 200) {
-        localStorage.setItem("jwt",response?.data?.token);
-        localStorage.setItem("name",response?.data?.name);
+        localStorage.setItem('jwt', response?.data?.token);
+        localStorage.setItem('name', response?.data?.name);
         navigate('/homepage');
-      } else {
-        <Snackbar open={()=>true} autoHideDuration={6000} onClose={()=>true}>    
-          <Alert severity="error">UnAuthorized!</Alert>
-        </Snackbar>
-      }
+        toast.success('Registered Successfully!');
+      } 
     } catch (error) {
       console.error('Registration error:', error);
+      toast.error('Registration failed. Please try again.');
     }
   };
 
