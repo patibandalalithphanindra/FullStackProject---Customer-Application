@@ -50,7 +50,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/customer/{customerId}")
+    @GetMapping("/customers/{customerId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> getCustomerByCustomerId(@PathVariable String customerId) {
         try {
