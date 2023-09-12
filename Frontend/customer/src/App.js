@@ -10,6 +10,7 @@ import Order from "./components/Order";
 import Reward from "./components/Reward";
 import EditCustomer from "./components/Customer/EditCustomer";
 import AddCustomer from "./components/Customer/AddCustomer";
+import ViewOrder from "./components/Order/ViewOrder";
 
 function App() {
   const response = localStorage.getItem("jwt");
@@ -87,6 +88,16 @@ function App() {
           element={
             response ? (
               <Order />
+            ) : (
+              <Login/>
+            )
+          }
+        />
+         <Route
+          path="/orders/:orderNo"
+          element={
+            response ? (
+              <ViewOrder />
             ) : (
               <Login/>
             )

@@ -13,8 +13,10 @@ import {
 import axios from 'axios';
 import styles from './styles.module.css'; 
 import Navbar from '../common/Navbar';
+import { useNavigate } from 'react-router-dom';
 
 function Order() {
+  const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [searchCustomerId, setSearchCustomerId] = useState('');
 
@@ -44,7 +46,7 @@ function Order() {
   };
 
   const handleView = (orderNo) => {
-    
+    navigate(`/orders/${orderNo}`)
   };
 
   const handleSearch = (e) => {
