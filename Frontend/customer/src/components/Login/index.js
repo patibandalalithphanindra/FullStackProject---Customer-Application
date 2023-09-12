@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button, Container, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import styles from './styles.module.css';
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -32,9 +31,9 @@ function Login() {
   };
 
   return (
-    <Container className={styles.container} maxWidth="xs">
+    <Container maxWidth="xs">
       <Typography variant="h4">Login</Typography>
-      <form className={styles.form} onSubmit={handleLogin}>
+      <form onSubmit={handleLogin}>
         <TextField
           label="Username"
           name="name"

@@ -53,7 +53,7 @@ function Register() {
           margin="normal"
         />
         <TextField
-          label="email"
+          label="Email"
           name="email"
           value={formData.email}
           onChange={handleChange}
