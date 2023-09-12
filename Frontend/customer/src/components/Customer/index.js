@@ -21,6 +21,9 @@ import styles from './styles.module.css';
 import Navbar from '../common/Navbar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function Customer() {
   const navigate = useNavigate();
@@ -155,14 +158,14 @@ function Customer() {
                 <TableCell>{customer.emailId}</TableCell>
                 <TableCell>{customer.phoneNo}</TableCell>
                 <TableCell>
-                  <Button
+                <Button
                     sx={{ mr: 2 }}
                     variant="contained"
                     color="primary"
                     className={`${styles.button} ${styles.primaryButton}`}
                     onClick={() => handleView(customer.customerId)}
                   >
-                    View
+                    <VisibilityIcon />
                   </Button>
                   <Button
                     sx={{ mr: 2 }}
@@ -171,7 +174,7 @@ function Customer() {
                     className={`${styles.button} ${styles.secondaryButton}`}
                     onClick={() => handleUpdate(customer.customerId)}
                   >
-                    Update
+                    <EditIcon />
                   </Button>
                   <Button
                     variant="contained"
@@ -179,7 +182,7 @@ function Customer() {
                     className={`${styles.button} ${styles.tertiaryButton}`}
                     onClick={() => handleDelete(customer.customerId)}
                   >
-                    Delete
+                    <DeleteIcon />
                   </Button>
                 </TableCell>
               </TableRow>
