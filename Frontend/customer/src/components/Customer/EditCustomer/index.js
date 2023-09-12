@@ -7,7 +7,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 function EditCustomer() {
   const navigate = useNavigate();
   const { customerId } = useParams(); 
-  console.log(customerId, 'customerId');
   const [customerData, setCustomerData] = useState({
     firstName: '',
     lastName: '',
@@ -32,7 +31,6 @@ function EditCustomer() {
     axios
       .get(`http://localhost:8080/customers/${customerId}`, { headers })
       .then((response) => {
-        console.log(response);
         const { data } = response;
         setCustomerData(data);
       })
@@ -61,9 +59,7 @@ function EditCustomer() {
         headers,
       })
       .then((response) => {
-        console.log('Customer data updated successfully:', response.data);
         navigate(`/customers/`);
-        
       })
       .catch((error) => {
         console.error('Error updating customer data:', error);
@@ -169,6 +165,15 @@ function EditCustomer() {
             <TextField
               name="emailId"
               value={customerData.emailId}
+              onChange={handleInputChange}
+              fullWidth
+            />
+          </div>
+          <div className={styles.formField}>
+            <label>Status:</label>
+            <TextField
+              name="status"
+              value={customerData.status}
               onChange={handleInputChange}
               fullWidth
             />

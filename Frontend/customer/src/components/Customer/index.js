@@ -48,9 +48,20 @@ function Customer() {
   const handleUpdate = async (customerId) => {
    navigate(`/customers/${customerId}/edit`);
   };
-
+ 
   const handleDelete = async (customerId) => {
-  
+    const response = localStorage.getItem('jwt');
+    const headers = {
+      Authorization: `Bearer ${response}`,
+      'Content-Type': 'application/json',
+    };
+    axios.delete(`http://localhost:8080/customers/${customerId}`, { headers })
+      .then(responses => {
+        setCustomers(prevItems => prevItems.filter(customers => customers.customerId !== customerId));
+      })
+      .catch(error => {
+        console.error(`Error deleting the customer ${customerId}: ${error.message}`);
+      });
   };
 
   const handleSearch = (e) => {
@@ -71,7 +82,7 @@ function Customer() {
         <TextField
           label="Search Name"
           id="filled-basic"
-          variant="filled"
+          variant="outlined"
           value={searchQuery}
           onChange={handleSearch}
           className={styles.search}

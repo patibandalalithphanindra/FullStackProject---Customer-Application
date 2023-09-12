@@ -40,8 +40,7 @@ function AddCustomer() {
         headers,
       })
       .then((response) => {
-        console.log('Customer added successfully:', response.data);
-        navigate(`customers/`);
+        navigate(`/customers/`);
       })
       .catch((error) => {
         console.error('Error adding customer:', error);
