@@ -2,7 +2,6 @@ package com.lalith.customer.controller;
 
 import com.lalith.customer.exception.CustomErrorResponse;
 import com.lalith.customer.model.Customer;
-import com.lalith.customer.model.Order;
 import com.lalith.customer.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +49,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/customers/{customerId}")
+    @GetMapping("/{customerId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> getCustomerByCustomerId(@PathVariable String customerId) {
         try {
