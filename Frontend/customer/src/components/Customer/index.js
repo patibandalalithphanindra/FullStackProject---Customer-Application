@@ -46,7 +46,7 @@ function Customer() {
   };
 
   const handleUpdate = async (customerId) => {
-   navigate(`/customer/${customerId}/edit`);
+   navigate(`/customers/${customerId}/edit`);
   };
 
   const handleDelete = async (customerId) => {

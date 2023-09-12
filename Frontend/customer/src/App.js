@@ -63,7 +63,7 @@ function App() {
           }
         />
          <Route
-          path="/customer/:customerId/edit"
+          path="/customers/:customerId/edit"
           element={
             response ? (
               <EditCustomer/>
