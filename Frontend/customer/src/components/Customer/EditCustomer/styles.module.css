@@ -1,51 +1,62 @@
 .editCustomerContainer {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
+    background-color: #f4f4f4;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
+    border-radius: 8px;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 600px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
   }
   
   .form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .formRow {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    padding: 20px;
+    flex-grow: 1;
   }
   
   .formField {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    margin-right: 10px;
+    margin-bottom: 20px;
   }
   
-  label {
+  .formField label {
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    color: #333;
   }
   
-  input {
-    padding: 10px;
+  .formField input,
+  .formField select {
+    width: 100%;
+    padding: 12px;
     border: 1px solid #ccc;
-    border-radius: 3px;
+    border-radius: 5px;
     outline: none;
     transition: border-color 0.2s;
   }
   
-  input:focus {
+  .formField input:focus,
+  .formField select:focus {
     border-color: #007bff;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+  }
+   
+  .saveButtonContainer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
   }
   
   .saveButton {
-    margin-top: 20px;
-    align-self: flex-end;
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
   }
   
+  .saveButton:hover {
+    background-color: #0056b3;
+  }
