@@ -11,6 +11,8 @@ import Reward from "./components/Reward";
 import EditCustomer from "./components/Customer/EditCustomer";
 import AddCustomer from "./components/Customer/AddCustomer";
 import ViewOrder from "./components/Order/ViewOrder";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const response = localStorage.getItem("jwt");
@@ -114,6 +116,7 @@ function App() {
           }
         />
       </Routes>
+      <ToastContainer /> 
     </Box>
   );
 }

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Button, Container, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -17,16 +19,18 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await axios.post('http://localhost:8080/user/authenticate', formData);
       if (response.status === 200) {
-        localStorage.setItem("jwt",response?.data?.token);
-        localStorage.setItem("name",response?.data?.name);
+        localStorage.setItem('jwt', response?.data?.token);
+        localStorage.setItem('name', response?.data?.name);
         navigate('/homepage');
+        toast.success('Logged in Successfully!'); 
       } 
     } catch (error) {
       console.error('Login error:', error);
+      toast.error('Login failed. Please check your credentials.');
     }
   };
 
