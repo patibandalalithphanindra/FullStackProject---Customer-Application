@@ -1,14 +1,13 @@
 .paperStyle {
     padding: 20px;
     text-align: center;
-    background-color: yellowgreen !important;
+    background-color: lightsteelblue !important;
    }
   
   .linkStyle {
     text-decoration: none;
   }
   
-  /* Define class for buttonStyle */
   .buttonStyle {
     padding: 12px 24px;
     cursor: pointer;

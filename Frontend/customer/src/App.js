@@ -19,36 +19,22 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (response && (location.pathname === "/login" ||location.pathname === "/register")) {
-      navigate("/homepage");
-    }
-    else if (response && (location.pathname === "/customers" )) {
-      navigate("/customers");
-    }
-    else if (response && (location.pathname === "/customers" )) {
+ 
+    if (response && (location.pathname === "/customers" )) {
       navigate("/customers");
     }
     else if (response && (location.pathname === "/dashboard/:customerId" )) {
       navigate("/dashboard/:customerId");
     }
-    else if( !response && (location.pathname === "/login")){
-      navigate("/login")
-    }
-    else if( !response && (location.pathname === "/register")){
-      navigate("/register")
-    } else if(!response&& (location.pathname === "/")) {
-      navigate("/");
-    }
+    else if( !response && (location.pathname === "/")){
+      navigate("/")
+    } 
   }, [response, location.pathname, navigate]);
 
   return (
     <Box>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route
-          path="/login"
-          element={<Login/>}
-        />
         <Route path="/register" element={ <Register /> } />
         <Route
           path="/homepage"
@@ -56,7 +42,7 @@ function App() {
             response ? (
               <LandingPage />
             ) : (
-              <Login/>
+              <HomePage/>
             )
           }
         />
@@ -66,7 +52,7 @@ function App() {
             response ? (
               <Customer />
             ) : (
-              <Login/>
+              <HomePage/>
             )
           }
         />
@@ -76,7 +62,7 @@ function App() {
             response ? (
               <Dashboard />
             ) : (
-              <Login/>
+              <HomePage/>
             )
           }
         />
@@ -86,7 +72,7 @@ function App() {
             response ? (
               <Order />
             ) : (
-              <Login/>
+              <HomePage/>
             )
           }
         />
@@ -106,7 +92,7 @@ function App() {
             response ? (
               <Reward />
             ) : (
-              <Login/>
+              <HomePage/>
             )
           }
         />
