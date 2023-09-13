@@ -12,7 +12,6 @@ import {
   MenuItem,
   Grid,
 } from '@mui/material';
-import styles from './styles.module.css';
 
 function CustomerModal({ isOpen, handleClose, customer, setCustomer, mode, handleSave }) {
   const isEditMode = mode === 'edit';
@@ -27,8 +26,8 @@ function CustomerModal({ isOpen, handleClose, customer, setCustomer, mode, handl
 
   return (
     <Dialog open={isOpen} onClose={handleClose}>
-        <DialogTitle>{ isEditMode ? 'Edit Customer' : 'Add Customer'}</DialogTitle>
-      <DialogContent className={styles.form}>
+      <DialogTitle>{isEditMode ? 'Edit Customer' : 'Add Customer'}</DialogTitle>
+      <DialogContent  style={{ paddingTop: '16px' }}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
@@ -37,8 +36,7 @@ function CustomerModal({ isOpen, handleClose, customer, setCustomer, mode, handl
               fullWidth
               value={customer?.firstName}
               onChange={handleChange}
-              className={styles.formField}
-              autoFocus={!isEditMode}
+              variant="outlined"
             />
           </Grid>
           <Grid item xs={6}>
@@ -48,7 +46,7 @@ function CustomerModal({ isOpen, handleClose, customer, setCustomer, mode, handl
               fullWidth
               value={customer?.lastName}
               onChange={handleChange}
-              className={styles.formField}
+              variant="outlined"
             />
           </Grid>
           <Grid item xs={6}>
@@ -56,9 +54,9 @@ function CustomerModal({ isOpen, handleClose, customer, setCustomer, mode, handl
               name="addressLine1"
               label="Address Line 1"
               fullWidth
-              value={customer.addressLine1}
+              value={customer?.addressLine1}
               onChange={handleChange}
-              className={styles.formField}
+              variant="outlined"
             />
           </Grid>
           <Grid item xs={6}>
@@ -68,7 +66,7 @@ function CustomerModal({ isOpen, handleClose, customer, setCustomer, mode, handl
               fullWidth
               value={customer?.addressLine2}
               onChange={handleChange}
-              className={styles.formField}
+              variant="outlined"
             />
           </Grid>
           <Grid item xs={6}>
@@ -78,7 +76,7 @@ function CustomerModal({ isOpen, handleClose, customer, setCustomer, mode, handl
               fullWidth
               value={customer?.city}
               onChange={handleChange}
-              className={styles.formField}
+              variant="outlined"
             />
           </Grid>
           <Grid item xs={6}>
@@ -88,7 +86,7 @@ function CustomerModal({ isOpen, handleClose, customer, setCustomer, mode, handl
               fullWidth
               value={customer?.state}
               onChange={handleChange}
-              className={styles.formField}
+              variant="outlined"
             />
           </Grid>
           <Grid item xs={6}>
@@ -98,7 +96,7 @@ function CustomerModal({ isOpen, handleClose, customer, setCustomer, mode, handl
               fullWidth
               value={customer?.zipCode}
               onChange={handleChange}
-              className={styles.formField}
+              variant="outlined"
             />
           </Grid>
           <Grid item xs={6}>
@@ -108,7 +106,7 @@ function CustomerModal({ isOpen, handleClose, customer, setCustomer, mode, handl
               fullWidth
               value={customer?.country}
               onChange={handleChange}
-              className={styles.formField}
+              variant="outlined"
             />
           </Grid>
           <Grid item xs={6}>
@@ -118,7 +116,7 @@ function CustomerModal({ isOpen, handleClose, customer, setCustomer, mode, handl
               fullWidth
               value={customer?.phoneNo}
               onChange={handleChange}
-              className={styles.formField}
+              variant="outlined"
             />
           </Grid>
           <Grid item xs={6}>
@@ -128,16 +126,17 @@ function CustomerModal({ isOpen, handleClose, customer, setCustomer, mode, handl
               fullWidth
               value={customer?.emailId}
               onChange={handleChange}
-              className={styles.formField}
+              variant="outlined"
             />
           </Grid>
           <Grid item xs={6}>
-            <FormControl fullWidth>
+            <FormControl fullWidth variant="outlined">
               <InputLabel>Status</InputLabel>
               <Select
                 name="status"
                 value={customer?.status}
                 onChange={handleChange}
+                label="Status"
               >
                 <MenuItem value="Active">Active</MenuItem>
                 <MenuItem value="Inactive">Inactive</MenuItem>
