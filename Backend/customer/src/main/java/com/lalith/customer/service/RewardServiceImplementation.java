@@ -82,22 +82,4 @@ public class RewardServiceImplementation implements RewardService {
 
         return balanceList;
     }
-
-//    @Override
-//    public RewardsAcc getRewardsAccOfCustomer(String customerId) {
-//        List<Reward> rewards = rewardRepository.findByCustomerId(customerId);
-//        double totalEarned = 0;
-//        double totalRedeemed = 0;
-//
-//        for (Reward reward : rewards) {
-//            totalEarned += reward.getRewardsEarned();
-//            totalRedeemed += reward.getRewardsRedeemed();
-//        }
-//        double totalBalance = totalEarned-totalRedeemed;
-//        RewardsAcc rewardsAcc = new RewardsAcc();
-//        rewardsAcc.setRewardsEarned(String.valueOf(totalEarned));
-//        rewardsAcc.setRewardsRedeemed(String.valueOf(totalRedeemed));
-//        rewardsAcc.setRewardsBalance(String.valueOf(totalBalance));
-//        return rewardsAcc;
-//    }
 }

@@ -45,11 +45,4 @@ public class RewardController {
         List<Double> rewardBalance = rewardService.getRewardDetails(customerId);
         return ResponseEntity.ok(rewardBalance);
     }
-
-//    @GetMapping("/rewardAccBalance/{customerId}")
-//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-//    public ResponseEntity<?> getRewardAccBalance(@PathVariable String customerId) {
-//        RewardsAcc rewardBalance = rewardService.getRewardsAccOfCustomer(customerId);
-//        return ResponseEntity.ok(rewardBalance);
-//    }
 }
