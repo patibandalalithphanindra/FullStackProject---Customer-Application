@@ -1,14 +1,11 @@
 import React, { useEffect } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import HomePage from "./components/HomePage";
-import Login from "./components/Login";
-import Register from "./components/Register";
 import LandingPage from "./components/LandingPage";
 import { Box } from "@mui/material";
 import Customer from "./components/Customer";
 import Order from "./components/Order";
 import Reward from "./components/Reward";
-import ViewOrder from "./components/Order/ViewOrder";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Dashboard from './components/Customer/Dashboard';
@@ -35,7 +32,6 @@ function App() {
     <Box>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/register" element={ <Register /> } />
         <Route
           path="/homepage"
           element={
@@ -73,16 +69,6 @@ function App() {
               <Order />
             ) : (
               <HomePage/>
-            )
-          }
-        />
-         <Route
-          path="/orders/:orderNo"
-          element={
-            response ? (
-              <ViewOrder />
-            ) : (
-              <Login/>
             )
           }
         />

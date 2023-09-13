@@ -24,6 +24,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
+import OrderModal from './OrderModal';
+
+const formatDate = (dateString) => {
+  const options = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  };
+  return new Date(dateString).toLocaleDateString('en-US', options);
+};
 
 function Order() {
   const [orders, setOrders] = useState([]);
@@ -31,7 +44,16 @@ function Order() {
   const [deleteOrderId, setDeleteOrderId] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [orderModalData, setOrderModalData] = useState({
+    customerId: '',
+    totalItems: 0,
+    orderTotal: 0,
+    currency: 'INR',
+    customerPhoneNo: '',
+    orderStatus: 'Created',
+  });
 
   useEffect(() => {
     const response = localStorage.getItem('jwt');
@@ -51,11 +73,24 @@ function Order() {
   }, []);
 
   const handleAddition = () => {
-    // Add logic for adding an order
+    setOrderModalData({
+      customerId: '',
+      totalItems: 0,
+      orderTotal: 0,
+      currency: 'INR',
+      customerPhoneNo: '',
+      orderStatus: 'Created',
+    });
+
+    setIsOrderModalOpen(true);
   };
 
   const handleUpdate = (orderNo) => {
-    // Add logic for updating an order
+    const selected = orders.find((order) => order.orderNo === orderNo);
+
+    setOrderModalData(selected);
+
+    setIsOrderModalOpen(true);
   };
 
   const handleView = (orderNo) => {
@@ -110,19 +145,71 @@ function Order() {
     setSelectedOrder(null);
   };
 
-  const filteredOrders = orders.filter((order) => order.customerId.includes(searchCustomerId) );
-
-  const formatDate = (dateString) => {
-    const options = {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-    };
-    return new Date(dateString).toLocaleDateString('en-US', options);
+  const handleOrderModalClose = () => {
+    setIsOrderModalOpen(false);
+    setOrderModalData({
+      customerId: '',
+      totalItems: 0,
+      orderTotal: 0,
+      currency: 'INR',
+      customerPhoneNo: '',
+      orderStatus: 'Created',
+    });
   };
+
+  const handleOrderModalSave = () => {
+    const response = localStorage.getItem('jwt');
+    const headers = {
+      Authorization: `Bearer ${response}`,
+      'Content-Type': 'application/json',
+    };
+
+    if (orderModalData.orderNo) {
+      axios
+        .put(
+          `http://localhost:8080/orders/${orderModalData.orderNo}`,
+          orderModalData,
+          { headers }
+        )
+        .then((response) => {
+          if (response.status === 200) {
+            toast.success('Order has been updated successfully');
+            setOrders((prevOrders) =>
+              prevOrders.map((order) =>
+                order.orderNo === orderModalData.orderNo ? orderModalData : order
+              )
+            );
+          } else {
+            toast.error('An error occurred while updating the order');
+          }
+          setIsOrderModalOpen(false);
+        })
+        .catch((error) => {
+          console.error(`Error updating the order ${orderModalData.orderNo}: ${error.message}`);
+          toast.error('Failed to update the order. Please try again.');
+          setIsOrderModalOpen(false);
+        });
+    } else {
+      axios
+        .post('http://localhost:8080/orders', orderModalData, { headers })
+        .then((response) => {
+          if (response.status === 201) {
+            toast.success('Order has been added successfully');
+            setOrders((prevOrders) => [...prevOrders, response.data]);
+          } else {
+            toast.error('An error occurred while adding the order');
+          }
+          setIsOrderModalOpen(false);
+        })
+        .catch((error) => {
+          console.error('Error adding the order:', error);
+          toast.error('Failed to add the order. Please try again.');
+          setIsOrderModalOpen(false);
+        });
+    }
+  };
+
+  const filteredOrders = orders.filter((order) => order.customerId.includes(searchCustomerId));
 
   return (
     <>
@@ -257,6 +344,13 @@ function Order() {
           </>
         )}
       </Dialog>
+      <OrderModal
+        isOpen={isOrderModalOpen}
+        handleClose={handleOrderModalClose}
+        orderData={orderModalData}
+        setOrderData={setOrderModalData}
+        handleSave={handleOrderModalSave}
+      />
       <ToastContainer />
     </>
   );

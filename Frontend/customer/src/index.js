@@ -1,5 +1,3 @@
-// index.js
-
 import { AuthProvider } from './service/AuthContext';
 import React from 'react';
 import { createRoot } from 'react-dom/client';

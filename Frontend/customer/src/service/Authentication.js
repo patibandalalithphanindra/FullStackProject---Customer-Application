@@ -20,9 +20,6 @@ function getCSRFToken() {
     'X-XSRF-TOKEN': csrfToken,
   };
 
-
-  
-
 export const userRegister = async (userData) => {
     try {
       const response = await axios.post(`${BASE_URL}/user/add`, userData);
@@ -31,7 +28,7 @@ export const userRegister = async (userData) => {
       throw error;
     }
   };
-// Function to authenticate a user.
+
 export const userLogin = async (loginData) => {
     axios.post(`${BASE_URL}/user/authenticate`, loginData, { headers })
   .then((response) => {

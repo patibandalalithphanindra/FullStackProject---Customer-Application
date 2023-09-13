@@ -47,21 +47,21 @@ const Dashboard = () => {
         </Typography>
         </container>
       <Paper className={styles.paper}>
-      <Typography variant="h4" className={styles.heading} marginBottom={2} >
+      <Typography variant="h5" className={styles.heading} marginBottom={2} >
         Profile
       </Typography>
         <Profile customer={customer} />
       </Paper>
 
       <Paper className={styles.paper}>
-        <Typography variant="h4" className={styles.heading} marginBottom={2}>
+        <Typography variant="h5" className={styles.heading} marginBottom={2}>
           Rewards
         </Typography>
         <Rewards id={customerId} />
       </Paper>
 
       <Paper className={styles.paper} >
-        <Typography variant="h4" className={styles.heading} marginBottom={2}>
+        <Typography variant="h5" className={styles.heading} marginBottom={2}>
           Orders
         </Typography>
         <Orders orders={orders} />
