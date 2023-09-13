@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Paper, Typography } from '@mui/material';
 import Profile from '../Profile';
 import Orders from '../Orders';
-import Rewards from '../Rewards';
+import Rewards from './Rewards';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import styles from './styles.module.css';
