@@ -141,4 +141,14 @@ public class OrderServiceImplementation implements OrderService {
         }
         return orders;
     }
+
+    @Override
+    public List<Order> getOrdersByCustomerId(String customerId) {
+        List<Order> orders = orderRepository.findByCustomerId(customerId);
+        if (orders.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No orders found for customer Id: " + customerId);
+        }
+        return orders;
+
+    }
 }

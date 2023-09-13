@@ -47,7 +47,7 @@ public class OrderController {
 
     @GetMapping("/byOrder/{orderNo}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> getOrderByOrderNo(@PathVariable String orderNo) {
+    public ResponseEntity<?> getOrderByOrderNo(@RequestParam String orderNo) {
         try {
             Order order = orderService.getOrderByOrderNo(orderNo);
             return ResponseEntity.ok(order);
@@ -62,6 +62,18 @@ public class OrderController {
     public ResponseEntity<?> getOrdersByPhoneNo(@RequestParam String phoneNo) {
         try {
             List<Order> orders = orderService.getOrdersByPhoneNo(phoneNo);
+            return ResponseEntity.ok(orders);
+        } catch (ResponseStatusException e) {
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+        }
+    }
+
+    @GetMapping("/{customerId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<?> getOrdersByCustomerId(@PathVariable String customerId) {
+        try {
+            List<Order> orders = orderService.getOrdersByCustomerId(customerId);
             return ResponseEntity.ok(orders);
         } catch (ResponseStatusException e) {
             CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());

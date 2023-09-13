@@ -13,6 +13,7 @@ import AddCustomer from "./components/Customer/AddCustomer";
 import ViewOrder from "./components/Order/ViewOrder";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Dashboard from './components/Customer/Dashboard';
 
 function App() {
   const response = localStorage.getItem("jwt");
@@ -25,6 +26,12 @@ function App() {
     }
     else if (response && (location.pathname === "/customers" )) {
       navigate("/customers");
+    }
+    else if (response && (location.pathname === "/customers" )) {
+      navigate("/customers");
+    }
+    else if (response && (location.pathname === "/dashboard/:customerId" )) {
+      navigate("/dashboard/:customerId");
     }
     else if( !response && (location.pathname === "/login")){
       navigate("/login")
@@ -72,6 +79,16 @@ function App() {
               <EditCustomer/>
             ) : (
               <Login />
+            )
+          }
+        />
+        <Route
+          path="/dashboard/:customerId"
+          element={
+            response ? (
+              <Dashboard />
+            ) : (
+              <Login/>
             )
           }
         />

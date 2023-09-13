@@ -1,6 +1,5 @@
 package com.lalith.customer.service;
 
-import com.lalith.customer.model.Customer;
 import com.lalith.customer.model.Reward;
 import com.lalith.customer.repository.RewardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -61,8 +61,8 @@ public class RewardServiceImplementation implements RewardService {
     }
 
 
-    @Override
-    public double getRewardBalance(String customerId) {
+
+    public List<Double> getRewardDetails(String customerId) {
         List<Reward> rewards = rewardRepository.findByCustomerId(customerId);
 
         double totalEarned = 0;
@@ -72,6 +72,32 @@ public class RewardServiceImplementation implements RewardService {
             totalEarned += reward.getRewardsEarned();
             totalRedeemed += reward.getRewardsRedeemed();
         }
-        return totalEarned - totalRedeemed;
+
+        double totalBalance = totalEarned - totalRedeemed;
+
+        List<Double> balanceList = new ArrayList<>();
+        balanceList.add(totalEarned);
+        balanceList.add(totalRedeemed);
+        balanceList.add(totalBalance);
+
+        return balanceList;
     }
+
+//    @Override
+//    public RewardsAcc getRewardsAccOfCustomer(String customerId) {
+//        List<Reward> rewards = rewardRepository.findByCustomerId(customerId);
+//        double totalEarned = 0;
+//        double totalRedeemed = 0;
+//
+//        for (Reward reward : rewards) {
+//            totalEarned += reward.getRewardsEarned();
+//            totalRedeemed += reward.getRewardsRedeemed();
+//        }
+//        double totalBalance = totalEarned-totalRedeemed;
+//        RewardsAcc rewardsAcc = new RewardsAcc();
+//        rewardsAcc.setRewardsEarned(String.valueOf(totalEarned));
+//        rewardsAcc.setRewardsRedeemed(String.valueOf(totalRedeemed));
+//        rewardsAcc.setRewardsBalance(String.valueOf(totalBalance));
+//        return rewardsAcc;
+//    }
 }

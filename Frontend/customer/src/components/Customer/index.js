@@ -54,8 +54,9 @@ function Customer() {
   };
 
   const handleView = async (customerId) => {
-    
+    navigate(`/dashboard/${customerId}`);
   };
+
 
   const handleUpdate = async (customerId) => {
     navigate(`/customers/${customerId}/edit`);

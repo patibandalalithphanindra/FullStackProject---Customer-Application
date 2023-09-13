@@ -1,7 +1,6 @@
 package com.lalith.customer.controller;
 
 import com.lalith.customer.exception.CustomErrorResponse;
-import com.lalith.customer.model.Customer;
 import com.lalith.customer.model.Reward;
 import com.lalith.customer.service.RewardService;
 import org.springframework.http.ResponseEntity;
@@ -40,10 +39,17 @@ public class RewardController {
         return ResponseEntity.ok(rewards);
     }
 
-    @GetMapping("/rewardbalance/{customerId}")
+    @GetMapping("/rewardDetails/{customerId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<Double> getRewardBalance(@PathVariable String customerId) {
-        double rewardBalance = rewardService.getRewardBalance(customerId);
+    public ResponseEntity<List<Double>> getRewardBalance(@PathVariable String customerId) {
+        List<Double> rewardBalance = rewardService.getRewardDetails(customerId);
         return ResponseEntity.ok(rewardBalance);
     }
+
+//    @GetMapping("/rewardAccBalance/{customerId}")
+//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//    public ResponseEntity<?> getRewardAccBalance(@PathVariable String customerId) {
+//        RewardsAcc rewardBalance = rewardService.getRewardsAccOfCustomer(customerId);
+//        return ResponseEntity.ok(rewardBalance);
+//    }
 }

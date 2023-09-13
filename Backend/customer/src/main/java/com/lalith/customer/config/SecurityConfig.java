@@ -46,7 +46,6 @@ public class SecurityConfig {
     public AccessDeniedHandler accessDeniedHandler() {
         return (request, response, ex) -> {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            // You can also send a custom response message if needed.
             response.getWriter().write("Unauthorized");
         };
     }
