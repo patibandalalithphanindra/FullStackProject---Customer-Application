@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Typography, Button, Modal, Box } from '@mui/material';
+import {
+  Typography,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@mui/material';
 import styles from './styles.module.css';
 import { toast } from 'react-toastify';
 
@@ -19,7 +27,7 @@ function Navbar() {
   const handleLogout = () => {
     localStorage.clear();
     navigate('/');
-    toast.success('Logged out Succesfully!', { autoClose: 2000 });
+    toast.success('Logged out successfully!', { autoClose: 2000 });
   };
 
   return (
@@ -29,37 +37,26 @@ function Navbar() {
           Customer Management System
         </Link>
       </Typography>
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={openLogoutModal}
-      >
+      <Button variant="contained" color="secondary" onClick={openLogoutModal}>
         Logout
       </Button>
 
-      <Modal
-        open={isLogoutModalOpen}
-        onClose={closeLogoutModal}
-        aria-labelledby="logout-modal-title"
-        aria-describedby="logout-modal-description"
-      >
-        <Box className={styles.modal}>
-          <Typography variant="h6" id="logout-modal-title" className={styles.modalTitle}>
-            Confirm Logout
-          </Typography>
-          <Typography id="logout-modal-description" className={styles.modalDescription}>
-            Do you want to logout for sure?
-          </Typography>
-          <div className={styles.modalActions}>
-            <Button onClick={closeLogoutModal} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={handleLogout} color="error">
-              Logout
-            </Button>
-          </div>
-        </Box>
-      </Modal>
+      <Dialog open={isLogoutModalOpen} onClose={closeLogoutModal}>
+        <DialogTitle>Confirmation</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure that you want to Logout ?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeLogoutModal} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleLogout} color="error">
+            Logout
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
