@@ -47,7 +47,7 @@ public class OrderController {
 
     @GetMapping("/byOrder/{orderNo}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> getOrderByOrderNo(@RequestParam String orderNo) {
+    public ResponseEntity<?> getOrderByOrderNo(@PathVariable String orderNo) {
         try {
             Order order = orderService.getOrderByOrderNo(orderNo);
             return ResponseEntity.ok(order);
