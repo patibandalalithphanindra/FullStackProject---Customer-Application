@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Table,
   TableBody,
@@ -24,15 +23,30 @@ import 'react-toastify/dist/ReactToastify.css';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CustomerModal from './CustomerModal';
 
 function Customer() {
-  const navigate = useNavigate();
   const [customers, setCustomers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [deleteCustomerId, setDeleteCustomerId] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isCustomerModalOpen, setIsCustomerModalOpen] = useState(false);
+  const [customerData, setCustomerData] = useState({
+    firstName: '',
+    lastName: '',
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    country: '',
+    phoneNo: '',
+    emailId: '',
+    status: 'Active',
+  });
+  const [modalMode, setModalMode] = useState('add');
 
-  useEffect(() => {
+  const fetchCustomerData = () => {
     const response = localStorage.getItem('jwt');
     const headers = {
       Authorization: `Bearer ${response}`,
@@ -47,22 +61,88 @@ function Customer() {
       .catch((error) => {
         console.error('Error fetching customer data:', error);
       });
+  };
+
+  useEffect(() => {
+    fetchCustomerData();
   }, []);
 
+  const handleView = () => {
+    // Handle view logic
+  };
+
   const handleAddition = () => {
-    navigate(`/customer/add`);
+    setModalMode('add');
+    setCustomerData({
+      firstName: '',
+      lastName: '',
+      addressLine1: '',
+      addressLine2: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      country: '',
+      phoneNo: '',
+      emailId: '',
+      status: 'Active',
+    });
+    setIsCustomerModalOpen(true);
   };
 
-  const handleView = async (customerId) => {
-    navigate(`/dashboard/${customerId}`);
+  const handleUpdate = (customerId) => {
+    setModalMode('edit');
+    const customerToUpdate = customers.find((customer) => customer.customerId === customerId);
+    setCustomerData(customerToUpdate);
+    setIsCustomerModalOpen(true);
   };
 
+  const handleSaveCustomer = async () => {
+    const response = localStorage.getItem('jwt');
+    const headers = {
+      Authorization: `Bearer ${response}`,
+      'Content-Type': 'application/json',
+    };
 
-  const handleUpdate = async (customerId) => {
-    navigate(`/customers/${customerId}/edit`);
+    if (modalMode === 'add') {
+      axios
+        .post('http://localhost:8080/customers', customerData, {
+          headers,
+        })
+        .then((response) => {
+          if (response.status === 200 || response.status === 201 ) {
+            toast.success('Customer has been added successfully');
+            fetchCustomerData();
+          } else {
+            toast.error('An error occurred while adding the customer');
+          }
+        })
+        .catch((error) => {
+          console.error('Error adding customer:', error);
+          toast.error('Failed to add the customer. Please try again.');
+        });
+    } else if (modalMode === 'edit') {
+      axios
+        .put(`http://localhost:8080/customers/${customerData.customerId}`, customerData, {
+          headers,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            toast.success('Customer information has been updated successfully');
+            fetchCustomerData();
+          } else {
+            toast.error('An error occurred while updating the customer');
+          }
+        })
+        .catch((error) => {
+          console.error('Error updating customer:', error);
+          toast.error('Failed to update customer data. Please try again.');
+        });
+    }
+
+    setIsCustomerModalOpen(false);
   };
 
-  const handleDelete = async (customerId) => {
+  const handleDelete = (customerId) => {
     setDeleteCustomerId(customerId);
     setIsDeleteModalOpen(true);
   };
@@ -73,6 +153,7 @@ function Customer() {
       Authorization: `Bearer ${response}`,
       'Content-Type': 'application/json',
     };
+
     axios
       .delete(`http://localhost:8080/customers/${deleteCustomerId}`, { headers })
       .then((response) => {
@@ -92,7 +173,7 @@ function Customer() {
         setIsDeleteModalOpen(false);
       });
   };
-  
+
   const handleDeleteCancel = () => {
     setDeleteCustomerId(null);
     setIsDeleteModalOpen(false);
@@ -105,6 +186,19 @@ function Customer() {
   const filteredCustomers = customers.filter((customer) =>
     customer.firstName.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const renderCustomerModal = () => {
+    return (
+      <CustomerModal
+        isOpen={isCustomerModalOpen}
+        handleClose={() => setIsCustomerModalOpen(false)}
+        customer={customerData}
+        setCustomer={(data) => setCustomerData(data)}
+        mode={modalMode}
+        handleSave={handleSaveCustomer}
+      />
+    );
+  };
 
   return (
     <>
@@ -159,7 +253,7 @@ function Customer() {
                 <TableCell>{customer.emailId}</TableCell>
                 <TableCell>{customer.phoneNo}</TableCell>
                 <TableCell>
-                <Button
+                  <Button
                     sx={{ mr: 2 }}
                     variant="contained"
                     color="primary"
@@ -208,6 +302,7 @@ function Customer() {
         </DialogActions>
       </Dialog>
       <ToastContainer />
+      {renderCustomerModal()}
     </>
   );
 }

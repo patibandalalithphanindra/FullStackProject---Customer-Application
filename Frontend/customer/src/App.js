@@ -8,8 +8,6 @@ import { Box } from "@mui/material";
 import Customer from "./components/Customer";
 import Order from "./components/Order";
 import Reward from "./components/Reward";
-import EditCustomer from "./components/Customer/EditCustomer";
-import AddCustomer from "./components/Customer/AddCustomer";
 import ViewOrder from "./components/Order/ViewOrder";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -72,16 +70,6 @@ function App() {
             )
           }
         />
-         <Route
-          path="/customers/:customerId/edit"
-          element={
-            response ? (
-              <EditCustomer/>
-            ) : (
-              <Login />
-            )
-          }
-        />
         <Route
           path="/dashboard/:customerId"
           element={
@@ -89,16 +77,6 @@ function App() {
               <Dashboard />
             ) : (
               <Login/>
-            )
-          }
-        />
-         <Route
-          path="/customer/add"
-          element={
-            response ? (
-              <AddCustomer/>
-            ) : (
-              <Login />
             )
           }
         />
