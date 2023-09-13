@@ -9,16 +9,29 @@ import {
   Paper,
   Button,
   TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Typography,
 } from '@mui/material';
 import axios from 'axios';
-import styles from './styles.module.css'; 
+import styles from './styles.module.css';
 import Navbar from '../common/Navbar';
-import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function Order() {
-  const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [searchCustomerId, setSearchCustomerId] = useState('');
+  const [deleteOrderId, setDeleteOrderId] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   useEffect(() => {
     const response = localStorage.getItem('jwt');
@@ -38,24 +51,78 @@ function Order() {
   }, []);
 
   const handleAddition = () => {
-  
+    // Add logic for adding an order
   };
 
   const handleUpdate = (orderNo) => {
-   
+    // Add logic for updating an order
   };
 
   const handleView = (orderNo) => {
-    navigate(`/orders/${orderNo}`)
+    const selected = orders.find((order) => order.orderNo === orderNo);
+    setSelectedOrder(selected);
+    setIsViewModalOpen(true);
   };
 
   const handleSearch = (e) => {
     setSearchCustomerId(e.target.value);
   };
 
-  const filteredOrders = orders.filter((order) =>
-    order.customerId.includes(searchCustomerId)
-  );
+  const handleDelete = (orderNo) => {
+    setDeleteOrderId(orderNo);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleDeleteConfirmation = () => {
+    const response = localStorage.getItem('jwt');
+    const headers = {
+      Authorization: `Bearer ${response}`,
+      'Content-Type': 'application/json',
+    };
+
+    axios
+      .delete(`http://localhost:8080/orders/${deleteOrderId}`, { headers })
+      .then((response) => {
+        if (response.status === 200) {
+          toast.success('Order has been deleted successfully');
+          setOrders((prevOrders) =>
+            prevOrders.filter((order) => order.orderNo !== deleteOrderId)
+          );
+        } else {
+          toast.error('An error occurred while deleting the order');
+        }
+        setIsDeleteModalOpen(false);
+      })
+      .catch((error) => {
+        console.error(`Error deleting the order ${deleteOrderId}: ${error.message}`);
+        toast.error('Failed to delete the order. Please try again.');
+        setIsDeleteModalOpen(false);
+      });
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteOrderId(null);
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleViewModalClose = () => {
+    setIsViewModalOpen(false);
+    setSelectedOrder(null);
+  };
+
+  const filteredOrders = orders.filter((order) => order.customerId.includes(searchCustomerId) );
+
+  const formatDate = (dateString) => {
+    const options = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    };
+    return new Date(dateString).toLocaleDateString('en-US', options);
+  };
 
   return (
     <>
@@ -115,15 +182,24 @@ function Order() {
                     className={`${styles.button} ${styles.primaryButton}`}
                     onClick={() => handleView(order.orderNo)}
                   >
-                    View
+                    <VisibilityIcon />
                   </Button>
                   <Button
+                    sx={{ mr: 2 }}
                     variant="contained"
                     color="success"
                     className={`${styles.button} ${styles.secondaryButton}`}
                     onClick={() => handleUpdate(order.orderNo)}
                   >
-                    Update
+                    <EditIcon />
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    className={`${styles.button} ${styles.tertiaryButton}`}
+                    onClick={() => handleDelete(order.orderNo)}
+                  >
+                    <DeleteIcon />
                   </Button>
                 </TableCell>
               </TableRow>
@@ -131,6 +207,57 @@ function Order() {
           </TableBody>
         </Table>
       </TableContainer>
+      <Dialog open={isDeleteModalOpen} onClose={handleDeleteCancel}>
+        <DialogTitle>Confirmation</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this order?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteCancel} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDeleteConfirmation} color="error">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={isViewModalOpen} onClose={handleViewModalClose}>
+        <DialogTitle>Order Details</DialogTitle>
+        {selectedOrder && (
+          <>
+            <DialogContent>
+              <DialogContentText>
+                <Typography variant="body1">
+                  <b>Order No:</b> {selectedOrder.orderNo}
+                </Typography>
+                <Typography variant="body1">
+                  <b>Customer ID:</b> {selectedOrder.customerId}
+                </Typography>
+                <Typography variant="body1">
+                  <b>Total Order Amount:</b> {selectedOrder.orderTotal}
+                </Typography>
+                <Typography variant="body1">
+                  <b>Order Status:</b> {selectedOrder.orderStatus}
+                </Typography>
+                <Typography variant="body1">
+                  <b>Order Date:</b> {formatDate(selectedOrder.orderDate)}
+                </Typography>
+                <Typography variant="body1">
+                  <b>Last Modified:</b> {formatDate(selectedOrder.lastModifiedTS)}
+                </Typography>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleViewModalClose} color="primary">
+                Close
+              </Button>
+            </DialogActions>
+          </>
+        )}
+      </Dialog>
+      <ToastContainer />
     </>
   );
 }
