@@ -13,14 +13,19 @@
     align-items: center;
   }
   
+  .leftContent {
+    display: flex;
+    align-items: center;
+  }
+  
   .largeAvatar {
     background-color: #ff6f61;
     color: #fff;
     width: 120px;
     height: 120px;
-    font-size: 72px; 
+    font-size: 72px;
     border-radius: 50%;
-    margin-bottom: 16px; 
+    margin-right: 16px;
   }
   
   .info {
@@ -35,15 +40,8 @@
   }
   
   .verticalText {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     font-size: 16px;
     color: #666;
     margin-top: 8px;
-  }
-  
-  .boldLabel {
-    font-weight: bold;
   }
   

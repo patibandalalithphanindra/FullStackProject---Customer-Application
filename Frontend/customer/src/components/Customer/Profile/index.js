@@ -21,28 +21,27 @@ const Profile = ({ customer }) => {
   return (
     <Card elevation={3} className={styles.profileContainer}>
       <CardContent>
-        <Grid container spacing={3}>
-          {/* Left Column */}
+      <Grid container spacing={3}>
           <Grid item xs={12} sm={6} className={styles.leftColumn}>
-            <div className={styles.avatarContainer}>
-              <Avatar className={styles.largeAvatar}>
-                <PersonIcon fontSize="large" />
-              </Avatar>
-            </div>
-            <div className={styles.info}>
-              <Typography variant="h6" className={styles.fullName}>
-                {firstName} {lastName}
-              </Typography>
-              <Typography variant="body1" className={styles.verticalText}>
-                <span className={styles.boldLabel}>Email:</span> {emailId}
-              </Typography>
-              <Typography variant="body1" className={styles.verticalText}>
-                <span className={styles.boldLabel}>Mobile:</span> {phoneNo}
-              </Typography>
+            <div className={styles.leftContent}>
+              <div className={styles.avatarContainer}>
+                <Avatar className={styles.largeAvatar}>
+                  <PersonIcon fontSize="large" />
+                </Avatar>
+              </div>
+              <div className={styles.info}>
+                <Typography variant="h6" className={styles.fullName}>
+                  {firstName} {lastName}
+                </Typography>
+                <Typography variant="body1" className={styles.verticalText}>
+                  {emailId}
+                </Typography>
+                <Typography variant="body1" className={styles.verticalText}>
+                  {phoneNo}
+                </Typography>
+              </div>
             </div>
           </Grid>
-
-          {/* Right Column */}
           <Grid item xs={12} sm={6} className={styles.rightColumn}>
             <Grid container spacing={1}>
               <Grid item xs={6}>
