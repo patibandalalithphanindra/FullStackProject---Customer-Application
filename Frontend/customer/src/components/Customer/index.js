@@ -24,8 +24,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CustomerModal from './CustomerModal';
+import { useNavigate } from 'react-router-dom';
 
 function Customer() {
+  const navigate = useNavigate();
   const [customers, setCustomers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [deleteCustomerId, setDeleteCustomerId] = useState(null);
@@ -67,8 +69,8 @@ function Customer() {
     fetchCustomerData();
   }, []);
 
-  const handleView = () => {
-    // Handle view logic
+  const handleView = async (customerId) => {
+    navigate(`/dashboard/${customerId}`);
   };
 
   const handleAddition = () => {
