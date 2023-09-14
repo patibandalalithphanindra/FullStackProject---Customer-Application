@@ -4,6 +4,7 @@ import styles from './styles.module.css';
 const Profile = ({ customer }) => {
   const {
     firstName,
+    lastName,
     emailId,
     phoneNo,
     addressLine1,
@@ -19,37 +20,38 @@ const Profile = ({ customer }) => {
       <CardContent>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={2} marginLeft={2}>
-            <Avatar src={"https://www.pngitem.com/pimgs/m/62-625606_computer-icons-suit-image-avatar-clip-art-customer.png"} alt="Customer Avatar" sx={{ width: 150, height: 150 }} />
+            <Avatar src={"https://www.pngitem.com/pimgs/m/62-625606_computer-icons-suit-image-avatar-clip-art-customer.png"}
+             alt="Customer Avatar" sx={{ width: 150, height: 150 }} />
           </Grid>
-          <Grid item xs={5}>
-            <Typography component="textPrimary" className={styles.address}>
-              {firstName}
+          <Grid item xs={5} className={styles.head}>
+            <Typography component="textPrimary" className={styles.profile}>
+            <b> Name : </b> {firstName} {lastName}
             </Typography>
-            <Typography color="textSecondary" className={styles.address}>
-              {phoneNo}
+            <Typography color="textPrimary" className={styles.profile}>
+            <b> Mobile Number : </b> {phoneNo}
             </Typography>
-            <Typography color="textSecondary" className={styles.address}>
-              {emailId}
+            <Typography color="textPrimary" className={styles.profile}>
+            <b> Email Id : </b>{emailId}
             </Typography>
           </Grid>
           <Grid item xs={3}>
-            <Typography color="textSecondary" className={styles.address}>
+            <Typography color="textPrimary" className={styles.address}>
               <b>Address : </b> {addressLine1}, {addressLine2}
             </Typography>
             <br/>
-            <Typography color="textSecondary" className={styles.address}>
+            <Typography color="textPrimary" className={styles.address}>
               <b>City : </b> {city}
             </Typography>
             <br/>
-            <Typography color="textSecondary" className={styles.address}>
+            <Typography color="textPrimary" className={styles.address}>
              <b> State : </b> {state}
             </Typography>
             <br/>
-            <Typography color="textSecondary" className={styles.address}>
+            <Typography color="textPrimary" className={styles.address}>
              <b>Country : </b> {country}
             </Typography>
             <br/>
-            <Typography color="textSecondary" className={styles.address}>
+            <Typography color="textPrimary" className={styles.address}>
              <b> Zip Code : </b>{zipCode}
             </Typography>
           </Grid>
