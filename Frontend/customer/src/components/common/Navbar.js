@@ -9,6 +9,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@mui/material';
+import LogoutIcon from '@mui/icons-material/Logout';
 import styles from './styles.module.css';
 import { toast } from 'react-toastify';
 
@@ -38,7 +39,7 @@ function Navbar() {
         </Link>
       </Typography>
       <Button variant="contained" color="secondary" onClick={openLogoutModal}>
-        Logout
+        <LogoutIcon/>
       </Button>
 
       <Dialog open={isLogoutModalOpen} onClose={closeLogoutModal}>
