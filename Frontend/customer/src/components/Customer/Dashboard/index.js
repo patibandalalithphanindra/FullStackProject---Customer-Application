@@ -42,7 +42,7 @@ const Dashboard = () => {
   return (
     <Container maxWidth="lg" className={styles.container}>
         <container>
-         <Typography variant="h4" className={styles.heading} align="center" marginBottom={2} >
+         <Typography variant="h5" className={styles.heading} align="center" marginBottom={2} >
           CUSTOMER DASHBOARD
         </Typography>
         </container>

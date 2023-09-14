@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardContent, Avatar, Typography, Grid } from '@mui/material';
+import styles from './styles.module.css';
 
 const Profile = ({ customer }) => {
   const {
@@ -33,8 +34,8 @@ const Profile = ({ customer }) => {
             </Typography>
           </Grid>
           <Grid item xs={3}>
-            <Typography variant="h6" color="textSecondary">
-              Address: {addressLine1}&nbsp;{addressLine2}
+            <Typography variant="h6" color="textSecondary" className={styles.address}>
+              Address: {addressLine1}, {addressLine2}
             </Typography>
             <Typography variant="h6" color="textSecondary">
               City: {city}

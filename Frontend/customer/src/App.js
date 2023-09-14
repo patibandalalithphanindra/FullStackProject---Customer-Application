@@ -16,15 +16,11 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
- 
-    if (response && (location.pathname === "/customers" )) {
-      navigate("/customers");
-    }
-    else if (response && (location.pathname === "/dashboard/:customerId" )) {
-      navigate("/dashboard/:customerId");
-    }
-    else if( !response && (location.pathname === "/")){
+    if( !response && (location.pathname === "/")){
       navigate("/")
+    } 
+    else if(response && (location.pathname === "/")){
+      navigate("/homepage")
     } 
   }, [response, location.pathname, navigate]);
 
