@@ -25,6 +25,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
 import OrderModal from './OrderModal';
 import { Search } from '@mui/icons-material';
 
@@ -239,7 +240,7 @@ function Order() {
           className={`${styles.button} ${styles.addOrderButton}`}
           onClick={handleAddition}
         >
-          Add Order
+           <AddIcon/>
         </Button>
       </div>
       <TableContainer component={Paper} className={styles.container}>
