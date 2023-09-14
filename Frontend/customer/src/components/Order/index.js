@@ -123,14 +123,14 @@ function Order() {
       .then((response) => {
         if (response.status === 200) {
           toast.success('Order has been deleted successfully', {
-            position: toast.POSITION.BOTTOM_LEFT
+            position: toast.POSITION.BOTTOM_LEFT,autoClose: 500
           });
           setOrders((prevOrders) =>
             prevOrders.filter((order) => order.orderNo !== deleteOrderId)
           );
         } else {
           toast.error('An error occurred while deleting the order', {
-            position: toast.POSITION.BOTTOM_LEFT
+            position: toast.POSITION.BOTTOM_LEFT,autoClose: 500
           });
         }
         setIsDeleteModalOpen(false);
@@ -138,7 +138,7 @@ function Order() {
       .catch((error) => {
         console.error(`Error deleting the order ${deleteOrderId}: ${error.message}`);
         toast.error('Failed to delete the order. Please try again.', {
-          position: toast.POSITION.BOTTOM_LEFT
+          position: toast.POSITION.BOTTOM_LEFT,autoClose: 500
         });
         setIsDeleteModalOpen(false);
       });
@@ -190,7 +190,7 @@ function Order() {
             );
           } else {
             toast.error('An error occurred while updating the order', {
-              position: toast.POSITION.BOTTOM_LEFT
+              position: toast.POSITION.BOTTOM_LEFT,autoClose: 500
             });
           }
           setIsOrderModalOpen(false);
@@ -198,7 +198,7 @@ function Order() {
         .catch((error) => {
           console.error(`Error updating the order ${orderModalData.orderNo}: ${error.message}`);
           toast.error('Failed to update the order. Please try again.', {
-            position: toast.POSITION.BOTTOM_LEFT
+            position: toast.POSITION.BOTTOM_LEFT,autoClose: 500
           });
           setIsOrderModalOpen(false);
         });
@@ -211,7 +211,7 @@ function Order() {
             setOrders((prevOrders) => [...prevOrders, response.data]);
           } else {
             toast.error('An error occurred while adding the order', {
-              position: toast.POSITION.BOTTOM_LEFT
+              position: toast.POSITION.BOTTOM_LEFT,autoClose: 500
             });
           }
           setIsOrderModalOpen(false);
@@ -219,7 +219,7 @@ function Order() {
         .catch((error) => {
           console.error('Error adding the order:', error);
           toast.error('Failed to add the order. Please try again.', {
-            position: toast.POSITION.BOTTOM_LEFT
+            position: toast.POSITION.BOTTOM_LEFT,autoClose: 500
           });
           setIsOrderModalOpen(false);
         });

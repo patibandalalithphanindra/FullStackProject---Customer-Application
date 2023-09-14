@@ -27,14 +27,14 @@ function Login() {
         localStorage.setItem('name', response?.data?.name);
         navigate('/homepage');
         toast.success('Logged in Successfully!', {
-          position: toast.POSITION.BOTTOM_LEFT
+          position: toast.POSITION.BOTTOM_LEFT,autoClose: 500
         }); 
       } 
     } catch (error) {
       console.error('Login error:', error);
       toast.error('Login failed. Please check your credentials.', {
-        position: toast.POSITION.BOTTOM_LEFT
-      });
+        position: toast.POSITION.BOTTOM_LEFT,
+        autoClose: 500});
     }
   };
 
