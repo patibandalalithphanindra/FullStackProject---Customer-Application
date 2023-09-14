@@ -14,6 +14,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  InputAdornment,
 } from '@mui/material';
 import axios from 'axios';
 import styles from './styles.module.css';
@@ -22,6 +23,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import AddIcon from '@mui/icons-material/Add';
+import { Search } from '@mui/icons-material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CustomerModal from './CustomerModal';
 import { useNavigate } from 'react-router-dom';
@@ -210,20 +213,27 @@ function Customer() {
           <b>CUSTOMERS INFORMATION</b>
         </h3>
         <TextField
-          label="Search Name"
-          id="filled-basic"
-          variant="outlined"
-          value={searchQuery}
-          onChange={handleSearch}
-          className={styles.search}
-        />
+        label="Search Name"
+        id="filled-basic"
+        variant="outlined"
+        value={searchQuery}
+        onChange={handleSearch}
+        className={styles.search}
+        InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <Search />
+          </InputAdornment>
+        ),
+      }}
+    />
         <Button
           style={{ maxWidth: '200px', maxHeight: '40px', marginTop: '8px' }}
           variant="contained"
           className={`${styles.button} ${styles.addCustomerButton}`}
           onClick={handleAddition}
         >
-          Add Customer
+          <AddIcon/>
         </Button>
       </div>
       <TableContainer component={Paper} className={styles.container}>

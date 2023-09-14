@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, Avatar, Typography, Grid } from '@mui/material';
-
+import styles from './styles.module.css';
 const Profile = ({ customer }) => {
   const {
     firstName,
@@ -22,31 +22,35 @@ const Profile = ({ customer }) => {
             <Avatar src={"https://www.pngitem.com/pimgs/m/62-625606_computer-icons-suit-image-avatar-clip-art-customer.png"} alt="Customer Avatar" sx={{ width: 150, height: 150 }} />
           </Grid>
           <Grid item xs={5}>
-            <Typography variant="h5" component="div">
+            <Typography component="textPrimary" className={styles.address}>
               {firstName}
             </Typography>
-            <Typography variant="h6" color="textSecondary">
+            <Typography color="textSecondary" className={styles.address}>
               {phoneNo}
             </Typography>
-            <Typography variant="h6" color="textSecondary">
+            <Typography color="textSecondary" className={styles.address}>
               {emailId}
             </Typography>
           </Grid>
           <Grid item xs={3}>
-            <Typography variant="h6" color="textSecondary">
-              Address: {addressLine1}, {addressLine2}
+            <Typography color="textSecondary" className={styles.address}>
+              <b>Address : </b> {addressLine1}, {addressLine2}
             </Typography>
-            <Typography variant="h6" color="textSecondary">
-              City: {city}
+            <br/>
+            <Typography color="textSecondary" className={styles.address}>
+              <b>City : </b> {city}
             </Typography>
-            <Typography variant="h6" color="textSecondary">
-              State: {state}
+            <br/>
+            <Typography color="textSecondary" className={styles.address}>
+             <b> State : </b> {state}
             </Typography>
-            <Typography variant="h6" color="textSecondary">
-              Country: {country}
+            <br/>
+            <Typography color="textSecondary" className={styles.address}>
+             <b>Country : </b> {country}
             </Typography>
-            <Typography variant="h6" color="textSecondary">
-              Zip Code: {zipCode}
+            <br/>
+            <Typography color="textSecondary" className={styles.address}>
+             <b> Zip Code : </b>{zipCode}
             </Typography>
           </Grid>
         </Grid>

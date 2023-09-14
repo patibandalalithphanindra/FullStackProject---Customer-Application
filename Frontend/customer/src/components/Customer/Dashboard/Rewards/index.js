@@ -51,7 +51,7 @@ const Rewards = ({ id }) => {
         </Grid>
         <Grid item xs={4}>
           <Box display="flex" alignItems="center">
-            <AttachMoney color="success" sx={{ fontSize: 40 }} />
+          <MoneyOff color="error" sx={{ fontSize: 40 }} />
             &nbsp;
             <div>
               <Typography variant="h6">Redeemed Coins</Typography>
@@ -61,7 +61,7 @@ const Rewards = ({ id }) => {
         </Grid>
         <Grid item xs={4}>
           <Box display="flex" alignItems="center">
-            <MoneyOff color="error" sx={{ fontSize: 40 }} />
+            <AttachMoney color="success" sx={{ fontSize: 40 }} />
             &nbsp; 
             <div>
               <Typography variant="h6">Balance Coins</Typography>

@@ -8,10 +8,12 @@ import {
   TableRow,
   Paper,
   TextField,
+  InputAdornment,
 } from '@mui/material';
 import axios from 'axios';
 import styles from './styles.module.css'; 
 import Navbar from '../common/Navbar';
+import { Search } from '@mui/icons-material';
 
 function Reward() {
   const [rewards, setRewards] = useState([]);
@@ -47,12 +49,19 @@ function Reward() {
       <Navbar />
      <div className={styles.headerpart}> 
      <h3 className={styles.heading}><b>REWARDS INFORMATION</b></h3>
-      <TextField
-        label="Search Customer ID"
-        variant="outlined"
-        value={searchCustomerId}
-        onChange={handleSearch}
-      />
+     <TextField
+    label="Search Customer ID"
+    variant="outlined"
+    value={searchCustomerId}
+    onChange={handleSearch}
+    InputProps={{
+      endAdornment: (
+        <InputAdornment position="end">
+          <Search />
+        </InputAdornment>
+      ),
+    }}
+  />
       </div>
      
       <TableContainer component={Paper} className={styles.container}>

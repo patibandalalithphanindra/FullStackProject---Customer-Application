@@ -15,6 +15,7 @@ import {
   DialogContentText,
   DialogTitle,
   Typography,
+  InputAdornment,
 } from '@mui/material';
 import axios from 'axios';
 import styles from './styles.module.css';
@@ -25,6 +26,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import OrderModal from './OrderModal';
+import { Search } from '@mui/icons-material';
 
 const formatDate = (dateString) => {
   const options = {
@@ -219,11 +221,18 @@ function Order() {
           <b>ORDERS INFORMATION</b>
         </h3>
         <TextField
-          label="Search Customer ID"
-          variant="outlined"
-          value={searchCustomerId}
-          onChange={handleSearch}
-        />
+         label="Search Customer ID"
+         variant="outlined"
+         value={searchCustomerId}
+         onChange={handleSearch}
+         InputProps={{
+          endAdornment: (
+         <InputAdornment position="end">
+          <Search />
+        </InputAdornment>
+      ),
+    }}
+  />
         <Button
           style={{ maxWidth: '200px', maxHeight: '40px', marginTop: '8px' }}
           variant="contained"
