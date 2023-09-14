@@ -9,6 +9,8 @@ import {
   Select,
   MenuItem,
   Button,
+  FormControl,
+  InputLabel
 } from '@mui/material';
 
 const OrderModal = ({
@@ -49,17 +51,17 @@ const OrderModal = ({
             value={orderData.orderTotal}
             onChange={(e) => setOrderData({ ...orderData, orderTotal: e.target.value })}
           />
-          <Select
-            label="Currency"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={orderData.currency}
-            onChange={(e) => setOrderData({ ...orderData, currency: e.target.value })}
-          >
-            <MenuItem value="INR">INR</MenuItem>
-            <MenuItem value="$">$</MenuItem>
-          </Select>
+          <FormControl variant="outlined" fullWidth margin="normal">
+            <InputLabel htmlFor="currency">Currency</InputLabel>
+            <Select
+              label="Currency"
+              value={orderData.currency}
+              onChange={(e) => setOrderData({ ...orderData, currency: e.target.value })}
+            >
+              <MenuItem value="INR">INR</MenuItem>
+              <MenuItem value="$">$</MenuItem>
+            </Select>
+          </FormControl>
           <TextField
             label="Customer Phone Number"
             variant="outlined"
@@ -68,17 +70,17 @@ const OrderModal = ({
             value={orderData.customerPhoneNo}
             onChange={(e) => setOrderData({ ...orderData, customerPhoneNo: e.target.value })}
           />
-          <Select
-            label="Order Status"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={orderData.orderStatus}
-            onChange={(e) => setOrderData({ ...orderData, orderStatus: e.target.value })}
-          >
-            <MenuItem value="Created">Created</MenuItem>
-            <MenuItem value="Shipped">Shipped</MenuItem>
-          </Select>
+          <FormControl variant="outlined" fullWidth margin="normal">
+            <InputLabel htmlFor="orderStatus">Order Status</InputLabel>
+            <Select
+              label="Order Status"
+              value={orderData.orderStatus}
+              onChange={(e) => setOrderData({ ...orderData, orderStatus: e.target.value })}
+            >
+              <MenuItem value="Created">Created</MenuItem>
+              <MenuItem value="Shipped">Shipped</MenuItem>
+            </Select>
+          </FormControl>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
