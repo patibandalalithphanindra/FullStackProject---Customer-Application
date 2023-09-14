@@ -28,7 +28,9 @@ function Navbar() {
   const handleLogout = () => {
     localStorage.clear();
     navigate('/');
-    toast.success('Logged out successfully!', { autoClose: 2000 });
+    toast.success('Logged out successfully!', {
+      position: toast.POSITION.BOTTOM_LEFT
+    , autoClose: 1000 });
   };
 
   return (

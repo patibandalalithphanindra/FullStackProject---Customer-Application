@@ -115,15 +115,21 @@ function Customer() {
         })
         .then((response) => {
           if (response.status === 200 || response.status === 201 ) {
-            toast.success('Customer has been added successfully');
+            toast.success('Customer has been added successfully', {
+              position: toast.POSITION.BOTTOM_LEFT
+            });
             fetchCustomerData();
           } else {
-            toast.error('An error occurred while adding the customer');
+            toast.error('An error occurred while adding the customer', {
+              position: toast.POSITION.BOTTOM_LEFT
+            });
           }
         })
         .catch((error) => {
           console.error('Error adding customer:', error);
-          toast.error('Failed to add the customer. Please try again.');
+          toast.error('Failed to add the customer. Please try again.', {
+            position: toast.POSITION.BOTTOM_LEFT
+          });
         });
     } else if (modalMode === 'edit') {
       axios
@@ -132,15 +138,21 @@ function Customer() {
         })
         .then((response) => {
           if (response.status === 200) {
-            toast.success('Customer information has been updated successfully');
+            toast.success('Customer information has been updated successfully', {
+              position: toast.POSITION.BOTTOM_LEFT
+            });
             fetchCustomerData();
           } else {
-            toast.error('An error occurred while updating the customer');
+            toast.error('An error occurred while updating the customer', {
+              position: toast.POSITION.BOTTOM_LEFT
+            });
           }
         })
         .catch((error) => {
           console.error('Error updating customer:', error);
-          toast.error('Failed to update customer data. Please try again.');
+          toast.error('Failed to update customer data. Please try again.', {
+            position: toast.POSITION.BOTTOM_LEFT
+          });
         });
     }
 
@@ -163,18 +175,24 @@ function Customer() {
       .delete(`http://localhost:8080/customers/${deleteCustomerId}`, { headers })
       .then((response) => {
         if (response.status === 200) {
-          toast.success('Customer has been deleted successfully');
+          toast.success('Customer has been deleted successfully', {
+            position: toast.POSITION.BOTTOM_LEFT
+          });
           setCustomers((prevItems) =>
             prevItems.filter((customer) => customer.customerId !== deleteCustomerId)
           );
         } else {
-          toast.error('An error occurred while deleting the customer');
+          toast.error('An error occurred while deleting the customer', {
+            position: toast.POSITION.BOTTOM_LEFT
+          });
         }
         setIsDeleteModalOpen(false);
       })
       .catch((error) => {
         console.error(`Error deleting the customer ${deleteCustomerId}: ${error.message}`);
-        toast.error('Customer is in Active status, Hence cannot be deleted!');
+        toast.error('Customer is in Active status, Hence cannot be deleted!', {
+          position: toast.POSITION.BOTTOM_LEFT
+        });
         setIsDeleteModalOpen(false);
       });
   };

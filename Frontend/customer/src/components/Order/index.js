@@ -122,18 +122,24 @@ function Order() {
       .delete(`http://localhost:8080/orders/${deleteOrderId}`, { headers })
       .then((response) => {
         if (response.status === 200) {
-          toast.success('Order has been deleted successfully');
+          toast.success('Order has been deleted successfully', {
+            position: toast.POSITION.BOTTOM_LEFT
+          });
           setOrders((prevOrders) =>
             prevOrders.filter((order) => order.orderNo !== deleteOrderId)
           );
         } else {
-          toast.error('An error occurred while deleting the order');
+          toast.error('An error occurred while deleting the order', {
+            position: toast.POSITION.BOTTOM_LEFT
+          });
         }
         setIsDeleteModalOpen(false);
       })
       .catch((error) => {
         console.error(`Error deleting the order ${deleteOrderId}: ${error.message}`);
-        toast.error('Failed to delete the order. Please try again.');
+        toast.error('Failed to delete the order. Please try again.', {
+          position: toast.POSITION.BOTTOM_LEFT
+        });
         setIsDeleteModalOpen(false);
       });
   };
@@ -183,13 +189,17 @@ function Order() {
               )
             );
           } else {
-            toast.error('An error occurred while updating the order');
+            toast.error('An error occurred while updating the order', {
+              position: toast.POSITION.BOTTOM_LEFT
+            });
           }
           setIsOrderModalOpen(false);
         })
         .catch((error) => {
           console.error(`Error updating the order ${orderModalData.orderNo}: ${error.message}`);
-          toast.error('Failed to update the order. Please try again.');
+          toast.error('Failed to update the order. Please try again.', {
+            position: toast.POSITION.BOTTOM_LEFT
+          });
           setIsOrderModalOpen(false);
         });
     } else {
@@ -200,13 +210,17 @@ function Order() {
             toast.success('Order has been added successfully');
             setOrders((prevOrders) => [...prevOrders, response.data]);
           } else {
-            toast.error('An error occurred while adding the order');
+            toast.error('An error occurred while adding the order', {
+              position: toast.POSITION.BOTTOM_LEFT
+            });
           }
           setIsOrderModalOpen(false);
         })
         .catch((error) => {
           console.error('Error adding the order:', error);
-          toast.error('Failed to add the order. Please try again.');
+          toast.error('Failed to add the order. Please try again.', {
+            position: toast.POSITION.BOTTOM_LEFT
+          });
           setIsOrderModalOpen(false);
         });
     }

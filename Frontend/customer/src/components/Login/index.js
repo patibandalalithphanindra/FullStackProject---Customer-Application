@@ -26,11 +26,15 @@ function Login() {
         localStorage.setItem('jwt', response?.data?.token);
         localStorage.setItem('name', response?.data?.name);
         navigate('/homepage');
-        toast.success('Logged in Successfully!'); 
+        toast.success('Logged in Successfully!', {
+          position: toast.POSITION.BOTTOM_LEFT
+        }); 
       } 
     } catch (error) {
       console.error('Login error:', error);
-      toast.error('Login failed. Please check your credentials.');
+      toast.error('Login failed. Please check your credentials.', {
+        position: toast.POSITION.BOTTOM_LEFT
+      });
     }
   };
 

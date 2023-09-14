@@ -29,11 +29,15 @@ function Register() {
         localStorage.setItem('jwt', response?.data?.token);
         localStorage.setItem('name', response?.data?.name);
         navigate('/homepage');
-        toast.success('Registered Successfully!');
+        toast.success('Registered Successfully!', {
+          position: toast.POSITION.BOTTOM_LEFT
+        });
       } 
     } catch (error) {
       console.error('Registration error:', error);
-      toast.error('Registration failed. Please try again.');
+      toast.error('Registration failed. Please try again.', {
+        position: toast.POSITION.BOTTOM_LEFT
+      });
     }
   };
 
