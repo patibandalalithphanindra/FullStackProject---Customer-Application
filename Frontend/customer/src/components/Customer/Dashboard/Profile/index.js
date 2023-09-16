@@ -24,7 +24,7 @@ const Profile = ({ customer }) => {
              alt="Customer Avatar" sx={{ width: 150, height: 150 }} />
           </Grid>
           <Grid item xs={5} className={styles.head}>
-            <Typography component="textPrimary" className={styles.profile}>
+            <Typography color="textPrimary" className={styles.profile}>
             <b> Name : </b> {firstName} {lastName}
             </Typography>
             <Typography color="textPrimary" className={styles.profile}>
