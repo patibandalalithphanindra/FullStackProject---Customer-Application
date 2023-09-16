@@ -25,6 +25,7 @@ const OrderModal = ({
       <DialogTitle>{orderData.orderNo ? 'Edit Order' : 'Add Order'}</DialogTitle>
       <DialogContent>
         <DialogContentText>
+          <div>
           <TextField
             label="Customer ID"
             variant="outlined"
@@ -33,6 +34,8 @@ const OrderModal = ({
             value={orderData.customerId}
             onChange={(e) => setOrderData({ ...orderData, customerId: e.target.value })}
           />
+          </div>
+          <div>
           <TextField
             label="Total Items"
             variant="outlined"
@@ -42,6 +45,8 @@ const OrderModal = ({
             value={orderData.totalItems}
             onChange={(e) => setOrderData({ ...orderData, totalItems: e.target.value })}
           />
+          </div>
+          <div>
           <TextField
             label="Order Total"
             variant="outlined"
@@ -51,6 +56,8 @@ const OrderModal = ({
             value={orderData.orderTotal}
             onChange={(e) => setOrderData({ ...orderData, orderTotal: e.target.value })}
           />
+          </div>
+          <div>
           <FormControl variant="outlined" fullWidth margin="normal">
             <InputLabel htmlFor="currency">Currency</InputLabel>
             <Select
@@ -62,6 +69,8 @@ const OrderModal = ({
               <MenuItem value="$">$</MenuItem>
             </Select>
           </FormControl>
+          </div>
+          <div>
           <TextField
             label="Customer Phone Number"
             variant="outlined"
@@ -81,6 +90,7 @@ const OrderModal = ({
               <MenuItem value="Shipped">Shipped</MenuItem>
             </Select>
           </FormControl>
+          </div>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
