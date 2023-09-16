@@ -41,11 +41,11 @@ const Dashboard = () => {
 
   return (
     <Container maxWidth="lg" className={styles.container}>
-        <container>
+        <Container>
          <Typography variant="h5" className={styles.heading} align="center" marginBottom={2} >
           CUSTOMER DASHBOARD
         </Typography>
-        </container>
+        </Container>
       <Paper className={styles.paper}>
       <Typography variant="h5" className={styles.heading} marginBottom={2} >
         Profile
