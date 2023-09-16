@@ -58,6 +58,9 @@ function Order() {
     orderStatus: 'Created',
   });
 
+  const [withCoinsData, setWithCoinsData] = useState('yes');
+
+
   useEffect(() => {
     const response = localStorage.getItem('jwt');
     const headers = {
@@ -85,7 +88,13 @@ function Order() {
       orderStatus: 'Created',
     });
 
+    setWithCoinsData(withCoinsData);
     setIsOrderModalOpen(true);
+  };
+
+  const dataToSend = {
+    orderModalData,
+    withCoinsData,
   };
 
   const handleUpdate = (orderNo) => {
@@ -122,24 +131,18 @@ function Order() {
       .delete(`http://localhost:8080/orders/${deleteOrderId}`, { headers })
       .then((response) => {
         if (response.status === 200) {
-          toast.success('Order has been deleted successfully', {
-            position: toast.POSITION.BOTTOM_LEFT,autoClose: 500
-          });
+          toast.success('Order has been deleted successfully');
           setOrders((prevOrders) =>
             prevOrders.filter((order) => order.orderNo !== deleteOrderId)
           );
         } else {
-          toast.error('An error occurred while deleting the order', {
-            position: toast.POSITION.BOTTOM_LEFT,autoClose: 500
-          });
+          toast.error('An error occurred while deleting the order');
         }
         setIsDeleteModalOpen(false);
       })
       .catch((error) => {
         console.error(`Error deleting the order ${deleteOrderId}: ${error.message}`);
-        toast.error('Failed to delete the order. Please try again.', {
-          position: toast.POSITION.BOTTOM_LEFT,autoClose: 500
-        });
+        toast.error('Failed to delete the order. Please try again.');
         setIsDeleteModalOpen(false);
       });
   };
@@ -189,38 +192,31 @@ function Order() {
               )
             );
           } else {
-            toast.error('An error occurred while updating the order', {
-              position: toast.POSITION.BOTTOM_LEFT,autoClose: 500
-            });
+            toast.error('An error occurred while updating the order');
           }
           setIsOrderModalOpen(false);
         })
         .catch((error) => {
           console.error(`Error updating the order ${orderModalData.orderNo}: ${error.message}`);
-          toast.error('Failed to update the order. Please try again.', {
-            position: toast.POSITION.BOTTOM_LEFT,autoClose: 500
-          });
+          toast.error('Failed to update the order. Please try again.');
           setIsOrderModalOpen(false);
         });
     } else {
       axios
-        .post('http://localhost:8080/orders', orderModalData, { headers })
+        .post('http://localhost:8080/orders', dataToSend, { headers })
         .then((response) => {
           if (response.status === 201) {
-            toast.success('Order has been added successfully');
+            toast.success('Order has been added successfully with coins param');
             setOrders((prevOrders) => [...prevOrders, response.data]);
           } else {
-            toast.error('An error occurred while adding the order', {
-              position: toast.POSITION.BOTTOM_LEFT,autoClose: 500
-            });
+            toast.error('An error occurred while adding the order with coins param');
           }
           setIsOrderModalOpen(false);
         })
         .catch((error) => {
-          console.error('Error adding the order:', error);
-          toast.error('Failed to add the order. Please try again.', {
-            position: toast.POSITION.BOTTOM_LEFT,autoClose: 500
-          });
+          console.error('Error adding the order with coin param:', error);
+          console.log(dataToSend);
+          toast.error('Failed to add the order with coin param. Please try again.');
           setIsOrderModalOpen(false);
         });
     }
@@ -236,25 +232,25 @@ function Order() {
           <b>ORDERS INFORMATION</b>
         </h3>
         <TextField
-         label="Search Customer ID"
-         variant="outlined"
-         value={searchCustomerId}
-         onChange={handleSearch}
-         InputProps={{
-          endAdornment: (
-         <InputAdornment position="end">
-          <Search />
-        </InputAdornment>
-      ),
-    }}
-  />
+          label="Search Customer ID"
+          variant="outlined"
+          value={searchCustomerId}
+          onChange={handleSearch}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <Search />
+              </InputAdornment>
+            ),
+          }}
+        />
         <Button
           style={{ maxWidth: '200px', maxHeight: '40px', marginTop: '8px' }}
           variant="contained"
           className={`${styles.button} ${styles.addOrderButton}`}
           onClick={handleAddition}
         >
-           <AddIcon/>
+          <AddIcon />
         </Button>
       </div>
       <TableContainer component={Paper} className={styles.container}>
@@ -321,9 +317,7 @@ function Order() {
       <Dialog open={isDeleteModalOpen} onClose={handleDeleteCancel}>
         <DialogTitle>Confirmation</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Are you sure you want to delete this order?
-          </DialogContentText>
+          <DialogContentText> Are you sure you want to delete this order? </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDeleteCancel} color="primary">
@@ -341,32 +335,34 @@ function Order() {
             <DialogContent>
               <DialogContentText>
                 <div>
-                <Typography variant="body1">
-                  <b>Order No:</b> {selectedOrder.orderNo}
-                </Typography>
+                  <Typography variant="body1">
+                    <b>Order No:</b> {selectedOrder.orderNo}
+                  </Typography>
                 </div>
                 <div>
-                <Typography variant="body1">
-                  <b>Customer ID:</b> {selectedOrder.customerId}
-                </Typography>
+                  <Typography variant="body1">
+                    <b>Customer ID:</b> {selectedOrder.customerId}
+                  </Typography>
                 </div>
                 <div>
-                <Typography variant="body1">
-                  <b>Total Order Amount:</b> {selectedOrder.orderTotal}
-                </Typography>
-                </div>
-                <div>
-                <Typography variant="body1">
-                  <b>Order Status:</b> {selectedOrder.orderStatus}
-                </Typography>
-                </div>
-                <div>
-                <Typography variant="body1">
-                  <b>Order Date:</b> {formatDate(selectedOrder.orderDate)}
-                </Typography>
-                <Typography variant="body1">
-                  <b>Last Modified:</b> {formatDate(selectedOrder.lastModifiedTS)}
-                </Typography>
+                  <Typography variant="body1">
+                    <b>Total Order Amount:</b> {selectedOrder.orderTotal}
+                  </Typography>
+                  </div>
+                  <div>
+                  <Typography variant="body1">
+                    <b>Order Status:</b> {selectedOrder.orderStatus}
+                  </Typography>
+                  </div>
+                  <div>
+                  <Typography variant="body1">
+                    <b>Order Date:</b> {formatDate(selectedOrder.orderDate)}
+                  </Typography>
+                  </div>
+                  <div>
+                  <Typography variant="body1">
+                    <b>Last Modified:</b> {formatDate(selectedOrder.lastModifiedTS)}
+                  </Typography>
                 </div>
               </DialogContentText>
             </DialogContent>
@@ -382,6 +378,9 @@ function Order() {
         isOpen={isOrderModalOpen}
         handleClose={handleOrderModalClose}
         orderData={orderModalData}
+        withCoins={withCoinsData}
+
+        setWithCoins={setWithCoinsData}
         setOrderData={setOrderModalData}
         handleSave={handleOrderModalSave}
       />

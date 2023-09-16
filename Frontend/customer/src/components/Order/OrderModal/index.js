@@ -6,6 +6,7 @@ import {
   DialogContentText,
   DialogTitle,
   TextField,
+
   Select,
   MenuItem,
   Button,
@@ -17,6 +18,8 @@ const OrderModal = ({
   isOpen,
   handleClose,
   orderData,
+  withCoins,
+  setWithCoins,
   setOrderData,
   handleSave,
 }) => {
@@ -26,73 +29,90 @@ const OrderModal = ({
       <DialogContent>
         <DialogContentText>
           <div>
-          <TextField
-            label="Customer ID"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={orderData.customerId}
-            onChange={(e) => setOrderData({ ...orderData, customerId: e.target.value })}
-          />
+            <TextField
+              label="Customer ID"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={orderData.customerId}
+              onChange={(e) => setOrderData({ ...orderData, customerId: e.target.value })}
+            />
+            </div>
+          <div>
+            <TextField
+              label="Total Items"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              type="number"
+              value={orderData.totalItems}
+              onChange={(e) => setOrderData({ ...orderData, totalItems: e.target.value })}
+            />
+            </div>
+          <div>
+            <TextField
+              label="Order Total"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              type="number"
+              value={orderData.orderTotal}
+              onChange={(e) => setOrderData({ ...orderData, orderTotal: e.target.value })}
+            />
           </div>
           <div>
-          <TextField
-            label="Total Items"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            type="number"
-            value={orderData.totalItems}
-            onChange={(e) => setOrderData({ ...orderData, totalItems: e.target.value })}
-          />
+
+            <FormControl variant="outlined" fullWidth margin="normal">
+              <InputLabel htmlFor="currency">Currency</InputLabel>
+              <Select
+                label="Currency"
+                value={orderData.currency}
+                onChange={(e) => setOrderData({ ...orderData, currency: e.target.value })}
+              >
+                <MenuItem value="INR">INR</MenuItem>
+                <MenuItem value="$">$</MenuItem>
+              </Select>
+            </FormControl>
           </div>
           <div>
-          <TextField
-            label="Order Total"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            type="number"
-            value={orderData.orderTotal}
-            onChange={(e) => setOrderData({ ...orderData, orderTotal: e.target.value })}
-          />
+
+            <FormControl variant="outlined" fullWidth margin="normal">
+              <InputLabel htmlFor="withCoins">With Coins</InputLabel>
+              <Select
+                label="withCoins"
+                value={withCoins}
+                onChange={(e) => setWithCoins(e.target.value)}
+              >
+                <MenuItem value="yes">Yes</MenuItem>
+                <MenuItem value="no">No</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+
+          <div>
+            <TextField
+              label="Customer Phone Number"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={orderData.customerPhoneNo}
+              onChange={(e) => setOrderData({ ...orderData, customerPhoneNo: e.target.value })}
+            />
           </div>
           <div>
-          <FormControl variant="outlined" fullWidth margin="normal">
-            <InputLabel htmlFor="currency">Currency</InputLabel>
-            <Select
-              label="Currency"
-              value={orderData.currency}
-              onChange={(e) => setOrderData({ ...orderData, currency: e.target.value })}
-            >
-              <MenuItem value="INR">INR</MenuItem>
-              <MenuItem value="$">$</MenuItem>
-            </Select>
-          </FormControl>
+            <FormControl variant="outlined" fullWidth margin="normal">
+              <InputLabel htmlFor="orderStatus">Order Status</InputLabel>
+              <Select
+                label="Order Status"
+                value={orderData.orderStatus}
+                onChange={(e) => setOrderData({ ...orderData, orderStatus: e.target.value })}
+              >
+                <MenuItem value="Created">Created</MenuItem>
+                <MenuItem value="Shipped">Shipped</MenuItem>
+              </Select>
+            </FormControl>
           </div>
-          <div>
-          <TextField
-            label="Customer Phone Number"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={orderData.customerPhoneNo}
-            onChange={(e) => setOrderData({ ...orderData, customerPhoneNo: e.target.value })}
-          />
-          </div>
-          <div>
-          <FormControl variant="outlined" fullWidth margin="normal">
-            <InputLabel htmlFor="orderStatus">Order Status</InputLabel>
-            <Select
-              label="Order Status"
-              value={orderData.orderStatus}
-              onChange={(e) => setOrderData({ ...orderData, orderStatus: e.target.value })}
-            >
-              <MenuItem value="Created">Created</MenuItem>
-              <MenuItem value="Shipped">Shipped</MenuItem>
-            </Select>
-          </FormControl>
-          </div>
+
         </DialogContentText>
       </DialogContent>
       <DialogActions>
