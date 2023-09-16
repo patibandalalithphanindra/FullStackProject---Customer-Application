@@ -79,6 +79,8 @@ const OrderModal = ({
             value={orderData.customerPhoneNo}
             onChange={(e) => setOrderData({ ...orderData, customerPhoneNo: e.target.value })}
           />
+          </div>
+          <div>
           <FormControl variant="outlined" fullWidth margin="normal">
             <InputLabel htmlFor="orderStatus">Order Status</InputLabel>
             <Select
