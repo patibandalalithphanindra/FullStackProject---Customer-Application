@@ -6,8 +6,9 @@ import java.util.List;
 
 public interface RewardService {
     Reward createReward(String customerId, double totalAmount, String orderNo);
+    Reward createRewardWithRedeem(String customerId, double totalAmount, String orderNo,double redeemBalance);
     List<Reward> getRewardsByCustomerId(String customerId);
     List<Double> getRewardDetails(String customerId);
-//    RewardsAcc getRewardsAccOfCustomer(String customerId);
+    Double getRewardBalanceOfCustomer(String customerId);
     List<Reward> getAllRewards();
 }

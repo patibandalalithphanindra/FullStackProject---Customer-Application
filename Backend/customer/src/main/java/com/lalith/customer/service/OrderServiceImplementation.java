@@ -30,7 +30,7 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public Order createOrder(Order order) {
+    public Order createOrderWithoutRedeem(Order order) {
         String orderNo = order.getOrderNo();
 
         Order existingOrder = orderRepository.findByOrderNo(orderNo);
@@ -56,7 +56,37 @@ public class OrderServiceImplementation implements OrderService {
         return orderRepository.save(order);
     }
 
-    private String generateOrderNo() {
+    @Override
+    public Order createOrderWithRedeem(Order order) {
+
+        double rewardCoins = rewardService.getRewardBalanceOfCustomer(order.getCustomerId());
+        double totalAmount = order.getOrderTotal();
+        double grandTotal;
+
+        if(rewardCoins>=1000){
+            grandTotal = totalAmount-rewardCoins;
+        }else {
+            grandTotal = totalAmount;
+        }
+
+        order.setOrderTotal(grandTotal);
+        order.setReward(rewardService.createRewardWithRedeem(order.getCustomerId(),grandTotal, order.getOrderNo(), totalAmount-grandTotal));
+        String orderNo = order.getOrderNo();
+
+        Order existingOrder = orderRepository.findByOrderNo(orderNo);
+        if (existingOrder != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "An order with the same orderNo already exists.");
+        }
+
+        order.setOrderDate(LocalDateTime.now());
+        order.setLastModifiedTS(LocalDateTime.now());
+        if (order.getOrderStatus() == null) {
+            order.setOrderStatus("Created");
+        }
+        return orderRepository.save(order);
+    }
+
+    public String generateOrderNo() {
         UUID uuid = UUID.randomUUID();
         return "O" + uuid.toString().replace("-", "").substring(0, 3);
     }
@@ -149,6 +179,7 @@ public class OrderServiceImplementation implements OrderService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No orders found for customer Id: " + customerId);
         }
         return orders;
-
     }
+
+
 }

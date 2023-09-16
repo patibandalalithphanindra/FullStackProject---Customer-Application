@@ -50,6 +50,22 @@ public class RewardServiceImplementation implements RewardService {
         reward.setRewardsId(rewardsId);
         reward.setRewardsDate(LocalDateTime.now());
         reward.setOrderNo(orderNo);
+        return rewardRepository.save(reward);
+    }
+
+    public Reward createRewardWithRedeem(String customerId, double orderTotal, String orderNo, double redeemedCoins) {
+        double rewardAmount = 0.05 * orderTotal;
+
+        Reward reward = new Reward();
+        reward.setCustomerId(customerId);
+        reward.setRewardsEarned(rewardAmount);
+        reward.setRewardsRedeemed(redeemedCoins);
+        reward.setRewardsBalance(rewardAmount);
+
+        String rewardsId = generateRewardsId();
+        reward.setRewardsId(rewardsId);
+        reward.setRewardsDate(LocalDateTime.now());
+        reward.setOrderNo(orderNo);
 
         return rewardRepository.save(reward);
     }
@@ -60,6 +76,20 @@ public class RewardServiceImplementation implements RewardService {
         return rewardsId;
     }
 
+    public Double getRewardBalanceOfCustomer(String customerId){
+        List<Reward> rewards = rewardRepository.findByCustomerId(customerId);
+
+        double totalEarned = 0;
+        double totalRedeemed = 0;
+
+        for (Reward reward : rewards) {
+            totalEarned += reward.getRewardsEarned();
+            totalRedeemed += reward.getRewardsRedeemed();
+        }
+
+        double totalBalance = totalEarned - totalRedeemed;
+        return totalBalance;
+    }
 
 
     public List<Double> getRewardDetails(String customerId) {

@@ -1,8 +1,11 @@
 package com.lalith.customer.controller;
 
+import com.lalith.customer.dto.OrderSubmission;
 import com.lalith.customer.exception.CustomErrorResponse;
 import com.lalith.customer.model.Order;
+import com.lalith.customer.model.Reward;
 import com.lalith.customer.service.OrderService;
+import com.lalith.customer.service.RewardService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,19 +20,39 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, RewardService rewardService) {
         this.orderService = orderService;
+        this.rewardService = rewardService;
     }
+
+    private final RewardService rewardService;
 
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> createOrder(@RequestBody Order order) {
-        try {
-            Order createdOrder = orderService.createOrder(order);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
-        } catch (ResponseStatusException e) {
-            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
-            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+    public ResponseEntity<?> createOrder(@RequestBody OrderSubmission orderSubmission) {
+        Order order = orderSubmission.getOrderModalData();
+        String withCoins = orderSubmission.getWithCoinsData();
+        String orderNo = order.getOrderNo();
+        if (orderNo == null) {
+            orderNo = orderService.generateOrderNo();
+            order.setOrderNo(orderNo);
+        }
+        if(withCoins.equalsIgnoreCase("No")) {
+            try {
+                Order createdOrder = orderService.createOrderWithoutRedeem(order);
+                return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
+            } catch (ResponseStatusException e) {
+                CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+                return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+            }
+        }else{
+            try {
+                Order createdNewOrder = orderService.createOrderWithRedeem(order);
+                return ResponseEntity.status(HttpStatus.CREATED).body(createdNewOrder);
+            } catch (ResponseStatusException e) {
+                CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+                return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+            }
         }
     }
 
