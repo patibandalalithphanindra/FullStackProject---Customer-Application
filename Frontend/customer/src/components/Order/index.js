@@ -340,24 +340,34 @@ function Order() {
           <>
             <DialogContent>
               <DialogContentText>
+                <div>
                 <Typography variant="body1">
                   <b>Order No:</b> {selectedOrder.orderNo}
                 </Typography>
+                </div>
+                <div>
                 <Typography variant="body1">
                   <b>Customer ID:</b> {selectedOrder.customerId}
                 </Typography>
+                </div>
+                <div>
                 <Typography variant="body1">
                   <b>Total Order Amount:</b> {selectedOrder.orderTotal}
                 </Typography>
+                </div>
+                <div>
                 <Typography variant="body1">
                   <b>Order Status:</b> {selectedOrder.orderStatus}
                 </Typography>
+                </div>
+                <div>
                 <Typography variant="body1">
                   <b>Order Date:</b> {formatDate(selectedOrder.orderDate)}
                 </Typography>
                 <Typography variant="body1">
                   <b>Last Modified:</b> {formatDate(selectedOrder.lastModifiedTS)}
                 </Typography>
+                </div>
               </DialogContentText>
             </DialogContent>
             <DialogActions>
