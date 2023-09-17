@@ -137,7 +137,7 @@ function Order() {
             prevOrders.filter((order) => order.orderNo !== deleteOrderId)
           );
         } else {
-          toast.error('An error occurred while deleting the order', {
+          toast.error('Order cannot be deleted!', {
             position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
           });
         }
@@ -145,7 +145,7 @@ function Order() {
       })
       .catch((error) => {
         console.error(`Error deleting the order ${deleteOrderId}: ${error.message}`);
-        toast.error('Failed to delete the order. Please try again.', {
+        toast.error('Order cannot be deleted!', {
           position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
         });
         setIsDeleteModalOpen(false);
