@@ -40,7 +40,7 @@ function Navbar() {
           Customer Management System
         </Link>
       </Typography>
-      <Button variant="contained" color="secondary" onClick={openLogoutModal}>
+      <Button variant="contained" color="error" onClick={openLogoutModal}>
         <LogoutIcon/>
       </Button>
 
