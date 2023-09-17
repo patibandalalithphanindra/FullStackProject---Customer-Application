@@ -30,7 +30,7 @@ function Navbar() {
     navigate('/');
     toast.success('Logged out successfully!', {
       position: toast.POSITION.BOTTOM_LEFT
-    , autoClose: 500 });
+    , autoClose: 900 });
   };
 
   return (

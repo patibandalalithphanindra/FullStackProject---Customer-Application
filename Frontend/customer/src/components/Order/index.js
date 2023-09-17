@@ -131,18 +131,24 @@ function Order() {
       .delete(`http://localhost:8080/orders/${deleteOrderId}`, { headers })
       .then((response) => {
         if (response.status === 200) {
-          toast.success('Order has been deleted successfully');
+          toast.success('Order has been deleted successfully', {
+            position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+          });
           setOrders((prevOrders) =>
             prevOrders.filter((order) => order.orderNo !== deleteOrderId)
           );
         } else {
-          toast.error('An error occurred while deleting the order');
+          toast.error('An error occurred while deleting the order', {
+            position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+          });
         }
         setIsDeleteModalOpen(false);
       })
       .catch((error) => {
         console.error(`Error deleting the order ${deleteOrderId}: ${error.message}`);
-        toast.error('Failed to delete the order. Please try again.');
+        toast.error('Failed to delete the order. Please try again.', {
+          position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+        });
         setIsDeleteModalOpen(false);
       });
   };
@@ -185,20 +191,26 @@ function Order() {
         )
         .then((response) => {
           if (response.status === 200) {
-            toast.success('Order has been updated successfully');
+            toast.success('Order has been updated successfully', {
+              position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+            });
             setOrders((prevOrders) =>
               prevOrders.map((order) =>
                 order.orderNo === orderModalData.orderNo ? orderModalData : order
               )
             );
           } else {
-            toast.error('An error occurred while updating the order');
+            toast.error('An error occurred while updating the order!', {
+              position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+            });
           }
           setIsOrderModalOpen(false);
         })
         .catch((error) => {
           console.error(`Error updating the order ${orderModalData.orderNo}: ${error.message}`);
-          toast.error('Failed to update the order. Please try again.');
+          toast.error('Failed to update the order. Please try again!', {
+            position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+          });
           setIsOrderModalOpen(false);
         });
     } else {
@@ -206,17 +218,22 @@ function Order() {
         .post('http://localhost:8080/orders', dataToSend, { headers })
         .then((response) => {
           if (response.status === 201) {
-            toast.success('Order has been added successfully with coins param');
+            toast.success('Order has been added successfully!', {
+              position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+            });
             setOrders((prevOrders) => [...prevOrders, response.data]);
           } else {
-            toast.error('An error occurred while adding the order with coins param');
+            toast.error('An error occurred while adding the order', {
+              position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+            });
           }
           setIsOrderModalOpen(false);
         })
         .catch((error) => {
           console.error('Error adding the order with coin param:', error);
-          console.log(dataToSend);
-          toast.error('Failed to add the order with coin param. Please try again.');
+          toast.error('Failed to add the order with coin param. Please try again.', {
+            position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+          });
           setIsOrderModalOpen(false);
         });
     }
@@ -336,17 +353,17 @@ function Order() {
               <DialogContentText>
                 <div>
                   <Typography variant="body1">
-                    <b>Order No:</b> {selectedOrder.orderNo}
+                    <b>Order No : </b> {selectedOrder.orderNo}
                   </Typography>
                 </div>
                 <div>
                   <Typography variant="body1">
-                    <b>Customer ID:</b> {selectedOrder.customerId}
+                    <b>Customer ID : </b> {selectedOrder.customerId}
                   </Typography>
                 </div>
                 <div>
                   <Typography variant="body1">
-                    <b>Total Order Amount:</b> {selectedOrder.orderTotal}
+                    <b>Total Order Amount : </b> {selectedOrder.orderTotal}
                   </Typography>
                   </div>
                   <div>
@@ -356,12 +373,12 @@ function Order() {
                   </div>
                   <div>
                   <Typography variant="body1">
-                    <b>Order Date:</b> {formatDate(selectedOrder.orderDate)}
+                    <b>Order Date : </b> {formatDate(selectedOrder.orderDate)}
                   </Typography>
                   </div>
                   <div>
                   <Typography variant="body1">
-                    <b>Last Modified:</b> {formatDate(selectedOrder.lastModifiedTS)}
+                    <b>Last Modified : </b> {formatDate(selectedOrder.lastModifiedTS)}
                   </Typography>
                 </div>
               </DialogContentText>

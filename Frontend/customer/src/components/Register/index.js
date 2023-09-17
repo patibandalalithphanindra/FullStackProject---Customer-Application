@@ -30,13 +30,13 @@ function Register() {
         localStorage.setItem('name', response?.data?.name);
         navigate('/homepage');
         toast.success('Registered Successfully!', {
-          position: toast.POSITION.BOTTOM_LEFT
+          position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
         });
       } 
     } catch (error) {
       console.error('Registration error:', error);
       toast.error('Registration failed. Please try again.', {
-        position: toast.POSITION.BOTTOM_LEFT
+        position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
       });
     }
   };

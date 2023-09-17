@@ -6,7 +6,6 @@ import {
   DialogContentText,
   DialogTitle,
   TextField,
-
   Select,
   MenuItem,
   Button,
@@ -77,7 +76,7 @@ const OrderModal = ({
           <div>
 
             <FormControl variant="outlined" fullWidth margin="normal">
-              <InputLabel htmlFor="withCoins">With Coins</InputLabel>
+              <InputLabel htmlFor="withCoins">Redeem Coins</InputLabel>
               <Select
                 label="withCoins"
                 value={withCoins}
