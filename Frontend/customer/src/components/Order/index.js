@@ -51,7 +51,7 @@ function Order() {
   const [orderModalData, setOrderModalData] = useState({
     customerId: '',
     totalItems: 0,
-    orderTotal: 0,
+    orderTotal: 0.0,
     currency: 'INR',
     customerPhoneNo: '',
     orderStatus: 'Created',
