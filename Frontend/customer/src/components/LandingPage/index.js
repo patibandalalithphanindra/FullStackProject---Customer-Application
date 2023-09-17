@@ -6,7 +6,7 @@ import Navbar from '../common/Navbar';
 
 function LandingPage() {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{backgroundImage: `url(/tableimage.jpg)` }}>
       <Navbar/>
       <div className={styles.cardContainer}>
         <Link to="/customers/" className={styles.cardLink}>
