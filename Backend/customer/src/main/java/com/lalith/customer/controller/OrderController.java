@@ -22,10 +22,7 @@ public class OrderController {
 
     public OrderController(OrderService orderService, RewardService rewardService) {
         this.orderService = orderService;
-        this.rewardService = rewardService;
     }
-
-    private final RewardService rewardService;
 
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
