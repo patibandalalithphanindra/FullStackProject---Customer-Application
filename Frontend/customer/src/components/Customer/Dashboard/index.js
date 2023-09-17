@@ -43,7 +43,7 @@ const Dashboard = () => {
     <Container maxWidth="lg" className={styles.container}>
         <Container>
          <Typography variant="h5" className={styles.heading} align="center" marginBottom={2} >
-          CUSTOMER DASHBOARD
+          <b>CUSTOMER DASHBOARD</b>
         </Typography>
         </Container>
       <Paper className={styles.paper}>
@@ -55,14 +55,14 @@ const Dashboard = () => {
 
       <Paper className={styles.paper}>
         <Typography variant="h5" className={styles.heading} marginBottom={2}>
-          Rewards
+          Rewards Summary
         </Typography>
         <Rewards id={customerId} />
       </Paper>
 
       <Paper className={styles.paper} >
         <Typography variant="h5" className={styles.heading} marginBottom={2}>
-          Orders
+          Order History
         </Typography>
         <Orders orders={orders} />
       </Paper>

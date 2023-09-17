@@ -35,9 +35,6 @@ const Rewards = ({ id }) => {
 
   return (
     <Paper elevation={3} sx={{ p: 2 }} >
-      <Typography variant="h6" gutterBottom >
-        Rewards Summary
-      </Typography>
       <Grid container spacing={2} >
         <Grid item xs={4}>
           <Box display="flex" alignItems="center">
@@ -71,8 +68,8 @@ const Rewards = ({ id }) => {
         </Grid>
       </Grid>
       <Divider sx={{ my: 2 }} />
-      <Typography variant="body2" color="textSecondary">
-        Note: Earned Coins represent the total coins earned, Redeemed Coins represent the coins spent or redeemed, and Balance Coins represent the remaining coins.
+      <Typography variant="body2" color="textPrimary">
+        Note : Earned Coins represent the total coins earned, Redeemed Coins represent the coins spent or redeemed, and Balance Coins represent the remaining coins.
       </Typography>
     </Paper>
   );
