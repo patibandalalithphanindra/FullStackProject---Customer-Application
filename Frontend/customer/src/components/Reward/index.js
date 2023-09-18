@@ -9,6 +9,7 @@ import {
   Paper,
   TextField,
   InputAdornment,
+  TablePagination,
 } from '@mui/material';
 import axios from 'axios';
 import styles from './styles.module.css'; 
@@ -18,6 +19,8 @@ import { Search } from '@mui/icons-material';
 function Reward() {
   const [rewards, setRewards] = useState([]);
   const [searchCustomerId, setSearchCustomerId] = useState('');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(() => {
     const response = localStorage.getItem('jwt');
@@ -44,24 +47,42 @@ function Reward() {
     reward.customerId.includes(searchCustomerId)
   );
 
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - filteredRewards.length) : 0;
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const getVisibleRewards = () => {
+    const startIndex = page * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    return filteredRewards.slice(startIndex, endIndex);
+  };
+
   return (
     <>
       <Navbar />
-     <div className={styles.headerpart}> 
-     <h3 className={styles.heading}><b>REWARDS INFORMATION</b></h3>
-     <TextField
-    label="Search Customer ID"
-    variant="outlined"
-    value={searchCustomerId}
-    onChange={handleSearch}
-    InputProps={{
-      endAdornment: (
-        <InputAdornment position="end">
-          <Search />
-        </InputAdornment>
-      ),
-    }}
-  />
+      <div className={styles.headerpart}> 
+        <h3 className={styles.heading}><b>REWARDS INFORMATION</b></h3>
+        <TextField
+          label="Search Customer ID"
+          variant="outlined"
+          value={searchCustomerId}
+          onChange={handleSearch}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <Search />
+              </InputAdornment>
+            ),
+          }}
+        />
       </div>
      
       <TableContainer component={Paper} className={styles.container}>
@@ -75,7 +96,7 @@ function Reward() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredRewards.map((reward) => (
+            {getVisibleRewards().map((reward) => (
               <TableRow key={reward.rewardsId} className={styles.tableRow}>
                 <TableCell>{reward.rewardsId}</TableCell>
                 <TableCell>{reward.customerId}</TableCell>
@@ -83,9 +104,24 @@ function Reward() {
                 <TableCell>{reward.rewardsEarned}</TableCell>
               </TableRow>
             ))}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={4} />
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
+      
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25, 50, { label: 'All', value: filteredRewards.length }]}
+        component="div"
+        count={filteredRewards.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </>
   );
 }
