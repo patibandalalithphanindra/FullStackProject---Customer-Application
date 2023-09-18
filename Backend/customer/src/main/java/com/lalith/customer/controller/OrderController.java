@@ -3,7 +3,6 @@ package com.lalith.customer.controller;
 import com.lalith.customer.dto.OrderSubmission;
 import com.lalith.customer.exception.CustomErrorResponse;
 import com.lalith.customer.model.Order;
-import com.lalith.customer.model.Reward;
 import com.lalith.customer.service.OrderService;
 import com.lalith.customer.service.RewardService;
 import org.springframework.http.HttpStatus;
