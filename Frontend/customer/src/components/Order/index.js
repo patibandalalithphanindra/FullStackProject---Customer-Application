@@ -16,8 +16,7 @@ import {
   DialogTitle,
   Typography,
   InputAdornment,
-  TablePagination,
-  TableFooter,
+  TablePagination
 } from "@mui/material";
 import axios from "axios";
 import styles from "./styles.module.css";
@@ -30,7 +29,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import OrderModal from "./OrderModal";
 import { Search } from "@mui/icons-material";
-import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 
 function Order() {
   const [orders, setOrders] = useState([]);
@@ -357,32 +355,6 @@ function Order() {
               </TableRow>
             )}
           </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[
-                  5,
-                  10,
-                  25,
-                  50,
-                  { label: "All", value: filteredOrders.length },
-                ]}
-                colSpan={5}
-                count={filteredOrders.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: {
-                    "aria-label": "rows per page",
-                  },
-                  native: true,
-                }}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-              />
-            </TableRow>
-          </TableFooter>
         </Table>
       </TableContainer>
       <Dialog open={isDeleteModalOpen} onClose={handleDeleteCancel}>
@@ -448,6 +420,15 @@ function Order() {
         handleSave={handleOrderModalSave}
       />
       <ToastContainer />
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25, 50, { label: 'All', value: filteredOrders.length }]}
+        component="div"
+        count={filteredOrders.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </>
   );
 }

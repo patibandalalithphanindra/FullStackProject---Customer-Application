@@ -15,6 +15,7 @@ import {
   DialogContentText,
   DialogTitle,
   InputAdornment,
+  TablePagination,
 } from '@mui/material';
 import axios from 'axios';
 import styles from './styles.module.css';
@@ -50,6 +51,8 @@ function Customer() {
     status: 'Active',
   });
   const [modalMode, setModalMode] = useState('add');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const fetchCustomerData = () => {
     const response = localStorage.getItem('jwt');
@@ -116,19 +119,19 @@ function Customer() {
         .then((response) => {
           if (response.status === 200 || response.status === 201 ) {
             toast.success('Customer has been added successfully', {
-              position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+              position: toast.POSITION.BOTTOM_LEFT, autoClose: 900
             });
             fetchCustomerData();
           } else {
             toast.error('An error occurred while adding the customer', {
-              position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+              position: toast.POSITION.BOTTOM_LEFT, autoClose: 900
             });
           }
         })
         .catch((error) => {
           console.error('Error adding customer:', error);
           toast.error('Failed to add the customer. Please try again.', {
-            position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+            position: toast.POSITION.BOTTOM_LEFT, autoClose: 900
           });
         });
     } else if (modalMode === 'edit') {
@@ -139,19 +142,19 @@ function Customer() {
         .then((response) => {
           if (response.status === 200) {
             toast.success('Customer information has been updated successfully', {
-              position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+              position: toast.POSITION.BOTTOM_LEFT, autoClose: 900
             });
             fetchCustomerData();
           } else {
             toast.error('An error occurred while updating the customer', {
-              position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+              position: toast.POSITION.BOTTOM_LEFT, autoClose: 900
             });
           }
         })
         .catch((error) => {
           console.error('Error updating customer:', error);
           toast.error('Failed to update customer data. Please try again.', {
-            position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+            position: toast.POSITION.BOTTOM_LEFT, autoClose: 900
           });
         });
     }
@@ -176,14 +179,14 @@ function Customer() {
       .then((response) => {
         if (response.status === 200) {
           toast.success('Customer has been deleted successfully', {
-            position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+            position: toast.POSITION.BOTTOM_LEFT, autoClose: 900
           });
           setCustomers((prevItems) =>
             prevItems.filter((customer) => customer.customerId !== deleteCustomerId)
           );
         } else {
           toast.error('An error occurred while deleting the customer', {
-            position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+            position: toast.POSITION.BOTTOM_LEFT, autoClose: 900
           });
         }
         setIsDeleteModalOpen(false);
@@ -191,7 +194,7 @@ function Customer() {
       .catch((error) => {
         console.error(`Error deleting the customer ${deleteCustomerId}: ${error.message}`);
         toast.error('Customer is in Active status, Hence cannot be deleted!', {
-          position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+          position: toast.POSITION.BOTTOM_LEFT, autoClose: 900
         });
         setIsDeleteModalOpen(false);
       });
@@ -207,8 +210,26 @@ function Customer() {
   };
 
   const filteredCustomers = customers.filter((customer) =>
-    customer.firstName.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  customer.firstName.toLowerCase().includes(searchQuery.toLowerCase())
+);
+
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - filteredCustomers.length) : 0;
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const getVisibleCustomers = () => {
+    const startIndex = page * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    return filteredCustomers.slice(startIndex, endIndex);
+  };
 
   const renderCustomerModal = () => {
     return (
@@ -231,20 +252,20 @@ function Customer() {
           <b>CUSTOMERS INFORMATION</b>
         </h3>
         <TextField
-        label="Search Name"
-        id="filled-basic"
-        variant="outlined"
-        value={searchQuery}
-        onChange={handleSearch}
-        className={styles.search}
-        InputProps={{
-        endAdornment: (
-          <InputAdornment position="end">
-            <Search />
-          </InputAdornment>
-        ),
-      }}
-    />
+          label="Search Name"
+          id="filled-basic"
+          variant="outlined"
+          value={searchQuery}
+          onChange={handleSearch}
+          className={styles.search}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <Search />
+              </InputAdornment>
+            ),
+          }}
+        />
         <Button
           style={{ maxWidth: '200px', maxHeight: '40px', marginTop: '8px' }}
           variant="contained"
@@ -276,7 +297,7 @@ function Customer() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredCustomers.map((customer) => (
+            {getVisibleCustomers().map((customer) => (
               <TableRow key={customer.customerId} className={styles.tableRow}>
                 <TableCell>{customer.customerId}</TableCell>
                 <TableCell>{customer.firstName}</TableCell>
@@ -312,6 +333,11 @@ function Customer() {
                 </TableCell>
               </TableRow>
             ))}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={5} />
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
@@ -333,6 +359,15 @@ function Customer() {
       </Dialog>
       <ToastContainer />
       {renderCustomerModal()}
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25, 50, { label: 'All', value: filteredCustomers.length }]}
+        component="div"
+        count={filteredCustomers.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </>
   );
 }
