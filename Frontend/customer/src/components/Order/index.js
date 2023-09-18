@@ -68,6 +68,17 @@ function Order() {
       });
   }, []);
 
+  const formatDate = (dateString) => {
+    const options = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit'
+    };
+    return new Date(dateString).toLocaleDateString('en-US', options);
+  };
+
   const handleAddition = () => {
     setOrderModalData({
       customerId: "",
@@ -397,9 +408,17 @@ function Order() {
                 </div>
                 <div>
                   <Typography variant="body1">
-                    <b>Order Status:</b> {selectedOrder.orderStatus}
+                    <b>Order Status : </b> {selectedOrder.orderStatus}
                   </Typography>
                 </div>
+                  <div>
+                  <Typography variant="body1">
+                    <b>Order Date : </b> {formatDate(selectedOrder.orderDate)}
+                  </Typography>
+                  </div>
+                  <Typography variant="body1">
+                    <b>Last Modified : </b> {formatDate(selectedOrder.lastModifiedTS)}
+                  </Typography>
               </DialogContentText>
             </DialogContent>
             <DialogActions>
