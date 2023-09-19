@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogActions,
@@ -32,6 +32,18 @@ const OrderModal = ({
   const [withCoinsValid, setWithCoinsValid] = useState(true);
   const [orderStatusValid, setOrderStatusValid] = useState(true);
 
+  useEffect(() => {
+    if (isOpen) {
+      setCustomerIdValid(true);
+      setTotalItemsValid(true);
+      setOrderTotalValid(true);
+      setCurrencyValid(true);
+      setCustomerPhoneNoValid(true);
+      setWithCoinsValid(true);
+      setOrderStatusValid(true);
+    }
+  }, [isOpen]);
+
   const handleSaveClick = () => {
     if (
       orderData.customerId &&
@@ -56,7 +68,7 @@ const OrderModal = ({
 
   return (
     <Dialog open={isOpen} onClose={handleClose}>
-      <DialogTitle>{orderData.orderNo ? 'Edit Order' : 'Add Order'}</DialogTitle>
+      <DialogTitle>{orderData.orderNo ? 'Edit an existing Order' : 'Add a new Order'}</DialogTitle>
       <DialogContent style={{ paddingTop: '8px' }}>
         <DialogContentText>
           <Grid container spacing={2}>
