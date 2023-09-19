@@ -7,6 +7,16 @@
   padding: 10px;
 }
 
+.whole {
+  display: flex;
+  align-items: center;
+}
+
+.left{
+  cursor: pointer;
+  margin-right: 10px;
+}
+
 .modal {
   position: absolute;
   top: 50%;

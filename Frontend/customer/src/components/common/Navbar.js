@@ -12,10 +12,15 @@ import {
 import LogoutIcon from '@mui/icons-material/Logout';
 import styles from './styles.module.css';
 import { toast } from 'react-toastify';
+import { ArrowBack } from '@mui/icons-material';
 
 function Navbar() {
   const navigate = useNavigate();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+
+  const goBack = () => {
+		navigate(-1);
+	}
 
   const openLogoutModal = () => {
     setIsLogoutModalOpen(true);
@@ -35,7 +40,8 @@ function Navbar() {
 
   return (
     <div className={styles.header}>
-      <Typography variant="h6" style={{ color: '#fff' }}>
+      <Typography variant="h6" style={{ color: '#fff' }} className={styles.whole}>
+      <ArrowBack onClick={goBack} className={styles.left}/>
         <Link to="/homepage" style={{ textDecoration: 'none', color: 'white' }}>
           Customer Management System
         </Link>
