@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Paper, Typography } from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
 import Profile from './Profile';
 import Orders from './Orders';
 import Rewards from './Rewards';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import styles from './styles.module.css';
 
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const { customerId } = useParams();
   const [orders, setOrders] = useState([]);
   const [customer, setCustomer] = useState({});
+
+
+  const goBack = () => {
+		navigate(-1);
+	}
 
   useEffect(() => {
     const response = localStorage.getItem('jwt');
@@ -42,7 +49,8 @@ const Dashboard = () => {
   return (
     <Container maxWidth="lg" className={styles.container}>
         <Container>
-         <Typography variant="h5" className={styles.heading} align="center" marginBottom={2} >
+         <Typography variant="h5" className={styles.heading} align="center" marginBottom={2}>
+          <ArrowBack onClick={goBack} className={styles.back}/>
           <b>CUSTOMER DASHBOARD</b>
         </Typography>
         </Container>

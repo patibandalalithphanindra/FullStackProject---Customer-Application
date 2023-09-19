@@ -4,11 +4,12 @@ import { Table, TableHead, TableRow, TableCell, TableBody, Paper, TableContainer
 const Orders = ({ orders }) => {
   const formatDate = (dateString) => {
     const options = {
-      year: 'numeric',
-      month: '2-digit',
       day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
+      hour12: true
     };
     return new Date(dateString).toLocaleDateString('en-US', options);
   };
