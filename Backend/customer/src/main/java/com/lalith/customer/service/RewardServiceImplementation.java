@@ -86,9 +86,7 @@ public class RewardServiceImplementation implements RewardService {
             totalEarned += reward.getRewardsEarned();
             totalRedeemed += reward.getRewardsRedeemed();
         }
-
-        double totalBalance = totalEarned - totalRedeemed;
-        return totalBalance;
+        return totalEarned - totalRedeemed;
     }
 
 
