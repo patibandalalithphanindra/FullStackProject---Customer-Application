@@ -16,7 +16,7 @@ import {
   DialogTitle,
   Typography,
   InputAdornment,
-  TablePagination
+  TablePagination,
 } from "@mui/material";
 import axios from "axios";
 import styles from "./styles.module.css";
@@ -79,7 +79,6 @@ function Order() {
     };
     return new Date(dateString).toLocaleDateString('en-US', options);
   };
-  
 
   const handleAddition = () => {
     setOrderModalData({
@@ -283,29 +282,36 @@ function Order() {
     <>
       <Navbar />
       <div className={styles.headingContainer}>
-        <h3 className={styles.heading}>
+        <div className={styles.heading}>
           <b>ORDERS INFORMATION</b>
-        </h3>
-        <TextField
-          label="Search Customer ID"
-          variant="outlined"
-          value={searchCustomerId}
-          onChange={handleSearch}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <Search />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <Button
-          style={{ maxWidth: "200px", maxHeight: "40px", marginTop: "8px" }}
-          variant="contained"
-          className={`${styles.button} ${styles.addOrderButton}`}
-          onClick={handleAddition}>
-          <AddIcon />
-        </Button>
+        </div>
+        <div className={styles.actionsContainer}>
+        <div className={styles.search}>
+          <label className={styles.label} >Search for a Customer :  </label>
+          <TextField
+            label="Search Customer ID"
+            size="small"
+            variant="outlined"
+            value={searchCustomerId}
+            onChange={handleSearch}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Search />
+                </InputAdornment>
+              ),
+            }}
+          />
+          </div>
+          <Button
+            style={{ maxWidth: "200px", maxHeight: "40px"}}
+            variant="contained"
+            className={`${styles.button} ${styles.addOrderButton}`}
+            onClick={handleAddition}
+          >
+            <AddIcon />
+          </Button>
+        </div>
       </div>
       <TableContainer component={Paper} className={styles.container}>
         <Table>
@@ -341,7 +347,8 @@ function Order() {
                     variant="contained"
                     color="primary"
                     className={`${styles.button} ${styles.primaryButton}`}
-                    onClick={() => handleView(order.orderNo)}>
+                    onClick={() => handleView(order.orderNo)}
+                  >
                     <VisibilityIcon />
                   </Button>
                   <Button
@@ -349,14 +356,16 @@ function Order() {
                     variant="contained"
                     color="success"
                     className={`${styles.button} ${styles.secondaryButton}`}
-                    onClick={() => handleUpdate(order.orderNo)}>
+                    onClick={() => handleUpdate(order.orderNo)}
+                  >
                     <EditIcon />
                   </Button>
                   <Button
                     variant="contained"
                     color="error"
                     className={`${styles.button} ${styles.tertiaryButton}`}
-                    onClick={() => handleDelete(order.orderNo)}>
+                    onClick={() => handleDelete(order.orderNo)}
+                  >
                     <DeleteIcon />
                   </Button>
                 </TableCell>
@@ -455,3 +464,4 @@ function Order() {
 }
 
 export default Order;
+
