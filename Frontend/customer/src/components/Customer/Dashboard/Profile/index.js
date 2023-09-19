@@ -13,6 +13,7 @@ const Profile = ({ customer }) => {
     state,
     zipCode,
     country,
+    status
   } = customer;
 
   return (
@@ -32,6 +33,9 @@ const Profile = ({ customer }) => {
             </Typography>
             <Typography color="textPrimary" className={styles.profile}>
             <b> Email Id : </b>{emailId}
+            </Typography>
+            <Typography color="textPrimary" className={styles.profile}>
+            <b> Status : </b>{status}
             </Typography>
           </Grid>
           <Grid item xs={3}>
