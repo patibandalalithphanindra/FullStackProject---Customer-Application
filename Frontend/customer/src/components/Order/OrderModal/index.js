@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogActions,
@@ -12,6 +12,7 @@ import {
   FormControl,
   InputLabel,
   Grid,
+  FormHelperText,
 } from '@mui/material';
 
 const OrderModal = ({
@@ -23,6 +24,36 @@ const OrderModal = ({
   setOrderData,
   handleSave,
 }) => {
+  const [customerIdValid, setCustomerIdValid] = useState(true);
+  const [totalItemsValid, setTotalItemsValid] = useState(true);
+  const [orderTotalValid, setOrderTotalValid] = useState(true);
+  const [currencyValid, setCurrencyValid] = useState(true);
+  const [customerPhoneNoValid, setCustomerPhoneNoValid] = useState(true);
+  const [withCoinsValid, setWithCoinsValid] = useState(true);
+  const [orderStatusValid, setOrderStatusValid] = useState(true);
+
+  const handleSaveClick = () => {
+    if (
+      orderData.customerId &&
+      orderData.totalItems &&
+      orderData.orderTotal &&
+      orderData.currency &&
+      orderData.customerPhoneNo &&
+      withCoins &&
+      orderData.orderStatus
+    ) {
+      handleSave();
+    } else {
+      setCustomerIdValid(!!orderData.customerId);
+      setTotalItemsValid(!!orderData.totalItems);
+      setOrderTotalValid(!!orderData.orderTotal);
+      setCurrencyValid(!!orderData.currency);
+      setCustomerPhoneNoValid(!!orderData.customerPhoneNo);
+      setWithCoinsValid(!!withCoins);
+      setOrderStatusValid(!!orderData.orderStatus);
+    }
+  };
+
   return (
     <Dialog open={isOpen} onClose={handleClose}>
       <DialogTitle>{orderData.orderNo ? 'Edit Order' : 'Add Order'}</DialogTitle>
@@ -34,29 +65,41 @@ const OrderModal = ({
                 label="Customer ID"
                 variant="outlined"
                 fullWidth
+                required
                 value={orderData.customerId}
                 onChange={(e) => setOrderData({ ...orderData, customerId: e.target.value })}
               />
+              {!customerIdValid && (
+                <FormHelperText error>This field is required.</FormHelperText>
+              )}
             </Grid>
             <Grid item xs={6}>
               <TextField
                 label="Total Items"
                 variant="outlined"
                 fullWidth
+                required
                 type="number"
                 value={orderData.totalItems}
                 onChange={(e) => setOrderData({ ...orderData, totalItems: e.target.value })}
               />
+              {!totalItemsValid && (
+                <FormHelperText error>This field is required.</FormHelperText>
+              )}
             </Grid>
             <Grid item xs={6}>
               <TextField
                 label="Order Total"
                 variant="outlined"
                 fullWidth
+                required
                 type="number"
                 value={orderData.orderTotal}
                 onChange={(e) => setOrderData({ ...orderData, orderTotal: e.target.value })}
               />
+              {!orderTotalValid && (
+                <FormHelperText error>This field is required.</FormHelperText>
+              )}
             </Grid>
             <Grid item xs={6}>
               <FormControl variant="outlined" fullWidth>
@@ -69,6 +112,7 @@ const OrderModal = ({
                   <MenuItem value="INR">INR</MenuItem>
                   <MenuItem value="$">$</MenuItem>
                 </Select>
+                {!currencyValid && <FormHelperText error>This field is required.</FormHelperText>}
               </FormControl>
             </Grid>
             <Grid item xs={6}>
@@ -76,14 +120,18 @@ const OrderModal = ({
                 label="Customer Phone Number"
                 variant="outlined"
                 fullWidth
+                required
                 value={orderData.customerPhoneNo}
                 onChange={(e) =>
                   setOrderData({ ...orderData, customerPhoneNo: e.target.value })
                 }
               />
+              {!customerPhoneNoValid && (
+                <FormHelperText error>This field is required.</FormHelperText>
+              )}
             </Grid>
             <Grid item xs={6}>
-              <FormControl variant="outlined" fullWidth >
+              <FormControl variant="outlined" fullWidth>
                 <InputLabel htmlFor="withCoins">Redeem(?)</InputLabel>
                 <Select
                   label="withCoins"
@@ -93,6 +141,7 @@ const OrderModal = ({
                   <MenuItem value="yes">Yes</MenuItem>
                   <MenuItem value="no">No</MenuItem>
                 </Select>
+                {!withCoinsValid && <FormHelperText error>This field is required.</FormHelperText>}
               </FormControl>
             </Grid>
             <Grid item xs={6}>
@@ -106,6 +155,9 @@ const OrderModal = ({
                   <MenuItem value="Created">Created</MenuItem>
                   <MenuItem value="Shipped">Shipped</MenuItem>
                 </Select>
+                {!orderStatusValid && (
+                  <FormHelperText error>This field is required.</FormHelperText>
+                )}
               </FormControl>
             </Grid>
           </Grid>
@@ -115,7 +167,7 @@ const OrderModal = ({
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleSave} color="primary">
+        <Button onClick={handleSaveClick} color="primary">
           Save
         </Button>
       </DialogActions>

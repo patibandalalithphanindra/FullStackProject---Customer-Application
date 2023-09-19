@@ -26,8 +26,8 @@ function CustomerModal({ isOpen, handleClose, customer, setCustomer, mode, handl
 
   return (
     <Dialog open={isOpen} onClose={handleClose}>
-      <DialogTitle>{isEditMode ? 'Edit Customer' : 'Add Customer'}</DialogTitle>
-      <DialogContent  style={{ paddingTop: '16px' }}>
+      <DialogTitle>{isEditMode ? 'Edit an existing Customer' : 'Add a new Customer'}</DialogTitle>
+      <DialogContent  style={{ paddingTop: '8px' }}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField

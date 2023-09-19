@@ -238,7 +238,7 @@ function Order() {
       axios
         .post("http://localhost:8080/orders", dataToSend, { headers })
         .then((response) => {
-          if (response.status === 200) {
+          if (response.status === 200 || response.status === 201) {
             toast.success("Order has been added successfully", {
               position: toast.POSITION.BOTTOM_LEFT,
               autoClose: 900,
