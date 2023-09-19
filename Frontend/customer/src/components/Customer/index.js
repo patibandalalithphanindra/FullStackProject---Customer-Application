@@ -50,7 +50,6 @@ function Customer() {
     emailId: '',
     status: 'Active',
   });
-  const [modalMode, setModalMode] = useState('add');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -80,7 +79,6 @@ function Customer() {
   };
 
   const handleAddition = () => {
-    setModalMode('add');
     setCustomerData({
       firstName: '',
       lastName: '',
@@ -98,7 +96,6 @@ function Customer() {
   };
 
   const handleUpdate = (customerId) => {
-    setModalMode('edit');
     const customerToUpdate = customers.find((customer) => customer.customerId === customerId);
     setCustomerData(customerToUpdate);
     setIsCustomerModalOpen(true);
@@ -111,7 +108,7 @@ function Customer() {
       'Content-Type': 'application/json',
     };
 
-    if (modalMode === 'add') {
+    if (!customerData.customerId) {
       axios
         .post('http://localhost:8080/customers', customerData, {
           headers,
@@ -134,7 +131,7 @@ function Customer() {
             position: toast.POSITION.BOTTOM_LEFT, autoClose: 900
           });
         });
-    } else if (modalMode === 'edit') {
+    } else if (customerData.customerId) {
       axios
         .put(`http://localhost:8080/customers/${customerData.customerId}`, customerData, {
           headers,
@@ -238,7 +235,6 @@ function Customer() {
         handleClose={() => setIsCustomerModalOpen(false)}
         customer={customerData}
         setCustomer={(data) => setCustomerData(data)}
-        mode={modalMode}
         handleSave={handleSaveCustomer}
       />
     );
