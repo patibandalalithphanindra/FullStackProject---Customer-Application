@@ -79,6 +79,7 @@ const OrderModal = ({
                 fullWidth
                 required
                 value={orderData.customerId}
+                disabled={orderData.orderNo !== undefined}
                 onChange={(e) => setOrderData({ ...orderData, customerId: e.target.value })}
               />
               {!customerIdValid && (
@@ -93,6 +94,7 @@ const OrderModal = ({
                 required
                 type="number"
                 value={orderData.totalItems}
+                disabled={orderData.orderNo !== undefined}
                 onChange={(e) => setOrderData({ ...orderData, totalItems: e.target.value })}
               />
               {!totalItemsValid && (
@@ -107,6 +109,7 @@ const OrderModal = ({
                 required
                 type="number"
                 value={orderData.orderTotal}
+                disabled={orderData.orderNo !== undefined}
                 onChange={(e) => setOrderData({ ...orderData, orderTotal: e.target.value })}
               />
               {!orderTotalValid && (
@@ -120,6 +123,7 @@ const OrderModal = ({
                   label="Currency"
                   value={orderData.currency}
                   onChange={(e) => setOrderData({ ...orderData, currency: e.target.value })}
+                  disabled={orderData.orderNo !== undefined}
                 >
                   <MenuItem value="INR">INR</MenuItem>
                   <MenuItem value="$">$</MenuItem>
@@ -134,6 +138,7 @@ const OrderModal = ({
                 fullWidth
                 required
                 value={orderData.customerPhoneNo}
+                disabled={orderData.orderNo !== undefined}
                 onChange={(e) =>
                   setOrderData({ ...orderData, customerPhoneNo: e.target.value })
                 }
@@ -149,6 +154,7 @@ const OrderModal = ({
                   label="withCoins"
                   value={withCoins}
                   onChange={(e) => setWithCoins(e.target.value)}
+                  disabled={orderData.orderNo !== undefined}
                 >
                   <MenuItem value="yes">Yes</MenuItem>
                   <MenuItem value="no">No</MenuItem>

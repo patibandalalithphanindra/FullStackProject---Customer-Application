@@ -91,6 +91,7 @@ const CustomerModal = ({
               fullWidth
               required
               value={customer.firstName}
+              disabled={customer.customerId!== undefined}
               onChange={(e) => setCustomer({ ...customer, firstName: e.target.value })}
             />
             {!firstNameValid && <FormHelperText error>This field is required.</FormHelperText>}
@@ -102,6 +103,7 @@ const CustomerModal = ({
               fullWidth
               required
               value={customer.lastName}
+              disabled={customer.customerId!== undefined}
               onChange={(e) => setCustomer({ ...customer, lastName: e.target.value })}
             />
             {!lastNameValid && <FormHelperText error>This field is required.</FormHelperText>}
@@ -178,6 +180,7 @@ const CustomerModal = ({
               fullWidth
               required
               value={customer.phoneNo}
+              disabled={customer.customerId!== undefined}
               onChange={(e) => setCustomer({ ...customer, phoneNo: e.target.value })}
             />
             {!phoneNoValid && <FormHelperText error>This field is required.</FormHelperText>}
@@ -189,6 +192,7 @@ const CustomerModal = ({
               fullWidth
               required
               value={customer.emailId}
+              disabled={customer.customerId!== undefined}
               onChange={(e) => setCustomer({ ...customer, emailId: e.target.value })}
             />
             {!emailIdValid && <FormHelperText error>This field is required.</FormHelperText>}
