@@ -71,7 +71,7 @@ function Reward() {
       <div className={styles.headerpart}> 
         <h3 className={styles.heading}><b>REWARDS INFORMATION</b></h3>
         <div className={styles.search}>
-        <label className={styles.label}>Search for Customer : </label>
+        <label className={styles.label}>Search for a Customer : </label>
         <TextField
           label="Search Customer ID"
           size="small"
