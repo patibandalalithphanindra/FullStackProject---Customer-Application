@@ -333,7 +333,7 @@ function Order() {
               <TableRow key={order.orderNo} className={styles.tableRow}>
                 <TableCell>{order.orderNo}</TableCell>
                 <TableCell>{order.customerId}</TableCell>
-                <TableCell>{order.orderTotal}</TableCell>
+                <TableCell>{order.orderTotal} {order.currency}</TableCell>
                 <TableCell>{order.orderStatus}</TableCell>
                 <TableCell>
                   <Button
@@ -405,7 +405,7 @@ function Order() {
                 </div>
                 <div>
                   <Typography variant="body1">
-                    <b>Total Order Amount : </b> {selectedOrder.orderTotal}
+                    <b>Total Order Amount : </b> {selectedOrder.orderTotal} {selectedOrder.currency}
                   </Typography>
                 </div>
                 <div>
