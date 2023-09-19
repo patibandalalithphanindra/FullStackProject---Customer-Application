@@ -247,9 +247,13 @@ function Customer() {
         <h3 className={styles.heading}>
           <b>CUSTOMERS INFORMATION</b>
         </h3>
+        <div className={styles.actionsContainer}>
+        <div className={styles.search}>
+          <label className={styles.label} >Search for a Customer :  </label>
         <TextField
           label="Search Name"
           id="filled-basic"
+          size="small"
           variant="outlined"
           value={searchQuery}
           onChange={handleSearch}
@@ -262,6 +266,7 @@ function Customer() {
             ),
           }}
         />
+         </div>
         <Button
           style={{ maxWidth: '200px', maxHeight: '40px', marginTop: '8px' }}
           variant="contained"
@@ -270,6 +275,7 @@ function Customer() {
         >
           <AddIcon/>
         </Button>
+      </div>
       </div>
       <TableContainer component={Paper} className={styles.container}>
         <Table>

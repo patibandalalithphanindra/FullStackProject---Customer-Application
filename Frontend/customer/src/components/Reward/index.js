@@ -70,11 +70,15 @@ function Reward() {
       <Navbar />
       <div className={styles.headerpart}> 
         <h3 className={styles.heading}><b>REWARDS INFORMATION</b></h3>
+        <div className={styles.search}>
+        <label className={styles.label}>Search for Customer : </label>
         <TextField
           label="Search Customer ID"
+          size="small"
           variant="outlined"
           value={searchCustomerId}
           onChange={handleSearch}
+          style={{maxWidth:'250px'}}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -83,6 +87,7 @@ function Reward() {
             ),
           }}
         />
+        </div>
       </div>
      
       <TableContainer component={Paper} className={styles.container}>
