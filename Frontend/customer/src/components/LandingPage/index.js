@@ -37,7 +37,7 @@ function LandingPage() {
   return (
     <div className={styles.container} style={{ }}>
       <Navbar/ >
-      <Paper elevation={3} sx={{ p: 2,width: "300", marginTop:"20px",marginLeft:"190px", marginRight:"190px" }}  >
+      <Paper elevation={3} sx={{ p: 2,width: "300", marginTop:"20px",marginLeft:"200px", marginRight:"200px" }}  >
       <Grid align="center" container spacing={6} >
         <Grid item xs={4}>
           <Box display="flex" alignItems="center">
@@ -72,7 +72,7 @@ function LandingPage() {
       </Grid>
       <Divider sx={{ my: 2 }} />
       <Typography variant="body2" color="textPrimary">
-        Note : Customers represent the total no of customers onboarded, Orders represent the total no of orders placed, and Rewards represent the total no of rewards earned by customers.
+        <b>Welcome! Click on respective card to know more detailed info. </b>
       </Typography>
     </Paper>
       <div className={styles.cardContainer}>
