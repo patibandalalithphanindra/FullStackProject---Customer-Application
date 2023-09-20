@@ -74,6 +74,12 @@ public class RewardServiceImplementation implements RewardService {
         return "R" + uuid.toString().replace("-", "").substring(0, 3);
     }
 
+    @Override
+    public int getRewardsCount() {
+        List<Reward> rewards = rewardRepository.findAll();
+        return rewards.size();
+    }
+
     public int getRewardBalanceOfCustomer(String customerId) {
         List<Reward> rewards = rewardRepository.findByCustomerId(customerId);
 

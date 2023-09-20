@@ -11,4 +11,5 @@ public interface RewardService {
     List<Integer> getRewardDetails(String customerId);
     int getRewardBalanceOfCustomer(String customerId);
     List<Reward> getAllRewards();
+    int getRewardsCount();
 }

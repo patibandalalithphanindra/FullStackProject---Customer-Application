@@ -11,6 +11,7 @@ public interface CustomerService {
     Customer createCustomer(Customer customer);
     Customer updateCustomer(String customerId, Customer updatedCustomer);
     String deleteCustomer(String customerId);
-
+    int getCustomersCount();
     Optional<Customer> getCustomerByCustomerId(String customerId);
+
 }

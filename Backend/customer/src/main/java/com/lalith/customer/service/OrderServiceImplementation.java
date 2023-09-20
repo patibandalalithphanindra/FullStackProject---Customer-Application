@@ -203,5 +203,11 @@ public class OrderServiceImplementation implements OrderService {
         return orders;
     }
 
+    @Override
+    public int getOrdersCount() {
+        List<Order> orders = orderRepository.findAll();
+        return orders.size();
+    }
+
 
 }

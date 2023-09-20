@@ -32,6 +32,12 @@ public class CustomerServiceImplementation implements CustomerService {
     }
 
     @Override
+    public int getCustomersCount() {
+        List<Customer> customers = customerRepository.findAll();
+        return customers.size();
+    }
+
+    @Override
     public Optional<Customer> getCustomerByEmailId(String emailId) {
         return customerRepository.findByEmailId(emailId);
     }

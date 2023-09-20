@@ -3,6 +3,8 @@ package com.lalith.customer.controller;
 import com.lalith.customer.exception.CustomErrorResponse;
 import com.lalith.customer.model.Customer;
 import com.lalith.customer.service.CustomerService;
+import com.lalith.customer.service.OrderService;
+import com.lalith.customer.service.RewardService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,9 +23,13 @@ import java.util.Optional;
 @Validated
 public class CustomerController {
     private final CustomerService customerService;
+    private final RewardService rewardService;
+    private final OrderService orderService;
 
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService, RewardService rewardService, OrderService orderService) {
         this.customerService = customerService;
+        this.rewardService = rewardService;
+        this.orderService = orderService;
     }
 
     @PostMapping
@@ -113,6 +120,24 @@ public class CustomerController {
         try {
             String response = customerService.deleteCustomer(customerId);
             return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (ResponseStatusException e) {
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+        }
+    }
+
+    @GetMapping("/counts")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<?> getAllCounts() {
+        try {
+            int customersCount = customerService.getCustomersCount();
+            int rewardsCount = rewardService.getRewardsCount();
+            int ordersCount = orderService.getOrdersCount();
+            List<Integer> count = new ArrayList<>();
+            count.add(0,customersCount);
+            count.add(1,rewardsCount);
+            count.add(2,ordersCount);
+            return ResponseEntity.ok(count);
         } catch (ResponseStatusException e) {
             CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
             return ResponseEntity.status(e.getStatusCode()).body(errorResponse);

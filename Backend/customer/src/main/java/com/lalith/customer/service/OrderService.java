@@ -7,6 +7,7 @@ public interface OrderService {
 
     List<Order> getAllOrders();
     Order getOrderByOrderNo(String orderNo);
+    int getOrdersCount();
     String generateOrderNo();
     List<Order> getOrdersByPhoneNo(String phoneNo);
     List<Order> getOrdersByCustomerId(String customerId);
