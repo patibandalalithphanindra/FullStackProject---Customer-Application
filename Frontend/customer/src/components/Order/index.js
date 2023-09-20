@@ -27,6 +27,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
+import CustomerDetailsModal from "./CustomerDetailsModal";
 import OrderModal from "./OrderModal";
 import { Search } from "@mui/icons-material";
 
@@ -37,6 +38,7 @@ function Order() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const [selectedCustomerId, setSelectedCustomerId] = useState("");
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orderModalData, setOrderModalData] = useState({
     customerId: "",
@@ -70,14 +72,14 @@ function Order() {
 
   const formatDate = (dateString) => {
     const options = {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
     };
-    return new Date(dateString).toLocaleDateString('en-US', options);
+    return new Date(dateString).toLocaleDateString("en-US", options);
   };
 
   const handleAddition = () => {
@@ -286,25 +288,25 @@ function Order() {
           <b>ORDERS INFORMATION</b>
         </div>
         <div className={styles.actionsContainer}>
-        <div className={styles.search}>
-          <label className={styles.label} >Search for a Customer :  </label>
-          <TextField
-            label="Search Customer ID"
-            size="small"
-            variant="outlined"
-            value={searchCustomerId}
-            onChange={handleSearch}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-          />
+          <div className={styles.search}>
+            <label className={styles.label}>Search for a Customer : </label>
+            <TextField
+              label="Search Customer ID"
+              size="small"
+              variant="outlined"
+              value={searchCustomerId}
+              onChange={handleSearch}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Search />
+                  </InputAdornment>
+                ),
+              }}
+            />
           </div>
           <Button
-            style={{ maxWidth: "200px", maxHeight: "40px"}}
+            style={{ maxWidth: "200px", maxHeight: "40px" }}
             variant="contained"
             className={`${styles.button} ${styles.addOrderButton}`}
             onClick={handleAddition}
@@ -338,7 +340,14 @@ function Order() {
             {getVisibleOrders().map((order) => (
               <TableRow key={order.orderNo} className={styles.tableRow}>
                 <TableCell>{order.orderNo}</TableCell>
-                <TableCell>{order.customerId}</TableCell>
+                <TableCell>
+                  <span
+                    style={{ cursor: "pointer", textDecoration: "none" }}
+                    onClick={() => setSelectedCustomerId(order.customerId)}
+                  >
+                    {order.customerId}
+                  </span>
+                </TableCell>
                 <TableCell>{order.orderTotal} {order.currency}</TableCell>
                 <TableCell>{order.orderStatus}</TableCell>
                 <TableCell>
@@ -422,14 +431,14 @@ function Order() {
                     <b>Order Status : </b> {selectedOrder.orderStatus}
                   </Typography>
                 </div>
-                  <div>
+                <div>
                   <Typography variant="body1">
                     <b>Order Date : </b> {formatDate(selectedOrder.orderDate)}
                   </Typography>
-                  </div>
-                  <Typography variant="body1">
-                    <b>Last Modified : </b> {formatDate(selectedOrder.lastModifiedTS)}
-                  </Typography>
+                </div>
+                <Typography variant="body1">
+                  <b>Last Modified : </b> {formatDate(selectedOrder.lastModifiedTS)}
+                </Typography>
               </DialogContentText>
             </DialogContent>
             <DialogActions>
@@ -449,9 +458,20 @@ function Order() {
         setOrderData={setOrderModalData}
         handleSave={handleOrderModalSave}
       />
+      <CustomerDetailsModal
+        customerId={selectedCustomerId}
+        isOpen={Boolean(selectedCustomerId)}
+        handleClose={() => setSelectedCustomerId(null)}
+      />
       <ToastContainer />
       <TablePagination
-        rowsPerPageOptions={[5, 10, 25, 50, { label: 'All', value: filteredOrders.length }]}
+        rowsPerPageOptions={[
+          5,
+          10,
+          25,
+          50,
+          { label: "All", value: filteredOrders.length },
+        ]}
         component="div"
         count={filteredOrders.length}
         rowsPerPage={rowsPerPage}
@@ -464,4 +484,3 @@ function Order() {
 }
 
 export default Order;
-
