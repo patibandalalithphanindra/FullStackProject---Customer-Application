@@ -41,8 +41,8 @@ public class RewardController {
 
     @GetMapping("/rewardDetails/{customerId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<List<Double>> getRewardBalance(@PathVariable String customerId) {
-        List<Double> rewardBalance = rewardService.getRewardDetails(customerId);
+    public ResponseEntity<List<Integer>> getRewardBalance(@PathVariable String customerId) {
+        List<Integer> rewardBalance = rewardService.getRewardDetails(customerId);
         return ResponseEntity.ok(rewardBalance);
     }
 }

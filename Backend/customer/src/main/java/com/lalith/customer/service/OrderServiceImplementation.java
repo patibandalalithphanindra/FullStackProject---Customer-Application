@@ -1,7 +1,9 @@
 package com.lalith.customer.service;
 
+import com.lalith.customer.model.Customer;
 import com.lalith.customer.model.Order;
 import com.lalith.customer.model.Reward;
+import com.lalith.customer.repository.CustomerRepository;
 import com.lalith.customer.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,11 +18,13 @@ import java.util.UUID;
 @Service
 public class OrderServiceImplementation implements OrderService {
     private final OrderRepository orderRepository;
+    private final CustomerRepository customerRepository;
     private final RewardService rewardService;
 
     @Autowired
-    public OrderServiceImplementation(OrderRepository orderRepository, RewardService rewardService) {
+    public OrderServiceImplementation(OrderRepository orderRepository, CustomerRepository customerRepository, RewardService rewardService) {
         this.orderRepository = orderRepository;
+        this.customerRepository = customerRepository;
         this.rewardService = rewardService;
     }
 
@@ -31,59 +35,77 @@ public class OrderServiceImplementation implements OrderService {
 
     @Override
     public Order createOrderWithoutRedeem(Order order) {
-        String orderNo = order.getOrderNo();
+        String customerId = order.getCustomerId();
+        Optional<Customer> customerOptional = customerRepository.findByCustomerId(customerId);
 
-        Order existingOrder = orderRepository.findByOrderNo(orderNo);
-        if (existingOrder != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "An order with the same orderNo already exists.");
+        if (customerOptional.isPresent()) {
+            Customer customer = customerOptional.get();
+            order.setCustomerPhoneNo(customer.getPhoneNo());
+
+            String orderNo = order.getOrderNo();
+            Order existingOrder = orderRepository.findByOrderNo(orderNo);
+            if (existingOrder != null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "An order with the same orderNo already exists.");
+            }
+
+            if (orderNo == null) {
+                orderNo = generateOrderNo();
+                order.setOrderNo(orderNo);
+            }
+
+            Reward reward = rewardService.createReward(customerId, order.getOrderTotal(), order.getOrderNo());
+
+            order.setReward(reward);
+            order.setOrderDate(LocalDateTime.now());
+            order.setLastModifiedTS(LocalDateTime.now());
+
+            if (order.getOrderStatus() == null) {
+                order.setOrderStatus("Created");
+            }
+
+            return orderRepository.save(order);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer with customerId " + customerId + " not found.");
         }
-
-        if (orderNo == null) {
-            orderNo = generateOrderNo();
-            order.setOrderNo(orderNo);
-        }
-
-        Reward reward = rewardService.createReward(order.getCustomerId(), order.getOrderTotal(), order.getOrderNo());
-
-        order.setReward(reward);
-        order.setOrderDate(LocalDateTime.now());
-        order.setLastModifiedTS(LocalDateTime.now());
-
-        if (order.getOrderStatus() == null) {
-            order.setOrderStatus("Created");
-        }
-
-        return orderRepository.save(order);
     }
 
     @Override
     public Order createOrderWithRedeem(Order order) {
+        String customerId = order.getCustomerId();
+        Optional<Customer> customerOptional = customerRepository.findByCustomerId(customerId);
 
-        double rewardCoins = rewardService.getRewardBalanceOfCustomer(order.getCustomerId());
-        double totalAmount = order.getOrderTotal();
-        double grandTotal;
+        if (customerOptional.isPresent()) {
+            Customer customer = customerOptional.get();
+            order.setCustomerPhoneNo(customer.getPhoneNo());
 
-        if(rewardCoins>=1000){
-            grandTotal = totalAmount-rewardCoins;
-        }else {
-            grandTotal = totalAmount;
+            double rewardCoins = rewardService.getRewardBalanceOfCustomer(customerId);
+            double totalAmount = order.getOrderTotal();
+            double grandTotal;
+
+            if (rewardCoins >= 1000) {
+                grandTotal = totalAmount - rewardCoins;
+            } else {
+                grandTotal = totalAmount;
+            }
+
+            order.setOrderTotal(grandTotal);
+            order.setReward(rewardService.createRewardWithRedeem(customerId, grandTotal, order.getOrderNo(), totalAmount - grandTotal));
+            String orderNo = order.getOrderNo();
+
+            Order existingOrder = orderRepository.findByOrderNo(orderNo);
+            if (existingOrder != null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "An order with the same orderNo already exists.");
+            }
+
+            order.setOrderDate(LocalDateTime.now());
+            order.setLastModifiedTS(LocalDateTime.now());
+            if (order.getOrderStatus() == null) {
+                order.setOrderStatus("Created");
+            }
+            return orderRepository.save(order);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer with customerId " + customerId + " not found.");
         }
-
-        order.setOrderTotal(grandTotal);
-        order.setReward(rewardService.createRewardWithRedeem(order.getCustomerId(),grandTotal, order.getOrderNo(), totalAmount-grandTotal));
-        String orderNo = order.getOrderNo();
-
-        Order existingOrder = orderRepository.findByOrderNo(orderNo);
-        if (existingOrder != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "An order with the same orderNo already exists.");
-        }
-
-        order.setOrderDate(LocalDateTime.now());
-        order.setLastModifiedTS(LocalDateTime.now());
-        if (order.getOrderStatus() == null) {
-            order.setOrderStatus("Created");
-        }
-        return orderRepository.save(order);
     }
 
     public String generateOrderNo() {

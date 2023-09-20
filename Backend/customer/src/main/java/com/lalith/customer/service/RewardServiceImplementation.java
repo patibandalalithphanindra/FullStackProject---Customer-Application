@@ -27,7 +27,6 @@ public class RewardServiceImplementation implements RewardService {
         return rewardRepository.findAll();
     }
 
-
     @Override
     public List<Reward> getRewardsByCustomerId(String customerId) {
         List<Reward> rewards = rewardRepository.findByCustomerId(customerId);
@@ -38,12 +37,12 @@ public class RewardServiceImplementation implements RewardService {
     }
 
     public Reward createReward(String customerId, double orderTotal, String orderNo) {
-        double rewardAmount = 0.05 * orderTotal;
+        long rewardAmount = Math.round(0.05 * orderTotal);
 
         Reward reward = new Reward();
         reward.setCustomerId(customerId);
         reward.setRewardsEarned(rewardAmount);
-        reward.setRewardsRedeemed(0.0);
+        reward.setRewardsRedeemed(0L);
         reward.setRewardsBalance(rewardAmount);
 
         String rewardsId = generateRewardsId();
@@ -54,13 +53,13 @@ public class RewardServiceImplementation implements RewardService {
     }
 
     public Reward createRewardWithRedeem(String customerId, double orderTotal, String orderNo, double redeemedCoins) {
-        double rewardAmount = 0.05 * orderTotal;
+        int rewardAmount = (int) Math.round(0.05 * orderTotal);
 
         Reward reward = new Reward();
         reward.setCustomerId(customerId);
         reward.setRewardsEarned(rewardAmount);
-        reward.setRewardsRedeemed(redeemedCoins);
-        reward.setRewardsBalance(rewardAmount);
+        reward.setRewardsRedeemed(Math.round(redeemedCoins));
+        reward.setRewardsBalance(rewardAmount - Math.round(redeemedCoins));
 
         String rewardsId = generateRewardsId();
         reward.setRewardsId(rewardsId);
@@ -72,15 +71,14 @@ public class RewardServiceImplementation implements RewardService {
 
     private String generateRewardsId() {
         UUID uuid = UUID.randomUUID();
-        String rewardsId = "R" + uuid.toString().replace("-", "").substring(0, 3);
-        return rewardsId;
+        return "R" + uuid.toString().replace("-", "").substring(0, 3);
     }
 
-    public Double getRewardBalanceOfCustomer(String customerId){
+    public int getRewardBalanceOfCustomer(String customerId) {
         List<Reward> rewards = rewardRepository.findByCustomerId(customerId);
 
-        double totalEarned = 0;
-        double totalRedeemed = 0;
+        int totalEarned = 0;
+        int totalRedeemed = 0;
 
         for (Reward reward : rewards) {
             totalEarned += reward.getRewardsEarned();
@@ -89,21 +87,20 @@ public class RewardServiceImplementation implements RewardService {
         return totalEarned - totalRedeemed;
     }
 
-
-    public List<Double> getRewardDetails(String customerId) {
+    public List<Integer> getRewardDetails(String customerId) {
         List<Reward> rewards = rewardRepository.findByCustomerId(customerId);
 
-        double totalEarned = 0;
-        double totalRedeemed = 0;
+        int totalEarned = 0;
+        int totalRedeemed = 0;
 
         for (Reward reward : rewards) {
             totalEarned += reward.getRewardsEarned();
             totalRedeemed += reward.getRewardsRedeemed();
         }
 
-        double totalBalance = totalEarned - totalRedeemed;
+        int totalBalance = totalEarned - totalRedeemed;
 
-        List<Double> balanceList = new ArrayList<>();
+        List<Integer> balanceList = new ArrayList<>();
         balanceList.add(totalEarned);
         balanceList.add(totalRedeemed);
         balanceList.add(totalBalance);
