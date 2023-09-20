@@ -57,7 +57,7 @@ const Orders = ({ orders }) => {
         </Typography>
       </div>
       {sortedOrders.length > 0 ? (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} className={styles.table}>
           <Table>
             <TableHead>
               <TableRow>

@@ -23,4 +23,9 @@
     font-weight: bold;
     margin-left: 10px; 
   }
+
+  .table {
+    max-height: 250px;
+    overflow-y: scroll;
+  }
   
