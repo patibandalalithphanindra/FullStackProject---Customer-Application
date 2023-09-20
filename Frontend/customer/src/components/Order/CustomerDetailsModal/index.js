@@ -46,38 +46,58 @@ function CustomerDetailsModal({ customerId, isOpen, handleClose }) {
           </div>
         ) : (
           customerData && (
+            <>
             <div>
               <Typography variant="body1">
                 <b>Customer ID : </b> {customerData.customerId}
               </Typography>
+              </div>
+              <div>
               <Typography variant="body1">
                 <b>Name : </b> {customerData.firstName} {customerData.lastName}
               </Typography>
+              </div>
+              <div>
               <Typography variant="body1">
                 <b>Phone No : </b> {customerData.phoneNo}
               </Typography>
+              </div>
+              <div>
               <Typography variant="body1">
                 <b>Email ID : </b> {customerData.emailId}
               </Typography>
+              </div>
+              <div>
               <Typography variant="body1">
                 <b>Address : </b> {customerData.addressLine1}, {customerData.addressLine2}
               </Typography>
+              </div>
+              <div>
               <Typography variant="body1">
                 <b>City : </b> {customerData.city}
               </Typography>
+              </div>
+              <div>
               <Typography variant="body1">
                 <b>State : </b> {customerData.state}
               </Typography>
+              </div>
+              <div>
               <Typography variant="body1">
                 <b>Zip Code : </b> {customerData.zipCode}
               </Typography>
+              </div>
+              <div>
               <Typography variant="body1">
                 <b>Country : </b> {customerData.country}
               </Typography>
+              </div>
+              <div>
               <Typography variant="body1">
                 <b>Status : </b> {customerData.status}
               </Typography>
-            </div>
+              </div>
+            </>
           )
         )}
       </DialogContent>

@@ -422,6 +422,11 @@ function Order() {
                   </Typography>
                 </div>
                 <div>
+                <div>
+                  <Typography variant="body1">
+                    <b>Total No of Items : </b> {selectedOrder.totalItems}
+                  </Typography>
+                </div>
                   <Typography variant="body1">
                     <b>Total Order Amount : </b> {selectedOrder.orderTotal} {selectedOrder.currency}
                   </Typography>
