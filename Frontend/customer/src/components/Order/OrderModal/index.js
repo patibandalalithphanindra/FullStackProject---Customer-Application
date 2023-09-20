@@ -28,7 +28,6 @@ const OrderModal = ({
   const [totalItemsValid, setTotalItemsValid] = useState(true);
   const [orderTotalValid, setOrderTotalValid] = useState(true);
   const [currencyValid, setCurrencyValid] = useState(true);
-  const [customerPhoneNoValid, setCustomerPhoneNoValid] = useState(true);
   const [withCoinsValid, setWithCoinsValid] = useState(true);
   const [orderStatusValid, setOrderStatusValid] = useState(true);
 
@@ -38,7 +37,6 @@ const OrderModal = ({
       setTotalItemsValid(true);
       setOrderTotalValid(true);
       setCurrencyValid(true);
-      setCustomerPhoneNoValid(true);
       setWithCoinsValid(true);
       setOrderStatusValid(true);
     }
@@ -50,7 +48,7 @@ const OrderModal = ({
       orderData.totalItems &&
       orderData.orderTotal &&
       orderData.currency &&
-      orderData.customerPhoneNo &&
+      (!orderData.orderNo || (orderData.orderNo && orderData.customerPhoneNo)) &&
       withCoins &&
       orderData.orderStatus
     ) {
@@ -60,7 +58,6 @@ const OrderModal = ({
       setTotalItemsValid(!!orderData.totalItems);
       setOrderTotalValid(!!orderData.orderTotal);
       setCurrencyValid(!!orderData.currency);
-      setCustomerPhoneNoValid(!!orderData.customerPhoneNo);
       setWithCoinsValid(!!withCoins);
       setOrderStatusValid(!!orderData.orderStatus);
     }
@@ -131,22 +128,22 @@ const OrderModal = ({
                 {!currencyValid && <FormHelperText error>This field is required.</FormHelperText>}
               </FormControl>
             </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Customer Phone Number"
-                variant="outlined"
-                fullWidth
-                required
-                value={orderData.customerPhoneNo}
-                disabled={orderData.orderNo !== undefined}
-                onChange={(e) =>
-                  setOrderData({ ...orderData, customerPhoneNo: e.target.value })
-                }
-              />
-              {!customerPhoneNoValid && (
-                <FormHelperText error>This field is required.</FormHelperText>
-              )}
-            </Grid>
+            {orderData.orderNo && (
+              <Grid item xs={6}>
+                <TextField
+                  label="Customer Phone Number"
+                  variant="outlined"
+                  fullWidth
+                  required
+                  value={orderData.customerPhoneNo}
+                  disabled={orderData.orderNo !== undefined}
+                  onChange={(e) =>
+                    setOrderData({ ...orderData, customerPhoneNo: e.target.value })
+                  }
+                />
+              </Grid>
+            )}
+
             <Grid item xs={6}>
               <FormControl variant="outlined" fullWidth>
                 <InputLabel htmlFor="withCoins">Redeem(?)</InputLabel>
@@ -162,6 +159,7 @@ const OrderModal = ({
                 {!withCoinsValid && <FormHelperText error>This field is required.</FormHelperText>}
               </FormControl>
             </Grid>
+            {orderData.orderNo && (
             <Grid item xs={6}>
               <FormControl variant="outlined" fullWidth>
                 <InputLabel htmlFor="orderStatus">Order Status</InputLabel>
@@ -177,7 +175,7 @@ const OrderModal = ({
                   <FormHelperText error>This field is required.</FormHelperText>
                 )}
               </FormControl>
-            </Grid>
+            </Grid> )}
           </Grid>
         </DialogContentText>
       </DialogContent>
