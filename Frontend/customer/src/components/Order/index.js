@@ -91,8 +91,7 @@ function Order() {
       orderTotal: 0,
       currency: "INR",
       customerPhoneNo: "",
-      orderStatus: "Created",
-      orderDate: new Date(), // Add the order date field here
+      orderStatus: "Created"
     });
 
     setWithCoinsData(withCoinsData);
@@ -105,22 +104,31 @@ function Order() {
   };
 
   const getVisibleOrders = () => {
+    let filteredAndSortedOrders = [...orders];
+  
+    if (searchCustomerId) {
+      filteredAndSortedOrders = filteredAndSortedOrders.filter((order) =>
+        order.customerId.includes(searchCustomerId)
+      );
+    } else {
+      filteredAndSortedOrders = filteredAndSortedOrders.sort((a, b) => {
+        const dateA = new Date(a.orderDate).getTime();
+        const dateB = new Date(b.orderDate).getTime();
+  
+        if (sortOrder === 'asc') {
+          return dateA - dateB;
+        } else {
+          return dateB - dateA;
+        }
+      });
+    }
+  
     const startIndex = page * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
-
-    const sortedOrders = [...orders].sort((a, b) => {
-      const dateA = new Date(a.orderDate).getTime();
-      const dateB = new Date(b.orderDate).getTime();
-
-      if (sortOrder === 'asc') {
-        return dateA - dateB;
-      } else {
-        return dateB - dateA;
-      }
-    });
-
-    return sortedOrders.slice(startIndex, endIndex);
+  
+    return filteredAndSortedOrders.slice(startIndex, endIndex);
   };
+  
 
   const handleUpdate = (orderNo) => {
     const selected = orders.find((order) => order.orderNo === orderNo);

@@ -94,8 +94,29 @@ function Reward() {
   const getVisibleRewards = () => {
     const startIndex = page * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
-    return filteredRewards.slice(startIndex, endIndex);
+  
+    let filteredAndSortedRewards = [...rewards];
+  
+    if (searchCustomerId) {
+      filteredAndSortedRewards = filteredAndSortedRewards.filter((reward) =>
+        reward.customerId.includes(searchCustomerId)
+      );
+    } else {
+      filteredAndSortedRewards = filteredAndSortedRewards.sort((a, b) => {
+        const dateA = new Date(a.rewardsDate);
+        const dateB = new Date(b.rewardsDate);
+  
+        if (sortOrder === 'asc') {
+          return dateA - dateB;
+        } else {
+          return dateB - dateA;
+        }
+      });
+    }
+  
+    return filteredAndSortedRewards.slice(startIndex, endIndex);
   };
+  
 
   return (
     <>

@@ -227,11 +227,28 @@ function Customer() {
   };
 
   const getVisibleCustomers = () => {
-    const startIndex = page * rowsPerPage;
-    const endIndex = startIndex + rowsPerPage;
-    return sortedCustomers.slice(startIndex, endIndex);
+    if (searchQuery) {
+      return customers.filter((customer) =>
+        customer.firstName.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    } else {
+      const sorted = [...sortedCustomers].sort((a, b) => {
+        const nameA = a.firstName.toLowerCase();
+        const nameB = b.firstName.toLowerCase();
+  
+        if (sortOrder === 'asc') {
+          return nameA.localeCompare(nameB);
+        } else {
+          return nameB.localeCompare(nameA);
+        }
+      });
+  
+      const startIndex = page * rowsPerPage;
+      const endIndex = startIndex + rowsPerPage;
+      return sorted.slice(startIndex, endIndex);
+    }
   };
-
+  
   const handleSort = () => {
     const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
 
