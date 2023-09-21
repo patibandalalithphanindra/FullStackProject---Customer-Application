@@ -65,7 +65,7 @@ public class CustomerServiceImplementation implements CustomerService {
 
     private String generateCustomerId() {
         UUID uuid = UUID.randomUUID();
-        return "C" + uuid.toString().replace("-", "").substring(0, 3);
+        return "C" + uuid.toString().replace("-", "").substring(0, 9);
     }
 
     @Override
