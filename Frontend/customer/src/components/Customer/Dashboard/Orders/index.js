@@ -38,7 +38,7 @@ const Orders = ({ orders }) => {
     setSortedOrders(newOrder);
   };
 
-  const sortIcon = ascending ? <ArrowUpward /> : <ArrowDownward />;
+  const sortIcon = ascending ? <ArrowDownward /> : <ArrowUpward />;
 
   useEffect(() => {
     setSortedOrders(orders);
