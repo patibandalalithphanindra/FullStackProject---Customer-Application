@@ -7,10 +7,10 @@ import {
   TableBody,
   Paper,
   TableContainer,
-  Typography
+  IconButton
 } from '@mui/material';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { ArrowDownward, ArrowUpward } from "@mui/icons-material";
+
 import styles from './styles.module.css';
 
 const Orders = ({ orders }) => {
@@ -38,7 +38,7 @@ const Orders = ({ orders }) => {
     setSortedOrders(newOrder);
   };
 
-  const sortIcon = ascending ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />;
+  const sortIcon = ascending ? <ArrowUpward /> : <ArrowDownward />;
 
   useEffect(() => {
     setSortedOrders(orders);
@@ -46,28 +46,28 @@ const Orders = ({ orders }) => {
 
   return (
     <Paper elevation={1} className={styles.container}>
-      <div className={styles.title}>
-        <Typography variant="h6" className={styles.titleText}>Orders Information</Typography>
-        <Typography
-          className={styles.sortButton}
-          onClick={toggleSort}
-          style={{ cursor: 'pointer', textDecoration: 'none' }}
-        >
-          Sort by {sortIcon}
-        </Typography>
-      </div>
       {sortedOrders.length > 0 ? (
         <TableContainer component={Paper} className={styles.table}>
           <Table>
-            <TableHead>
+            <TableHead className={styles.header}>
               <TableRow>
-              <TableCell><b>Order No</b></TableCell>
-            <TableCell><b>Date</b></TableCell>
-            <TableCell><b>Rewards Earned</b></TableCell>
-            <TableCell><b>Rewards Redeemed</b></TableCell>
-            <TableCell><b>Total Items</b></TableCell>
-            <TableCell><b>Total Order Value</b></TableCell>
-            <TableCell><b>Order Status</b></TableCell>
+                <TableCell><b>Order No</b></TableCell>
+                <TableCell>
+                  <b>Date</b>
+                  <IconButton
+                    onClick={toggleSort}
+                    color="inherit"
+                    size="small"
+                    aria-label="sort"
+                  >
+                    {sortIcon}
+                  </IconButton>
+                </TableCell>
+                <TableCell><b>Rewards Earned</b></TableCell>
+                <TableCell><b>Rewards Redeemed</b></TableCell>
+                <TableCell><b>Total Items</b></TableCell>
+                <TableCell><b>Total Order Value</b></TableCell>
+                <TableCell><b>Order Status</b></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

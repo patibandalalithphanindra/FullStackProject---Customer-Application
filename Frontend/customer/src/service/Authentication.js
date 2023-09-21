@@ -38,14 +38,3 @@ export const userLogin = async (loginData) => {
 
   });
   };
-  
-
-export const fetchUserData=()=>{
-    return axios({
-        method:'GET',
-        url:`${process.env.hostUrl||'http://localhost:808'}/api/v1/auth/userinfo`,
-        headers:{
-            'Authorization':'Bearer '+getCSRFToken()
-        }
-    })
-}

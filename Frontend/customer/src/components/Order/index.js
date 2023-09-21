@@ -17,6 +17,7 @@ import {
   Typography,
   InputAdornment,
   TablePagination,
+  IconButton,
 } from "@mui/material";
 import axios from "axios";
 import styles from "./styles.module.css";
@@ -29,7 +30,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import CustomerDetailsModal from "./CustomerDetailsModal";
 import OrderModal from "./OrderModal";
-import { Search } from "@mui/icons-material";
+import { ArrowDownward, ArrowUpward, Search } from "@mui/icons-material";
 
 function Order() {
   const [orders, setOrders] = useState([]);
@@ -50,6 +51,7 @@ function Order() {
   });
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [sortOrder, setSortOrder] = useState('asc');
 
   const [withCoinsData, setWithCoinsData] = useState("yes");
 
@@ -90,6 +92,7 @@ function Order() {
       currency: "INR",
       customerPhoneNo: "",
       orderStatus: "Created",
+      orderDate: new Date(), // Add the order date field here
     });
 
     setWithCoinsData(withCoinsData);
@@ -104,7 +107,19 @@ function Order() {
   const getVisibleOrders = () => {
     const startIndex = page * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
-    return filteredOrders.slice(startIndex, endIndex);
+
+    const sortedOrders = [...orders].sort((a, b) => {
+      const dateA = new Date(a.orderDate).getTime();
+      const dateB = new Date(b.orderDate).getTime();
+
+      if (sortOrder === 'asc') {
+        return dateA - dateB;
+      } else {
+        return dateB - dateA;
+      }
+    });
+
+    return sortedOrders.slice(startIndex, endIndex);
   };
 
   const handleUpdate = (orderNo) => {
@@ -187,6 +202,7 @@ function Order() {
       currency: "INR",
       customerPhoneNo: "",
       orderStatus: "Created",
+      orderDate: new Date(), // Add the order date field here
     });
   };
 
@@ -280,6 +296,24 @@ function Order() {
     setPage(0);
   };
 
+  const handleSort = () => {
+    const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+
+    const sorted = [...orders].sort((a, b) => {
+      const dateA = new Date(a.orderDate).getTime();
+      const dateB = new Date(b.orderDate).getTime();
+
+      if (newSortOrder === 'asc') {
+        return dateA - dateB;
+      } else {
+        return dateB - dateA;
+      }
+    });
+
+    setSortOrder(newSortOrder);
+    setOrders(sorted);
+  };
+
   return (
     <>
       <Navbar />
@@ -326,6 +360,21 @@ function Order() {
                 <b>Customer ID</b>
               </TableCell>
               <TableCell>
+                <b>Order Date</b>
+                <IconButton
+                  onClick={handleSort}
+                  color="inherit"
+                  size="small"
+                  aria-label="sort"
+                >
+                  {sortOrder === 'asc' ? (
+                    <ArrowUpward />
+                  ) : (
+                    <ArrowDownward />
+                  )}
+                </IconButton>
+              </TableCell>
+              <TableCell>
                 <b>Total Order Amount</b>
               </TableCell>
               <TableCell>
@@ -348,6 +397,7 @@ function Order() {
                     {order.customerId}
                   </span>
                 </TableCell>
+                <TableCell>{formatDate(order.orderDate)}</TableCell>
                 <TableCell>{order.orderTotal} {order.currency}</TableCell>
                 <TableCell>{order.orderStatus}</TableCell>
                 <TableCell>
@@ -422,11 +472,11 @@ function Order() {
                   </Typography>
                 </div>
                 <div>
-                <div>
                   <Typography variant="body1">
                     <b>Total No of Items : </b> {selectedOrder.totalItems}
                   </Typography>
                 </div>
+                <div>
                   <Typography variant="body1">
                     <b>Total Order Amount : </b> {selectedOrder.orderTotal} {selectedOrder.currency}
                   </Typography>

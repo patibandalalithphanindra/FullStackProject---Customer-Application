@@ -16,6 +16,7 @@ import {
   DialogTitle,
   InputAdornment,
   TablePagination,
+  IconButton,
 } from '@mui/material';
 import axios from 'axios';
 import styles from './styles.module.css';
@@ -25,7 +26,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import AddIcon from '@mui/icons-material/Add';
-import { Search } from '@mui/icons-material';
+import { Search, ArrowUpward as ArrowUpwardIcon, ArrowDownward as ArrowDownwardIcon } from '@mui/icons-material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CustomerModal from './CustomerModal';
 import { useNavigate } from 'react-router-dom';
@@ -52,6 +53,8 @@ function Customer() {
   });
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [sortOrder, setSortOrder] = useState('asc');
+  const [sortedCustomers, setSortedCustomers] = useState([]);
 
   const fetchCustomerData = () => {
     const response = localStorage.getItem('jwt');
@@ -64,6 +67,7 @@ function Customer() {
       .get('http://localhost:8080/customers', { headers })
       .then((response) => {
         setCustomers(response.data);
+        setSortedCustomers([...response.data]);
       })
       .catch((error) => {
         console.error('Error fetching customer data:', error);
@@ -114,7 +118,7 @@ function Customer() {
           headers,
         })
         .then((response) => {
-          if (response.status === 200 || response.status === 201 ) {
+          if (response.status === 200 || response.status === 201) {
             toast.success('Customer has been added successfully', {
               position: toast.POSITION.BOTTOM_LEFT, autoClose: 900
             });
@@ -207,8 +211,8 @@ function Customer() {
   };
 
   const filteredCustomers = customers.filter((customer) =>
-  customer.firstName.toLowerCase().includes(searchQuery.toLowerCase())
-);
+    customer.firstName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - filteredCustomers.length) : 0;
@@ -225,7 +229,25 @@ function Customer() {
   const getVisibleCustomers = () => {
     const startIndex = page * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
-    return filteredCustomers.slice(startIndex, endIndex);
+    return sortedCustomers.slice(startIndex, endIndex);
+  };
+
+  const handleSort = () => {
+    const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+
+    const sorted = [...sortedCustomers].sort((a, b) => {
+      const nameA = a.firstName.toLowerCase();
+      const nameB = b.firstName.toLowerCase();
+
+      if (newSortOrder === 'asc') {
+        return nameA.localeCompare(nameB);
+      } else {
+        return nameB.localeCompare(nameA);
+      }
+    });
+
+    setSortOrder(newSortOrder);
+    setSortedCustomers(sorted);
   };
 
   const renderCustomerModal = () => {
@@ -248,34 +270,34 @@ function Customer() {
           <b>CUSTOMERS INFORMATION</b>
         </h3>
         <div className={styles.actionsContainer}>
-        <div className={styles.search}>
-          <label className={styles.label} >Search for a Customer :  </label>
-        <TextField
-          label="Search Name"
-          id="filled-basic"
-          size="small"
-          variant="outlined"
-          value={searchQuery}
-          onChange={handleSearch}
-          className={styles.search}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <Search />
-              </InputAdornment>
-            ),
-          }}
-        />
-         </div>
-        <Button
-          style={{ maxWidth: '200px', maxHeight: '40px', marginTop: '8px' }}
-          variant="contained"
-          className={`${styles.button} ${styles.addCustomerButton}`}
-          onClick={handleAddition}
-        >
-          <AddIcon/>
-        </Button>
-      </div>
+          <div className={styles.search}>
+            <label className={styles.label}>Search for a Customer : </label>
+            <TextField
+              label="Search Name"
+              id="filled-basic"
+              size="small"
+              variant="outlined"
+              value={searchQuery}
+              onChange={handleSearch}
+              className={styles.search}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Search />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </div>
+          <Button
+            style={{ maxWidth: '200px', maxHeight: '40px', marginTop: '8px' }}
+            variant="contained"
+            className={`${styles.button} ${styles.addCustomerButton}`}
+            onClick={handleAddition}
+          >
+            <AddIcon />
+          </Button>
+        </div>
       </div>
       <TableContainer component={Paper} className={styles.container}>
         <Table>
@@ -286,6 +308,18 @@ function Customer() {
               </TableCell>
               <TableCell>
                 <b>Name</b>
+                <IconButton
+                  onClick={handleSort}
+                  color="inherit"
+                  size="small"
+                  aria-label="sort"
+                >
+                  {sortOrder === 'asc' ? (
+                    <ArrowUpwardIcon />
+                  ) : (
+                    <ArrowDownwardIcon />
+                  )}
+                </IconButton>
               </TableCell>
               <TableCell>
                 <b>Email</b>
@@ -362,9 +396,9 @@ function Customer() {
       <ToastContainer />
       {renderCustomerModal()}
       <TablePagination
-        rowsPerPageOptions={[5, 10, 25, 50, { label: 'All', value: filteredCustomers.length }]}
+        rowsPerPageOptions={[5, 10, 25, 50, { label: 'All', value: sortedCustomers.length }]}
         component="div"
-        count={filteredCustomers.length}
+        count={sortedCustomers.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
