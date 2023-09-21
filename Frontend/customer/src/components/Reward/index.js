@@ -10,17 +10,31 @@ import {
   TextField,
   InputAdornment,
   TablePagination,
+  IconButton,
 } from '@mui/material';
 import axios from 'axios';
 import styles from './styles.module.css'; 
 import Navbar from '../common/Navbar';
-import { Search } from '@mui/icons-material';
+import { Search, ArrowUpward as ArrowUpwardIcon, ArrowDownward as ArrowDownwardIcon } from '@mui/icons-material';
 
 function Reward() {
   const [rewards, setRewards] = useState([]);
   const [searchCustomerId, setSearchCustomerId] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [sortOrder, setSortOrder] = useState('asc');
+
+  const formatDate = (dateString) => {
+    const options = {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    };
+    return new Date(dateString).toLocaleDateString('en-US', options);
+  };
 
   useEffect(() => {
     const response = localStorage.getItem('jwt');
@@ -41,6 +55,24 @@ function Reward() {
 
   const handleSearch = (e) => {
     setSearchCustomerId(e.target.value);
+  };
+
+  const handleSort = () => {
+    const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    setSortOrder(newSortOrder);
+
+    const sortedRewards = [...rewards].sort((a, b) => {
+      const dateA = new Date(a.rewardsDate);
+      const dateB = new Date(b.rewardsDate);
+
+      if (newSortOrder === 'asc') {
+        return dateA - dateB;
+      } else {
+        return dateB - dateA;
+      }
+    });
+
+    setRewards(sortedRewards);
   };
 
   const filteredRewards = rewards.filter((reward) =>
@@ -71,22 +103,22 @@ function Reward() {
       <div className={styles.headerpart}> 
         <h3 className={styles.heading}><b>REWARDS INFORMATION</b></h3>
         <div className={styles.search}>
-        <label className={styles.label}>Search for a Customer : </label>
-        <TextField
-          label="Search Customer ID"
-          size="small"
-          variant="outlined"
-          value={searchCustomerId}
-          onChange={handleSearch}
-          style={{maxWidth:'250px'}}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <Search />
-              </InputAdornment>
-            ),
-          }}
-        />
+          <label className={styles.label}>Search for a Customer : </label>
+          <TextField
+            label="Search Customer ID"
+            size="small"
+            variant="outlined"
+            value={searchCustomerId}
+            onChange={handleSearch}
+            style={{maxWidth:'250px'}}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Search />
+                </InputAdornment>
+              ),
+            }}
+          />
         </div>
       </div>
      
@@ -98,6 +130,21 @@ function Reward() {
               <TableCell><b>Customer Id</b></TableCell>
               <TableCell><b>Order No</b></TableCell>
               <TableCell><b>Rewards Earned</b></TableCell>
+              <TableCell>
+                <b>Date</b>
+                <IconButton
+                  onClick={handleSort}
+                  color="inherit"
+                  size="small"
+                  aria-label="sort"
+                >
+                  {sortOrder === 'asc' ? (
+                    <ArrowUpwardIcon />
+                  ) : (
+                    <ArrowDownwardIcon />
+                  )}
+                </IconButton>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -107,11 +154,12 @@ function Reward() {
                 <TableCell>{reward.customerId}</TableCell>
                 <TableCell>{reward.orderNo}</TableCell>
                 <TableCell>{reward.rewardsEarned}</TableCell>
+                <TableCell>{formatDate(reward.rewardsDate)}</TableCell>
               </TableRow>
             ))}
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={4} />
+                <TableCell colSpan={5} />
               </TableRow>
             )}
           </TableBody>
