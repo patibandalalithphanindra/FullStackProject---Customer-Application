@@ -35,7 +35,7 @@ function LandingPage() {
   }, []);
 
   return (
-    <div className={styles.container} style={{ }}>
+    <div className={styles.container}>
       <Navbar/ >
       <Paper elevation={3} sx={{ p: 2,width: "300", marginTop:"20px",marginLeft:"200px", marginRight:"200px" }}  >
       <Grid align="center" container spacing={6} >
@@ -107,6 +107,10 @@ function LandingPage() {
           </Card>
         </Link>
       </div>
+      {/* <div>
+      <img src='/oms.jpg' alt="" height = "280px" width="400px" className={styles.image} />
+      <img src='/oms2.jpg' alt="" height = "280px" width="400px" className={styles.image2} />
+      </div> */}
     </div>
   );
 }

@@ -28,4 +28,10 @@
     max-height: 250px;
     overflow-y: scroll;
   }
+
+  .nodata {
+    padding-top: 4px;
+    padding-left: 12px;
+    padding-bottom: 10px;
+  }
   

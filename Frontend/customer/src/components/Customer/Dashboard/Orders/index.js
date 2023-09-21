@@ -86,7 +86,7 @@ const Orders = ({ orders }) => {
           </Table>
         </TableContainer>
       ) : (
-        <h3>No orders have been placed by the customer!</h3>
+        <h3 className={styles.nodata}>No orders have been placed by the customer!</h3>
       )}
     </Paper>
   );
