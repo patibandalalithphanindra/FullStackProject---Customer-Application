@@ -33,7 +33,7 @@ body {
 
 .card:hover {
   transform: translateY(-5px);
-  background-color: #f1c27d;
+  background-color: lightcyan;
 }
 
 .cardLink {
