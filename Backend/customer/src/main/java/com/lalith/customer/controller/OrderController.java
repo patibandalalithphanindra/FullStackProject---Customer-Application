@@ -1,5 +1,6 @@
 package com.lalith.customer.controller;
 
+import com.lalith.customer.dto.OrderItem;
 import com.lalith.customer.dto.OrderSubmission;
 import com.lalith.customer.exception.CustomErrorResponse;
 import com.lalith.customer.model.Order;
@@ -28,6 +29,7 @@ public class OrderController {
     public ResponseEntity<?> createOrder(@RequestBody OrderSubmission orderSubmission) {
         Order order = orderSubmission.getOrderModalData();
         String withCoins = orderSubmission.getWithCoinsData();
+        List<OrderItem> orderItems = orderSubmission.getOrderItemsData();
         String orderNo = order.getOrderNo();
         if (orderNo == null) {
             orderNo = orderService.generateOrderNo();
@@ -35,7 +37,7 @@ public class OrderController {
         }
         if(withCoins.equalsIgnoreCase("No")) {
             try {
-                Order createdOrder = orderService.createOrderWithoutRedeem(order);
+                Order createdOrder = orderService.createOrderWithoutRedeem(order,orderItems);
                 return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
             } catch (ResponseStatusException e) {
                 CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
@@ -43,7 +45,7 @@ public class OrderController {
             }
         }else{
             try {
-                Order createdNewOrder = orderService.createOrderWithRedeem(order);
+                Order createdNewOrder = orderService.createOrderWithRedeem(order,orderItems);
                 return ResponseEntity.status(HttpStatus.CREATED).body(createdNewOrder);
             } catch (ResponseStatusException e) {
                 CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());

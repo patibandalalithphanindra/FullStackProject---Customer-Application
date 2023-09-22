@@ -1,5 +1,6 @@
 package com.lalith.customer.service;
 
+import com.lalith.customer.dto.OrderItem;
 import com.lalith.customer.model.Order;
 import java.util.List;
 
@@ -11,8 +12,8 @@ public interface OrderService {
     String generateOrderNo();
     List<Order> getOrdersByPhoneNo(String phoneNo);
     List<Order> getOrdersByCustomerId(String customerId);
-    Order createOrderWithoutRedeem(Order order);
-    Order createOrderWithRedeem(Order order);
+    Order createOrderWithoutRedeem(Order order,List<OrderItem> orderItems);
+    Order createOrderWithRedeem(Order order,List<OrderItem> orderItems);
     Order updateOrder(String orderNo, Order updatedOrder);
     void deleteOrder(String orderNo);
 }

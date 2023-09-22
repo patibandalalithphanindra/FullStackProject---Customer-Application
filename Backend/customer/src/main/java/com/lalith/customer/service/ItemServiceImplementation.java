@@ -28,4 +28,10 @@ public class ItemServiceImplementation implements ItemService {
     public List<Item> getAllItems() {
         return itemRepository.findAll();
     }
+
+    @Override
+    public Item getItem(String itemId) {
+        return itemRepository.findByItemId(itemId);
+    }
+
 }

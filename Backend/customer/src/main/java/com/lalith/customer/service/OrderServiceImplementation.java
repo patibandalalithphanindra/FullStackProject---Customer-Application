@@ -1,6 +1,8 @@
 package com.lalith.customer.service;
 
+import com.lalith.customer.dto.OrderItem;
 import com.lalith.customer.model.Customer;
+import com.lalith.customer.model.Item;
 import com.lalith.customer.model.Order;
 import com.lalith.customer.model.Reward;
 import com.lalith.customer.repository.CustomerRepository;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,12 +23,14 @@ public class OrderServiceImplementation implements OrderService {
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
     private final RewardService rewardService;
+    private final ItemService itemService;
 
     @Autowired
-    public OrderServiceImplementation(OrderRepository orderRepository, CustomerRepository customerRepository, RewardService rewardService) {
+    public OrderServiceImplementation(OrderRepository orderRepository, CustomerRepository customerRepository, RewardService rewardService,ItemService itemService) {
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
         this.rewardService = rewardService;
+        this.itemService = itemService;
     }
 
     @Override
@@ -34,7 +39,7 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public Order createOrderWithoutRedeem(Order order) {
+    public Order createOrderWithoutRedeem(Order order,List<OrderItem> orderItems) {
         String customerId = order.getCustomerId();
         Optional<Customer> customerOptional = customerRepository.findByCustomerId(customerId);
 
@@ -53,16 +58,26 @@ public class OrderServiceImplementation implements OrderService {
                 order.setOrderNo(orderNo);
             }
 
-            Reward reward = rewardService.createReward(customerId, order.getOrderTotal(), order.getOrderNo());
 
+            List<Item> items = new ArrayList<Item>();
+            double orderTotal=0;
+            for(OrderItem oItem: orderItems){
+                Item item = itemService.getItem(oItem.getItemId());
+                items.add(item);
+                orderTotal+=oItem.getQuantity()*item.getItemPrice();
+            }
+
+            Reward reward = rewardService.createReward(customerId, orderTotal, order.getOrderNo());
+            order.setTotalItems(orderItems.size());
+            order.setOrderItems(items);
             order.setReward(reward);
+            order.setOrderTotal(orderTotal);
             order.setOrderDate(LocalDateTime.now());
             order.setLastModifiedTS(LocalDateTime.now());
 
             if (order.getOrderStatus() == null) {
                 order.setOrderStatus("Created");
             }
-
             return orderRepository.save(order);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer with customerId " + customerId + " not found.");
@@ -70,7 +85,7 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public Order createOrderWithRedeem(Order order) {
+    public Order createOrderWithRedeem(Order order,List<OrderItem> orderItems) {
         String customerId = order.getCustomerId();
         Optional<Customer> customerOptional = customerRepository.findByCustomerId(customerId);
 
@@ -79,17 +94,26 @@ public class OrderServiceImplementation implements OrderService {
             order.setCustomerPhoneNo(customer.getPhoneNo());
 
             double rewardCoins = rewardService.getRewardBalanceOfCustomer(customerId);
-            double totalAmount = order.getOrderTotal();
+
+
+            List<Item> items = new ArrayList<Item>();
+            double orderTotal=0;
+            for(OrderItem oItem: orderItems){
+                Item item = itemService.getItem(oItem.getItemId());
+                items.add(item);
+                orderTotal+=oItem.getQuantity()*item.getItemPrice();
+            }
             double grandTotal;
 
             if (rewardCoins >= 1000) {
-                grandTotal = totalAmount - rewardCoins;
+                grandTotal = orderTotal - rewardCoins;
             } else {
-                grandTotal = totalAmount;
+                grandTotal = orderTotal;
             }
-
+            order.setTotalItems(orderItems.size());
+            order.setOrderItems(items);
             order.setOrderTotal(grandTotal);
-            order.setReward(rewardService.createRewardWithRedeem(customerId, grandTotal, order.getOrderNo(), totalAmount - grandTotal));
+            order.setReward(rewardService.createRewardWithRedeem(customerId, grandTotal, order.getOrderNo(), orderTotal - grandTotal));
             String orderNo = order.getOrderNo();
 
             Order existingOrder = orderRepository.findByOrderNo(orderNo);

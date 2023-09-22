@@ -1,9 +1,7 @@
 package com.lalith.customer.dto;
-import com.lalith.customer.model.Item;
 import com.lalith.customer.model.Order;
-import lombok.*;
-
 import java.util.List;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
@@ -13,4 +11,5 @@ import java.util.List;
 public class OrderSubmission {
     private Order orderModalData;
     public String withCoinsData;
+    public List<OrderItem> orderItemsData;
 }

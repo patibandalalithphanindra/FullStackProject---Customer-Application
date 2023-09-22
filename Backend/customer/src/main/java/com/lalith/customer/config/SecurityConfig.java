@@ -65,7 +65,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/user/add", "/user/authenticate")
                                 .permitAll()
-                                .requestMatchers("/customers/**", "/orders/**", "/rewards/**")
+                                .requestMatchers("/customers/**", "/orders/**", "/rewards/**", "/items/**")
                                 .authenticated())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -22,6 +22,7 @@ public class Order {
     @NotNull(message = "orderNo should not be empty!")
     private String orderNo;
     private Reward reward;
+    private List<Item> orderItems;
     private String customerId;
     private LocalDateTime orderDate = LocalDateTime.now();
     private String orderStatus = "Created";
