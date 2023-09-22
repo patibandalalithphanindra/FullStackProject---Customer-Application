@@ -43,10 +43,7 @@ function Order() {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orderModalData, setOrderModalData] = useState({
     customerId: "",
-    totalItems: 0,
-    orderTotal: 0.0,
     currency: "INR",
-    customerPhoneNo: "",
     orderStatus: "Created",
   });
   const [page, setPage] = React.useState(0);
@@ -54,7 +51,9 @@ function Order() {
   const [sortOrder, setSortOrder] = useState('asc');
 
   const [withCoinsData, setWithCoinsData] = useState("yes");
-
+  const [orderItemsData,setOrderItemsData] = useState([]);
+  const [orderItemsMenu,setOrderItemsBcknd] = useState([]);
+  
   useEffect(() => {
     const response = localStorage.getItem("jwt");
     const headers = {
@@ -66,6 +65,14 @@ function Order() {
       .get("http://localhost:8080/orders", { headers })
       .then((response) => {
         setOrders(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching order data:", error);
+      });
+      axios
+      .get("http://localhost:8080/items", { headers })
+      .then((response) => {
+        setOrderItemsBcknd(response.data);
       })
       .catch((error) => {
         console.error("Error fetching order data:", error);
@@ -87,21 +94,21 @@ function Order() {
   const handleAddition = () => {
     setOrderModalData({
       customerId: "",
-      totalItems: 0,
-      orderTotal: 0,
       currency: "INR",
-      customerPhoneNo: "",
       orderStatus: "Created"
     });
 
     setWithCoinsData(withCoinsData);
+    setOrderItemsData(orderItemsData);
     setIsOrderModalOpen(true);
   };
 
   const dataToSend = {
     orderModalData,
     withCoinsData,
+    orderItemsData
   };
+  console.log(dataToSend);
 
   const getVisibleOrders = () => {
     let filteredAndSortedOrders = [...orders];
@@ -209,11 +216,10 @@ function Order() {
       orderTotal: 0,
       currency: "INR",
       customerPhoneNo: "",
-      orderStatus: "Created",
-      orderDate: new Date(), // Add the order date field here
+      orderStatus: "Created"
     });
   };
-
+console.log(orderItemsData);
   const handleOrderModalSave = () => {
     const response = localStorage.getItem("jwt");
     const headers = {
@@ -518,6 +524,9 @@ function Order() {
         orderData={orderModalData}
         withCoins={withCoinsData}
         setWithCoins={setWithCoinsData}
+        orderItemsMenu={orderItemsMenu}
+        orderItemsD={orderItemsData}
+        setOrderItemsD={setOrderItemsData}
         setOrderData={setOrderModalData}
         handleSave={handleOrderModalSave}
       />

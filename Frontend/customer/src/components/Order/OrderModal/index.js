@@ -7,58 +7,90 @@ import {
   DialogTitle,
   TextField,
   Select,
+  Typography,
   MenuItem,
   Button,
   FormControl,
   InputLabel,
   Grid,
   FormHelperText,
+  Chip,
 } from '@mui/material';
+import styles from './styles.module.css';
 
 const OrderModal = ({
   isOpen,
   handleClose,
   orderData,
+  orderItemsMenu,
+  orderItemsD,
+  setOrderItemsD,
   withCoins,
   setWithCoins,
   setOrderData,
   handleSave,
 }) => {
   const [customerIdValid, setCustomerIdValid] = useState(true);
-  const [totalItemsValid, setTotalItemsValid] = useState(true);
-  const [orderTotalValid, setOrderTotalValid] = useState(true);
   const [currencyValid, setCurrencyValid] = useState(true);
   const [withCoinsValid, setWithCoinsValid] = useState(true);
   const [orderStatusValid, setOrderStatusValid] = useState(true);
+  const [selectedItem, setSelectedItem] = useState('');
+  const [quantity,setQuantity]=useState('');
+
+  const [itemSelectionOpen, setItemSelectionOpen] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
       setCustomerIdValid(true);
-      setTotalItemsValid(true);
-      setOrderTotalValid(true);
+  
       setCurrencyValid(true);
       setWithCoinsValid(true);
       setOrderStatusValid(true);
     }
   }, [isOpen]);
 
+  const openItemSelection = () => {
+    setItemSelectionOpen(true);
+  };
+
+  const closeItemSelection = () => {
+    setItemSelectionOpen(false);
+  };
+
+  const addItemWithQuantity = () => {
+    if (selectedItem && quantity > 0) {
+      const newItem = {
+        itemId: selectedItem.itemId,
+        itemName:selectedItem.itemName,
+        quantity: quantity,
+      };
+      setOrderItemsD([...orderItemsD, newItem]);
+
+      setSelectedItem('');
+      setQuantity('');
+      closeItemSelection();
+    }
+  };
+
+  const removeItem = (itemId) => {
+    const updatedItems = orderItemsD.filter((item) => item.itemId !== itemId);
+    setOrderItemsD(updatedItems);
+  };
+
   const handleSaveClick = () => {
     if (
       orderData.customerId &&
-      orderData.totalItems &&
-      orderData.orderTotal &&
       orderData.currency &&
-      (!orderData.orderNo || (orderData.orderNo && orderData.customerPhoneNo)) &&
       withCoins &&
+      orderItemsD &&
       orderData.orderStatus
     ) {
       handleSave();
     } else {
       setCustomerIdValid(!!orderData.customerId);
-      setTotalItemsValid(!!orderData.totalItems);
-      setOrderTotalValid(!!orderData.orderTotal);
       setCurrencyValid(!!orderData.currency);
       setWithCoinsValid(!!withCoins);
+      setOrderItemsD(!!orderItemsD);
       setOrderStatusValid(!!orderData.orderStatus);
     }
   };
@@ -83,36 +115,8 @@ const OrderModal = ({
                 <FormHelperText error>This field is required.</FormHelperText>
               )}
             </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Total Items"
-                variant="outlined"
-                fullWidth
-                required
-                type="number"
-                value={orderData.totalItems}
-                disabled={orderData.orderNo !== undefined}
-                onChange={(e) => setOrderData({ ...orderData, totalItems: e.target.value })}
-              />
-              {!totalItemsValid && (
-                <FormHelperText error>This field is required.</FormHelperText>
-              )}
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                label="Order Total"
-                variant="outlined"
-                fullWidth
-                required
-                type="number"
-                value={orderData.orderTotal}
-                disabled={orderData.orderNo !== undefined}
-                onChange={(e) => setOrderData({ ...orderData, orderTotal: e.target.value })}
-              />
-              {!orderTotalValid && (
-                <FormHelperText error>This field is required.</FormHelperText>
-              )}
-            </Grid>
+            
+            
             <Grid item xs={6}>
               <FormControl variant="outlined" fullWidth>
                 <InputLabel htmlFor="currency">Currency</InputLabel>
@@ -128,21 +132,7 @@ const OrderModal = ({
                 {!currencyValid && <FormHelperText error>This field is required.</FormHelperText>}
               </FormControl>
             </Grid>
-            {orderData.orderNo && (
-              <Grid item xs={6}>
-                <TextField
-                  label="Customer Phone Number"
-                  variant="outlined"
-                  fullWidth
-                  required
-                  value={orderData.customerPhoneNo}
-                  disabled={orderData.orderNo !== undefined}
-                  onChange={(e) =>
-                    setOrderData({ ...orderData, customerPhoneNo: e.target.value })
-                  }
-                />
-              </Grid>
-            )}
+            
 
             <Grid item xs={6}>
               <FormControl variant="outlined" fullWidth>
@@ -176,6 +166,77 @@ const OrderModal = ({
                 )}
               </FormControl>
             </Grid> )}
+            <Grid item xs={12}>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={openItemSelection}
+              >
+                Add Item
+              </Button>
+            </Grid>
+            <Dialog
+              open={itemSelectionOpen}
+              onClose={closeItemSelection}
+              fullWidth
+            >
+              <DialogTitle>Select Item and Quantity</DialogTitle>
+              <DialogContent>
+                <FormControl variant="outlined" fullWidth  className={styles.item}>
+                  <InputLabel htmlFor="selectedItem">Select Item</InputLabel>
+                  <Select
+                    label="Select Item"
+                    value={selectedItem}
+                    onChange={(e) => setSelectedItem(e.target.value)}
+                  >
+                    {orderItemsMenu.map((item) => (
+                      <MenuItem key={item.itemId} value={item}>
+                        {item.itemName}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <TextField
+                  label="Quantity"
+                  variant="outlined"
+                  fullWidth
+                  required
+                  type="number"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                  className={styles.item}
+                  InputProps={{
+                    inputProps: {
+                      min: 1,
+                    },
+                  }}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={closeItemSelection} color="primary">
+                  Cancel
+                </Button>
+                <Button onClick={addItemWithQuantity} color="primary">
+                  Add
+                </Button>
+              </DialogActions>
+            </Dialog>
+
+            {orderItemsD.length > 0 && (
+              <Grid item xs={12}>
+                <Typography variant="subtitle1">Selected Items : </Typography>
+                <div>
+                  {orderItemsD.map((item) => (
+                    <Chip
+                      key={item.itemId}
+                      label={`${item.itemName} x${item.quantity}`}
+                      onDelete={() => removeItem(item.itemId)}
+                      style={{ margin: '4px' }}
+                    />
+                  ))}
+                </div>
+              </Grid>
+            )}
           </Grid>
         </DialogContentText>
       </DialogContent>
