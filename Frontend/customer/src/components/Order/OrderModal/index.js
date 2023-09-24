@@ -188,7 +188,7 @@ const OrderModal = ({
             >
               <DialogTitle>Select Item and Quantity</DialogTitle>
               <DialogContent className={styles.forms}>
-                <FormControl variant="outlined" fullWidth  className={styles.item}>
+                <FormControl variant="outlined" fullWidth  style={{marginTop:'10px'}}>
                   <InputLabel htmlFor="selectedItem">Select Item</InputLabel>
                   <Select
                     label="Select Item"
@@ -210,7 +210,7 @@ const OrderModal = ({
                   type="number"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
-                  className={styles.item2}
+                  style={{marginTop:'10px'}}
                   InputProps={{
                     inputProps: {
                       min: 1,
