@@ -36,7 +36,7 @@ const OrderModal = ({
   const [orderStatusValid, setOrderStatusValid] = useState(true);
   const [selectedItem, setSelectedItem] = useState('');
   const [quantity,setQuantity]=useState('');
-
+  const [quantityError, setQuantityError] = useState(false);
   const [itemSelectionOpen, setItemSelectionOpen] = useState(false);
 
   useEffect(() => {
@@ -54,6 +54,8 @@ const OrderModal = ({
   };
 
   const closeItemSelection = () => {
+    setSelectedItem('');
+    setQuantity('');
     setItemSelectionOpen(false);
   };
 
@@ -69,6 +71,10 @@ const OrderModal = ({
       setSelectedItem('');
       setQuantity('');
       closeItemSelection();
+      setQuantityError(false);
+    }
+    else {
+      setQuantityError(true);
     }
   };
 
@@ -210,6 +216,8 @@ const OrderModal = ({
                       min: 1,
                     },
                   }}
+                  error={quantityError}
+                  helperText={quantityError ? 'Quantity must be greater than 0' : ''}
                 />
               </DialogContent>
               <DialogActions>
