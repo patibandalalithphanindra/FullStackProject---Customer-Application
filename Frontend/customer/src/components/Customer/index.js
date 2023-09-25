@@ -30,6 +30,7 @@ import { Search, ArrowUpward as ArrowUpwardIcon, ArrowDownward as ArrowDownwardI
 import DeleteIcon from '@mui/icons-material/Delete';
 import CustomerModal from './CustomerModal';
 import { useNavigate } from 'react-router-dom';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 function Customer() {
   const navigate = useNavigate();
@@ -55,6 +56,7 @@ function Customer() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortedCustomers, setSortedCustomers] = useState([]);
+  const [copiedCustomerId, setCopiedCustomerId] = useState(null);
 
   const fetchCustomerData = () => {
     const response = localStorage.getItem('jwt');
@@ -347,6 +349,9 @@ function Customer() {
               <TableCell>
                 <b>Actions</b>
               </TableCell>
+              <TableCell>
+                <b>Place an Order</b>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -384,11 +389,33 @@ function Customer() {
                     <DeleteIcon />
                   </Button>
                 </TableCell>
+                <TableCell>
+                  <CopyToClipboard
+                    text={customer.customerId}
+                    onCopy={() => {
+                      setCopiedCustomerId(customer.customerId);
+                      navigate('/orders');
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      className={`${styles.button}`}
+                    >
+                      <AddIcon/>
+                    </Button>
+                  </CopyToClipboard>
+                  {copiedCustomerId === customer.customerId && (
+                    <span style={{ marginLeft: '8px', color: 'green' }}>
+                      Copied!
+                    </span>
+                  )}
+                </TableCell>
               </TableRow>
             ))}
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={5} />
+                <TableCell colSpan={6} />
               </TableRow>
             )}
           </TableBody>
