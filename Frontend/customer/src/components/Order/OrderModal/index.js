@@ -38,11 +38,12 @@ const OrderModal = ({
   const [quantity,setQuantity]=useState('');
   const [quantityError, setQuantityError] = useState(false);
   const [itemSelectionOpen, setItemSelectionOpen] = useState(false);
+  const [itemSelectionError, setItemSelectionError] = useState(false);
+
 
   useEffect(() => {
     if (isOpen) {
       setCustomerIdValid(true);
-  
       setCurrencyValid(true);
       setWithCoinsValid(true);
       setOrderStatusValid(true);
@@ -51,6 +52,8 @@ const OrderModal = ({
 
   const openItemSelection = () => {
     setItemSelectionOpen(true);
+    setItemSelectionError(false); 
+    setQuantityError(false);
   };
 
   const closeItemSelection = () => {
@@ -67,14 +70,19 @@ const OrderModal = ({
         quantity: quantity,
       };
       setOrderItemsD([...orderItemsD, newItem]);
-
       setSelectedItem('');
       setQuantity('');
       closeItemSelection();
       setQuantityError(false);
+      setItemSelectionError(false);
     }
     else {
-      setQuantityError(true);
+      if (!selectedItem) {
+        setItemSelectionError(true);
+      }
+      if (quantity <= 0) {
+        setQuantityError(true);
+      }
     }
   };
 
@@ -84,23 +92,22 @@ const OrderModal = ({
   };
 
   const handleSaveClick = () => {
-    if (
-      orderData.customerId &&
-      orderData.currency &&
-      withCoins &&
-      orderItemsD &&
-      orderData.orderStatus
-    ) {
+    const isCustomerIdValid = !!orderData.customerId;
+    const isCurrencyValid = !!orderData.currency;
+    const isWithCoinsValid = !!withCoins;
+    const isOrderItemsValid = !!orderItemsD && orderItemsD.length > 0;
+    const isOrderStatusValid = !!orderData.orderStatus;
+  
+    setCustomerIdValid(isCustomerIdValid);
+    setCurrencyValid(isCurrencyValid);
+    setWithCoinsValid(isWithCoinsValid);
+    setOrderStatusValid(isOrderStatusValid);
+  
+    if (isCustomerIdValid && isCurrencyValid && isWithCoinsValid && isOrderItemsValid && isOrderStatusValid) {
       handleSave();
-    } else {
-      setCustomerIdValid(!!orderData.customerId);
-      setCurrencyValid(!!orderData.currency);
-      setWithCoinsValid(!!withCoins);
-      setOrderItemsD(!!orderItemsD);
-      setOrderStatusValid(!!orderData.orderStatus);
     }
   };
-
+  
   return (
     <Dialog open={isOpen} onClose={handleClose}>
       <DialogTitle>{orderData.orderNo ? 'Edit an existing Order' : 'Add a new Order'}</DialogTitle>
@@ -201,6 +208,7 @@ const OrderModal = ({
                       </MenuItem>
                     ))}
                   </Select>
+                  {itemSelectionError && <FormHelperText error>This field is required.</FormHelperText>}
                 </FormControl>
                 <TextField
                   label="Quantity"
@@ -216,9 +224,8 @@ const OrderModal = ({
                       min: 1,
                     },
                   }}
-                  error={quantityError}
-                  helperText={quantityError ? 'Quantity must be greater than 0' : ''}
                 />
+                {quantityError && <FormHelperText error>Quantity of item must be greater than 0</FormHelperText>}
               </DialogContent>
               <DialogActions>
                 <Button onClick={closeItemSelection} color="primary">

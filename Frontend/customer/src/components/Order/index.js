@@ -218,8 +218,9 @@ function Order() {
       customerPhoneNo: "",
       orderStatus: "Created"
     });
+    setOrderItemsData([]);
   };
-console.log(orderItemsData);
+
   const handleOrderModalSave = () => {
     const response = localStorage.getItem("jwt");
     const headers = {
