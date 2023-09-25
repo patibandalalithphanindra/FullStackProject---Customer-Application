@@ -20,8 +20,21 @@ function Register() {
     setFormData({ ...formData, [name]: value });
   };
 
+  const isEmailValid = (email) => {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    return emailRegex.test(email);
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    if (!isEmailValid(formData.email)) {
+      toast.error('Invalid email address. Please enter a valid email.', {
+        position: toast.POSITION.BOTTOM_LEFT,
+        autoClose: 3000,
+      });
+      return;
+    }
 
     try {
       const response = await axios.post('http://localhost:8080/user/add', formData);
@@ -30,13 +43,15 @@ function Register() {
         localStorage.setItem('name', response?.data?.name);
         navigate('/homepage');
         toast.success('Registered Successfully!', {
-          position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+          position: toast.POSITION.BOTTOM_LEFT,
+          autoClose: 900,
         });
-      } 
+      }
     } catch (error) {
       console.error('Registration error:', error);
       toast.error('Registration failed. Please try again.', {
-        position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
+        position: toast.POSITION.BOTTOM_LEFT,
+        autoClose: 900,
       });
     }
   };
@@ -57,6 +72,7 @@ function Register() {
         <TextField
           label="Email"
           name="email"
+          type="email"
           value={formData.email}
           onChange={handleChange}
           fullWidth
