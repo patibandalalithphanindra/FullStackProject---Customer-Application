@@ -49,7 +49,6 @@ function Order() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortOrder, setSortOrder] = useState('asc');
-
   const [withCoinsData, setWithCoinsData] = useState("yes");
   const [orderItemsData,setOrderItemsData] = useState([]);
   const [orderItemsMenu,setOrderItemsBcknd] = useState([]);
@@ -108,7 +107,6 @@ function Order() {
     withCoinsData,
     orderItemsData
   };
-  console.log(dataToSend);
 
   const getVisibleOrders = () => {
     let filteredAndSortedOrders = [...orders];

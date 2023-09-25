@@ -23,7 +23,6 @@ function LandingPage() {
       .get('http://localhost:8080/customers/counts', { headers })
       .then((response) => {
         setCounts(response.data);
-        console.log(response.data)
       })
       .catch((error) => {
         console.error('Error fetching customer counts data:', error);

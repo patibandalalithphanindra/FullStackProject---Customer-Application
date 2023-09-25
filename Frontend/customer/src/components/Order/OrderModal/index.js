@@ -16,7 +16,7 @@ import {
   FormHelperText,
   Chip
 } from '@mui/material';
-import styles from './styles.module.css';
+
 
 const OrderModal = ({
   isOpen,
@@ -36,11 +36,11 @@ const OrderModal = ({
   const [itemDetailsValid, setItemDetailsValid] = useState(true);
   const [orderStatusValid, setOrderStatusValid] = useState(true);
   const [selectedItem, setSelectedItem] = useState('');
-  const [quantity,setQuantity]=useState('');
+  const [quantity, setQuantity] = useState('');
   const [quantityError, setQuantityError] = useState(false);
   const [itemSelectionOpen, setItemSelectionOpen] = useState(false);
   const [itemSelectionError, setItemSelectionError] = useState(false);
- 
+
   const resetState = () => {
     setCustomerIdValid(true);
     setCurrencyValid(true);
@@ -54,16 +54,16 @@ const OrderModal = ({
     setItemDetailsValid(true);
     setOrderItemsD([]);
   };
- 
+
   useEffect(() => {
     if (isOpen) {
-      resetState(); 
+      resetState();
     }
   }, [isOpen]);
 
   const openItemSelection = () => {
     setItemSelectionOpen(true);
-    setItemSelectionError(false); 
+    setItemSelectionError(false);
     setQuantityError(false);
   };
 
@@ -75,10 +75,10 @@ const OrderModal = ({
 
   const addItemWithQuantity = () => {
     if (selectedItem && quantity > 0) {
-      setItemDetailsValid(true)
+      setItemDetailsValid(true);
       const newItem = {
         itemId: selectedItem.itemId,
-        itemName:selectedItem.itemName,
+        itemName: selectedItem.itemName,
         quantity: quantity,
       };
       setOrderItemsD([...orderItemsD, newItem]);
@@ -87,8 +87,7 @@ const OrderModal = ({
       closeItemSelection();
       setQuantityError(false);
       setItemSelectionError(false);
-    }
-    else {
+    } else {
       if (!selectedItem) {
         setItemSelectionError(true);
       }
@@ -103,28 +102,32 @@ const OrderModal = ({
     setOrderItemsD(updatedItems);
   };
 
-  const handleSaveClick = () => {
+  const handleSaveClick = (orderNoExists) => {
     const isCustomerIdValid = !!orderData.customerId;
     const isWithCoinsValid = !!withCoins;
     const isOrderItemsValid = !!orderItemsD && orderItemsD.length > 0;
     const isOrderStatusValid = !!orderData.orderStatus;
-    if(!isOrderItemsValid){
+
+    if (!isOrderItemsValid) {
       setItemDetailsValid(false);
+    } else if (isOrderItemsValid) {
+      setItemDetailsValid(true);
     }
-     else if(isOrderItemsValid){
-      setItemDetailsValid(true)
-    }
-  
     setCustomerIdValid(isCustomerIdValid);
     setWithCoinsValid(isWithCoinsValid);
     setOrderStatusValid(isOrderStatusValid);
-  
+   if(!orderNoExists){
     if (isCustomerIdValid && isWithCoinsValid && isOrderItemsValid && isOrderStatusValid) {
       setItemDetailsValid(true);
       handleSave();
     }
+   } else {
+    if (isCustomerIdValid && isWithCoinsValid  && isOrderStatusValid) {
+      handleSave();
+    }
+   }
   };
-  
+
   return (
     <Dialog open={isOpen} onClose={handleClose}>
       <DialogTitle>{orderData.orderNo ? 'Edit an existing Order' : 'Add a new Order'}</DialogTitle>
@@ -144,7 +147,7 @@ const OrderModal = ({
               {!customerIdValid && (
                 <FormHelperText error>This field is required.</FormHelperText>
               )}
-            </Grid>     
+            </Grid>
             <Grid item xs={6}>
               <FormControl variant="outlined" fullWidth>
                 <InputLabel htmlFor="currency">Currency</InputLabel>
@@ -159,7 +162,6 @@ const OrderModal = ({
                 {!currencyValid && <FormHelperText error>This field is required.</FormHelperText>}
               </FormControl>
             </Grid>
-            
             <Grid item xs={6}>
               <FormControl variant="outlined" fullWidth>
                 <InputLabel htmlFor="withCoins">Redeem(?)</InputLabel>
@@ -176,34 +178,36 @@ const OrderModal = ({
               </FormControl>
             </Grid>
             {orderData.orderNo && (
-            <Grid item xs={6}>
-              <FormControl variant="outlined" fullWidth>
-                <InputLabel htmlFor="orderStatus">Order Status</InputLabel>
-                <Select
-                  label="Order Status"
-                  value={orderData.orderStatus}
-                  onChange={(e) => setOrderData({ ...orderData, orderStatus: e.target.value })}
-                >
-                  <MenuItem value="Created">Created</MenuItem>
-                  <MenuItem value="Shipped">Shipped</MenuItem>
-                </Select>
-                {!orderStatusValid && (
-                  <FormHelperText error>This field is required.</FormHelperText>
-                )}
-              </FormControl>
-            </Grid> )}
+              <Grid item xs={6}>
+                <FormControl variant="outlined" fullWidth>
+                  <InputLabel htmlFor="orderStatus">Order Status</InputLabel>
+                  <Select
+                    label="Order Status"
+                    value={orderData.orderStatus}
+                    onChange={(e) => setOrderData({ ...orderData, orderStatus: e.target.value })}
+                  >
+                    <MenuItem value="Created">Created</MenuItem>
+                    <MenuItem value="Shipped">Shipped</MenuItem>
+                  </Select>
+                  {!orderStatusValid && (
+                    <FormHelperText error>This field is required.</FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+            )}
             <Grid item xs={12}>
-              
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={()=>openItemSelection()}
-              >
-                Add Item
-              </Button>
-              {!itemDetailsValid && (
-                  <FormHelperText error>Atleast one item must be selected</FormHelperText>
-                )}
+              {!orderData.orderNo && (
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => openItemSelection()}
+                >
+                  Add Item
+                </Button>
+              )}
+              {!itemDetailsValid && !orderData.orderNo &&  (
+                <FormHelperText error>At least one item must be selected</FormHelperText>
+              )}
             </Grid>
             <Dialog
               open={itemSelectionOpen}
@@ -211,13 +215,14 @@ const OrderModal = ({
               fullWidth
             >
               <DialogTitle>Select Item and Quantity</DialogTitle>
-              <DialogContent className={styles.forms}>
-                <FormControl variant="outlined" fullWidth  style={{marginTop:'10px'}}>
+              <DialogContent>
+                <FormControl variant="outlined" fullWidth style={{marginTop: '8px'}}>
                   <InputLabel htmlFor="selectedItem">Select Item</InputLabel>
                   <Select
                     label="Select Item"
                     value={selectedItem}
                     onChange={(e) => setSelectedItem(e.target.value)}
+                    error={itemSelectionError}
                   >
                     {orderItemsMenu.map((item) => (
                       <MenuItem key={item.itemId} value={item}>
@@ -225,7 +230,9 @@ const OrderModal = ({
                       </MenuItem>
                     ))}
                   </Select>
-                  {itemSelectionError && <FormHelperText error>This field is required.</FormHelperText>}
+                  {itemSelectionError && (
+                    <FormHelperText error>Please select an item.</FormHelperText>
+                  )}
                 </FormControl>
                 <TextField
                   label="Quantity"
@@ -253,17 +260,16 @@ const OrderModal = ({
                 </Button>
               </DialogActions>
             </Dialog>
-
             {orderItemsD.length > 0 && (
               <Grid item xs={12}>
-                <Typography variant="subtitle1">Selected Items : </Typography>
+                <Typography variant="subtitle1">Selected Items:</Typography>
                 <div>
                   {orderItemsD.map((item) => (
                     <Chip
                       key={item.itemId}
                       label={`${item.itemName} x${item.quantity}`}
-                      onDelete={() => removeItem(item.itemId)}
                       style={{ margin: '4px' }}
+                      onDelete={() => removeItem(item.itemId)}
                     />
                   ))}
                 </div>
@@ -273,11 +279,11 @@ const OrderModal = ({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => {handleClose()}} color="primary">
+        <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={()=>handleSaveClick()} color="primary">
-          Save
+        <Button onClick={() => handleSaveClick(orderData.orderNo ? true : false)} color="primary">
+         {orderData.orderNo ? 'Update Order'  : 'Place Order'}
         </Button>
       </DialogActions>
     </Dialog>
