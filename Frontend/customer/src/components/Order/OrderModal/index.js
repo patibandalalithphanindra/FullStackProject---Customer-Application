@@ -127,9 +127,7 @@ const OrderModal = ({
               {!customerIdValid && (
                 <FormHelperText error>This field is required.</FormHelperText>
               )}
-            </Grid>
-            
-            
+            </Grid>     
             <Grid item xs={6}>
               <FormControl variant="outlined" fullWidth>
                 <InputLabel htmlFor="currency">Currency</InputLabel>

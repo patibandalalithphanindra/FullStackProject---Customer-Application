@@ -407,7 +407,7 @@ function Customer() {
                   </CopyToClipboard>
                   {copiedCustomerId === customer.customerId && (
                     <span style={{ marginLeft: '8px', color: 'green' }}>
-                      Copied!
+                      Customer Id copied successfully!
                     </span>
                   )}
                 </TableCell>
