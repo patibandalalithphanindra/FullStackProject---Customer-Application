@@ -14,7 +14,7 @@ import {
   InputLabel,
   Grid,
   FormHelperText,
-  Chip,
+  Chip
 } from '@mui/material';
 import styles from './styles.module.css';
 
@@ -33,20 +33,31 @@ const OrderModal = ({
   const [customerIdValid, setCustomerIdValid] = useState(true);
   const [currencyValid, setCurrencyValid] = useState(true);
   const [withCoinsValid, setWithCoinsValid] = useState(true);
+  const [itemDetailsValid, setItemDetailsValid] = useState(true);
   const [orderStatusValid, setOrderStatusValid] = useState(true);
   const [selectedItem, setSelectedItem] = useState('');
   const [quantity,setQuantity]=useState('');
   const [quantityError, setQuantityError] = useState(false);
   const [itemSelectionOpen, setItemSelectionOpen] = useState(false);
   const [itemSelectionError, setItemSelectionError] = useState(false);
-
-
+ 
+  const resetState = () => {
+    setCustomerIdValid(true);
+    setCurrencyValid(true);
+    setWithCoinsValid(true);
+    setOrderStatusValid(true);
+    setSelectedItem('');
+    setQuantity('');
+    setQuantityError(false);
+    setItemSelectionOpen(false);
+    setItemSelectionError(false);
+    setItemDetailsValid(true);
+    setOrderItemsD([]);
+  };
+ 
   useEffect(() => {
     if (isOpen) {
-      setCustomerIdValid(true);
-      setCurrencyValid(true);
-      setWithCoinsValid(true);
-      setOrderStatusValid(true);
+      resetState(); 
     }
   }, [isOpen]);
 
@@ -64,6 +75,7 @@ const OrderModal = ({
 
   const addItemWithQuantity = () => {
     if (selectedItem && quantity > 0) {
+      setItemDetailsValid(true)
       const newItem = {
         itemId: selectedItem.itemId,
         itemName:selectedItem.itemName,
@@ -93,17 +105,22 @@ const OrderModal = ({
 
   const handleSaveClick = () => {
     const isCustomerIdValid = !!orderData.customerId;
-    const isCurrencyValid = !!orderData.currency;
     const isWithCoinsValid = !!withCoins;
     const isOrderItemsValid = !!orderItemsD && orderItemsD.length > 0;
     const isOrderStatusValid = !!orderData.orderStatus;
+    if(!isOrderItemsValid){
+      setItemDetailsValid(false);
+    }
+     else if(isOrderItemsValid){
+      setItemDetailsValid(true)
+    }
   
     setCustomerIdValid(isCustomerIdValid);
-    setCurrencyValid(isCurrencyValid);
     setWithCoinsValid(isWithCoinsValid);
     setOrderStatusValid(isOrderStatusValid);
   
-    if (isCustomerIdValid && isCurrencyValid && isWithCoinsValid && isOrderItemsValid && isOrderStatusValid) {
+    if (isCustomerIdValid && isWithCoinsValid && isOrderItemsValid && isOrderStatusValid) {
+      setItemDetailsValid(true);
       handleSave();
     }
   };
@@ -138,13 +155,11 @@ const OrderModal = ({
                   disabled={orderData.orderNo !== undefined}
                 >
                   <MenuItem value="INR">INR</MenuItem>
-                  <MenuItem value="$">$</MenuItem>
                 </Select>
                 {!currencyValid && <FormHelperText error>This field is required.</FormHelperText>}
               </FormControl>
             </Grid>
             
-
             <Grid item xs={6}>
               <FormControl variant="outlined" fullWidth>
                 <InputLabel htmlFor="withCoins">Redeem(?)</InputLabel>
@@ -178,13 +193,17 @@ const OrderModal = ({
               </FormControl>
             </Grid> )}
             <Grid item xs={12}>
+              
               <Button
                 variant="outlined"
                 color="primary"
-                onClick={openItemSelection}
+                onClick={()=>openItemSelection()}
               >
                 Add Item
               </Button>
+              {!itemDetailsValid && (
+                  <FormHelperText error>Atleast one item must be selected</FormHelperText>
+                )}
             </Grid>
             <Dialog
               open={itemSelectionOpen}
@@ -254,10 +273,10 @@ const OrderModal = ({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={() => {handleClose()}} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleSaveClick} color="primary">
+        <Button onClick={()=>handleSaveClick()} color="primary">
           Save
         </Button>
       </DialogActions>
