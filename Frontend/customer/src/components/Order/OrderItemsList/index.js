@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import React from "react";
 
 function OrderItemsList({ orderItems }) {
@@ -12,8 +13,8 @@ function OrderItemsList({ orderItems }) {
   };
 
   return (
-    <div style={{ marginTop: "16px" }}>
-      <h4>Ordered Items along with their quantities:</h4>
+    <div style={{ marginTop: "8px" }}>
+      <Typography variant="p"><b>Ordered Items and quantities : </b></Typography>
       <ul style={{ listStyle: "none", padding: 0 }}>
         {orderItems.map((item) => (
           <li key={item.itemId} style={listItemStyle}>
