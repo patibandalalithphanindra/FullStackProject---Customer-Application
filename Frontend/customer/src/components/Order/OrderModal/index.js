@@ -14,8 +14,16 @@ import {
   InputLabel,
   Grid,
   FormHelperText,
-  Chip
+  TableContainer,
+  Table,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableRow,
+  IconButton,
 } from '@mui/material';
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
 
 const OrderModal = ({
   isOpen,
@@ -36,9 +44,7 @@ const OrderModal = ({
   const [orderStatusValid, setOrderStatusValid] = useState(true);
   const [selectedItem, setSelectedItem] = useState('');
   const [quantity, setQuantity] = useState('');
-  const [quantityError, setQuantityError] = useState(false);
-  const [itemSelectionOpen, setItemSelectionOpen] = useState(false);
-  const [itemSelectionError, setItemSelectionError] = useState(false);
+  const [quantityError, setQuantityError] = useState('');
 
   const resetState = () => {
     setCustomerIdValid(true);
@@ -47,11 +53,8 @@ const OrderModal = ({
     setOrderStatusValid(true);
     setSelectedItem('');
     setQuantity('');
-    setQuantityError(false);
-    setItemSelectionOpen(false);
-    setItemSelectionError(false);
+    setQuantityError('');
     setItemDetailsValid(true);
-    setOrderItemsD([]);
   };
 
   useEffect(() => {
@@ -59,18 +62,6 @@ const OrderModal = ({
       resetState();
     }
   }, [isOpen]);
-
-  const openItemSelection = () => {
-    setItemSelectionOpen(true);
-    setItemSelectionError(false);
-    setQuantityError(false);
-  };
-
-  const closeItemSelection = () => {
-    setSelectedItem('');
-    setQuantity('');
-    setItemSelectionOpen(false);
-  };
 
   const addItemWithQuantity = () => {
     if (selectedItem && quantity > 0) {
@@ -95,15 +86,17 @@ const OrderModal = ({
 
       setSelectedItem('');
       setQuantity('');
-      closeItemSelection();
-      setQuantityError(false);
-      setItemSelectionError(false);
+      setQuantityError('');
     } else {
       if (!selectedItem) {
-        setItemSelectionError(true);
+        setItemDetailsValid(false);
       }
-      if (quantity <= 0) {
-        setQuantityError(true);
+      if (!quantity) {
+        setQuantityError('Enter quantity');
+      } else if (quantity <= 0) {
+        setQuantityError('Should be greater than zero');
+      } else {
+        setQuantityError('');
       }
     }
   };
@@ -121,12 +114,12 @@ const OrderModal = ({
 
     if (!isOrderItemsValid) {
       setItemDetailsValid(false);
-    } else if (isOrderItemsValid) {
-      setItemDetailsValid(true);
     }
+    
     setCustomerIdValid(isCustomerIdValid);
     setWithCoinsValid(isWithCoinsValid);
     setOrderStatusValid(isOrderStatusValid);
+
     if (!orderNoExists) {
       if (isCustomerIdValid && isWithCoinsValid && isOrderItemsValid && isOrderStatusValid) {
         setItemDetailsValid(true);
@@ -206,84 +199,85 @@ const OrderModal = ({
                 </FormControl>
               </Grid>
             )}
-            <Grid item xs={12}>
-              {!orderData.orderNo && (
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={() => openItemSelection()}
-                >
-                  Add Item
-                </Button>
-              )}
-              {!itemDetailsValid && !orderData.orderNo && (
-                <FormHelperText error>At least one item must be selected</FormHelperText>
-              )}
-            </Grid>
-            <Dialog
-              open={itemSelectionOpen}
-              onClose={closeItemSelection}
-              fullWidth
-            >
-              <DialogTitle>Select Item and Quantity</DialogTitle>
-              <DialogContent>
-                <FormControl variant="outlined" fullWidth style={{ marginTop: '8px' }}>
-                  <InputLabel htmlFor="selectedItem">Select Item</InputLabel>
-                  <Select
-                    label="Select Item"
-                    value={selectedItem}
-                    onChange={(e) => setSelectedItem(e.target.value)}
-                    error={itemSelectionError}
-                  >
-                    {orderItemsMenu.map((item) => (
-                      <MenuItem key={item.itemId} value={item}>
-                        {item.itemName}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {itemSelectionError && (
-                    <FormHelperText error>Please select an item.</FormHelperText>
-                  )}
-                </FormControl>
-                <TextField
-                  label="Quantity"
-                  variant="outlined"
-                  fullWidth
-                  required
-                  type="number"
-                  value={quantity}
-                  onChange={(e) => setQuantity(e.target.value)}
-                  style={{ marginTop: '10px' }}
-                  InputProps={{
-                    inputProps: {
-                      min: 1,
-                    },
-                  }}
-                />
-                {quantityError && <FormHelperText error>Quantity of item must be greater than 0</FormHelperText>}
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={closeItemSelection} color="primary">
-                  Cancel
-                </Button>
-                <Button onClick={addItemWithQuantity} color="primary">
-                  Add
-                </Button>
-              </DialogActions>
-            </Dialog>
-            {orderItemsD.length > 0 && (
+            {!orderData.orderNo && (
               <Grid item xs={12}>
-                <Typography variant="subtitle1">Selected Items:</Typography>
-                <div>
-                  {orderItemsD.map((item) => (
-                    <Chip
-                      key={item.itemId}
-                      label={`${item.itemName} x${item.quantity}`}
-                      style={{ margin: '4px' }}
-                      onDelete={() => removeItem(item.itemId)}
+                <Typography variant="p"> Select Items </Typography>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <FormControl variant="outlined" fullWidth style={{ marginTop: '10px' }}>
+                      <InputLabel htmlFor="select-item">Select Item</InputLabel>
+                      <Select
+                        label="Select Item"
+                        value={selectedItem}
+                        onChange={(e) => setSelectedItem(e.target.value)}
+                      >
+                        {orderItemsMenu.map((item) => (
+                          <MenuItem key={item.itemId} value={item}>
+                            {item.itemName}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                      {!itemDetailsValid && (
+                        <FormHelperText error>Please select an item</FormHelperText>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <TextField
+                      label="Quantity"
+                      variant="outlined"
+                      fullWidth
+                      type="number"
+                      value={quantity}
+                      onChange={(e) => setQuantity(e.target.value)}
+                      error={!!quantityError}
+                      style={{ marginTop: '10px' }}
                     />
-                  ))}
-                </div>
+                    {quantityError && (
+                      <FormHelperText error>{quantityError}</FormHelperText>
+                    )}
+                  </Grid>
+                  <Grid item xs={3} style={{ display: 'flex', alignItems: 'center' }}>
+                    <Button
+                      aria-label="Add"
+                      color='success'
+                      variant='contained'
+                      onClick={addItemWithQuantity}
+                      style={{ marginTop: '10px' }}
+                    >
+                      <AddIcon />
+                    </Button>
+                  </Grid>
+                </Grid>
+                {orderItemsD.length > 0 ? (
+                  <TableContainer>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Item Name</TableCell>
+                          <TableCell>Item Quantity</TableCell>
+                          <TableCell>Actions</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {orderItemsD.map((item) => (
+                          <TableRow key={item.itemId}>
+                            <TableCell>{item.itemName}</TableCell>
+                            <TableCell>{item.quantity}</TableCell>
+                            <TableCell>
+                              <IconButton
+                                aria-label="Delete"
+                                onClick={() => removeItem(item.itemId)}
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                ) : null}
               </Grid>
             )}
           </Grid>
@@ -293,8 +287,12 @@ const OrderModal = ({
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={() => handleSaveClick(orderData.orderNo ? true : false)} color="primary">
-          {orderData.orderNo ? 'Update Order' : 'Place Order'}
+        <Button
+          onClick={() => handleSaveClick(!!orderData.orderNo)}
+          color="primary"
+          variant="contained"
+        >
+        {orderData.orderNo ? 'Update Order' : 'Place Order'}
         </Button>
       </DialogActions>
     </Dialog>
