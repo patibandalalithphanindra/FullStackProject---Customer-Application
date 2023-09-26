@@ -17,7 +17,6 @@ import {
   Chip
 } from '@mui/material';
 
-
 const OrderModal = ({
   isOpen,
   handleClose,
@@ -76,12 +75,24 @@ const OrderModal = ({
   const addItemWithQuantity = () => {
     if (selectedItem && quantity > 0) {
       setItemDetailsValid(true);
-      const newItem = {
-        itemId: selectedItem.itemId,
-        itemName: selectedItem.itemName,
-        quantity: quantity,
-      };
-      setOrderItemsD([...orderItemsD, newItem]);
+
+      const existingItemIndex = orderItemsD.findIndex(
+        (item) => item.itemId === selectedItem.itemId
+      );
+
+      if (existingItemIndex !== -1) {
+        const updatedOrderItems = [...orderItemsD];
+        updatedOrderItems[existingItemIndex].quantity += Number(quantity);
+        setOrderItemsD(updatedOrderItems);
+      } else {
+        const newItem = {
+          itemId: selectedItem.itemId,
+          itemName: selectedItem.itemName,
+          quantity: Number(quantity),
+        };
+        setOrderItemsD([...orderItemsD, newItem]);
+      }
+
       setSelectedItem('');
       setQuantity('');
       closeItemSelection();
@@ -116,16 +127,16 @@ const OrderModal = ({
     setCustomerIdValid(isCustomerIdValid);
     setWithCoinsValid(isWithCoinsValid);
     setOrderStatusValid(isOrderStatusValid);
-   if(!orderNoExists){
-    if (isCustomerIdValid && isWithCoinsValid && isOrderItemsValid && isOrderStatusValid) {
-      setItemDetailsValid(true);
-      handleSave();
+    if (!orderNoExists) {
+      if (isCustomerIdValid && isWithCoinsValid && isOrderItemsValid && isOrderStatusValid) {
+        setItemDetailsValid(true);
+        handleSave();
+      }
+    } else {
+      if (isCustomerIdValid && isWithCoinsValid && isOrderStatusValid) {
+        handleSave();
+      }
     }
-   } else {
-    if (isCustomerIdValid && isWithCoinsValid  && isOrderStatusValid) {
-      handleSave();
-    }
-   }
   };
 
   return (
@@ -205,7 +216,7 @@ const OrderModal = ({
                   Add Item
                 </Button>
               )}
-              {!itemDetailsValid && !orderData.orderNo &&  (
+              {!itemDetailsValid && !orderData.orderNo && (
                 <FormHelperText error>At least one item must be selected</FormHelperText>
               )}
             </Grid>
@@ -216,7 +227,7 @@ const OrderModal = ({
             >
               <DialogTitle>Select Item and Quantity</DialogTitle>
               <DialogContent>
-                <FormControl variant="outlined" fullWidth style={{marginTop: '8px'}}>
+                <FormControl variant="outlined" fullWidth style={{ marginTop: '8px' }}>
                   <InputLabel htmlFor="selectedItem">Select Item</InputLabel>
                   <Select
                     label="Select Item"
@@ -242,7 +253,7 @@ const OrderModal = ({
                   type="number"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
-                  style={{marginTop:'10px'}}
+                  style={{ marginTop: '10px' }}
                   InputProps={{
                     inputProps: {
                       min: 1,
@@ -283,7 +294,7 @@ const OrderModal = ({
           Cancel
         </Button>
         <Button onClick={() => handleSaveClick(orderData.orderNo ? true : false)} color="primary">
-         {orderData.orderNo ? 'Update Order'  : 'Place Order'}
+          {orderData.orderNo ? 'Update Order' : 'Place Order'}
         </Button>
       </DialogActions>
     </Dialog>

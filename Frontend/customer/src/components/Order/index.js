@@ -31,6 +31,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CustomerDetailsModal from "./CustomerDetailsModal";
 import OrderModal from "./OrderModal";
 import { ArrowDownward, ArrowUpward, Search } from "@mui/icons-material";
+import OrderItemsList from "./OrderItemsList";
 
 function Order() {
   const [orders, setOrders] = useState([]);
@@ -48,11 +49,11 @@ function Order() {
   });
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [sortOrder, setSortOrder] = useState('asc');
+  const [sortOrder, setSortOrder] = useState("asc");
   const [withCoinsData, setWithCoinsData] = useState("yes");
-  const [orderItemsData,setOrderItemsData] = useState([]);
-  const [orderItemsMenu,setOrderItemsBcknd] = useState([]);
-  
+  const [orderItemsData, setOrderItemsData] = useState([]);
+  const [orderItemsMenu, setOrderItemsBcknd] = useState([]);
+
   useEffect(() => {
     const response = localStorage.getItem("jwt");
     const headers = {
@@ -68,7 +69,7 @@ function Order() {
       .catch((error) => {
         console.error("Error fetching order data:", error);
       });
-      axios
+    axios
       .get("http://localhost:8080/items", { headers })
       .then((response) => {
         setOrderItemsBcknd(response.data);
@@ -94,7 +95,7 @@ function Order() {
     setOrderModalData({
       customerId: "",
       currency: "INR",
-      orderStatus: "Created"
+      orderStatus: "Created",
     });
 
     setWithCoinsData(withCoinsData);
@@ -105,12 +106,12 @@ function Order() {
   const dataToSend = {
     orderModalData,
     withCoinsData,
-    orderItemsData
+    orderItemsData,
   };
 
   const getVisibleOrders = () => {
     let filteredAndSortedOrders = [...orders];
-  
+
     if (searchCustomerId) {
       filteredAndSortedOrders = filteredAndSortedOrders.filter((order) =>
         order.customerId.includes(searchCustomerId)
@@ -119,21 +120,20 @@ function Order() {
       filteredAndSortedOrders = filteredAndSortedOrders.sort((a, b) => {
         const dateA = new Date(a.orderDate).getTime();
         const dateB = new Date(b.orderDate).getTime();
-  
-        if (sortOrder === 'asc') {
+
+        if (sortOrder === "asc") {
           return dateA - dateB;
         } else {
           return dateB - dateA;
         }
       });
     }
-  
+
     const startIndex = page * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
-  
+
     return filteredAndSortedOrders.slice(startIndex, endIndex);
   };
-  
 
   const handleUpdate = (orderNo) => {
     const selected = orders.find((order) => order.orderNo === orderNo);
@@ -214,7 +214,7 @@ function Order() {
       orderTotal: 0,
       currency: "INR",
       customerPhoneNo: "",
-      orderStatus: "Created"
+      orderStatus: "Created",
     });
     setOrderItemsData([]);
   };
@@ -310,13 +310,13 @@ function Order() {
   };
 
   const handleSort = () => {
-    const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
 
     const sorted = [...orders].sort((a, b) => {
       const dateA = new Date(a.orderDate).getTime();
       const dateB = new Date(b.orderDate).getTime();
 
-      if (newSortOrder === 'asc') {
+      if (newSortOrder === "asc") {
         return dateA - dateB;
       } else {
         return dateB - dateA;
@@ -380,11 +380,7 @@ function Order() {
                   size="small"
                   aria-label="sort"
                 >
-                  {sortOrder === 'asc' ? (
-                    <ArrowUpward />
-                  ) : (
-                    <ArrowDownward />
-                  )}
+                  {sortOrder === "asc" ? <ArrowUpward /> : <ArrowDownward />}
                 </IconButton>
               </TableCell>
               <TableCell>
@@ -411,7 +407,9 @@ function Order() {
                   </span>
                 </TableCell>
                 <TableCell>{formatDate(order.orderDate)}</TableCell>
-                <TableCell>{order.orderTotal} {order.currency}</TableCell>
+                <TableCell>
+                  {order.orderTotal} {order.currency}
+                </TableCell>
                 <TableCell>{order.orderStatus}</TableCell>
                 <TableCell>
                   <Button
@@ -491,7 +489,8 @@ function Order() {
                 </div>
                 <div>
                   <Typography variant="body1">
-                    <b>Total Order Amount : </b> {selectedOrder.orderTotal} {selectedOrder.currency}
+                    <b>Total Order Amount : </b> {selectedOrder.orderTotal}{" "}
+                    {selectedOrder.currency}
                   </Typography>
                 </div>
                 <div>
@@ -505,9 +504,11 @@ function Order() {
                   </Typography>
                 </div>
                 <Typography variant="body1">
-                  <b>Last Modified : </b> {formatDate(selectedOrder.lastModifiedTS)}
+                  <b>Last Modified : </b>{" "}
+                  {formatDate(selectedOrder.lastModifiedTS)}
                 </Typography>
               </DialogContentText>
+              <OrderItemsList orderItems={selectedOrder.orderItems} /> {/* Render OrderItemsList component */}
             </DialogContent>
             <DialogActions>
               <Button onClick={handleViewModalClose} color="primary">
