@@ -39,7 +39,25 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public Order createOrderWithoutRedeem(Order order,List<OrderItem> orderItems) {
+    public List<OrderItem> getOrderItemsByOrderNo(String orderNo) {
+        Order order = orderRepository.findByOrderNo(orderNo);
+
+        List<OrderItem> orderItems = order.getOrderItems();
+        List<OrderItem> formattedOrderItems = new ArrayList<>();
+
+        for (OrderItem itemData : orderItems) {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setItemId(itemData.getItemId());
+            orderItem.setItemName(itemData.getItemName());
+            orderItem.setQuantity(itemData.getQuantity());
+            formattedOrderItems.add(orderItem);
+        }
+        return formattedOrderItems;
+    }
+
+
+    @Override
+    public Order createOrderWithoutRedeem(Order order, List<OrderItem> orderItems) {
         String customerId = order.getCustomerId();
         Optional<Customer> customerOptional = customerRepository.findByCustomerId(customerId);
 
@@ -58,18 +76,19 @@ public class OrderServiceImplementation implements OrderService {
                 order.setOrderNo(orderNo);
             }
 
+            List<OrderItem> orderItemDtos = new ArrayList<>();
+            double orderTotal = 0;
 
-            List<Item> items = new ArrayList<Item>();
-            double orderTotal=0;
-            for(OrderItem oItem: orderItems){
+            for (OrderItem oItem : orderItems) {
                 Item item = itemService.getItem(oItem.getItemId());
-                items.add(item);
-                orderTotal+=oItem.getQuantity()*item.getItemPrice();
+                double itemTotalPrice = oItem.getQuantity() * item.getItemPrice();
+                orderTotal += itemTotalPrice;
+                orderItemDtos.add(new OrderItem(item.getItemId(), item.getItemName(), oItem.getQuantity()));
             }
 
             Reward reward = rewardService.createReward(customerId, orderTotal, order.getOrderNo());
-            order.setTotalItems(orderItems.size());
-            order.setOrderItems(items);
+            order.setTotalItems(orderItemDtos.size());
+            order.setOrderItems(orderItemDtos);
             order.setReward(reward);
             order.setOrderTotal(orderTotal);
             order.setOrderDate(LocalDateTime.now());
@@ -85,7 +104,7 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public Order createOrderWithRedeem(Order order,List<OrderItem> orderItems) {
+    public Order createOrderWithRedeem(Order order, List<OrderItem> orderItems) {
         String customerId = order.getCustomerId();
         Optional<Customer> customerOptional = customerRepository.findByCustomerId(customerId);
 
@@ -95,14 +114,16 @@ public class OrderServiceImplementation implements OrderService {
 
             double rewardCoins = rewardService.getRewardBalanceOfCustomer(customerId);
 
+            List<OrderItem> orderItemDtos = new ArrayList<>();
+            double orderTotal = 0;
 
-            List<Item> items = new ArrayList<Item>();
-            double orderTotal=0;
-            for(OrderItem oItem: orderItems){
+            for (OrderItem oItem : orderItems) {
                 Item item = itemService.getItem(oItem.getItemId());
-                items.add(item);
-                orderTotal+=oItem.getQuantity()*item.getItemPrice();
+                double itemTotalPrice = oItem.getQuantity() * item.getItemPrice();
+                orderTotal += itemTotalPrice;
+                orderItemDtos.add(new OrderItem(item.getItemId(), item.getItemName(), oItem.getQuantity()));
             }
+
             double grandTotal;
 
             if (rewardCoins >= 1000) {
@@ -110,8 +131,9 @@ public class OrderServiceImplementation implements OrderService {
             } else {
                 grandTotal = orderTotal;
             }
-            order.setTotalItems(orderItems.size());
-            order.setOrderItems(items);
+
+            order.setTotalItems(orderItemDtos.size());
+            order.setOrderItems(orderItemDtos);
             order.setOrderTotal(grandTotal);
             order.setReward(rewardService.createRewardWithRedeem(customerId, grandTotal, order.getOrderNo(), orderTotal - grandTotal));
             String orderNo = order.getOrderNo();
@@ -131,6 +153,7 @@ public class OrderServiceImplementation implements OrderService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer with customerId " + customerId + " not found.");
         }
     }
+
 
     public String generateOrderNo() {
         UUID uuid = UUID.randomUUID();

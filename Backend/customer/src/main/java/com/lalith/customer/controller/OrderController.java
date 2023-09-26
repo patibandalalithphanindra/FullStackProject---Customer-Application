@@ -24,6 +24,20 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+    @GetMapping("/{orderNo}/items")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<?> getOrderItemsWithQuantity(@PathVariable String orderNo) {
+        try {
+            List<OrderItem> orderItems = orderService.getOrderItemsByOrderNo(orderNo); // Replace with your actual service method
+
+            return ResponseEntity.ok(orderItems);
+        } catch (ResponseStatusException e) {
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+        }
+    }
+
+
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> createOrder(@RequestBody OrderSubmission orderSubmission) {
@@ -35,17 +49,17 @@ public class OrderController {
             orderNo = orderService.generateOrderNo();
             order.setOrderNo(orderNo);
         }
-        if(withCoins.equalsIgnoreCase("No")) {
+        if (withCoins.equalsIgnoreCase("No")) {
             try {
-                Order createdOrder = orderService.createOrderWithoutRedeem(order,orderItems);
+                Order createdOrder = orderService.createOrderWithoutRedeem(order, orderItems);
                 return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
             } catch (ResponseStatusException e) {
                 CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
                 return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
             }
-        }else{
+        } else {
             try {
-                Order createdNewOrder = orderService.createOrderWithRedeem(order,orderItems);
+                Order createdNewOrder = orderService.createOrderWithRedeem(order, orderItems);
                 return ResponseEntity.status(HttpStatus.CREATED).body(createdNewOrder);
             } catch (ResponseStatusException e) {
                 CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());

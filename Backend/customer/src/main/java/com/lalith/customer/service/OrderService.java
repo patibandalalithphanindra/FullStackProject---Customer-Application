@@ -16,4 +16,6 @@ public interface OrderService {
     Order createOrderWithRedeem(Order order,List<OrderItem> orderItems);
     Order updateOrder(String orderNo, Order updatedOrder);
     void deleteOrder(String orderNo);
+
+    List<OrderItem> getOrderItemsByOrderNo(String orderNo);
 }

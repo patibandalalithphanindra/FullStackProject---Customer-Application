@@ -1,5 +1,7 @@
 package com.lalith.customer.model;
 
+import com.lalith.customer.dto.OrderItem;
+import com.lalith.customer.model.Reward;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -22,7 +24,7 @@ public class Order {
     @NotNull(message = "orderNo should not be empty!")
     private String orderNo;
     private Reward reward;
-    private List<Item> orderItems;
+    private List<OrderItem> orderItems;
     private String customerId;
     private LocalDateTime orderDate = LocalDateTime.now();
     private String orderStatus = "Created";

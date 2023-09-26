@@ -24,7 +24,6 @@ public class Reward {
     private String customerId;
     private double rewardsEarned;
     private double rewardsRedeemed;
-    private double rewardsBalance;
     private LocalDateTime rewardsDate;
 }
 

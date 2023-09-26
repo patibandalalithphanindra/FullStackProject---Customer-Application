@@ -43,7 +43,6 @@ public class RewardServiceImplementation implements RewardService {
         reward.setCustomerId(customerId);
         reward.setRewardsEarned(rewardAmount);
         reward.setRewardsRedeemed(0L);
-        reward.setRewardsBalance(rewardAmount);
 
         String rewardsId = generateRewardsId();
         reward.setRewardsId(rewardsId);
@@ -59,8 +58,6 @@ public class RewardServiceImplementation implements RewardService {
         reward.setCustomerId(customerId);
         reward.setRewardsEarned(rewardAmount);
         reward.setRewardsRedeemed(Math.round(redeemedCoins));
-        reward.setRewardsBalance(rewardAmount - Math.round(redeemedCoins));
-
         String rewardsId = generateRewardsId();
         reward.setRewardsId(rewardsId);
         reward.setRewardsDate(LocalDateTime.now());
