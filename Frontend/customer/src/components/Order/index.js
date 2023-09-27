@@ -416,7 +416,7 @@ function Order() {
                 </TableCell>
                 <TableCell>{formatDate(order.orderDate)}</TableCell>
                 <TableCell>
-                  {order.orderTotal} {order.currency}
+                {order.currency} {order.orderTotal}
                 </TableCell>
                 <TableCell>{order.orderStatus}</TableCell>
                 <TableCell>
