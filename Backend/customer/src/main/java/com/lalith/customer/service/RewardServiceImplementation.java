@@ -68,7 +68,7 @@ public class RewardServiceImplementation implements RewardService {
 
     private String generateRewardsId() {
         UUID uuid = UUID.randomUUID();
-        return "R" + uuid.toString().replace("-", "").substring(0, 9);
+        return "r" + uuid.toString().replace("-", "").substring(0, 9);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class ItemServiceImplementation implements ItemService {
     @Override
     public Item createItem(Item item) {
         UUID uuid = UUID.randomUUID();
-        item.setItemId("I" + uuid.toString().replace("-", "").substring(0, 9));
+        item.setItemId("i" + uuid.toString().replace("-", "").substring(0, 9));
         return itemRepository.save(item);
     }
 

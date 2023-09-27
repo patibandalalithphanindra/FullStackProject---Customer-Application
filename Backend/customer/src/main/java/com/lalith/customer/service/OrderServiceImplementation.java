@@ -157,7 +157,7 @@ public class OrderServiceImplementation implements OrderService {
 
     public String generateOrderNo() {
         UUID uuid = UUID.randomUUID();
-        return "O" + uuid.toString().replace("-", "").substring(0, 9);
+        return "o" + uuid.toString().replace("-", "").substring(0, 9);
     }
 
     @Override
