@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Button, Container, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import styles from './styles.module.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function Register() {
+function Register({ toggleForm }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -89,10 +90,18 @@ function Register() {
           required
           margin="normal"
         />
-        <Button type="submit" variant="contained" color="primary" fullWidth>
+        <Button type="submit" variant="contained" color="success" fullWidth className={styles.registerButton}>
           Register
         </Button>
       </form>
+      <div className={styles.switchLink}>
+        <Typography variant="body2">
+          Already have an account?{' '}
+          <span className={styles.switchButton} onClick={toggleForm}>
+            Switch to Login
+          </span>
+        </Typography>
+      </div>
     </Container>
   );
 }

@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { Button, Container, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import styles from './styles.module.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function Login() {
+function Login({ toggleForm }) {
   const [formData, setFormData] = useState({
     name: '',
     password: ''
   });
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -61,10 +63,18 @@ function Login() {
           required
           margin="normal"
         />
-        <Button type="submit" variant="contained" color="primary" fullWidth>
+        <Button type="submit" variant="contained" color="primary" fullWidth className={styles.loginButton}>
           Login
         </Button>
       </form>
+      <div className={styles.switchLink}>
+        <Typography variant="body2">
+          New user?{' '}
+          <span className={styles.switchButton} onClick={toggleForm}>
+            Switch to Register
+          </span>
+        </Typography>
+      </div>
     </Container>
   );
 }
