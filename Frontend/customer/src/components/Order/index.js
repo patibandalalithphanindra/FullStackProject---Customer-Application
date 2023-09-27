@@ -54,13 +54,7 @@ function Order() {
   const [orderItemsData, setOrderItemsData] = useState([]);
   const [orderItemsMenu, setOrderItemsBcknd] = useState([]);
 
-  useEffect(() => {
-    const response = localStorage.getItem("jwt");
-    const headers = {
-      Authorization: `Bearer ${response}`,
-      "Content-Type": "application/json",
-    };
-
+  const refetchOrders = (headers) => {
     axios
       .get("http://localhost:8080/orders", { headers })
       .then((response) => {
@@ -77,6 +71,15 @@ function Order() {
       .catch((error) => {
         console.error("Error fetching order data:", error);
       });
+  }
+
+  useEffect(() => {
+    const response = localStorage.getItem("jwt");
+    const headers = {
+      Authorization: `Bearer ${response}`,
+      "Content-Type": "application/json",
+    };
+   refetchOrders(headers);
   }, []);
 
   const formatDate = (dateString) => {
@@ -219,7 +222,8 @@ function Order() {
     setOrderItemsData([]);
   };
 
-  const handleOrderModalSave = () => {
+  const handleOrderModalSave = (updatedStatus) => {
+    console.log(updatedStatus)
     const response = localStorage.getItem("jwt");
     const headers = {
       Authorization: `Bearer ${response}`,
@@ -230,7 +234,10 @@ function Order() {
       axios
         .put(
           `http://localhost:8080/orders/${orderModalData.orderNo}`,
-          orderModalData,
+          {
+            ...orderModalData,
+            orderStatus: updatedStatus,
+          },
           { headers }
         )
         .then((response) => {
@@ -244,8 +251,9 @@ function Order() {
                 order.orderNo === orderModalData.orderNo
                   ? orderModalData
                   : order
-              )
+              ) 
             );
+            refetchOrders(headers);
           } else {
             toast.error("An error occurred while updating the order!", {
               position: toast.POSITION.BOTTOM_LEFT,

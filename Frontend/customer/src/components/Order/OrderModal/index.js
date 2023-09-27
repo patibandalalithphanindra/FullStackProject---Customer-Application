@@ -6,13 +6,15 @@ import {
   DialogContentText,
   DialogTitle,
   TextField,
-  Select,
   Typography,
-  MenuItem,
   Button,
+  Stepper,
+  Step,
+  StepLabel,
   FormControl,
   InputLabel,
-  Grid,
+  Select,
+  MenuItem,
   FormHelperText,
   TableContainer,
   Table,
@@ -21,6 +23,7 @@ import {
   TableCell,
   TableRow,
   IconButton,
+  Grid,
 } from '@mui/material';
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
@@ -41,16 +44,17 @@ const OrderModal = ({
   const [currencyValid, setCurrencyValid] = useState(true);
   const [withCoinsValid, setWithCoinsValid] = useState(true);
   const [itemDetailsValid, setItemDetailsValid] = useState(true);
-  const [orderStatusValid, setOrderStatusValid] = useState(true);
   const [selectedItem, setSelectedItem] = useState('');
   const [quantity, setQuantity] = useState('');
   const [quantityError, setQuantityError] = useState('');
+  const [activeStep, setActiveStep] = useState(0);
+
+  const orderStatusStages = ["Created", "Items Packed", "Shipped", "In Transit", "Delivered"];
 
   const resetState = () => {
     setCustomerIdValid(true);
     setCurrencyValid(true);
     setWithCoinsValid(true);
-    setOrderStatusValid(true);
     setSelectedItem('');
     setQuantity('');
     setQuantityError('');
@@ -60,8 +64,13 @@ const OrderModal = ({
   useEffect(() => {
     if (isOpen) {
       resetState();
+      if (orderData.orderNo) {
+        setActiveStep(orderStatusStages.indexOf(orderData.orderStatus));
+      } else {
+        setActiveStep(0);
+      }
     }
-  }, [isOpen]);
+  }, [isOpen, orderData]);
 
   const addItemWithQuantity = () => {
     if (selectedItem && quantity > 0) {
@@ -106,31 +115,34 @@ const OrderModal = ({
     setOrderItemsD(updatedItems);
   };
 
-  const handleSaveClick = (orderNoExists) => {
+  const handleSaveClick = async (orderNoExists) => {
     const isCustomerIdValid = !!orderData.customerId;
     const isWithCoinsValid = !!withCoins;
     const isOrderItemsValid = !!orderItemsD && orderItemsD.length > 0;
-    const isOrderStatusValid = !!orderData.orderStatus;
-
     if (!isOrderItemsValid) {
       setItemDetailsValid(false);
     }
-    
     setCustomerIdValid(isCustomerIdValid);
     setWithCoinsValid(isWithCoinsValid);
-    setOrderStatusValid(isOrderStatusValid);
-
+  
     if (!orderNoExists) {
-      if (isCustomerIdValid && isWithCoinsValid && isOrderItemsValid && isOrderStatusValid) {
+      if (isCustomerIdValid && isWithCoinsValid && isOrderItemsValid) {
         setItemDetailsValid(true);
-        handleSave();
+        await handleSave();
+        setActiveStep((prevStep) => prevStep + 1);
       }
     } else {
-      if (isCustomerIdValid && isWithCoinsValid && isOrderStatusValid) {
-        handleSave();
+      const updatedStatusIndex = activeStep + 1;
+      if (updatedStatusIndex < orderStatusStages.length) {
+        const updatedStatus = orderStatusStages[updatedStatusIndex];
+        setOrderData({ ...orderData, orderStatus: updatedStatus });
+        await handleSave(updatedStatus);
+        setActiveStep(updatedStatusIndex);
       }
     }
   };
+  
+  
 
   return (
     <Dialog open={isOpen} onClose={handleClose}>
@@ -181,24 +193,6 @@ const OrderModal = ({
                 {!withCoinsValid && <FormHelperText error>This field is required.</FormHelperText>}
               </FormControl>
             </Grid>
-            {orderData.orderNo && (
-              <Grid item xs={6}>
-                <FormControl variant="outlined" fullWidth>
-                  <InputLabel htmlFor="orderStatus">Order Status</InputLabel>
-                  <Select
-                    label="Order Status"
-                    value={orderData.orderStatus}
-                    onChange={(e) => setOrderData({ ...orderData, orderStatus: e.target.value })}
-                  >
-                    <MenuItem value="Created">Created</MenuItem>
-                    <MenuItem value="Shipped">Shipped</MenuItem>
-                  </Select>
-                  {!orderStatusValid && (
-                    <FormHelperText error>This field is required.</FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
-            )}
             {!orderData.orderNo && (
               <Grid item xs={12}>
                 <Typography variant="p"> Select Items </Typography>
@@ -283,17 +277,30 @@ const OrderModal = ({
           </Grid>
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
+      {orderData.orderNo && (
+        <Stepper activeStep={activeStep} alternativeLabel style={{ marginTop: '16px' }}>
+          {orderStatusStages.map((label) => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+      )}
+      <DialogActions style={{ marginTop: '16px' }}>
         <Button onClick={handleClose} color="primary">
-          Cancel
+          Close
         </Button>
-        <Button
-          onClick={() => handleSaveClick(!!orderData.orderNo)}
-          color="primary"
-          variant="contained"
-        >
-        {orderData.orderNo ? 'Update Order' : 'Place Order'}
-        </Button>
+        {activeStep < orderStatusStages.length - 1 ? (
+          <Button
+            onClick={() => handleSaveClick(!!orderData.orderNo)}
+            color="primary"
+            variant="contained"
+          >
+            {orderData.orderNo ? 'Update' : 'Add'}
+          </Button>
+        ) : (
+            null
+        )}
       </DialogActions>
     </Dialog>
   );
