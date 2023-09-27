@@ -23,11 +23,11 @@ function HomePage() {
           <div className={styles.cardContent}>
             {showLogin ? (
               <>
-                <Register toggleForm={toggleForm} />
+               <Login toggleForm={toggleForm} />
               </>
             ) : (
               <>
-                <Login toggleForm={toggleForm} />
+                <Register toggleForm={toggleForm} />
               </>
             )}
           </div>
