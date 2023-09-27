@@ -78,7 +78,7 @@ const Orders = ({ orders }) => {
                   <TableCell>{order.reward.rewardsEarned}</TableCell>
                   <TableCell>{order.reward.rewardsRedeemed}</TableCell>
                   <TableCell>{order.totalItems}</TableCell>
-                  <TableCell>{order.orderTotal} {order.currency}</TableCell>
+                  <TableCell>{order.currency} {order.orderTotal}</TableCell>
                   <TableCell>{order.orderStatus}</TableCell>
                 </TableRow>
               ))}

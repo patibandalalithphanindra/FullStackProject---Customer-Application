@@ -49,6 +49,16 @@ const CustomerModal = ({
     }
   }, [isOpen]);
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhoneNumber = (phoneNo) => {
+    const phoneRegex = /^\d{10}$/;
+    return phoneRegex.test(phoneNo);
+  };
+
   const handleSaveClick = () => {
     if (
       customer.firstName &&
@@ -58,8 +68,8 @@ const CustomerModal = ({
       customer.state &&
       customer.zipCode &&
       customer.country &&
-      customer.phoneNo &&
-      customer.emailId &&
+      validatePhoneNumber(customer.phoneNo) &&
+      validateEmail(customer.emailId) &&
       customer.status
     ) {
       handleSave();
@@ -71,8 +81,8 @@ const CustomerModal = ({
       setStateValid(!!customer.state);
       setZipCodeValid(!!customer.zipCode);
       setCountryValid(!!customer.country);
-      setPhoneNoValid(!!customer.phoneNo);
-      setEmailIdValid(!!customer.emailId);
+      setPhoneNoValid(validatePhoneNumber(customer.phoneNo));
+      setEmailIdValid(validateEmail(customer.emailId));
       setStatusValid(!!customer.status);
     }
   };
@@ -181,7 +191,7 @@ const CustomerModal = ({
               disabled={customer.customerId!== undefined}
               onChange={(e) => setCustomer({ ...customer, phoneNo: e.target.value })}
             />
-            {!phoneNoValid && <FormHelperText error>This field is required.</FormHelperText>}
+            {!phoneNoValid && <FormHelperText error>This field is required and must be 10 digits.</FormHelperText>}
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -193,7 +203,7 @@ const CustomerModal = ({
               disabled={customer.customerId!== undefined}
               onChange={(e) => setCustomer({ ...customer, emailId: e.target.value })}
             />
-            {!emailIdValid && <FormHelperText error>This field is required.</FormHelperText>}
+            {!emailIdValid && <FormHelperText error>This field is required and must be a valid email address.</FormHelperText>}
           </Grid>
           <Grid item xs={6}>
             <FormControl variant="outlined" fullWidth>
@@ -216,7 +226,7 @@ const CustomerModal = ({
           Cancel
         </Button>
         <Button onClick={handleSaveClick} color="primary">
-       {customer.customerId ?  'Save' : 'Add'}
+          {customer.customerId ? 'Save' : 'Add'}
         </Button>
       </DialogActions>
     </Dialog>

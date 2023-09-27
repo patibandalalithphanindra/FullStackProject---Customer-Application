@@ -184,9 +184,7 @@ function Customer() {
           toast.success('Customer has been deleted successfully', {
             position: toast.POSITION.BOTTOM_LEFT, autoClose: 900
           });
-          setCustomers((prevItems) =>
-            prevItems.filter((customer) => customer.customerId !== deleteCustomerId)
-          );
+          fetchCustomerData();
         } else {
           toast.error('An error occurred while deleting the customer', {
             position: toast.POSITION.BOTTOM_LEFT, autoClose: 900
