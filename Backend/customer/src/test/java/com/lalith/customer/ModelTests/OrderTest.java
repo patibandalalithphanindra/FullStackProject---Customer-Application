@@ -54,5 +54,54 @@ public class OrderTest {
         assertEquals(orderItems, order.getOrderItems());
         assertEquals("CUST001", order.getCustomerId());
         assertEquals(orderDate, order.getOrderDate());
+        assertEquals("Created", order.getOrderStatus());
+        assertEquals(0, order.getTotalItems());
+        assertEquals(0.0, order.getOrderTotal());
+        assertNull(order.getCurrency());
+        assertNotNull(order.getLastModifiedTS());
+        assertNull(order.getCustomerPhoneNo());
+    }
+
+    @Test
+    public void testOrderStatusSetterGetter() {
+        Order order = new Order();
+        order.setOrderStatus("Shipped");
+        assertEquals("Shipped", order.getOrderStatus());
+    }
+
+    @Test
+    public void testTotalItemsSetterGetter() {
+        Order order = new Order();
+        order.setTotalItems(5);
+        assertEquals(5, order.getTotalItems());
+    }
+
+    @Test
+    public void testOrderTotalSetterGetter() {
+        Order order = new Order();
+        order.setOrderTotal(100.0);
+        assertEquals(100.0, order.getOrderTotal(), 0.01);
+    }
+
+    @Test
+    public void testCurrencySetterGetter() {
+        Order order = new Order();
+        order.setCurrency("USD");
+        assertEquals("USD", order.getCurrency());
+    }
+
+    @Test
+    public void testLastModifiedTSSetterGetter() {
+        LocalDateTime lastModifiedTS = LocalDateTime.of(2023, 9, 28, 12, 0);
+        Order order = new Order();
+        order.setLastModifiedTS(lastModifiedTS);
+        assertEquals(lastModifiedTS, order.getLastModifiedTS());
+    }
+
+    @Test
+    public void testCustomerPhoneNoSetterGetter() {
+        Order order = new Order();
+        order.setCustomerPhoneNo("123-456-7890");
+        assertEquals("123-456-7890", order.getCustomerPhoneNo());
     }
 }
