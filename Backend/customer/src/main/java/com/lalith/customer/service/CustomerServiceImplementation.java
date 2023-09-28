@@ -43,6 +43,11 @@ public class CustomerServiceImplementation implements CustomerService {
     }
 
     @Override
+    public Optional<Customer> getCustomerByPhoneNo(String phoneNo) {
+        return customerRepository.findByPhoneNo(phoneNo);
+    }
+
+    @Override
     public Customer createCustomer(Customer customer) {
         String customerId = customer.getCustomerId();
         if (customerRepository.findByCustomerId(customer.getCustomerId()).isPresent()) {
