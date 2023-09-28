@@ -105,12 +105,14 @@ public class CustomerServiceTests {
     @Test
     public void testGetCustomerByCustomerId() {
         String customerId = "456";
-        when(customerService.getCustomerByCustomerId(customerId)).thenReturn(null);
+        Customer customer = new Customer();
+        customer.setCustomerId(customerId);
+        when(customerRepository.findByCustomerId(customerId)).thenReturn(Optional.of(customer));
 
-        ResponseEntity<?> response = customerController.getCustomerByCustomerId(customerId);
+        Optional<Customer> result = customerService.getCustomerByCustomerId(customerId);
 
-        verify(customerService, times(1)).getCustomerByCustomerId(customerId);
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertTrue(result.isPresent());
+        assertEquals(customerId, result.get().getCustomerId());
     }
 
     @Test
@@ -144,8 +146,10 @@ public class CustomerServiceTests {
     @Test
     public void testDeleteCustomer() {
         String customerId = "123";
+        String status = "Inactive";
         Customer existingCustomer = new Customer();
         existingCustomer.setCustomerId(customerId);
+        existingCustomer.setStatus(status);
         when(customerRepository.findByCustomerId(customerId)).thenReturn(Optional.of(existingCustomer));
         doNothing().when(customerRepository).deleteById(existingCustomer.getCustomerKey());
 
