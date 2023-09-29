@@ -60,13 +60,20 @@ public class CustomerController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> getCustomerByCustomerId(@PathVariable String customerId) {
         try {
-            Optional<Customer> customer = customerService.getCustomerByCustomerId(customerId);
-            return ResponseEntity.ok(customer);
+            Optional<Customer> customerOptional = customerService.getCustomerByCustomerId(customerId);
+
+            if (customerOptional.isPresent()) {
+                Customer customer = customerOptional.get();
+                return ResponseEntity.ok(customer);
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer with customerID : " + customerId + " not found.");
+            }
         } catch (ResponseStatusException e) {
             CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
             return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
         }
     }
+
 
     @GetMapping("/email")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")

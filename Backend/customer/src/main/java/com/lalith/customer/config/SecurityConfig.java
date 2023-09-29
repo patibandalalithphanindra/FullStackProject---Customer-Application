@@ -1,6 +1,7 @@
 package com.lalith.customer.config;
 
 import com.lalith.customer.filter.JwtAuthFilter;
+import com.lalith.customer.repository.UserInfoRepository;
 import com.lalith.customer.service.UserInfoUserDetailsService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +38,11 @@ import java.util.Arrays;
 public class SecurityConfig {
     @Autowired
    private JwtAuthFilter jwtAuthFilter;
+    @Autowired
+    private UserInfoRepository userInfoRepository;
   @Bean
     public UserDetailsService userDetailsService() {
-      return new UserInfoUserDetailsService();
+      return new UserInfoUserDetailsService(userInfoRepository);
    }
 
     @Bean

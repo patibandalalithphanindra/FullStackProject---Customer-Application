@@ -112,6 +112,17 @@ public class OrderServiceImplementation implements OrderService {
             Customer customer = customerOptional.get();
             order.setCustomerPhoneNo(customer.getPhoneNo());
 
+            String orderNo = order.getOrderNo();
+            if (orderNo == null) {
+                orderNo = generateOrderNo();
+                order.setOrderNo(orderNo);
+            }
+
+            Order existingOrder = orderRepository.findByOrderNo(orderNo);
+            if (existingOrder != null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "An order with the same orderNo already exists.");
+            }
+
             double rewardCoins = rewardService.getRewardBalanceOfCustomer(customerId);
 
             List<OrderItem> orderItemDtos = new ArrayList<>();
@@ -135,19 +146,14 @@ public class OrderServiceImplementation implements OrderService {
             order.setTotalItems(orderItemDtos.size());
             order.setOrderItems(orderItemDtos);
             order.setOrderTotal(grandTotal);
-            order.setReward(rewardService.createRewardWithRedeem(customerId, grandTotal, order.getOrderNo(), orderTotal - grandTotal));
-            String orderNo = order.getOrderNo();
-
-            Order existingOrder = orderRepository.findByOrderNo(orderNo);
-            if (existingOrder != null) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "An order with the same orderNo already exists.");
-            }
+            order.setReward(rewardService.createRewardWithRedeem(customerId, grandTotal, orderNo, orderTotal - grandTotal));
 
             order.setOrderDate(LocalDateTime.now());
             order.setLastModifiedTS(LocalDateTime.now());
             if (order.getOrderStatus() == null) {
                 order.setOrderStatus("Created");
             }
+
             return orderRepository.save(order);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer with customerId " + customerId + " not found.");

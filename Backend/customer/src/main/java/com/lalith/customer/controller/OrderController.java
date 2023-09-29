@@ -5,7 +5,6 @@ import com.lalith.customer.dto.OrderSubmission;
 import com.lalith.customer.exception.CustomErrorResponse;
 import com.lalith.customer.model.Order;
 import com.lalith.customer.service.OrderService;
-import com.lalith.customer.service.RewardService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,7 +19,7 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
 
-    public OrderController(OrderService orderService, RewardService rewardService) {
+    public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
 
@@ -92,7 +91,7 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/byPhone/{phoneNo}")
+    @GetMapping("/byPhone?phoneNo=")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> getOrdersByPhoneNo(@RequestParam String phoneNo) {
         try {

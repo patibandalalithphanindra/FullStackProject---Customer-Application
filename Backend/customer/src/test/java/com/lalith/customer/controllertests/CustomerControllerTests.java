@@ -30,18 +30,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = CustomerApplication.class)
 public class CustomerControllerTests {
-
     @Mock
     private CustomerService customerService;
-
     @Mock
     private RewardService rewardService;
-
     @Mock
     private OrderService orderService;
-
     private MockMvc mockMvc;
-
     private ObjectMapper objectMapper;
 
     @BeforeEach
@@ -247,4 +242,5 @@ public class CustomerControllerTests {
         assertEquals(rewardsCount, returnedCounts.get(1));
         assertEquals(ordersCount, returnedCounts.get(2));
     }
+
 }

@@ -25,13 +25,8 @@ public class CustomerServiceTests {
 
     @Mock
     private CustomerRepository customerRepository;
-
-    @InjectMocks
-    private CustomerController customerController;
-
     @InjectMocks
     private CustomerServiceImplementation customerService;
-
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
