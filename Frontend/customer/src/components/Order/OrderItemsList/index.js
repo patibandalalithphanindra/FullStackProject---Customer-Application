@@ -17,7 +17,7 @@ function OrderItemsList({ orderItems }) {
       <Typography variant="p"><b>Ordered Items and quantities : </b></Typography>
       <ul style={{ listStyle: "none", padding: 0 }}>
         {orderItems.map((item) => (
-          <li key={item.itemId} style={listItemStyle}>
+          <li key={item.itemId} style={listItemStyle} data-testid="order-item">
             <span>{item.itemName}</span>
             <span>Quantity: {item.quantity}</span>
           </li>

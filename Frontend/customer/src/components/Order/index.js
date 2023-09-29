@@ -408,7 +408,7 @@ function Order() {
                 <TableCell>{order.orderNo}</TableCell>
                 <TableCell>
                   <span
-                    style={{ cursor: "pointer", textDecoration: "none" }}
+                    style={{ cursor: "pointer", textDecoration:'underline' }}
                     onClick={() => setSelectedCustomerId(order.customerId)}
                   >
                     {order.customerId}
