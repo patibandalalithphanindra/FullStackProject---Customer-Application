@@ -243,4 +243,76 @@ public class CustomerControllerTests {
         assertEquals(ordersCount, returnedCounts.get(2));
     }
 
+    @Test
+    public void testCreateCustomerException() throws Exception {
+        Customer newCustomer = new Customer();
+        when(customerService.createCustomer(any(Customer.class)))
+                .thenThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/customers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(newCustomer)))
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError());
+    }
+
+    @Test
+    public void testUpdateCustomerException() throws Exception {
+        String customerId = "123";
+        Customer updatedCustomer = new Customer();
+        updatedCustomer.setCustomerId(customerId);
+
+        when(customerService.updateCustomer(eq(customerId), any(Customer.class)))
+                .thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid customer data"));
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/customers/" + customerId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updatedCustomer)))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
+    public void testDeleteCustomerException() throws Exception {
+        String customerId = "123";
+
+        when(customerService.deleteCustomer(customerId))
+                .thenThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"));
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/customers/" + customerId))
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError());
+    }
+
+    @Test
+    public void testGetAllCountsExceptions() throws Exception {
+        when(customerService.getCustomersCount()).thenThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"));
+        when(rewardService.getRewardsCount()).thenThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"));
+        when(orderService.getOrdersCount()).thenThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/customers/counts"))
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError());
+    }
+
+    @Test
+    public void testGetAllCountsSuccess() throws Exception {
+        int customersCount = 5;
+        int rewardsCount = 10;
+        int ordersCount = 15;
+
+        when(customerService.getCustomersCount()).thenReturn(customersCount);
+        when(rewardService.getRewardsCount()).thenReturn(rewardsCount);
+        when(orderService.getOrdersCount()).thenReturn(ordersCount);
+
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/customers/counts"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+        List<Integer> returnedCounts = objectMapper.readValue(content, objectMapper.getTypeFactory().constructCollectionType(List.class, Integer.class));
+
+        assertEquals(3, returnedCounts.size());
+        assertEquals(customersCount, returnedCounts.get(0));
+        assertEquals(rewardsCount, returnedCounts.get(1));
+        assertEquals(ordersCount, returnedCounts.get(2));
+    }
+
+
 }

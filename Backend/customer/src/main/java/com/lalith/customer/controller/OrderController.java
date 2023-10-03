@@ -27,7 +27,7 @@ public class OrderController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> getOrderItemsWithQuantity(@PathVariable String orderNo) {
         try {
-            List<OrderItem> orderItems = orderService.getOrderItemsByOrderNo(orderNo); // Replace with your actual service method
+            List<OrderItem> orderItems = orderService.getOrderItemsByOrderNo(orderNo);
 
             return ResponseEntity.ok(orderItems);
         } catch (ResponseStatusException e) {
@@ -91,7 +91,7 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/byPhone?phoneNo=")
+    @GetMapping("/byPhone")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> getOrdersByPhoneNo(@RequestParam String phoneNo) {
         try {
@@ -102,6 +102,7 @@ public class OrderController {
             return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
         }
     }
+
 
     @GetMapping("/{customerId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")

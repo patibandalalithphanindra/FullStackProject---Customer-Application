@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lalith.customer.controller.OrderController;
 import com.lalith.customer.dto.OrderItem;
 import com.lalith.customer.dto.OrderSubmission;
-import com.lalith.customer.exception.CustomErrorResponse;
 import com.lalith.customer.model.Order;
 import com.lalith.customer.service.OrderService;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,12 +20,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.mockito.ArgumentMatchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class OrderControllerTests {
@@ -162,7 +162,7 @@ public class OrderControllerTests {
         orders.add(new Order());
         when(orderService.getOrdersByPhoneNo(eq(phoneNo))).thenReturn(orders);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/orders/byPhone/" + phoneNo))
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/orders/byPhone?phoneNo=" + phoneNo))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
@@ -195,6 +195,8 @@ public class OrderControllerTests {
         String orderNo = "123";
         Order updatedOrder = new Order();
         updatedOrder.setOrderNo(orderNo);
+        updatedOrder.setOrderDate(LocalDateTime.now());
+        updatedOrder.setLastModifiedTS(LocalDateTime.now());
         when(orderService.updateOrder(eq(orderNo), any(Order.class))).thenReturn(updatedOrder);
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/orders/" + orderNo)
@@ -229,5 +231,81 @@ public class OrderControllerTests {
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/orders/" + orderNo))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void testGetOrdersByCustomerIdException() throws Exception {
+        String customerId = "456";
+        when(orderService.getOrdersByCustomerId(eq(customerId)))
+                .thenThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/orders/" + customerId))
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError());
+    }
+
+    @Test
+    public void testUpdateOrderException() throws Exception {
+        String orderNo = "123";
+        Order updatedOrder = new Order();
+        updatedOrder.setOrderNo(orderNo);
+
+        when(orderService.updateOrder(eq(orderNo), any(Order.class)))
+                .thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid order data"));
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/orders/" + orderNo)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updatedOrder)))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
+    public void testDeleteOrderException() throws Exception {
+        String orderNo = "123";
+
+        doThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"))
+                .when(orderService).deleteOrder(eq(orderNo));
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/orders/" + orderNo))
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError());
+    }
+
+    @Test
+    public void testCreateOrderWithoutRedeemException() throws Exception {
+        OrderSubmission orderSubmission = new OrderSubmission();
+        Order order = new Order();
+        order.setOrderNo("123");
+        orderSubmission.setOrderModalData(order);
+        orderSubmission.setWithCoinsData("No");
+        List<OrderItem> orderItems = new ArrayList<>();
+        orderItems.add(new OrderItem());
+        orderSubmission.setOrderItemsData(orderItems);
+
+        when(orderService.createOrderWithoutRedeem(eq(order), eq(orderItems)))
+                .thenThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/orders")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(orderSubmission)))
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError());
+    }
+
+    @Test
+    public void testCreateOrderWithRedeemException() throws Exception {
+        OrderSubmission orderSubmission = new OrderSubmission();
+        Order order = new Order();
+        order.setOrderNo("123");
+        orderSubmission.setOrderModalData(order);
+        orderSubmission.setWithCoinsData("Yes");
+        List<OrderItem> orderItems = new ArrayList<>();
+        orderItems.add(new OrderItem());
+        orderSubmission.setOrderItemsData(orderItems);
+
+        when(orderService.createOrderWithRedeem(eq(order), eq(orderItems)))
+                .thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid order data"));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/orders")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(orderSubmission)))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 }

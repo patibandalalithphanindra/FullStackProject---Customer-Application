@@ -50,6 +50,9 @@ public class CustomerServiceImplementation implements CustomerService {
     @Override
     public Customer createCustomer(Customer customer) {
         String customerId = customer.getCustomerId();
+        String phoneNo = customer.getPhoneNo();
+        String emailId = customer.getEmailId();
+
         if (customerRepository.findByCustomerId(customer.getCustomerId()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Customer with the same id already exists");
         }
@@ -65,6 +68,11 @@ public class CustomerServiceImplementation implements CustomerService {
             customerId = generateCustomerId();
             customer.setCustomerId(customerId);
         }
+
+        if (phoneNo == null || emailId == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "phoneNo, and emailId must not be null");
+        }
+
         return customerRepository.save(customer);
     }
 
@@ -87,54 +95,60 @@ public class CustomerServiceImplementation implements CustomerService {
     public Customer updateCustomer(String customerId, Customer updatedCustomer) {
         Optional<Customer> optionalExistingCustomer = customerRepository.findByCustomerId(customerId);
 
-        if (optionalExistingCustomer.isPresent()) {
-            Customer existingCustomer = optionalExistingCustomer.get();
-
-            if (updatedCustomer.getCustomerId() != null && !customerId.equals(updatedCustomer.getCustomerId())) {
-                throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Modification of customerId is not allowed.");
-            }
-
-            if (updatedCustomer.getCustomerKey() != null && !existingCustomer.getCustomerKey().equals(updatedCustomer.getCustomerKey())) {
-                throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Modification of customerKey is not allowed.");
-            }
-
-            if (updatedCustomer.getFirstName() != null) {
-                existingCustomer.setFirstName(updatedCustomer.getFirstName());
-            }
-            if (updatedCustomer.getLastName() != null) {
-                existingCustomer.setLastName(updatedCustomer.getLastName());
-            }
-            if (updatedCustomer.getAddressLine1() != null) {
-                existingCustomer.setAddressLine1(updatedCustomer.getAddressLine1());
-            }
-            if (updatedCustomer.getAddressLine2() != null) {
-                existingCustomer.setAddressLine2(updatedCustomer.getAddressLine2());
-            }
-            if (updatedCustomer.getCity() != null) {
-                existingCustomer.setCity(updatedCustomer.getCity());
-            }
-            if (updatedCustomer.getState() != null) {
-                existingCustomer.setState(updatedCustomer.getState());
-            }
-            if (updatedCustomer.getZipCode() != null) {
-                existingCustomer.setZipCode(updatedCustomer.getZipCode());
-            }
-            if (updatedCustomer.getCountry() != null) {
-                existingCustomer.setCountry(updatedCustomer.getCountry());
-            }
-            if (updatedCustomer.getPhoneNo() != null) {
-                existingCustomer.setPhoneNo(updatedCustomer.getPhoneNo());
-            }
-            if (updatedCustomer.getEmailId() != null) {
-                existingCustomer.setEmailId(updatedCustomer.getEmailId());
-            }
-            if (updatedCustomer.getStatus() != null) {
-                existingCustomer.setStatus(updatedCustomer.getStatus());
-            }
-            return customerRepository.save(existingCustomer);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Customer with id " + customerId + " cannot be found");
+        if (optionalExistingCustomer.get().getCustomerId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "customerId cannot be null.");
         }
+
+        if (optionalExistingCustomer.get().getCustomerKey() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "customerKey cannot be null.");
+        }
+
+        Customer existingCustomer = optionalExistingCustomer.get();
+
+        if (updatedCustomer.getCustomerId() != null && !customerId.equals(updatedCustomer.getCustomerId())) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Modification of customerId is not allowed.");
+        }
+
+        if (!existingCustomer.getCustomerKey().equals(updatedCustomer.getCustomerKey())) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Modification of customerKey is not allowed.");
+        }
+
+        if (updatedCustomer.getFirstName() != null) {
+            existingCustomer.setFirstName(updatedCustomer.getFirstName());
+        }
+        if (updatedCustomer.getLastName() != null) {
+            existingCustomer.setLastName(updatedCustomer.getLastName());
+        }
+        if (updatedCustomer.getAddressLine1() != null) {
+            existingCustomer.setAddressLine1(updatedCustomer.getAddressLine1());
+        }
+        if (updatedCustomer.getAddressLine2() != null) {
+            existingCustomer.setAddressLine2(updatedCustomer.getAddressLine2());
+        }
+        if (updatedCustomer.getCity() != null) {
+            existingCustomer.setCity(updatedCustomer.getCity());
+        }
+        if (updatedCustomer.getState() != null) {
+            existingCustomer.setState(updatedCustomer.getState());
+        }
+        if (updatedCustomer.getZipCode() != null) {
+            existingCustomer.setZipCode(updatedCustomer.getZipCode());
+        }
+        if (updatedCustomer.getCountry() != null) {
+            existingCustomer.setCountry(updatedCustomer.getCountry());
+        }
+        if (updatedCustomer.getPhoneNo() != null) {
+            existingCustomer.setPhoneNo(updatedCustomer.getPhoneNo());
+        }
+        if (updatedCustomer.getEmailId() != null) {
+            existingCustomer.setEmailId(updatedCustomer.getEmailId());
+        }
+        if (updatedCustomer.getStatus() != null) {
+            existingCustomer.setStatus(updatedCustomer.getStatus());
+        }
+        System.out.println(existingCustomer);
+        customerRepository.save(existingCustomer);
+        return existingCustomer;
     }
 
     @Override

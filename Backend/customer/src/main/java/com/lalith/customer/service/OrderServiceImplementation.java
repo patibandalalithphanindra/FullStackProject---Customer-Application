@@ -71,6 +71,10 @@ public class OrderServiceImplementation implements OrderService {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "An order with the same orderNo already exists.");
             }
 
+            if (orderItems.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order must have at least one item.");
+            }
+
             if (orderNo == null) {
                 orderNo = generateOrderNo();
                 order.setOrderNo(orderNo);
@@ -97,7 +101,8 @@ public class OrderServiceImplementation implements OrderService {
             if (order.getOrderStatus() == null) {
                 order.setOrderStatus("Created");
             }
-            return orderRepository.save(order);
+            orderRepository.save(order);
+            return order;
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer with customerId " + customerId + " not found.");
         }
@@ -108,6 +113,10 @@ public class OrderServiceImplementation implements OrderService {
         String customerId = order.getCustomerId();
         Optional<Customer> customerOptional = customerRepository.findByCustomerId(customerId);
 
+        if (orderItems.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order must have at least one item.");
+        }
+
         if (customerOptional.isPresent()) {
             Customer customer = customerOptional.get();
             order.setCustomerPhoneNo(customer.getPhoneNo());
@@ -116,11 +125,6 @@ public class OrderServiceImplementation implements OrderService {
             if (orderNo == null) {
                 orderNo = generateOrderNo();
                 order.setOrderNo(orderNo);
-            }
-
-            Order existingOrder = orderRepository.findByOrderNo(orderNo);
-            if (existingOrder != null) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "An order with the same orderNo already exists.");
             }
 
             double rewardCoins = rewardService.getRewardBalanceOfCustomer(customerId);
@@ -137,7 +141,7 @@ public class OrderServiceImplementation implements OrderService {
 
             double grandTotal;
 
-            if (rewardCoins >= 1000) {
+            if (rewardCoins >= 1000 && orderTotal>=1000) {
                 grandTotal = orderTotal - rewardCoins;
             } else {
                 grandTotal = orderTotal;
@@ -154,7 +158,8 @@ public class OrderServiceImplementation implements OrderService {
                 order.setOrderStatus("Created");
             }
 
-            return orderRepository.save(order);
+            orderRepository.save(order);
+            return order;
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer with customerId " + customerId + " not found.");
         }

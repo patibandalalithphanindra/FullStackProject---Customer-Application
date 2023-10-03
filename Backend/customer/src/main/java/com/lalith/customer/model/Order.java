@@ -1,5 +1,12 @@
 package com.lalith.customer.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.lalith.customer.dto.OrderItem;
 import com.lalith.customer.model.Reward;
 import lombok.Getter;
@@ -26,11 +33,17 @@ public class Order {
     private Reward reward;
     private List<OrderItem> orderItems;
     private String customerId;
+    @JsonProperty("orderDate")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime orderDate = LocalDateTime.now();
     private String orderStatus = "Created";
     private int totalItems;
     private double orderTotal;
     private String currency;
+    @JsonProperty("lastModifiedTS")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime lastModifiedTS = LocalDateTime.now();
     private String customerPhoneNo;
 }

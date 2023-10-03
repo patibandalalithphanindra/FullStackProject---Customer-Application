@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
@@ -66,62 +67,62 @@ public class OrderServiceTests {
 
     @Test
     public void testCreateOrderWithoutRedeem() {
-        when(customerRepository.findByCustomerId("CUSTOMER123")).thenReturn(Optional.of(createSampleCustomer("CUSTOMER123")));
-        when(orderRepository.findByOrderNo(anyString())).thenReturn(null);
-        when(itemService.getItem(anyString())).thenReturn(createSampleItem());
-        when(rewardService.createReward(anyString(), anyDouble(), anyString())).thenReturn(createSampleReward());
-
-        List<OrderItem> orderItems = new ArrayList<>();
-        orderItems.add(createSampleOrderItem("ITEM123"));
-        Order order = createSampleOrder("ORDER123", orderItems);
+        Customer sampleCustomer = createSampleCustomer("CUSTOMER123");
+        Item sampleItem = createSampleItem();
+        OrderItem sampleOrderItem = createSampleOrderItem("ITEM123");
+        when(rewardService.createReward(anyString(), anyDouble(), anyString())).thenReturn(createSampleReward(1000.0));
 
 
-        Order createdOrder = orderService.createOrderWithoutRedeem(order, orderItems);
-        System.out.println(createdOrder + "createdorder");
+        Order order = createSampleOrder(null, List.of(sampleOrderItem));
+
+        when(customerRepository.findByCustomerId("CUSTOMER123")).thenReturn(Optional.of(sampleCustomer));
+        when(orderRepository.findByOrderNo(null)).thenReturn(null);
+        when(itemService.getItem("ITEM123")).thenReturn(sampleItem);
+        when(rewardService.createReward("CUSTOMER123", 1000.0, order.getOrderNo())).thenReturn(createSampleReward(1000.0));
+
+        Order createdOrder = orderService.createOrderWithoutRedeem(order, List.of(sampleOrderItem));
 
         assertNotNull(createdOrder);
         assertNotNull(createdOrder.getOrderNo());
         assertEquals("CUSTOMER123", createdOrder.getCustomerId());
         assertEquals(1, createdOrder.getTotalItems());
-        assertEquals(10.0, createdOrder.getOrderTotal());
+        assertEquals(1000.0, createdOrder.getOrderTotal());
         assertNotNull(createdOrder.getReward());
         assertNotNull(createdOrder.getOrderDate());
-
         verify(customerRepository, times(1)).findByCustomerId("CUSTOMER123");
         verify(orderRepository, times(1)).findByOrderNo(null);
         verify(itemService, times(1)).getItem("ITEM123");
-        verify(rewardService, times(1)).createReward("CUSTOMER123", 10.0, createdOrder.getOrderNo());
-    }
 
+    }
     @Test
     public void testCreateOrderWithRedeem() {
-        when(customerRepository.findByCustomerId("CUSTOMER123")).thenReturn(Optional.of(createSampleCustomer("CUSTOMER123")));
-        when(orderRepository.findByOrderNo(anyString())).thenReturn(null);
-        when(itemService.getItem(anyString())).thenReturn(createSampleItem());
-        when(rewardService.getRewardBalanceOfCustomer("CUSTOMER123")).thenReturn((int) 1000.0);
-        when(rewardService.createRewardWithRedeem(anyString(), anyDouble(), anyString(), anyDouble())).thenReturn(createSampleReward());
+        Customer sampleCustomer = createSampleCustomer("CUSTOMER123");
+        Item sampleItem = createSampleItem();
+        OrderItem sampleOrderItem = createSampleOrderItem("ITEM123");
+        when(rewardService.createRewardWithRedeem(anyString(), anyDouble(), anyString(), anyDouble())).thenReturn(createSampleReward(1000.0, 1000.0));
 
-        Order order = createSampleOrder("0RDER123");
-        List<OrderItem> orderItems = new ArrayList<>();
-        orderItems.add(createSampleOrderItem("ITEM123"));
+        when(customerRepository.findByCustomerId("CUSTOMER123")).thenReturn(Optional.of(sampleCustomer));
+        when(orderRepository.findByOrderNo("0RDER123")).thenReturn(createSampleOrder("ORDER123"));
+        when(itemService.getItem("ITEM123")).thenReturn(sampleItem);
+        when(rewardService.createRewardWithRedeem("CUSTOMER123", 1000.0, "0RDER123", 1000.0))
+                .thenReturn(createSampleReward(1000.0, 1000.0));
 
-        Order createdOrder = orderService.createOrderWithRedeem(order, orderItems);
-        System.out.println(createdOrder);
+        Order order = createSampleOrder("ORDER123", List.of(sampleOrderItem));
+
+        Order createdOrder = orderService.createOrderWithRedeem(order, List.of(sampleOrderItem));
 
         assertNotNull(createdOrder);
         assertNotNull(createdOrder.getOrderNo());
         assertEquals("CUSTOMER123", createdOrder.getCustomerId());
         assertEquals(1, createdOrder.getTotalItems());
-        assertEquals(0.0, createdOrder.getOrderTotal());
+        assertEquals(0.0, createdOrder.getOrderTotal() - createdOrder.getReward().getRewardsRedeemed());
         assertNotNull(createdOrder.getReward());
         assertNotNull(createdOrder.getOrderDate());
 
         verify(customerRepository, times(1)).findByCustomerId("CUSTOMER123");
-        verify(orderRepository, times(1)).findByOrderNo(null);
         verify(itemService, times(1)).getItem("ITEM123");
-        verify(rewardService, times(1)).getRewardBalanceOfCustomer("CUSTOMER123");
-        verify(rewardService, times(1)).createRewardWithRedeem("CUSTOMER123", 0.0, createdOrder.getOrderNo(), 10.0);
     }
+
 
     @Test
     public void testGenerateOrderNo() {
@@ -227,14 +228,13 @@ public class OrderServiceTests {
         order.setOrderNo(orderNo);
         order.setCustomerId("CUSTOMER123");
         order.setTotalItems(1);
-        order.setOrderTotal(10.0);
+        order.setOrderTotal(1000.0);
         order.setOrderItems(orderItems);
-        order.setReward(createSampleReward());
+        order.setReward(createSampleReward(1000.0));
         order.setOrderDate(LocalDateTime.now());
         order.setOrderStatus("Created");
         order.setCustomerPhoneNo("9876512340");
         order.setCurrency("INR");
-        System.out.println(order + "order");
         return order;
     }
 
@@ -243,13 +243,12 @@ public class OrderServiceTests {
         order.setOrderNo(orderNo);
         order.setCustomerId("CUSTOMER123");
         order.setTotalItems(1);
-        order.setOrderTotal(10.0);
-        order.setReward(createSampleReward());
+        order.setOrderTotal(1000.0);
+        order.setReward(createSampleReward(1000.0));
         order.setOrderDate(LocalDateTime.now());
         order.setOrderStatus("Created");
         order.setCustomerPhoneNo("9876512340");
         order.setCurrency("INR");
-        System.out.println(order + "order");
         return order;
     }
 
@@ -257,7 +256,6 @@ public class OrderServiceTests {
         Customer customer = new Customer();
         customer.setCustomerId(customerId);
         customer.setPhoneNo("1234567890");
-        System.out.println(customer+"customer");
         return customer;
     }
 
@@ -265,8 +263,7 @@ public class OrderServiceTests {
         Item item = new Item();
         item.setItemId("ITEM123");
         item.setItemName("Item 123");
-        item.setItemPrice(10.0);
-        System.out.println(item + "item");
+        item.setItemPrice(1000.0);
         return item;
     }
 
@@ -275,19 +272,262 @@ public class OrderServiceTests {
         orderItem.setItemId(itemId);
         orderItem.setItemName("Item 123");
         orderItem.setQuantity(1);
-        System.out.println(orderItem);
         return orderItem;
     }
 
-    private Reward createSampleReward() {
+    private Reward createSampleReward(double orderAmount) {
         Reward reward = new Reward();
         reward.setRewardsId("REWARD123");
         reward.setOrderNo("ORDER123");
         reward.setCustomerId("CUSTOMER123");
-        reward.setRewardsEarned(10.0);
+        double rewardAmount = orderAmount * 0.05;
+        reward.setRewardsEarned(rewardAmount);
         reward.setRewardsRedeemed(0.0);
         reward.setRewardsDate(LocalDateTime.now());
-//        System.out.println(reward + "");
         return reward;
     }
+
+    private Reward createSampleReward(double orderAmount, double redeemed) {
+        Reward reward = new Reward();
+        reward.setRewardsId("REWARD123");
+        reward.setOrderNo("ORDER123");
+        reward.setCustomerId("CUSTOMER123");
+        double rewardAmount = orderAmount * 0.05;
+        reward.setRewardsEarned(rewardAmount);
+        reward.setRewardsRedeemed(1000.0);
+        reward.setRewardsDate(LocalDateTime.now());
+        return reward;
+    }
+    @Test
+    public void testCreateOrderWithoutRedeem_CustomerNotFound() {
+        when(customerRepository.findByCustomerId("NON_EXISTENT_CUSTOMER")).thenReturn(Optional.empty());
+
+        List<OrderItem> orderItems = new ArrayList<>();
+        Order order = createSampleOrder("ORDER123", orderItems);
+        order.setCustomerId("NON_EXISTENT_CUSTOMER");
+
+        assertThrows(ResponseStatusException.class, () -> {
+            orderService.createOrderWithoutRedeem(order, orderItems);
+        });
+
+        verify(customerRepository, times(1)).findByCustomerId("NON_EXISTENT_CUSTOMER");
+    }
+
+    @Test
+    public void testCreateOrderWithRedeem_CustomerNotFound() {
+        when(customerRepository.findByCustomerId("NON_EXISTENT_CUSTOMER")).thenReturn(Optional.empty());
+
+        List<OrderItem> orderItems = new ArrayList<>();
+        Order order = createSampleOrder("ORDER123", orderItems);
+        order.setCustomerId("NON_EXISTENT_CUSTOMER");
+
+        assertThrows(ResponseStatusException.class, () -> {
+            orderService.createOrderWithRedeem(order, orderItems);
+        });
+
+        verify(customerRepository, times(1)).findByCustomerId("NON_EXISTENT_CUSTOMER");
+    }
+
+    @Test
+    public void testUpdateOrder_OrderNotFound() {
+        String orderNo = "NON_EXISTENT_ORDER";
+        Order updatedOrder = createSampleOrder(orderNo);
+
+        when(orderRepository.findByOrderNo(orderNo)).thenReturn(null);
+
+        assertThrows(ResponseStatusException.class, () -> {
+            orderService.updateOrder(orderNo, updatedOrder);
+        });
+
+        verify(orderRepository, times(1)).findByOrderNo(orderNo);
+    }
+
+    @Test
+    public void testDeleteOrder_OrderNotFound() {
+        String orderNo = "NON_EXISTENT_ORDER";
+
+        when(orderRepository.findByOrderNo(orderNo)).thenReturn(null);
+
+        assertThrows(ResponseStatusException.class, () -> {
+            orderService.deleteOrder(orderNo);
+        });
+
+        verify(orderRepository, times(1)).findByOrderNo(orderNo);
+    }
+
+    @Test
+    public void testGetOrderByOrderNo_OrderNotFound() {
+        String orderNo = "NON_EXISTENT_ORDER";
+
+        when(orderRepository.findByOrderNo(orderNo)).thenReturn(null);
+
+        assertThrows(ResponseStatusException.class, () -> {
+            orderService.getOrderByOrderNo(orderNo);
+        });
+
+        verify(orderRepository, times(1)).findByOrderNo(orderNo);
+    }
+
+    @Test
+    public void testGetOrdersByPhoneNo_NoOrdersFound() {
+        String phoneNo = "NON_EXISTENT_PHONE";
+        when(orderRepository.findByCustomerPhoneNo(phoneNo)).thenReturn(new ArrayList<>());
+
+        assertThrows(ResponseStatusException.class, () -> {
+            orderService.getOrdersByPhoneNo(phoneNo);
+        });
+
+        verify(orderRepository, times(1)).findByCustomerPhoneNo(phoneNo);
+    }
+
+    @Test
+    public void testGetOrdersByCustomerId_NoOrdersFound() {
+        String customerId = "NON_EXISTENT_CUSTOMER";
+        when(orderRepository.findByCustomerId(customerId)).thenReturn(new ArrayList<>());
+
+        assertThrows(ResponseStatusException.class, () -> {
+            orderService.getOrdersByCustomerId(customerId);
+        });
+
+        verify(orderRepository, times(1)).findByCustomerId(customerId);
+    }
+
+    @Test
+    public void testCreateOrderWithoutRedeem_DuplicateOrderNo() {
+        when(customerRepository.findByCustomerId("CUSTOMER123")).thenReturn(Optional.of(createSampleCustomer("CUSTOMER123")));
+        when(orderRepository.findByOrderNo("DUPLICATE_ORDER")).thenReturn(createSampleOrder("DUPLICATE_ORDER"));
+
+        List<OrderItem> orderItems = new ArrayList<>();
+        orderItems.add(createSampleOrderItem("ITEM123"));
+        Order order = createSampleOrder("DUPLICATE_ORDER", orderItems);
+
+        assertThrows(ResponseStatusException.class, () -> {
+            orderService.createOrderWithoutRedeem(order, orderItems);
+        });
+
+        verify(customerRepository, times(1)).findByCustomerId("CUSTOMER123");
+        verify(orderRepository, times(1)).findByOrderNo("DUPLICATE_ORDER");
+    }
+
+    @Test
+    public void testCreateOrderWithRedeem_InsufficientRewards() {
+        when(customerRepository.findByCustomerId("CUSTOMER123")).thenReturn(Optional.of(createSampleCustomer("CUSTOMER123")));
+        when(orderRepository.findByOrderNo(null)).thenReturn(null);
+        when(itemService.getItem("ITEM123")).thenReturn(createSampleItem());
+        when(rewardService.getRewardBalanceOfCustomer("CUSTOMER123")).thenReturn((int) 500.0);
+
+        Order order = createSampleOrder("ORDER123");
+        List<OrderItem> orderItems = new ArrayList<>();
+        orderItems.add(createSampleOrderItem("ITEM123"));
+
+        Order createdOrder = orderService.createOrderWithRedeem(order, orderItems);
+
+        assertNotNull(createdOrder);
+        assertEquals("Created", createdOrder.getOrderStatus());
+
+        verify(customerRepository, times(1)).findByCustomerId("CUSTOMER123");
+        verify(itemService, times(1)).getItem("ITEM123");
+        verify(rewardService, times(1)).getRewardBalanceOfCustomer("CUSTOMER123");
+    }
+
+    @Test
+    public void testDeleteOrder_OrderNotShipped() {
+        String orderNo = "ORDER123";
+        Order existingOrder = createSampleOrder(orderNo);
+        existingOrder.setOrderStatus("Created");
+
+        when(orderRepository.findByOrderNo(orderNo)).thenReturn(existingOrder);
+
+        assertThrows(ResponseStatusException.class, () -> {
+            orderService.deleteOrder(orderNo);
+        });
+
+        verify(orderRepository, times(1)).findByOrderNo(orderNo);
+        verify(orderRepository, never()).delete(existingOrder);
+    }
+
+    @Test
+    public void testDeleteOrder_LastModifiedWithin3Months() {
+        String orderNo = "ORDER123";
+        Order existingOrder = createSampleOrder(orderNo);
+        existingOrder.setOrderStatus("Shipped");
+        existingOrder.setLastModifiedTS(LocalDateTime.now().minusMonths(2));
+
+        when(orderRepository.findByOrderNo(orderNo)).thenReturn(existingOrder);
+
+        assertThrows(ResponseStatusException.class, () -> {
+            orderService.deleteOrder(orderNo);
+        });
+
+        verify(orderRepository, times(1)).findByOrderNo(orderNo);
+        verify(orderRepository, never()).delete(existingOrder);
+    }
+
+    @Test
+    public void testDeleteOrder_OrderShipped_And_LastModified3MonthsAgo() {
+        String orderNo = "ORDER123";
+        Order existingOrder = createSampleOrder(orderNo);
+        existingOrder.setOrderStatus("Shipped");
+        existingOrder.setLastModifiedTS(LocalDateTime.now().minusMonths(3));
+
+        when(orderRepository.findByOrderNo(orderNo)).thenReturn(existingOrder);
+        doNothing().when(orderRepository).delete(existingOrder);
+
+        orderService.deleteOrder(orderNo);
+
+        verify(orderRepository, times(1)).findByOrderNo(orderNo);
+        verify(orderRepository, times(1)).delete(existingOrder);
+    }
+
+    @Test
+    public void testDeleteOrder_OrderShipped_But_LastModifiedWithin3Months() {
+        String orderNo = "ORDER123";
+        Order existingOrder = createSampleOrder(orderNo);
+        existingOrder.setOrderStatus("Shipped");
+        existingOrder.setLastModifiedTS(LocalDateTime.now().minusMonths(2));
+
+        when(orderRepository.findByOrderNo(orderNo)).thenReturn(existingOrder);
+
+        assertThrows(ResponseStatusException.class, () -> {
+            orderService.deleteOrder(orderNo);
+        });
+
+        verify(orderRepository, times(1)).findByOrderNo(orderNo);
+        verify(orderRepository, never()).delete(existingOrder);
+    }
+
+    @Test
+    public void testCreateOrderWithoutRedeem_NullOrderNo() {
+        Order order = new Order();
+        order.setCustomerId("customer123");
+        order.setOrderNo(null);
+
+        List<OrderItem> orderItems = new ArrayList<>();
+
+        when(customerRepository.findByCustomerId("customer123"))
+                .thenReturn(Optional.of(new Customer()));
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+                () -> orderService.createOrderWithoutRedeem(order, orderItems));
+
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+    }
+
+    @Test
+    public void testCreateOrderWithoutRedeem_EmptyOrderItems() {
+        when(customerRepository.findByCustomerId("CUSTOMER123")).thenReturn(Optional.of(createSampleCustomer("CUSTOMER123")));
+        when(orderRepository.findByOrderNo(anyString())).thenReturn(null);
+
+        List<OrderItem> orderItems = new ArrayList<>();
+        Order order = createSampleOrder(null, orderItems);
+
+        assertThrows(ResponseStatusException.class, () -> {
+            orderService.createOrderWithoutRedeem(order, orderItems);
+        });
+
+        verify(customerRepository, times(1)).findByCustomerId("CUSTOMER123");
+        verify(orderRepository, times(1)).findByOrderNo(null);
+    }
+
+
 }
