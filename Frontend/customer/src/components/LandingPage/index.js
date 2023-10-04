@@ -9,7 +9,6 @@ import {
   ShoppingCart,
   Star,
 } from "@mui/icons-material";
-
 import { Card, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
@@ -77,7 +76,7 @@ function LandingPage() {
               <ShoppingCart color="primary" sx={{ fontSize: 60 }} />
               &nbsp;
               <div>
-                <Typography variant="h6">Total Orders Placed</Typography>
+                <Typography variant="h6">Orders Placed</Typography>
                 <Typography variant="subtitle1">{counts[1]} </Typography>
               </div>
             </Box>

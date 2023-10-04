@@ -35,8 +35,8 @@ describe("LandingPage Component", () => {
     );
 
     expect(await screen.findByText("Customers Onboarded")).toBeInTheDocument();
-    expect(await screen.findByText("Total Orders Placed")).toBeInTheDocument();
-    expect(await screen.findByText("No of Rewards Earned")).toBeInTheDocument();
+    expect(await screen.findByText("Orders Placed")).toBeInTheDocument();
+    expect(await screen.findByText("Rewards Issued")).toBeInTheDocument();
     expect(await screen.findByText("10")).toBeInTheDocument();
     expect(await screen.findByText("20")).toBeInTheDocument();
     expect(await screen.findByText("30")).toBeInTheDocument();
@@ -90,4 +90,37 @@ describe("LandingPage Component", () => {
     const rewardsCard = screen.getByText("Rewards");
     userEvent.click(rewardsCard);
   });
+
+  it("renders status counts section with correct counts", async () => {
+    axios.get.mockResolvedValue({
+      data: {
+        Created: 5,
+        "Items Packed": 10,
+        Shipped: 15,
+        "In Transit": 20,
+        Delivered: 25,
+      },
+    });
+  
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    expect(await screen.findByText("Created")).toBeInTheDocument();
+  expect(await screen.findByText("Items Packed")).toBeInTheDocument();
+  expect(await screen.findByText("Shipped")).toBeInTheDocument();
+  expect(await screen.findByText("In Transit")).toBeInTheDocument();
+  expect(await screen.findByText("Delivered")).toBeInTheDocument();
+
+  expect(await screen.findByText("5")).toBeInTheDocument();
+  expect(await screen.findByText("10")).toBeInTheDocument();
+  expect(await screen.findByText("15")).toBeInTheDocument();
+  expect(await screen.findByText("20")).toBeInTheDocument();
+  expect(await screen.findByText("25")).toBeInTheDocument();
+});
+
+  
 });
