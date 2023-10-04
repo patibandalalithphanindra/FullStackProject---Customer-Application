@@ -142,7 +142,4 @@ public class UserAdditionServiceTests {
         verify(repository, times(1)).findByEmail(userInfo.getEmail());
         verifyNoMoreInteractions(passwordEncoder, jwtService);
     }
-
-
-
 }
