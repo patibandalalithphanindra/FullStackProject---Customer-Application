@@ -22,4 +22,17 @@ public class CustomExceptionHandler {
         CustomErrorResponse errorResponse = new CustomErrorResponse(errorMessage);
         return new ResponseEntity<>(errorResponse, ex.getStatusCode());
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<CustomErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex) {
+        CustomErrorResponse errorResponse = new CustomErrorResponse(ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<CustomErrorResponse> handleGenericException(Exception ex) {
+        CustomErrorResponse errorResponse = new CustomErrorResponse("An error occurred: " + ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
