@@ -2,7 +2,8 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import Login from '../components/Login';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import LandingPage from '../components/LandingPage';
 
 jest.mock('axios');
 
@@ -65,6 +66,28 @@ test('user sees an error message when login fails', async () => {
   fireEvent.click(screen.getByTestId('login'));
 
   expect(screen.getByText(/Switch to Register/)).toBeInTheDocument();
+});
+
+
+test('user is redirected to landingpage after successful login', async () => {
+  axios.post.mockResolvedValueOnce({
+    data: {
+      token: 'token',
+      name: 'user',
+    },
+    status: 200,
+  });
+
+  render(
+    <MemoryRouter>
+      <Login />
+      <Routes>
+        <Route path="/homepage" element={<div><LandingPage/></div>} />
+      </Routes>
+    </MemoryRouter>
+  );
+
+  fireEvent.submit(screen.getByTestId('login'));
 });
 
 

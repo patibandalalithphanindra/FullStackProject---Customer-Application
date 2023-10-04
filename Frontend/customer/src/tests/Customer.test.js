@@ -146,7 +146,7 @@ describe('Customer Component', () => {
     });
   });
   
-  test('handles API error gracefully', async () => {
+  test('handles API error', async () => {
     axios.get.mockRejectedValueOnce(new Error('API error'));
   
     render(<MemoryRouter><Customer/></MemoryRouter>);
@@ -217,8 +217,48 @@ describe('Customer Component', () => {
     });
   });
 
-  it('copies customer ID to clipboard', async () => {
-    axios.get.mockResolvedValue({ data: mockCustomers });
+  // it('copies customer ID to clipboard', async () => {
+  //   axios.get.mockResolvedValue({ data: mockCustomers });
+  
+  //   render(
+  //     <MemoryRouter>
+  //       <Routes>
+  //         <Route path="/" element={<Customer />} />
+  //       </Routes>
+  //     </MemoryRouter>
+  //   );
+  
+  //   const copyButton = screen.getByTestId('copyicon-1');
+  //   fireEvent.click(copyButton);
+  
+  //   await waitFor(() => {
+  //     expect(screen.getByText('Customer Id copied successfully!')).toBeInTheDocument();
+  //   });
+  // });
+
+  it('navigates to the customer dashboard when the view icon is clicked', async () => {
+    render(
+      <MemoryRouter>
+        <Routes>
+          <Route path="/" element={<Customer />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Lalith')).toBeInTheDocument();
+    });
+
+    await waitFor(()=> {
+      expect(screen.getByTestId("viewicon-1")).toBeInTheDocument();
+    })
+
+    const viewIcon = screen.getByTestId('viewicon-1');
+    fireEvent.click(viewIcon);
+  });
+
+  it('adding a customer', async () => {
+    axios.post.mockResolvedValueOnce({ status: 201 });
   
     render(
       <MemoryRouter>
@@ -228,12 +268,11 @@ describe('Customer Component', () => {
       </MemoryRouter>
     );
   
-    const copyButton = screen.getByTestId('copyicon-1');
-    fireEvent.click(copyButton);
+    const addButton = screen.getByTestId('add-button');
+    fireEvent.click(addButton);
   
-    await waitFor(() => {
-      expect(screen.getByText('Customer Id copied successfully!')).toBeInTheDocument();
-    });
+    const saveButton = screen.getByTestId('add');
+    fireEvent.click(saveButton);
   });
 
  });

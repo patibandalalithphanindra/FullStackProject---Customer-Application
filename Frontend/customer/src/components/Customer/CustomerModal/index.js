@@ -225,7 +225,7 @@ const CustomerModal = ({
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleSaveClick} color="primary">
+        <Button onClick={handleSaveClick} color="primary" data-testid="add">
           {customer.customerId ? 'Save' : 'Add'}
         </Button>
       </DialogActions>

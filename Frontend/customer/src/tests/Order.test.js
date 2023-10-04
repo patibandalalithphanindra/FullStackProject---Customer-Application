@@ -170,12 +170,12 @@ describe("Order Component", () => {
   // });
 
   it("opens the View Modal for viewing order details", async () => {
+    axios.get.mockResolvedValue({ data: mockOrders });
     render(<MemoryRouter><Order/></MemoryRouter>);
 
     await waitFor(() => {
       expect(screen.getByText('123')).toBeInTheDocument();
     });
-    screen.debug(screen.getByTestId("table"), 300000)
 
     const viewButton = screen.getByTestId("viewicon-1");
 
