@@ -69,6 +69,7 @@ function Register({ toggleForm }) {
           fullWidth
           required
           margin="normal"
+          data-testid="username"
         />
         <TextField
           label="Email"
@@ -79,6 +80,7 @@ function Register({ toggleForm }) {
           fullWidth
           required
           margin="normal"
+          data-testid="email"
         />
         <TextField
           label="Password"
@@ -89,8 +91,9 @@ function Register({ toggleForm }) {
           fullWidth
           required
           margin="normal"
+          data-testid="password"
         />
-        <Button type="submit" variant="contained" color="success" fullWidth className={styles.registerButton}>
+        <Button type="submit" variant="contained" color="success" data-testid="register" fullWidth className={styles.registerButton}>
           Register
         </Button>
       </form>

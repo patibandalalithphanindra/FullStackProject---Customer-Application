@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/10</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/5</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>9/10</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -192,29 +192,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -307,30 +307,30 @@ import Navbar from '../common/Navbar';
 &nbsp;
 &nbsp;
 &nbsp;
-function LandingPage() {
-  const [counts, setCounts] = useState([]);
-  const fetchCustomerData = () =&gt; {
-    const response = localStorage.getItem('jwt');
-    const headers = {
+function <span class="fstat-no" title="function not covered" >LandingPage(</span>) {
+  const [counts, setCounts] = <span class="cstat-no" title="statement not covered" >useState([]);</span>
+  const fetchCustomerData = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+    const response = <span class="cstat-no" title="statement not covered" >localStorage.getItem('jwt');</span>
+    const headers = <span class="cstat-no" title="statement not covered" >{</span>
       Authorization: `Bearer ${response}`,
       'Content-Type': 'application/json',
     };
 &nbsp;
-    axios
+<span class="cstat-no" title="statement not covered" >    axios</span>
       .get('http://localhost:8080/customers/counts', { headers })
-      .then((response) =&gt; {
-        setCounts(response.data);
+      .then(<span class="fstat-no" title="function not covered" >(r</span>esponse) =&gt; {
+<span class="cstat-no" title="statement not covered" >        setCounts(response.data);</span>
       })
       .catch(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
 <span class="cstat-no" title="statement not covered" >        console.error('Error fetching customer counts data:', error);</span>
       });
   };
 &nbsp;
-  useEffect(() =&gt; {
-    fetchCustomerData();
+<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    fetchCustomerData();</span>
   }, []);
 &nbsp;
-  return (
+<span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;div className={styles.container}&gt;
       &lt;Navbar/ &gt;
       &lt;Paper elevation={3} sx={{ p: 2,width: "300", marginTop:"20px",marginLeft:"200px", marginRight:"200px" }}  &gt;
@@ -360,7 +360,7 @@ function LandingPage() {
           &lt;Star color='gold'   sx={{ fontSize: 60 }} /&gt;
             &amp;nbsp; 
             &lt;div&gt;
-              &lt;Typography variant="h6"&gt;No of Rewards Earned&lt;/Typography&gt;
+              &lt;Typography variant="h6"&gt;No of Rewards Issued&lt;/Typography&gt;
               &lt;Typography variant="subtitle1"&gt;{counts[2]} &lt;/Typography&gt;
             &lt;/div&gt;
           &lt;/Box&gt;
@@ -418,7 +418,7 @@ export default LandingPage;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-09-29T10:01:48.280Z
+                at 2023-10-03T10:36:04.954Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

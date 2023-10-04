@@ -90,7 +90,6 @@ const OrderModal = ({
           itemName: selectedItem.itemName,
           quantity: Number(quantity),
         };
-        setOrderItemsD([...orderItemsD, newItem]);
       }
 
       setSelectedItem('');
@@ -199,8 +198,9 @@ const OrderModal = ({
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
                     <FormControl variant="outlined" fullWidth style={{ marginTop: '10px' }}>
-                      <InputLabel htmlFor="select-item">Select Item</InputLabel>
+                      <InputLabel id="select-item-label" htmlFor="select-item">Select Item</InputLabel>
                       <Select
+                        labelId="select-item-label"
                         label="Select Item"
                         value={selectedItem}
                         onChange={(e) => setSelectedItem(e.target.value)}
@@ -262,6 +262,7 @@ const OrderModal = ({
                               <IconButton
                                 aria-label="Delete"
                                 onClick={() => removeItem(item.itemId)}
+                                data-testid="delete"
                               >
                                 <DeleteIcon />
                               </IconButton>

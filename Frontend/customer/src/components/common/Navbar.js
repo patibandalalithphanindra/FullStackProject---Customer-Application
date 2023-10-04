@@ -41,12 +41,12 @@ function Navbar() {
   return (
     <div className={styles.header}>
       <Typography variant="h6" style={{ color: '#fff' }} className={styles.whole}>
-      <ArrowBack onClick={goBack} className={styles.left}/>
+      <ArrowBack onClick={goBack} className={styles.left} data-testid="back-button"/>
         <Link to="/homepage" style={{ textDecoration: 'none', color: 'white' }}>
           Customer Management System
         </Link>
       </Typography>
-      <Button variant="contained" color="error" onClick={openLogoutModal}>
+      <Button variant="contained" color="error" onClick={openLogoutModal} data-testid="logout-button">
         <LogoutIcon/>
       </Button>
 
@@ -61,7 +61,7 @@ function Navbar() {
           <Button onClick={closeLogoutModal} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleLogout} color="error">
+          <Button onClick={handleLogout} color="error" data-testid="logout">
             Logout
           </Button>
         </DialogActions>

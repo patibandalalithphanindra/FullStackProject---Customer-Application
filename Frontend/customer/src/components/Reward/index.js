@@ -17,24 +17,25 @@ import styles from './styles.module.css';
 import Navbar from '../common/Navbar';
 import { Search, ArrowUpward as ArrowUpwardIcon, ArrowDownward as ArrowDownwardIcon } from '@mui/icons-material';
 
+export const formatDate = (dateString) => {
+  const options = {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  };
+  return new Date(dateString).toLocaleDateString('en-US', options);
+};
+
 function Reward() {
   const [rewards, setRewards] = useState([]);
   const [searchCustomerId, setSearchCustomerId] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [sortOrder, setSortOrder] = useState('asc');
-
-  const formatDate = (dateString) => {
-    const options = {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
-    };
-    return new Date(dateString).toLocaleDateString('en-US', options);
-  };
+  const [error, setError] = useState(null); 
 
   useEffect(() => {
     const response = localStorage.getItem('jwt');
@@ -47,9 +48,11 @@ function Reward() {
       .get('http://localhost:8080/rewards', { headers })
       .then((response) => {
         setRewards(response.data);
+        setError(null);
       })
       .catch((error) => {
         console.error('Error fetching order data:', error);
+        setError('Error fetching data. Please try again!');
       });
   }, []);
 
@@ -185,7 +188,9 @@ function Reward() {
             )}
           </TableBody>
         </Table>
+        {error && <h4 style={{display:"flex", justifyContent:"center"}}>{error}</h4>}
       </TableContainer>
+
       
       <TablePagination
         rowsPerPageOptions={[5, 10, 25, 50, { label: 'All', value: filteredRewards.length }]}

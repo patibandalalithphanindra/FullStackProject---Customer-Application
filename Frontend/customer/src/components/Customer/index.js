@@ -57,6 +57,7 @@ function Customer() {
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortedCustomers, setSortedCustomers] = useState([]);
   const [copiedCustomerId, setCopiedCustomerId] = useState(null);
+  const [error, setError] = useState(null); 
 
   const fetchCustomerData = () => {
     const response = localStorage.getItem('jwt');
@@ -72,6 +73,7 @@ function Customer() {
         setSortedCustomers([...response.data]);
       })
       .catch((error) => {
+        setError('Error fetching data. Please try again!');
         console.error('Error fetching customer data:', error);
       });
   };
@@ -311,6 +313,7 @@ function Customer() {
             variant="contained"
             className={`${styles.button} ${styles.addCustomerButton}`}
             onClick={handleAddition}
+            data-testid="add-button"
           >
             <AddIcon />
           </Button>
@@ -366,6 +369,7 @@ function Customer() {
                     color="primary"
                     className={`${styles.button} ${styles.primaryButton}`}
                     onClick={() => handleView(customer.customerId)}
+                    data-testid={`viewicon-${customer.customerId}`} 
                   >
                     <VisibilityIcon />
                   </Button>
@@ -375,6 +379,7 @@ function Customer() {
                     color="success"
                     className={`${styles.button} ${styles.secondaryButton}`}
                     onClick={() => handleUpdate(customer.customerId)}
+                    data-testid={`editicon-${customer.customerId}`} 
                   >
                     <EditIcon />
                   </Button>
@@ -383,6 +388,7 @@ function Customer() {
                     color="error"
                     className={`${styles.button} ${styles.tertiaryButton}`}
                     onClick={() => handleDelete(customer.customerId)}
+                    data-testid={`deleteicon-${customer.customerId}`} 
                   >
                     <DeleteIcon />
                   </Button>
@@ -399,6 +405,7 @@ function Customer() {
                       variant="contained"
                       color="secondary"
                       className={`${styles.button}`}
+                      data-testid={`copyicon-${customer.customerId}`} 
                     >
                       <AddIcon/>
                     </Button>
@@ -418,6 +425,7 @@ function Customer() {
             )}
           </TableBody>
         </Table>
+        {error && <h4 style={{display:"flex", justifyContent:"center"}}>{error}</h4>}
       </TableContainer>
       <Dialog open={isDeleteModalOpen} onClose={handleDeleteCancel}>
         <DialogTitle>Confirmation</DialogTitle>
@@ -427,10 +435,10 @@ function Customer() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDeleteCancel} color="primary">
+          <Button onClick={handleDeleteCancel} color="primary" data-testid="cancel">
             Cancel
           </Button>
-          <Button onClick={handleDeleteConfirmation} color="error">
+          <Button onClick={handleDeleteConfirmation} color="error" data-testid="delete">
             Delete
           </Button>
         </DialogActions>

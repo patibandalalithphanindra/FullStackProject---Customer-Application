@@ -63,7 +63,7 @@ function LandingPage() {
           <Star color='gold'   sx={{ fontSize: 60 }} />
             &nbsp; 
             <div>
-              <Typography variant="h6">No of Rewards Earned</Typography>
+              <Typography variant="h6">No of Rewards Issued</Typography>
               <Typography variant="subtitle1">{counts[2]} </Typography>
             </div>
           </Box>

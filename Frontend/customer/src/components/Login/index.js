@@ -52,6 +52,7 @@ function Login({ toggleForm }) {
           fullWidth
           required
           margin="normal"
+          data-testid="username"
         />
         <TextField
           label="Password"
@@ -62,8 +63,9 @@ function Login({ toggleForm }) {
           fullWidth
           required
           margin="normal"
+          data-testid="password"
         />
-        <Button type="submit" variant="contained" color="primary" fullWidth className={styles.loginButton}>
+        <Button type="submit" variant="contained" color="primary" data-testid="login" fullWidth className={styles.loginButton}>
           Login
         </Button>
       </form>

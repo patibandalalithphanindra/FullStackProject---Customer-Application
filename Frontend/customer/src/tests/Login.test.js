@@ -40,3 +40,34 @@ test('user can log in', async () => {
     expect(localStorage.getItem('name')).toEqual('User');
   });
 });
+
+test('user switches to Register form', () => {
+  const toggleForm = jest.fn();
+
+  render(<MemoryRouter><Login toggleForm={toggleForm} /></MemoryRouter>);
+
+  fireEvent.click(screen.getByText(/Switch to Register/));
+
+  expect(toggleForm).toHaveBeenCalled();
+});
+
+test('user sees an error message when login fails', async () => {
+  axios.post.mockRejectedValueOnce(new Error('Login failed'));
+
+  render(<MemoryRouter><Login /></MemoryRouter>);
+
+  const usernameInput = screen.getByTestId('username');
+  const passwordInput = screen.getByTestId('password');
+
+  usernameInput.value = 'testuser';
+  passwordInput.value = 'testpassword';
+
+  fireEvent.click(screen.getByTestId('login'));
+
+  expect(screen.getByText(/Switch to Register/)).toBeInTheDocument();
+});
+
+
+
+
+

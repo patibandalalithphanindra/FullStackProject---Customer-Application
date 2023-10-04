@@ -53,15 +53,18 @@ function Order() {
   const [withCoinsData, setWithCoinsData] = useState("yes");
   const [orderItemsData, setOrderItemsData] = useState([]);
   const [orderItemsMenu, setOrderItemsBcknd] = useState([]);
+  const [error, setError] = useState(null); 
 
   const refetchOrders = (headers) => {
     axios
       .get("http://localhost:8080/orders", { headers })
       .then((response) => {
         setOrders(response.data);
+        setError(null);
       })
       .catch((error) => {
         console.error("Error fetching order data:", error);
+        setError('Error fetching data. Please try again!');
       });
     axios
       .get("http://localhost:8080/items", { headers })
@@ -69,7 +72,7 @@ function Order() {
         setOrderItemsBcknd(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching order data:", error);
+        console.error("Error fetching order items data:", error);
       });
   }
 
@@ -213,10 +216,7 @@ function Order() {
     setIsOrderModalOpen(false);
     setOrderModalData({
       customerId: "",
-      totalItems: 0,
-      orderTotal: 0,
       currency: "INR",
-      customerPhoneNo: "",
       orderStatus: "Created",
     });
     setOrderItemsData([]);
@@ -302,8 +302,8 @@ function Order() {
   };
 
   const filteredOrders = orders.filter((order) =>
-    order.customerId.includes(searchCustomerId)
-  );
+  order.customerId && order.customerId.includes(searchCustomerId)
+);
 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - filteredOrders.length) : 0;
@@ -365,12 +365,13 @@ function Order() {
             variant="contained"
             className={`${styles.button} ${styles.addOrderButton}`}
             onClick={handleAddition}
+            data-testid="add"
           >
             <AddIcon />
           </Button>
         </div>
       </div>
-      <TableContainer component={Paper} className={styles.container}>
+      <TableContainer component={Paper} className={styles.container} data-testid="table">
         <Table>
           <TableHead>
             <TableRow>
@@ -426,6 +427,7 @@ function Order() {
                     color="primary"
                     className={`${styles.button} ${styles.primaryButton}`}
                     onClick={() => handleView(order.orderNo)}
+                    data-testid={`viewicon-${order.orderNo}`} 
                   >
                     <VisibilityIcon />
                   </Button>
@@ -435,6 +437,7 @@ function Order() {
                     color="success"
                     className={`${styles.button} ${styles.secondaryButton}`}
                     onClick={() => handleUpdate(order.orderNo)}
+                    data-testid={`editicon-${order.orderNo}`} 
                   >
                     <EditIcon />
                   </Button>
@@ -443,6 +446,7 @@ function Order() {
                     color="error"
                     className={`${styles.button} ${styles.tertiaryButton}`}
                     onClick={() => handleDelete(order.orderNo)}
+                    data-testid={`deleteicon-${order.orderNo}`} 
                   >
                     <DeleteIcon />
                   </Button>
@@ -456,6 +460,7 @@ function Order() {
             )}
           </TableBody>
         </Table>
+        {error && <h4 style={{display:"flex", justifyContent:"center"}}>{error}</h4>}
       </TableContainer>
       <Dialog open={isDeleteModalOpen} onClose={handleDeleteCancel}>
         <DialogTitle>Confirmation</DialogTitle>
@@ -466,10 +471,10 @@ function Order() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDeleteCancel} color="primary">
+          <Button onClick={handleDeleteCancel} color="primary" data-testid="cancel">
             Cancel
           </Button>
-          <Button onClick={handleDeleteConfirmation} color="error">
+          <Button onClick={handleDeleteConfirmation} color="error" data-testid="deletebutton">
             Delete
           </Button>
         </DialogActions>
@@ -516,10 +521,10 @@ function Order() {
                   {formatDate(selectedOrder.lastModifiedTS)}
                 </Typography>
               </DialogContentText>
-              <OrderItemsList orderItems={selectedOrder.orderItems} /> {/* Render OrderItemsList component */}
+              <OrderItemsList orderItems={selectedOrder.orderItems} />
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleViewModalClose} color="primary">
+              <Button onClick={handleViewModalClose} color="primary" data-testid="close">
                 Close
               </Button>
             </DialogActions>

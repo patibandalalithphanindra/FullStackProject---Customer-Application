@@ -29,12 +29,11 @@ export const userRegister = async (userData) => {
     }
   };
 
-export const userLogin = async (loginData) => {
-    axios.post(`${BASE_URL}/user/authenticate`, loginData, { headers })
-  .then((response) => {
-
-  })
-  .catch((error) => {
-
-  });
+  export const userLogin = async (loginData) => {
+    try {
+      const response = await axios.post(`${BASE_URL}/user/authenticate`, loginData, { headers });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   };
