@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
@@ -136,6 +137,18 @@ public class OrderController {
         try {
             orderService.deleteOrder(orderNo);
             return ResponseEntity.ok("Order with " + orderNo + " has been deleted successfully");
+        } catch (ResponseStatusException e) {
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
+        }
+    }
+
+    @GetMapping("/statuscounts")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<?> getOrderCountsByStatus() {
+        try {
+            Map<String, Integer> statusCounts = orderService.getOrderCountsByStatus();
+            return ResponseEntity.ok(statusCounts);
         } catch (ResponseStatusException e) {
             CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
             return ResponseEntity.status(e.getStatusCode()).body(errorResponse);

@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -22,7 +23,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -308,4 +312,30 @@ public class OrderControllerTests {
                         .content(objectMapper.writeValueAsString(orderSubmission)))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
+    @Test
+    public void testGetOrderCountsByStatus() throws Exception {
+        Map<String, Integer> mockStatusCounts = new HashMap<>();
+        mockStatusCounts.put("Created", 5);
+
+        when(orderService.getOrderCountsByStatus()).thenReturn(mockStatusCounts);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/orders/statuscounts")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.Created").value(5));
+    }
+
+    @Test
+    public void testGetOrderCountsByStatus_StatusNotFound() throws Exception {
+        when(orderService.getOrderCountsByStatus())
+                .thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Status not found"));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/orders/statuscounts")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Status not found"));
+    }
+
 }

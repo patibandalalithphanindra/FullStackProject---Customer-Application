@@ -3,6 +3,7 @@ package com.lalith.customer.service;
 import com.lalith.customer.dto.OrderItem;
 import com.lalith.customer.model.Order;
 import java.util.List;
+import java.util.Map;
 
 public interface OrderService {
 
@@ -17,4 +18,5 @@ public interface OrderService {
     Order updateOrder(String orderNo, Order updatedOrder);
     void deleteOrder(String orderNo);
     List<OrderItem> getOrderItemsByOrderNo(String orderNo);
+    Map<String,Integer> getOrderCountsByStatus();
 }

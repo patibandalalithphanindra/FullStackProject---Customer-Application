@@ -21,6 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -529,5 +530,32 @@ public class OrderServiceTests {
         verify(orderRepository, times(1)).findByOrderNo(null);
     }
 
+
+    @Test
+    public void testGetOrderCountsByStatus() {
+        List<Order> mockOrders = new ArrayList<>();
+        Order order1 = new Order();
+        order1.setOrderNo("Order1");
+        order1.setOrderStatus("Created");
+
+        Order order2 = new Order();
+        order2.setOrderNo("Order2");
+        order2.setOrderStatus("Shipped");
+
+        Order order3 = new Order();
+        order3.setOrderNo("Order3");
+        order3.setOrderStatus("Created");
+
+        mockOrders.add(order1);
+        mockOrders.add(order2);
+        mockOrders.add(order3);
+
+        when(orderRepository.findAll()).thenReturn(mockOrders);
+
+        Map<String, Integer> statusCounts = orderService.getOrderCountsByStatus();
+
+        assertEquals(2, statusCounts.get("Created").intValue());
+        assertEquals(1, statusCounts.get("Shipped").intValue());
+    }
 
 }
