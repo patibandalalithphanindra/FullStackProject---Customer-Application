@@ -137,25 +137,28 @@ public class OrderServiceImplementation implements OrderService {
                 orderItemDtos.add(new OrderItem(item.getItemId(), item.getItemName(), oItem.getQuantity()));
             }
 
+            double maxRedeemableAmount = Math.min(rewardCoins, orderTotal);
+
             double grandTotal;
 
-            if (rewardCoins >= 1000 && orderTotal>=1000) {
-                grandTotal = orderTotal - rewardCoins;
+            if (rewardCoins >= 1000 && orderTotal >= 1000) {
+                grandTotal = orderTotal - maxRedeemableAmount;
             } else {
                 grandTotal = orderTotal;
             }
 
+            double remainingRewards = rewardCoins - maxRedeemableAmount;
+
             order.setTotalItems(orderItemDtos.size());
             order.setOrderItems(orderItemDtos);
             order.setOrderTotal(grandTotal);
-            order.setReward(rewardService.createRewardWithRedeem(customerId, grandTotal, orderNo, orderTotal - grandTotal));
+            order.setReward(rewardService.createRewardWithRedeem(customerId, grandTotal, orderNo, maxRedeemableAmount));
 
             order.setOrderDate(LocalDateTime.now());
             order.setLastModifiedTS(LocalDateTime.now());
             if (order.getOrderStatus() == null) {
                 order.setOrderStatus("Created");
             }
-
             orderRepository.save(order);
             return order;
         } else {
