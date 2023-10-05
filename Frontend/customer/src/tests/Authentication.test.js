@@ -27,14 +27,14 @@ describe('HTTP Request Functions', () => {
       password: 'password123',
     };
 
-    axios.post.mockResolvedValueOnce({ data: 'Login successful' }); // Mock the login response
+    axios.post.mockResolvedValueOnce({ data: 'Login successful' });
 
-    await userLogin(mockLoginData); // Call userLogin without expecting a return value
+    await userLogin(mockLoginData);
 
     expect(axios.post).toHaveBeenCalledWith(
       expect.stringContaining('/user/authenticate'),
       mockLoginData,
-      expect.any(Object) // Ensure headers are present
+      expect.any(Object)
     );
   });
 
@@ -61,4 +61,42 @@ describe('HTTP Request Functions', () => {
 
     await expect(userLogin(mockLoginData)).rejects.toThrow(errorMessage);
   });
+
+  it('should handle empty response during user registration', async () => {
+    const mockUserData = {
+      username: 'testuser',
+      password: 'password123',
+    };
+  
+    axios.post.mockResolvedValueOnce({ data: undefined });
+  
+    const response = await userRegister(mockUserData);
+  
+    expect(response).toBeUndefined();
+  });
+
+  it('should handle missing CSRF token', async () => {
+    jest.spyOn(document, 'cookie', 'get').mockReturnValue('');
+  
+    const mockUserData = {
+      username: 'testuser',
+      password: 'password123',
+    };
+  
+    const errorMessage = 'CSRF token not found';
+    axios.post.mockRejectedValueOnce(new Error(errorMessage));
+  
+    await expect(userRegister(mockUserData)).rejects.toThrow(errorMessage);
+  });
+
+  it('should handle invalid user registration data', async () => {
+    const mockUserData = {
+    };
+  
+    const errorMessage = 'Invalid data';
+    axios.post.mockRejectedValueOnce(new Error(errorMessage));
+  
+    await expect(userRegister(mockUserData)).rejects.toThrow(errorMessage);
+  });
+  
 });
