@@ -3,8 +3,11 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import Register from '../components/Register';
 import { MemoryRouter } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 jest.mock('axios');
+jest.mock('react-toastify');
+
 
 test('renders Register component', () => {
   render(<MemoryRouter><Register /></MemoryRouter>);
@@ -43,5 +46,10 @@ test('user can fill and submit registration form', async () => {
 
   await waitFor(() => {
     expect(localStorage.getItem('name')).toEqual('User');
+  });
+
+  expect(toast.success).toHaveBeenCalledWith('Registered Successfully!', {
+    position: toast.POSITION.BOTTOM_LEFT,
+    autoClose: 900,
   });
 });

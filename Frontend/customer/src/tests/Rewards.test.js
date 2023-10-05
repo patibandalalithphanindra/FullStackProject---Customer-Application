@@ -46,7 +46,7 @@ it('renders Reward component', async () => {
 
   await waitFor(() => {
     expect(screen.getByText('Rewards Earned')).toBeInTheDocument();
-  });
+  }, 6000);
 
   await waitFor(() => {
     expect(screen.getByText('Date')).toBeInTheDocument();

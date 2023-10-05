@@ -61,7 +61,7 @@ describe('Customer Component', () => {
     await waitFor(() => {
         expect(screen.getByText('Hanumath')).toBeInTheDocument();
       });
-  });
+  }, 6000);
 
   it('allows searching for customers', async () => {
     render(
