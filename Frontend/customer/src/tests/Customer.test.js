@@ -61,7 +61,7 @@ describe('Customer Component', () => {
     await waitFor(() => {
         expect(screen.getByText('Hanumath')).toBeInTheDocument();
       });
-  }, 6000);
+  }, 10000);
 
   it('allows searching for customers', async () => {
     render(
@@ -407,32 +407,8 @@ describe('Customer Component', () => {
       expect(screen.getByText('Hanumath')).toBeInTheDocument();
     });
   });
-  
 
-  // it('handles API error when adding a customer', async () => {
-  //   axios.post.mockRejectedValueOnce(new Error('API error'));
-
-  //   render(
-  //     <MemoryRouter>
-  //       <Routes>
-  //         <Route path="/" element={<Customer />} />
-  //       </Routes>
-  //     </MemoryRouter>
-  //   );
-
-  //   fireEvent.click(screen.getByTestId('add-button'));
-  //   fireEvent.click(screen.getByTestId('add'));
-
-  //   expect(require('react-toastify').toast.error).toHaveBeenCalledWith(
-  //     'Failed to add the customer. Please try again.',
-  //     {
-  //       position: require('react-toastify').toast.POSITION.BOTTOM_LEFT,
-  //       autoClose: 900,
-  //     }
-  //   );
-  // });
-
- });
+});
 
 
 

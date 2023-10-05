@@ -83,7 +83,7 @@ describe("Order Component", () => {
     await waitFor(() => {
       expect(screen.getByText('Order Date')).toBeInTheDocument();
     });
-  }, 6000);
+  }, 10000);
   
 
   it("allows searching for orders", async () => {

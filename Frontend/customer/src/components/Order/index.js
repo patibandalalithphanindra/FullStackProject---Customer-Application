@@ -289,6 +289,7 @@ function Order() {
               autoClose: 900,
             });
           }
+          setOrderItemsData([]);
           setIsOrderModalOpen(false);
         })
         .catch((error) => {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1696494531640" clover="3.2.0">
-  <project timestamp="1696494531640" name="All files">
-    <metrics statements="614" coveredstatements="493" conditionals="226" coveredconditionals="166" methods="186" coveredmethods="133" elements="1026" coveredelements="792" complexity="0" loc="614" ncloc="614" packages="18" files="21" classes="21"/>
+<coverage generated="1696499388306" clover="3.2.0">
+  <project timestamp="1696499388306" name="All files">
+    <metrics statements="615" coveredstatements="493" conditionals="226" coveredconditionals="166" methods="186" coveredmethods="133" elements="1027" coveredelements="792" complexity="0" loc="615" ncloc="615" packages="18" files="21" classes="21"/>
     <package name="src">
       <metrics statements="11" coveredstatements="8" conditionals="18" coveredconditionals="17" methods="2" coveredmethods="2"/>
       <file name="App.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/App.js">
@@ -235,21 +235,21 @@
       <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Customer/Dashboard/Orders/index.js">
         <metrics statements="17" coveredstatements="16" conditionals="6" coveredconditionals="5" methods="7" coveredmethods="6"/>
         <line num="16" count="4" type="stmt"/>
-        <line num="17" count="8" type="stmt"/>
-        <line num="18" count="8" type="stmt"/>
-        <line num="20" count="8" type="stmt"/>
+        <line num="17" count="7" type="stmt"/>
+        <line num="18" count="7" type="stmt"/>
+        <line num="20" count="7" type="stmt"/>
         <line num="21" count="8" type="stmt"/>
         <line num="29" count="8" type="stmt"/>
-        <line num="32" count="8" type="stmt"/>
+        <line num="32" count="7" type="stmt"/>
         <line num="33" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="34" count="1" type="stmt"/>
         <line num="35" count="0" type="stmt"/>
         <line num="37" count="1" type="stmt"/>
         <line num="38" count="1" type="stmt"/>
-        <line num="41" count="8" type="cond" truecount="2" falsecount="0"/>
-        <line num="43" count="8" type="stmt"/>
+        <line num="41" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="43" count="7" type="stmt"/>
         <line num="44" count="5" type="stmt"/>
-        <line num="47" count="8" type="stmt"/>
+        <line num="47" count="7" type="stmt"/>
         <line num="75" count="8" type="stmt"/>
       </file>
     </package>
@@ -333,9 +333,9 @@
       </file>
     </package>
     <package name="src.components.Order">
-      <metrics statements="139" coveredstatements="104" conditionals="35" coveredconditionals="19" methods="45" coveredmethods="30"/>
+      <metrics statements="140" coveredstatements="104" conditionals="35" coveredconditionals="19" methods="45" coveredmethods="30"/>
       <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Order/index.js">
-        <metrics statements="139" coveredstatements="104" conditionals="35" coveredconditionals="19" methods="45" coveredmethods="30"/>
+        <metrics statements="140" coveredstatements="104" conditionals="35" coveredconditionals="19" methods="45" coveredmethods="30"/>
         <line num="37" count="3" type="stmt"/>
         <line num="38" count="62" type="stmt"/>
         <line num="46" count="62" type="stmt"/>
@@ -447,34 +447,35 @@
         <line num="285" count="0" type="stmt"/>
         <line num="287" count="0" type="stmt"/>
         <line num="292" count="0" type="stmt"/>
-        <line num="295" count="0" type="stmt"/>
+        <line num="293" count="0" type="stmt"/>
         <line num="296" count="0" type="stmt"/>
-        <line num="300" count="0" type="stmt"/>
-        <line num="305" count="59" type="stmt"/>
-        <line num="306" count="60" type="cond" truecount="2" falsecount="0"/>
-        <line num="310" count="59" type="cond" truecount="1" falsecount="1"/>
-        <line num="312" count="59" type="stmt"/>
-        <line num="313" count="0" type="stmt"/>
-        <line num="316" count="59" type="stmt"/>
-        <line num="317" count="1" type="stmt"/>
+        <line num="297" count="0" type="stmt"/>
+        <line num="301" count="0" type="stmt"/>
+        <line num="306" count="59" type="stmt"/>
+        <line num="307" count="60" type="cond" truecount="2" falsecount="0"/>
+        <line num="311" count="59" type="cond" truecount="1" falsecount="1"/>
+        <line num="313" count="59" type="stmt"/>
+        <line num="314" count="0" type="stmt"/>
+        <line num="317" count="59" type="stmt"/>
         <line num="318" count="1" type="stmt"/>
-        <line num="321" count="59" type="stmt"/>
-        <line num="322" count="7" type="cond" truecount="2" falsecount="0"/>
-        <line num="324" count="7" type="stmt"/>
-        <line num="325" count="2" type="stmt"/>
+        <line num="319" count="1" type="stmt"/>
+        <line num="322" count="59" type="stmt"/>
+        <line num="323" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="325" count="7" type="stmt"/>
         <line num="326" count="2" type="stmt"/>
-        <line num="328" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="329" count="1" type="stmt"/>
-        <line num="331" count="1" type="stmt"/>
-        <line num="335" count="7" type="stmt"/>
+        <line num="327" count="2" type="stmt"/>
+        <line num="329" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="330" count="1" type="stmt"/>
+        <line num="332" count="1" type="stmt"/>
         <line num="336" count="7" type="stmt"/>
-        <line num="339" count="59" type="stmt"/>
-        <line num="409" count="57" type="stmt"/>
-        <line num="414" count="0" type="stmt"/>
-        <line num="430" count="2" type="stmt"/>
-        <line num="440" count="1" type="stmt"/>
-        <line num="449" count="3" type="stmt"/>
-        <line num="554" count="0" type="stmt"/>
+        <line num="337" count="7" type="stmt"/>
+        <line num="340" count="59" type="stmt"/>
+        <line num="410" count="57" type="stmt"/>
+        <line num="415" count="0" type="stmt"/>
+        <line num="431" count="2" type="stmt"/>
+        <line num="441" count="1" type="stmt"/>
+        <line num="450" count="3" type="stmt"/>
+        <line num="555" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.components.Order.CustomerDetailsModal">
