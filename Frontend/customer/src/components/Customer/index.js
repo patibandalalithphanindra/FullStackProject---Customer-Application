@@ -359,7 +359,7 @@ function Customer() {
             {getVisibleCustomers().map((customer) => (
               <TableRow key={customer.customerId} className={styles.tableRow}>
                 <TableCell>{customer.customerId}</TableCell>
-                <TableCell>{customer.firstName}</TableCell>
+                <TableCell data-testid="customername">{customer.firstName}</TableCell>
                 <TableCell>{customer.emailId}</TableCell>
                 <TableCell>{customer.phoneNo}</TableCell>
                 <TableCell>

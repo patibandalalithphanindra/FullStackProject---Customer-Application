@@ -62,28 +62,28 @@ describe("Order Component", () => {
   
     await waitFor(() => {
       expect(screen.getByText('ORDERS INFORMATION')).toBeInTheDocument();
-    }, 6000);
+    });
   
     await waitFor(() => {
       expect(screen.getByText('Order No')).toBeInTheDocument();
-    }, 6000);
+    });
   
     await waitFor(() => {
       expect(screen.getByText('Customer ID')).toBeInTheDocument();
-    }, 6000);
+    });
   
     await waitFor(() => {
       expect(screen.getByText('Total Order Amount')).toBeInTheDocument();
-    }, 6000);
+    });
   
     await waitFor(() => {
       expect(screen.getByText('Order Status')).toBeInTheDocument();
-    }, 6000);
+    });
   
     await waitFor(() => {
       expect(screen.getByText('Order Date')).toBeInTheDocument();
-    }, 6000);
-  });
+    });
+  }, 6000);
   
 
   it("allows searching for orders", async () => {

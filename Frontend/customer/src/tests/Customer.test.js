@@ -377,6 +377,38 @@ describe('Customer Component', () => {
     expect(handleSave).toHaveBeenCalled();
   });
 
+  it('sorts customers correctly in ascending order', async () => {
+    axios.get.mockResolvedValue({ data: mockCustomers });
+  
+    render(
+      <MemoryRouter>
+        <Routes>
+          <Route path="/" element={<Customer />} />
+        </Routes>
+      </MemoryRouter>
+    );
+  
+    await waitFor(() => {
+      expect(screen.getByText('Hanumath')).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Lalith')).toBeInTheDocument();
+    });
+  
+    const sortButton = screen.getByLabelText('sort');
+    fireEvent.click(sortButton);
+  
+    await waitFor(() => {
+      expect(screen.getByText('Lalith')).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Hanumath')).toBeInTheDocument();
+    });
+  });
+  
+
   // it('handles API error when adding a customer', async () => {
   //   axios.post.mockRejectedValueOnce(new Error('API error'));
 
