@@ -33,6 +33,19 @@ import OrderModal from "./OrderModal";
 import { ArrowDownward, ArrowUpward, Search } from "@mui/icons-material";
 import OrderItemsList from "./OrderItemsList";
 
+
+export const formatDate = (dateString) => {
+  const options = {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  };
+  return new Date(dateString).toLocaleDateString("en-US", options);
+};
+
 function Order() {
   const [orders, setOrders] = useState([]);
   const [searchCustomerId, setSearchCustomerId] = useState("");
@@ -47,8 +60,8 @@ function Order() {
     currency: "INR",
     orderStatus: "Created",
   });
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [sortOrder, setSortOrder] = useState("asc");
   const [withCoinsData, setWithCoinsData] = useState("yes");
   const [orderItemsData, setOrderItemsData] = useState([]);
@@ -84,18 +97,6 @@ function Order() {
     };
    refetchOrders(headers);
   }, []);
-
-  const formatDate = (dateString) => {
-    const options = {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    };
-    return new Date(dateString).toLocaleDateString("en-US", options);
-  };
 
   const handleAddition = () => {
     setOrderModalData({
@@ -521,7 +522,11 @@ function Order() {
                   {formatDate(selectedOrder.lastModifiedTS)}
                 </Typography>
               </DialogContentText>
+              {selectedOrder.orderItems && selectedOrder.orderItems.length > 0 && (
+                <>
               <OrderItemsList orderItems={selectedOrder.orderItems} />
+              </>
+               )}
             </DialogContent>
             <DialogActions>
               <Button onClick={handleViewModalClose} color="primary" data-testid="close">

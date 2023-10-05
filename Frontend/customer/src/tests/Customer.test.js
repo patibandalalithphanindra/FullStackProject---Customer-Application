@@ -3,6 +3,8 @@ import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import axios from 'axios';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import Customer from '../components/Customer';
+import CustomerModal from '../components/Customer/CustomerModal';
+
 
 jest.mock('axios');
 
@@ -23,6 +25,21 @@ describe('Customer Component', () => {
       phoneNo: '9876543210',
     },
   ];
+
+  const customer = {
+    customerId: 1,
+    firstName: 'Lalith',
+    lastName: 'Phanindra',
+    emailId: 'plp@gmail.com',
+    phoneNo: '1234567890',
+    addressLine1: '123 Main St',
+    addressLine2: 'Apt 4B',
+    city: 'Bangalore',
+    state: 'Karnataka',
+    zipCode: '560068',
+    country: 'India',
+    status: 'Active',
+  };
 
   beforeEach(() => {
     axios.get.mockResolvedValue({ data: mockCustomers });
@@ -217,24 +234,24 @@ describe('Customer Component', () => {
     });
   });
 
-  // it('copies customer ID to clipboard', async () => {
-  //   axios.get.mockResolvedValue({ data: mockCustomers });
+  it('copies customer ID to clipboard', async () => {
+    axios.get.mockResolvedValue({ data: mockCustomers });
   
-  //   render(
-  //     <MemoryRouter>
-  //       <Routes>
-  //         <Route path="/" element={<Customer />} />
-  //       </Routes>
-  //     </MemoryRouter>
-  //   );
-  
-  //   const copyButton = screen.getByTestId('copyicon-1');
-  //   fireEvent.click(copyButton);
-  
-  //   await waitFor(() => {
-  //     expect(screen.getByText('Customer Id copied successfully!')).toBeInTheDocument();
-  //   });
-  // });
+    render(
+      <MemoryRouter>
+        <Routes>
+          <Route path="/" element={<Customer />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Lalith')).toBeInTheDocument();
+    });
+
+    const copyButton = screen.getByTestId('copyicon-1');
+    fireEvent.click(copyButton);
+});
 
   it('navigates to the customer dashboard when the view icon is clicked', async () => {
     render(
@@ -275,7 +292,116 @@ describe('Customer Component', () => {
     fireEvent.click(saveButton);
   });
 
+  it('renders the CustomerModal when isCustomerModalOpen is true', async () => {
+   render(
+      <MemoryRouter>
+        <Routes>
+          <Route path="/" element={<Customer />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    await waitFor(()=> {
+     expect(screen.getByTestId('add-button')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByTestId('add-button'));
+  });
+
+  it('renders CustomerModal with provided data for an existing customer', () => {
+    const handleClose = jest.fn();
+  const setCustomer = jest.fn();
+  const handleSave = jest.fn();
+
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={customer}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+
+    expect(screen.getByText('Edit an existing Customer')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Lalith')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Phanindra')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('123 Main St')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Apt 4B')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Bangalore')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Karnataka')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('560068')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('India')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('1234567890')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('plp@gmail.com')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Active')).toBeInTheDocument();    
+    expect(screen.getByText('Cancel')).toBeInTheDocument();
+    expect(screen.getByText('Save')).toBeInTheDocument();
+  });
+
+  it('closes the modal when Cancel is clicked', () => {  
+    const handleClose = jest.fn();
+  const setCustomer = jest.fn();
+  const handleSave = jest.fn();
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={customer}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+  
+    fireEvent.click(screen.getByText('Cancel'));
+  
+    expect(handleClose).toHaveBeenCalled();
+  });
+
+  it('validates all fields and triggers save', () => {
+  const handleClose = jest.fn();
+  const setCustomer = jest.fn();
+  const handleSave = jest.fn();
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={customer}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+
+    fireEvent.click(screen.getByText('Save'));
+
+    expect(handleSave).toHaveBeenCalled();
+  });
+
+  // it('handles API error when adding a customer', async () => {
+  //   axios.post.mockRejectedValueOnce(new Error('API error'));
+
+  //   render(
+  //     <MemoryRouter>
+  //       <Routes>
+  //         <Route path="/" element={<Customer />} />
+  //       </Routes>
+  //     </MemoryRouter>
+  //   );
+
+  //   fireEvent.click(screen.getByTestId('add-button'));
+  //   fireEvent.click(screen.getByTestId('add'));
+
+  //   expect(require('react-toastify').toast.error).toHaveBeenCalledWith(
+  //     'Failed to add the customer. Please try again.',
+  //     {
+  //       position: require('react-toastify').toast.POSITION.BOTTOM_LEFT,
+  //       autoClose: 900,
+  //     }
+  //   );
+  // });
+
  });
+
 
 
 

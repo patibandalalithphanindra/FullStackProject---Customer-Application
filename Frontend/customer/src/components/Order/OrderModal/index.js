@@ -90,6 +90,7 @@ const OrderModal = ({
           itemName: selectedItem.itemName,
           quantity: Number(quantity),
         };
+        setOrderItemsD([...orderItemsD, newItem]);
       }
 
       setSelectedItem('');
@@ -118,7 +119,8 @@ const OrderModal = ({
     const isCustomerIdValid = !!orderData.customerId;
     const isWithCoinsValid = !!withCoins;
     const isOrderItemsValid = !!orderItemsD && orderItemsD.length > 0;
-    if (!isOrderItemsValid) {
+    const isQuantityValid = !!quantity && quantity > 0;
+    if (!isOrderItemsValid  || !isQuantityValid ) {
       setItemDetailsValid(false);
     }
     setCustomerIdValid(isCustomerIdValid);
@@ -140,7 +142,6 @@ const OrderModal = ({
       }
     }
   };
-  
   
 
   return (
@@ -169,6 +170,7 @@ const OrderModal = ({
                 <Select
                   label="Currency"
                   value={orderData.currency}
+                  aria-label="Currency"
                   onChange={(e) => setOrderData({ ...orderData, currency: e.target.value })}
                   disabled={orderData.orderNo !== undefined}
                 >
@@ -262,7 +264,7 @@ const OrderModal = ({
                               <IconButton
                                 aria-label="Delete"
                                 onClick={() => removeItem(item.itemId)}
-                                data-testid="delete"
+                                data-testid={`delete-${item.itemId}`} 
                               >
                                 <DeleteIcon />
                               </IconButton>

@@ -23,7 +23,7 @@ const mockRewardsData = [
   },
 ];
 
-test('renders Reward component', async () => {
+it('renders Reward component', async () => {
   axios.get.mockResolvedValueOnce({ data: mockRewardsData });
 
   render(<MemoryRouter><Reward/></MemoryRouter>);
@@ -53,7 +53,7 @@ test('renders Reward component', async () => {
   });
 });
 
-test('user can search rewards by customer ID', async () => {
+it('user can search rewards by customer ID', async () => {
   axios.get.mockResolvedValueOnce({ data: mockRewardsData });
 
   render(<MemoryRouter><Reward/></MemoryRouter>);
@@ -85,7 +85,7 @@ test('user can sort rewards by date', async () => {
   });
 });
 
-test('displays empty rows when there are no rewards', async () => {
+it('displays empty rows when there are no rewards', async () => {
   axios.get.mockResolvedValueOnce({ data: [] });
 
   render(<MemoryRouter><Reward/></MemoryRouter>);
@@ -115,7 +115,7 @@ test('displays empty rows when there are no rewards', async () => {
   });
 });
 
-test('user can search and sort rewards', async () => {
+it('user can search and sort rewards', async () => {
   axios.get.mockResolvedValueOnce({ data: mockRewardsData });
 
   render(<MemoryRouter><Reward/></MemoryRouter>);
@@ -155,7 +155,7 @@ test('user can change rows per page', async () => {
   });
 });
 
-test('handles API error gracefully', async () => {
+it('handles API error', async () => {
   axios.get.mockRejectedValueOnce(new Error('API error'));
 
   render(<MemoryRouter><Reward/></MemoryRouter>);
@@ -165,7 +165,7 @@ test('handles API error gracefully', async () => {
   });
 });
 
-test('formats date correctly', () => {
+it('formats date correctly', () => {
   const dateToFormat = '2023-01-01T12:00:00Z';
   const expectedFormattedDate = '01/01/2023, 05:30 PM';
   const formattedDate = formatDate(dateToFormat);
@@ -173,7 +173,7 @@ test('formats date correctly', () => {
 });
 
 
-test('renders Reward component with ascending and descending sorting', async () => { 
+it('renders Reward component with ascending and descending sorting', async () => { 
   axios.get.mockResolvedValueOnce({ data: mockRewardsData });
 
   render(<MemoryRouter><Reward/></MemoryRouter>);

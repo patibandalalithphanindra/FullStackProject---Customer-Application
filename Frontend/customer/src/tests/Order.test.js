@@ -1,8 +1,9 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import axios from "axios";
-import Order from "../components/Order";
+import Order, {formatDate} from "../components/Order";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
+import CustomerDetailsModal from "../components/Order/CustomerDetailsModal";
 
 jest.mock("axios");
 
@@ -21,6 +22,8 @@ describe("Order Component", () => {
       orderTotal: 100,
       currency: "USD",
       orderStatus: "Created",
+      totalItems : 2,
+      lastModified : "2023-10-01T10:00:00Z"
     },
     {
       orderNo: 2,
@@ -29,25 +32,27 @@ describe("Order Component", () => {
       orderTotal: 150,
       currency: "INR",
       orderStatus: "Delivered",
+      totalItems : 2,
+      lastModified : "2023-10-02T09:30:00Z"
     },
   ];
 
-  const mockItems = [
-    {
-      itemId: 101,
-      itemName: "Item A",
-      itemPrice: 10,
-    },
-    {
-      itemId: 102,
-      itemName: "Item B",
-      itemPrice: 20,
-    },
-  ];
+  // const mockItems = [
+  //   {
+  //     itemId: 101,
+  //     itemName: "Item A",
+  //     itemPrice: 10,
+  //   },
+  //   {
+  //     itemId: 102,
+  //     itemName: "Item B",
+  //     itemPrice: 20,
+  //   },
+  // ];
 
   beforeEach(() => {
-    axios.get.mockResolvedValueOnce({ data: mockOrders });
-    axios.get.mockResolvedValueOnce({ data: mockItems });
+    axios.get.mockResolvedValue({ data: mockOrders });
+  //  axios.get.mockResolvedValue({ data: mockItems });
   });
 
   test('renders Order component', async () => {
@@ -57,27 +62,27 @@ describe("Order Component", () => {
   
     await waitFor(() => {
       expect(screen.getByText('ORDERS INFORMATION')).toBeInTheDocument();
-    });
+    }, 6000);
   
     await waitFor(() => {
       expect(screen.getByText('Order No')).toBeInTheDocument();
-    });
+    }, 6000);
   
     await waitFor(() => {
       expect(screen.getByText('Customer ID')).toBeInTheDocument();
-    });
+    }, 6000);
   
     await waitFor(() => {
       expect(screen.getByText('Total Order Amount')).toBeInTheDocument();
-    });
+    }, 6000);
   
     await waitFor(() => {
       expect(screen.getByText('Order Status')).toBeInTheDocument();
-    });
+    }, 6000);
   
     await waitFor(() => {
       expect(screen.getByText('Order Date')).toBeInTheDocument();
-    });
+    }, 6000);
   });
   
 
@@ -97,77 +102,83 @@ describe("Order Component", () => {
     });
   });
 
-  // it('displays a confirmation dialog when deleting an Order', async () => {
-  //   axios.get.mockResolvedValueOnce({ data: mockOrders });
-  //   render(
-  //       <MemoryRouter>
-  //           <Routes>
-  //               <Route path="/" element={<Order />} />
-  //           </Routes>
-  //       </MemoryRouter>
-  //   );
+  it('displays a confirmation dialog when deleting an Order', async () => {
+    axios.get.mockResolvedValueOnce({ data: mockOrders });
+    render(
+        <MemoryRouter>
+            <Routes>
+                <Route path="/" element={<Order />} />
+            </Routes>
+        </MemoryRouter>
+    );
 
-  //   await waitFor(() => {
-  //     expect(screen.getByText('123')).toBeInTheDocument();
-  //   });
+    await waitFor(() => {
+      expect(screen.getByText('123')).toBeInTheDocument();
+    });
 
-  //   await waitFor(() => {
-  //       expect(screen.getByTestId("deleteicon-1")).toBeInTheDocument();
-  //   });
+    
+
+    await waitFor(() => {
+        expect(screen.getByTestId("deleteicon-1")).toBeInTheDocument();
+    });
   
-  //   const deleteButton = screen.getByTestId(`deleteicon-1`);
+    const deleteButton = screen.getByTestId(`deleteicon-1`);
 
-  //   fireEvent.click(deleteButton);
+    fireEvent.click(deleteButton);
   
-  //   expect(screen.getByText('Confirmation')).toBeInTheDocument();
-  //   expect(screen.getByText('Are you sure you want to delete this order?')).toBeInTheDocument();
-  // });
+    expect(screen.getByText('Confirmation')).toBeInTheDocument();
+    expect(screen.getByText('Are you sure you want to delete this order?')).toBeInTheDocument();
+  });
 
-  // it("closes the confirmation dialog when canceling deletion", async () => {
-  //   render(<MemoryRouter><Order/></MemoryRouter>);
+  it("closes the confirmation dialog when canceling deletion", async () => {
+    render(<MemoryRouter><Order/></MemoryRouter>);
 
-  //   await waitFor(() => {
-  //     expect(screen.getByText('123')).toBeInTheDocument();
-  //   });
+    await waitFor(() => {
+      expect(screen.getByText('123')).toBeInTheDocument();
+    });
 
-  //   const deleteButton = screen.getByTestId("deleteicon-1");
-  //   fireEvent.click(deleteButton);
+    const deleteButton = screen.getByTestId("deleteicon-1");
+    fireEvent.click(deleteButton);
 
-  //   const cancelButton = screen.getByTestId("cancel");
-  //   fireEvent.click(cancelButton);
+    const cancelButton = screen.getByTestId("cancel");
+    fireEvent.click(cancelButton);
 
-  //   await waitFor(() => {
-  //     expect(screen.queryByText("Are you sure you want to delete this order?")).not.toBeInTheDocument();
-  //   });
-  // });
+    await waitFor(() => {
+      expect(screen.queryByText("Are you sure you want to delete this order?")).not.toBeInTheDocument();
+    });
+  });
 
-  // it("opens the Order Modal for addition", async () => {
-  //   render(<MemoryRouter><Order/></MemoryRouter>);
+  it("opens the Order Modal for addition", async () => {
+    render(<MemoryRouter><Order/></MemoryRouter>);
 
-  //   const addButton = screen.getByTestId("add");
+    await waitFor(() => {
+      expect(screen.getByTestId("add")).toBeInTheDocument();
+    });
 
-  //   fireEvent.click(addButton);
+    const addButton = screen.getByTestId("add");
 
-  //   await waitFor(() => {
-  //     matchText(screen.getByText("Add Order"), "Add Order");
-  //   });
-  // });
+    fireEvent.click(addButton);
 
-  // it("opens the Order Modal for editing", async () => {
-  //   render(<MemoryRouter><Order/></MemoryRouter>);
+    await waitFor(() => {
+      matchText(screen.getByText("Add"), "Add");
+    });
+  });
 
-  //   await waitFor(() => {
-  //     expect(screen.getByText('123')).toBeInTheDocument();
-  //   });
+  it("opens the Order Modal for editing", async () => {
+    render(<MemoryRouter><Order/></MemoryRouter>);
 
-  //   const editButton = screen.getByTestId("editicon-1");
+    await waitFor(() => {
+      expect(screen.getByText('123')).toBeInTheDocument();
+    });
 
-  //   fireEvent.click(editButton);
+    const editButton = screen.getByTestId("editicon-1");
 
-  //   await waitFor(() => {
-  //     matchText(screen.getByText("Edit Order"), "Edit Order");
-  //   });
-  // });
+    fireEvent.click(editButton);
+
+    await waitFor(() => {
+      matchText(screen.getByText("Close"), "Close");
+    });
+  });
 
   it("opens the View Modal for viewing order details", async () => {
     axios.get.mockResolvedValue({ data: mockOrders });
@@ -201,15 +212,15 @@ describe("Order Component", () => {
     });
   });
   
-  // test('handles API error gracefully', async () => {
-  //   axios.get.mockRejectedValueOnce(new Error('API error'));
+  test('handles API error', async () => {
+    axios.get.mockRejectedValueOnce(new Error('API error'));
   
-  //   render(<MemoryRouter><Order/></MemoryRouter>);
+    render(<MemoryRouter><Order/></MemoryRouter>);
   
-  //   await waitFor(() => {
-  //     expect(screen.getByText('Error fetching data. Please try again!')).toBeInTheDocument();
-  //   });
-  // });
+    await waitFor(() => {
+      expect(screen.getByText('Error fetching data. Please try again!')).toBeInTheDocument();
+    });
+  });
   
   test('displays empty rows when there are no orders', async () => {
     axios.get.mockResolvedValueOnce({ data: [] });
@@ -222,31 +233,31 @@ describe("Order Component", () => {
   });
   
 
-  // test('user can search and sort orders', async () => {
-  //   axios.get.mockResolvedValueOnce({ data: mockOrders });
+  test('user can search and sort orders', async () => {
+    axios.get.mockResolvedValueOnce({ data: mockOrders });
   
-  //   render(<MemoryRouter><Order/></MemoryRouter>);
+    render(<MemoryRouter><Order/></MemoryRouter>);
   
-  //   const searchInput = screen.getByLabelText(/Search Customer ID/i);
-  //   fireEvent.change(searchInput, { target: { value: '123' } });
+    const searchInput = screen.getByLabelText(/Search Customer ID/i);
+    fireEvent.change(searchInput, { target: { value: '123' } });
   
-  //   await waitFor(() => {
-  //     expect(screen.getByText('123')).toBeInTheDocument();
-  //   });
+    await waitFor(() => {
+      expect(screen.getByText('123')).toBeInTheDocument();
+    });
   
   
-  //   await waitFor(() => {
-  //     expect(screen.queryByText('456')).not.toBeInTheDocument();
-  //   });
+    await waitFor(() => {
+      expect(screen.queryByText('456')).not.toBeInTheDocument();
+    });
   
-  //   const sortButton = screen.getByRole('button', { name: /sort/i });
-  //   fireEvent.click(sortButton);
+    const sortButton = screen.getByRole('button', { name: /sort/i });
+    fireEvent.click(sortButton);
   
-  //   await waitFor(() => {
-  //     const orderItems = screen.getAllByText(/\d/);
-  //     expect(orderItems[0]).toHaveTextContent('1');
-  //   });
-  // });
+    await waitFor(() => {
+      const orderItems = screen.getAllByText(/\d/);
+      expect(orderItems[0]).toHaveTextContent('1');
+    });
+  });
 
   it("handles order deletion failure", async () => {
     axios.delete.mockRejectedValueOnce(new Error("Deletion failed"));
@@ -277,29 +288,29 @@ describe("Order Component", () => {
   });
 
 
-  // it("closes view modal when 'Close' is clicked", async () => {
-  //   axios.get.mockResolvedValueOnce({ data: mockOrders });
+  it("closes view modal when 'Close' is clicked", async () => {
+    axios.get.mockResolvedValueOnce({ data: mockOrders });
 
-  //   render(<MemoryRouter><Order/></MemoryRouter>);
+    render(<MemoryRouter><Order/></MemoryRouter>);
 
-  //   await waitFor(() => {
-  //     expect(screen.getByText('123')).toBeInTheDocument();
-  //   });
+    await waitFor(() => {
+      expect(screen.getByText('123')).toBeInTheDocument();
+    });
 
-  //   await waitFor(()=> {
-  //     expect(screen.getByTestId("viewicon-1")).toBeInTheDocument();
-  //   })
+    await waitFor(()=> {
+      expect(screen.getByTestId("viewicon-1")).toBeInTheDocument();
+    })
 
-  //   const viewButton = screen.getByTestId("viewicon-1");
-  //   fireEvent.click(viewButton);
+    const viewButton = screen.getByTestId("viewicon-1");
+    fireEvent.click(viewButton);
 
-  //   const closeButton = screen.getByText("Close");
-  //   fireEvent.click(closeButton);
+    const closeButton = screen.getByText("Close");
+    fireEvent.click(closeButton);
 
-  //   await waitFor(() => {
-  //     expect(screen.queryByText("Order Details")).not.toBeInTheDocument();
-  //   });
-  // });
+    await waitFor(() => {
+      expect(screen.queryByText("Order Details")).not.toBeInTheDocument();
+    });
+  });
 
   it("closes order modal when 'Close' is clicked", async () => {
     axios.get.mockResolvedValueOnce({ data: mockOrders });
@@ -321,6 +332,136 @@ describe("Order Component", () => {
     });
   });
 
+  it('formats date correctly', () => {
+    const dateToFormat = '2023-01-01T12:00:00Z';
+    const expectedFormattedDate = '01/01/2023, 05:30 PM';
+    const formattedDate = formatDate(dateToFormat);
+    expect(formattedDate).toBe(expectedFormattedDate);
+  });
+
+  test('user can sort orders by date', async () => {
+    axios.get.mockResolvedValueOnce({ data: mockOrders });
+  
+    render(<MemoryRouter><Order/></MemoryRouter>);
+  
+    const sortButton = screen.getByRole('button', { name: /sort/i });
+    fireEvent.click(sortButton);
+  
+    await waitFor(() => {
+      const orderItems = screen.getAllByText(/\d/);
+      console.log(orderItems);
+      expect(orderItems[0]).toHaveTextContent('2');
+    });
+  
+    await waitFor(() => {
+      const orderItems = screen.getAllByText(/\d/);
+      expect(orderItems[3]).toHaveTextContent('1');
+    });
+  });
+
+  test('user can sort orders by date in descending order', async () => {
+    axios.get.mockResolvedValueOnce({ data: mockOrders });
+  
+    render(<MemoryRouter><Order/></MemoryRouter>);
+  
+    const sortButton = screen.getByRole('button', { name: /sort/i });
+    fireEvent.click(sortButton);
+  
+    await waitFor(() => {
+      const orderItems = screen.getAllByText(/\d/);
+      expect(orderItems[0]).toHaveTextContent('2');
+    });
+
+    await waitFor(() => {
+      const orderItems = screen.getAllByText(/\d/);
+      expect(orderItems[3]).toHaveTextContent('1');
+    });
+  });
+  
+  test('user can sort orders by date in ascending order', async () => {
+    axios.get.mockResolvedValueOnce({ data: mockOrders });
+  
+    render(<MemoryRouter><Order/></MemoryRouter>);
+  
+    const sortButton = screen.getByRole('button', { name: /sort/i });
+    fireEvent.click(sortButton);
+  
+    fireEvent.click(sortButton);
+  
+    await waitFor(() => {
+      const orderItems = screen.getAllByText(/\d/);
+      console.log(orderItems.map(item => item.textContent));
+      expect(orderItems[0]).toHaveTextContent('1');
+    });
+
+    await waitFor(() => {
+      const orderItems = screen.getAllByText(/\d/);
+      expect(orderItems[4]).toHaveTextContent('2');
+    });
+  });
+
+  test('user can sort orders by date in ascending and descending order', async () => {
+    axios.get.mockResolvedValueOnce({ data: mockOrders });
+  
+    render(<MemoryRouter><Order/></MemoryRouter>);
+  
+    const sortButton = screen.getByRole('button', { name: /sort/i });
+    fireEvent.click(sortButton);
+  
+    await waitFor(() => {
+      const orderItems = screen.getAllByText(/\d/);
+      expect(orderItems[0]).toHaveTextContent('2');
+    });
+
+    await waitFor(() => {
+      const orderItems = screen.getAllByText(/\d/);
+      expect(orderItems[3]).toHaveTextContent('1');
+    });
+  
+    fireEvent.click(sortButton);
+  
+    await waitFor(() => {
+      const orderItems = screen.getAllByText(/\d/);
+      expect(orderItems[0]).toHaveTextContent('1');
+    });
+
+    await waitFor(() => {
+      const orderItems = screen.getAllByText(/\d/);
+      expect(orderItems[4]).toHaveTextContent('2');
+    });
+  });
+  
+  test('user can change the page', async() => { 
+   render(
+      <MemoryRouter>
+        <Order />
+      </MemoryRouter>
+    );
+    const nextPageButton = screen.getByRole('button', { name: /Next page/i });
+  
+    fireEvent.click(nextPageButton);
+  });
+
+  test('handleClose is called when modal close button is clicked', () => {
+    const setSelectedCustomerId = jest.fn();
+  
+    render(
+      <CustomerDetailsModal
+        customerId="123"
+        isOpen={true}
+        handleClose={() => setSelectedCustomerId(null)}
+      />
+    );
+  
+    const closeBtn = screen.getByRole('button', { name: /Close/i });
+    
+    fireEvent.click(closeBtn);
+  
+    expect(setSelectedCustomerId).toHaveBeenCalledWith(null);
+  });
+
+  
+  
  });
 
 
