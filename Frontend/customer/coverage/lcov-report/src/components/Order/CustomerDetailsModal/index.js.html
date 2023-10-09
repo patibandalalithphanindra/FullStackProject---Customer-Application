@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.61% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>11/13</span>
+                <span class='fraction'>0/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.5% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/8</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.61% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>11/13</span>
+                <span class='fraction'>0/13</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -189,23 +189,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">65x</span>
-<span class="cline-any cline-yes">65x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">65x</span>
-<span class="cline-any cline-yes">22x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -214,7 +214,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">65x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -301,24 +301,24 @@ import {
 } from "@mui/material";
 import axios from "axios";
 &nbsp;
-function CustomerDetailsModal({ customerId, isOpen, handleClose }) {
-  const [customerData, setCustomerData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+function <span class="fstat-no" title="function not covered" >CustomerDetailsModal(</span>{ customerId, isOpen, handleClose }) {
+  const [customerData, setCustomerData] = <span class="cstat-no" title="statement not covered" >useState(null);</span>
+  const [isLoading, setIsLoading] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
 &nbsp;
-  useEffect(() =&gt; {
-    if (isOpen &amp;&amp; customerId) {
-      setIsLoading(true);
-      const response = localStorage.getItem("jwt");
-      const headers = {
+<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    if (isOpen &amp;&amp; customerId) {</span>
+<span class="cstat-no" title="statement not covered" >      setIsLoading(true);</span>
+      const response = <span class="cstat-no" title="statement not covered" >localStorage.getItem("jwt");</span>
+      const headers = <span class="cstat-no" title="statement not covered" >{</span>
         Authorization: `Bearer ${response}`,
         "Content-Type": "application/json",
       };
 &nbsp;
-      axios
+<span class="cstat-no" title="statement not covered" >      axios</span>
         .get(`http://localhost:8080/customers/${customerId}`, { headers })
-        .then((response) =&gt; {
-          setCustomerData(response.data);
-          setIsLoading(false);
+        .then(<span class="fstat-no" title="function not covered" >(r</span>esponse) =&gt; {
+<span class="cstat-no" title="statement not covered" >          setCustomerData(response.data);</span>
+<span class="cstat-no" title="statement not covered" >          setIsLoading(false);</span>
         })
         .catch(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
 <span class="cstat-no" title="statement not covered" >          console.error(`Error fetching customer data: ${error.message}`);</span>
@@ -327,7 +327,7 @@ function CustomerDetailsModal({ customerId, isOpen, handleClose }) {
     }
   }, [isOpen, customerId]);
 &nbsp;
-  return (
+<span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;Dialog open={isOpen} onClose={handleClose}&gt;
       &lt;DialogTitle&gt;Customer Details&lt;/DialogTitle&gt;
       &lt;DialogContent&gt;
@@ -337,7 +337,7 @@ function CustomerDetailsModal({ customerId, isOpen, handleClose }) {
           &lt;/div&gt;
         ) : (
           customerData &amp;&amp; (
-<span class="branch-1 cbranch-no" title="branch not covered" >            &lt;&gt;</span>
+            &lt;&gt;
             &lt;div&gt;
               &lt;Typography variant="body1"&gt;
                 &lt;b&gt;Customer ID : &lt;/b&gt; {customerData.customerId}
@@ -409,7 +409,7 @@ export default CustomerDetailsModal;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-09T07:24:11.900Z
+                at 2023-10-09T07:31:48.063Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

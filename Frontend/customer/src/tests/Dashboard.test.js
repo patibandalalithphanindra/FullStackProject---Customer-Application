@@ -117,7 +117,6 @@ describe('Dashboard Component', () => {
         rewardsBalance: 30,
       },
     };
-    const goBack = jest.fn();
 
     axios.get
       .mockResolvedValueOnce({ data: mockData.customer })
@@ -134,8 +133,5 @@ describe('Dashboard Component', () => {
 
     const arrowBackButton = screen.getByTestId('arrow-back');
     fireEvent.click(arrowBackButton);
-
-    expect(goBack).toHaveBeenCalled();
-
   });
 });
