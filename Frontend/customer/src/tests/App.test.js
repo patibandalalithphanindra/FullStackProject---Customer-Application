@@ -19,7 +19,7 @@ describe('App Component', () => {
     localStorage.setItem('jwt', 'mockToken');
 
     render(
-      <MemoryRouter initialEntries={['/homepage']}>
+      <MemoryRouter initialEntries={['/homepage/*']}>
         <App />
       </MemoryRouter>
     );
