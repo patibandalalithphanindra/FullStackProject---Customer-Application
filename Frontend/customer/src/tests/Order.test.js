@@ -458,9 +458,7 @@ describe("Order Component", () => {
     fireEvent.click(closeBtn);
   
     expect(setSelectedCustomerId).toHaveBeenCalledWith(null);
-  });
-
-  
+  }); 
   
  });
 

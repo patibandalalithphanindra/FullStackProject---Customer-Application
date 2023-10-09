@@ -51,7 +51,7 @@ function Reward() {
         setError(null);
       })
       .catch((error) => {
-        console.error('Error fetching order data:', error);
+        console.error('Error fetching reward data:', error);
         setError('Error fetching data. Please try again!');
       });
   }, []);

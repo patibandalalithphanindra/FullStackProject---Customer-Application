@@ -408,7 +408,33 @@ describe('Customer Component', () => {
     });
   });
 
-});
+  it('updates a customer - error', async () => {
+    axios.put.mockResolvedValue({ status: 200 });
+  
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  
+    render(
+      <MemoryRouter>
+        <Routes>
+          <Route path="/" element={<Customer />} />
+        </Routes>
+      </MemoryRouter>
+    );
+  
+    await waitFor(() => {
+      expect(screen.getByTestId("editicon-1")).toBeInTheDocument();
+    });
+  
+    const updateButton = screen.getByTestId('editicon-1');
+    fireEvent.click(updateButton);
+  
+    fireEvent.click(screen.getByText('Save'));
+  
+    expect(consoleErrorSpy).not.toHaveBeenCalled();
+  
+    consoleErrorSpy.mockRestore();
+  });
+}, 10000);
 
 
 

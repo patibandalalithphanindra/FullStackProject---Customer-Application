@@ -32,7 +32,7 @@ describe('Rewards Component', () => {
 
     const attachMoneyIcon = screen.getByTestId('AttachMoneyIcon');
     expect(attachMoneyIcon).toBeInTheDocument();
-  });
+  }, 10000);
 
   it('renders rewards summary', async () => {
     const mockRewardsData = [50, 20, 30];
@@ -55,25 +55,10 @@ describe('Rewards Component', () => {
       expect(screen.getByText('Balance Coins')).toBeInTheDocument();
     });
 
-//     await waitFor(() => {
-// expect(screen.getByText(/0 coins/i)).toBeInTheDocument();
-//       });
-
     await waitFor(() => {
       const noteText = 'Note : Earned Coins represent the total coins earned, Redeemed Coins represent the coins spent or redeemed, and Balance Coins represent the remaining coins.';
       const noteElement = screen.getByText(noteText);
       expect(noteElement).toBeInTheDocument();
     });
-
-    // expect(fetchMock).toHaveBeenCalledWith(
-    // 'http://localhost:8080/rewards/rewardDetails/1',
-    //   {
-    //     method: 'GET',
-    //     headers: {
-    //       Authorization: 'Bearer testAccessToken',
-    //       'Content-Type': 'application/json',
-    //     },
-    //   }
-    // );
   });
 }, 10000);

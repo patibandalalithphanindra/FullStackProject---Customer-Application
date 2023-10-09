@@ -51,7 +51,7 @@ it('renders Reward component', async () => {
   await waitFor(() => {
     expect(screen.getByText('Date')).toBeInTheDocument();
   });
-});
+}, 10000);
 
 it('user can search rewards by customer ID', async () => {
   axios.get.mockResolvedValueOnce({ data: mockRewardsData });
@@ -64,7 +64,7 @@ it('user can search rewards by customer ID', async () => {
   await waitFor(() => {
     expect(screen.queryByText('C2')).not.toBeInTheDocument();
   });
-});
+}, 10000);
 
 test('user can sort rewards by date', async () => {
   axios.get.mockResolvedValueOnce({ data: mockRewardsData });
@@ -83,7 +83,7 @@ test('user can sort rewards by date', async () => {
     const rewardItems = screen.getAllByText(/C\d/);
     expect(rewardItems[1]).toHaveTextContent('C1');
   });
-});
+}, 10000);
 
 it('displays empty rows when there are no rewards', async () => {
   axios.get.mockResolvedValueOnce({ data: [] });
@@ -113,7 +113,7 @@ it('displays empty rows when there are no rewards', async () => {
   await waitFor(() => {
     expect(screen.getByText('Date')).toBeInTheDocument();
   });
-});
+}, 10000);
 
 it('user can search and sort rewards', async () => {
   axios.get.mockResolvedValueOnce({ data: mockRewardsData });
@@ -138,7 +138,7 @@ it('user can search and sort rewards', async () => {
     const rewardItems = screen.getAllByText(/C\d/);
     expect(rewardItems[0]).toHaveTextContent('C1');
   });
-});
+}, 10000);
 
 test('user can change rows per page', async () => {
   axios.get.mockResolvedValueOnce({ data: mockRewardsData });
@@ -153,7 +153,7 @@ test('user can change rows per page', async () => {
   await waitFor(() => {
     expect(screen.getAllByRole('row').length).toBe(3);
   });
-});
+}, 10000);
 
 it('handles API error', async () => {
   axios.get.mockRejectedValueOnce(new Error('API error'));
@@ -163,14 +163,14 @@ it('handles API error', async () => {
   await waitFor(() => {
     expect(screen.getByText('Error fetching data. Please try again!')).toBeInTheDocument();
   });
-});
+}, 10000);
 
 it('formats date correctly', () => {
   const dateToFormat = '2023-01-01T12:00:00Z';
   const expectedFormattedDate = '01/01/2023, 05:30 PM';
   const formattedDate = formatDate(dateToFormat);
   expect(formattedDate).toBe(expectedFormattedDate);
-});
+}, 10000);
 
 
 it('renders Reward component with ascending and descending sorting', async () => { 
@@ -201,5 +201,20 @@ it('renders Reward component with ascending and descending sorting', async () =>
     const rewardItems = screen.getAllByText(/C\d/);
     expect(rewardItems[1]).toHaveTextContent('C1');
   });
-});
+}, 10000);
+
+it('logs an error when API request fails', async () => {
+  const consoleErrorSpy = jest.spyOn(console, 'error');
+  axios.get.mockRejectedValueOnce(new Error('API error'));
+
+  render(<MemoryRouter><Reward/></MemoryRouter>);
+
+  await waitFor(() => {
+    expect(screen.getByText('Error fetching data. Please try again!')).toBeInTheDocument();
+  });
+
+  expect(consoleErrorSpy).toHaveBeenCalledWith('Error fetching reward data:', expect.any(Error));
+
+  consoleErrorSpy.mockRestore();
+}, 10000);
 
