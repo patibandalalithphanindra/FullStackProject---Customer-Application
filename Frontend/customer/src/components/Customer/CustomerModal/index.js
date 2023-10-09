@@ -102,6 +102,7 @@ const CustomerModal = ({
               required
               value={customer.firstName}
               onChange={(e) => setCustomer({ ...customer, firstName: e.target.value })}
+              inputProps={{ "data-testid": "firstname" }}
             />
             {!firstNameValid && <FormHelperText error>This field is required.</FormHelperText>}
           </Grid>
@@ -113,6 +114,7 @@ const CustomerModal = ({
               required
               value={customer.lastName}
               onChange={(e) => setCustomer({ ...customer, lastName: e.target.value })}
+              inputProps={{ "data-testid": "lastname" }}
             />
             {!lastNameValid && <FormHelperText error>This field is required.</FormHelperText>}
           </Grid>
@@ -124,6 +126,7 @@ const CustomerModal = ({
               required
               value={customer.addressLine1}
               onChange={(e) => setCustomer({ ...customer, addressLine1: e.target.value })}
+              inputProps={{ "data-testid": "add1" }}
             />
             {!addressLine1Valid && <FormHelperText error>This field is required.</FormHelperText>}
           </Grid>
@@ -134,6 +137,7 @@ const CustomerModal = ({
               fullWidth
               value={customer.addressLine2}
               onChange={(e) => setCustomer({ ...customer, addressLine2: e.target.value })}
+              inputProps={{ "data-testid": "add2" }}
             />
             {!addressLine2Valid && <FormHelperText error>This field is required.</FormHelperText>}
           </Grid>
@@ -145,6 +149,7 @@ const CustomerModal = ({
               required
               value={customer.city}
               onChange={(e) => setCustomer({ ...customer, city: e.target.value })}
+              inputProps={{ "data-testid": "city" }}
             />
             {!cityValid && <FormHelperText error>This field is required.</FormHelperText>}
           </Grid>
@@ -156,6 +161,7 @@ const CustomerModal = ({
               required
               value={customer.state}
               onChange={(e) => setCustomer({ ...customer, state: e.target.value })}
+              inputProps={{ "data-testid": "state" }}
             />
             {!stateValid && <FormHelperText error>This field is required.</FormHelperText>}
           </Grid>
@@ -167,6 +173,7 @@ const CustomerModal = ({
               required
               value={customer.zipCode}
               onChange={(e) => setCustomer({ ...customer, zipCode: e.target.value })}
+              inputProps={{ "data-testid": "zipcode" }}
             />
             {!zipCodeValid && <FormHelperText error>This field is required.</FormHelperText>}
           </Grid>
@@ -178,6 +185,7 @@ const CustomerModal = ({
               required
               value={customer.country}
               onChange={(e) => setCustomer({ ...customer, country: e.target.value })}
+              inputProps={{ "data-testid": "country" }}
             />
             {!countryValid && <FormHelperText error>This field is required.</FormHelperText>}
           </Grid>
@@ -190,6 +198,7 @@ const CustomerModal = ({
               value={customer.phoneNo}
               disabled={customer.customerId!== undefined}
               onChange={(e) => setCustomer({ ...customer, phoneNo: e.target.value })}
+              inputProps={{ "data-testid": "phonenumber" }}
             />
             {!phoneNoValid && <FormHelperText error>This field is required and must be 10 digits.</FormHelperText>}
           </Grid>
@@ -202,6 +211,7 @@ const CustomerModal = ({
               value={customer.emailId}
               disabled={customer.customerId!== undefined}
               onChange={(e) => setCustomer({ ...customer, emailId: e.target.value })}
+              inputProps={{ "data-testid": "email" }}
             />
             {!emailIdValid && <FormHelperText error>This field is required and must be a valid email address.</FormHelperText>}
           </Grid>
@@ -212,6 +222,7 @@ const CustomerModal = ({
                 label="Status"
                 value={customer.status}
                 onChange={(e) => setCustomer({ ...customer, status: e.target.value })}
+                inputProps={{ "data-testid": "status" }}
               >
                 <MenuItem value="Active">Active</MenuItem>
                 <MenuItem value="Inactive">Inactive</MenuItem>

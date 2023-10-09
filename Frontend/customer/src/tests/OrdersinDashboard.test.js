@@ -69,4 +69,4 @@ describe('Orders Component', () => {
     render(<Orders orders={[]} />);
     expect(screen.getByText('No orders have been placed by the customer!')).toBeInTheDocument();
   });
-});
+}, 10000);

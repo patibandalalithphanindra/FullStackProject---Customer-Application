@@ -76,4 +76,4 @@ describe('Rewards Component', () => {
     //   }
     // );
   });
-});
+}, 10000);

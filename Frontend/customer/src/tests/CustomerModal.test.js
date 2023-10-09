@@ -238,4 +238,447 @@ describe('CustomerModal Component', () => {
   
     expect(handleClose).toHaveBeenCalled();
   });
+
+
+  it('validates and triggers save on valid input for a new customer', () => {
+    const handleClose = jest.fn();
+    const setCustomer = jest.fn();
+    const handleSave = jest.fn();
+  
+    const newCustomer = {
+      firstName: 'Ramu',
+      lastName: 'Ravi',
+      addressLine1: '456 B',
+      city: 'Chennai',
+      state: 'TamilNadu',
+      zipCode: '613401',
+      country: 'India',
+      phoneNo: '9876513220',
+      emailId: 'ramuravi@gmail.com',
+      status: 'Active',
+    };
+  
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={newCustomer}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+  
+    fireEvent.click(screen.getByText('Add'));
+  
+    expect(handleSave).toHaveBeenCalled();
+    expect(
+      screen.queryByText('This field is required.')
+    ).not.toBeInTheDocument();
+  });
+  
+  it('validates and triggers save on valid input for editing an existing customer', () => {
+    const handleClose = jest.fn();
+    const setCustomer = jest.fn();
+    const handleSave = jest.fn();
+  
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={customer}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+  
+    fireEvent.click(screen.getByText('Save'));
+  
+    expect(handleSave).toHaveBeenCalled();
+    expect(
+      screen.queryByText('This field is required.')
+    ).not.toBeInTheDocument();
+  });
+  
+  it('validates and does not trigger save on invalid status', () => {
+    const handleClose = jest.fn();
+    const setCustomer = jest.fn();
+    const handleSave = jest.fn();
+  
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={{ ...customer, status: '' }}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+  
+    fireEvent.click(screen.getByText('Save'));
+  
+    expect(handleSave).not.toHaveBeenCalled();
+    expect(
+      screen.getByText('This field is required.')
+    ).toBeInTheDocument();
+  });
+
+  it('displays error messages for required fields', async () => {
+    const handleClose = jest.fn();
+    const setCustomer = jest.fn();
+    const handleSave = jest.fn();
+  
+    const initialCustomer = {
+      firstName: '',
+      lastName: '',
+      addressLine1: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      country: '',
+      phoneNo: '',
+      emailId: '',
+      status: '',
+    };
+  
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={initialCustomer}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+  
+    fireEvent.click(screen.getByText('Add'));
+  
+    const errorMessages = screen.getAllByText('This field is required.');
+    errorMessages.forEach((errorMessage) => {
+      expect(errorMessage).toBeInTheDocument();
+  });
+});
+
+  it('displays error message for required fields if they are empty', () => {
+    const handleClose = jest.fn();
+    const setCustomer = jest.fn();
+    const handleSave = jest.fn();
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={{
+          firstName: '',
+          lastName: '',
+          addressLine1: '',
+          city: '',
+          state: '',
+          zipCode: '',
+          country: '',
+          phoneNo: '',
+          emailId: '',
+          status: '',
+        }}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+    fireEvent.click(screen.getByTestId('add'));
+
+    expect(screen.getAllByText('This field is required.')).toHaveLength(8);
+  });
+
+  it('updates zipCode when user enters a value', () => {
+    const handleClose = jest.fn();
+    const setCustomer = jest.fn();
+    const handleSave = jest.fn();
+  
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={customer}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+    const zipCodeInput = screen.getByTestId('zipcode');
+  
+    fireEvent.change(zipCodeInput, {
+      target: { value: "123456" }
+    });
+  
+    expect(setCustomer).toHaveBeenCalledWith({
+      ...customer,
+      zipCode: '123456',
+    });
+  });
+
+  it('updates firstname when user enters a value', () => {
+    const handleClose = jest.fn();
+    const setCustomer = jest.fn();
+    const handleSave = jest.fn();
+  
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={customer}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+    const firstNameInput = screen.getByTestId('firstname');
+  
+    fireEvent.change(firstNameInput, {
+      target: { value: "Ravi" }
+    });
+  
+    expect(setCustomer).toHaveBeenCalledWith({
+      ...customer,
+      firstName: 'Ravi',
+    });
+  });
+
+  it('updates lastname when user enters a value', () => {
+    const handleClose = jest.fn();
+    const setCustomer = jest.fn();
+    const handleSave = jest.fn();
+  
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={customer}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+    const lastNameInput = screen.getByTestId('lastname');
+  
+    fireEvent.change(lastNameInput, {
+      target: { value: "Ramu" }
+    });
+  
+    expect(setCustomer).toHaveBeenCalledWith({
+      ...customer,
+      lastName: 'Ramu',
+    });
+  });
+  
+  it('updates city when user enters a value', () => {
+    const handleClose = jest.fn();
+    const setCustomer = jest.fn();
+    const handleSave = jest.fn();
+  
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={customer}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+    const cityInput = screen.getByTestId('city');
+  
+    fireEvent.change(cityInput, {
+      target: { value: "Vijayawada" }
+    });
+  
+    expect(setCustomer).toHaveBeenCalledWith({
+      ...customer,
+      city: 'Vijayawada',
+    });
+  });
+
+  it('updates state when user enters a value', () => {
+    const handleClose = jest.fn();
+    const setCustomer = jest.fn();
+    const handleSave = jest.fn();
+  
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={customer}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+    const stateInput = screen.getByTestId('state');
+  
+    fireEvent.change(stateInput, {
+      target: { value: "AndhraPradesh" }
+    });
+  
+    expect(setCustomer).toHaveBeenCalledWith({
+      ...customer,
+      state: 'AndhraPradesh',
+    });
+  });
+
+  it('updates country when user enters a value', () => {
+    const handleClose = jest.fn();
+    const setCustomer = jest.fn();
+    const handleSave = jest.fn();
+  
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={customer}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+    const countryInput = screen.getByTestId('country');
+  
+    fireEvent.change(countryInput, {
+      target: { value: "England" }
+    });
+  
+    expect(setCustomer).toHaveBeenCalledWith({
+      ...customer,
+      country: 'England',
+    });
+  });
+
+  it('updates address line 1 when user enters a value', () => {
+    const handleClose = jest.fn();
+    const setCustomer = jest.fn();
+    const handleSave = jest.fn();
+  
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={customer}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+    const addressInput1 = screen.getByTestId('add1');
+  
+    fireEvent.change(addressInput1, {
+      target: { value: "Hongkong" }
+    });
+
+    expect(setCustomer).toHaveBeenCalledWith({
+      ...customer,
+     addressLine1 : 'Hongkong'
+    });
+  });
+
+  it('updates address line 2 when user enters a value', () => {
+    const handleClose = jest.fn();
+    const setCustomer = jest.fn();
+    const handleSave = jest.fn();
+  
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={customer}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+    const addressInput2 = screen.getByTestId('add2');
+  
+    fireEvent.change(addressInput2, {
+      target: { value: "Hongkong" }
+    });
+
+    expect(setCustomer).toHaveBeenCalledWith({
+      ...customer,
+     addressLine2 : 'Hongkong'
+    });
+  });
+
+  it('updates phone number when user enters a value', () => {
+    const handleClose = jest.fn();
+    const setCustomer = jest.fn();
+    const handleSave = jest.fn();
+  
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={customer}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+    const mobileInput = screen.getByTestId('phonenumber');
+  
+    fireEvent.change(mobileInput, {
+      target: { value: "9876512340" }
+    });
+
+    expect(setCustomer).toHaveBeenCalledWith({
+      ...customer,
+       phoneNo : '9876512340'
+    });
+  });
+
+  it('updates email when user enters a value', () => {
+    const handleClose = jest.fn();
+    const setCustomer = jest.fn();
+    const handleSave = jest.fn();
+  
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={customer}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+    const emailInput = screen.getByTestId('email');
+  
+    fireEvent.change(emailInput, {
+      target: { value: "rk@gmail.com" }
+    });
+
+    expect(setCustomer).toHaveBeenCalledWith({
+      ...customer,
+     emailId : 'rk@gmail.com'
+    });
+  });
+
+  it('updates status when user selects a value from the dropdown', () => {
+    const handleClose = jest.fn();
+    const setCustomer = jest.fn();
+    const handleSave = jest.fn();
+  
+    render(
+      <CustomerModal
+        isOpen={true}
+        handleClose={handleClose}
+        customer={customer}
+        setCustomer={setCustomer}
+        handleSave={handleSave}
+      />
+    );
+    
+    const statusSelect = screen.getByTestId('status');
+  
+    fireEvent.change(statusSelect, {
+      target: { value: 'Inactive' }
+    });
+  
+    expect(setCustomer).toHaveBeenCalledWith({
+      ...customer,
+      status: 'Inactive',
+    });
+  });
+  
+  
+  
+  
+  
+  
+  
+  
 });

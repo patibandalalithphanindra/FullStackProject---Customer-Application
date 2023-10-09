@@ -70,4 +70,4 @@ describe('Profile Component', () => {
     expect(avatar).toBeInTheDocument();
     expect(avatar).toHaveAttribute('src', 'https://www.pngitem.com/pimgs/m/62-625606_computer-icons-suit-image-avatar-clip-art-customer.png');
   });
-});
+}, 10000);

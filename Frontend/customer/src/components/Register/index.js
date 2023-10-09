@@ -32,7 +32,7 @@ function Register({ toggleForm }) {
     if (!isEmailValid(formData.email)) {
       toast.error('Invalid email address. Please enter a valid email.', {
         position: toast.POSITION.BOTTOM_LEFT,
-        autoClose: 3000,
+        autoClose: 900,
       });
       return;
     }

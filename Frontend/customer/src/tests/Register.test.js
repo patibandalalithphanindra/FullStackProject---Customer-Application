@@ -53,3 +53,38 @@ test('user can fill and submit registration form', async () => {
     autoClose: 900,
   });
 });
+
+  test('user receives an error message on registration failure', async () => {
+    axios.post.mockRejectedValueOnce(new Error('Registration failed'));
+  
+    render(<MemoryRouter><Register /></MemoryRouter>);
+  
+    fireEvent.submit(screen.getByRole('button', { name: /Register/i }));
+  
+    await waitFor(() => {
+      expect(localStorage.getItem('jwt')).toBeNull();
+    });
+  
+    expect(toast.error).toHaveBeenCalledWith(
+      'Invalid email address. Please enter a valid email.', 
+      { position: toast.POSITION.BOTTOM_LEFT, autoClose: 900 }
+    );
+  });
+
+  test('user cannot submit with an invalid email', async () => {
+    render(<MemoryRouter><Register /></MemoryRouter>);
+    
+    const emailInput = screen.getByLabelText(/Email/i);
+    
+    fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
+    fireEvent.submit(screen.getByRole('button', { name: /Register/i }));
+  
+    await waitFor(() => {
+      expect(localStorage.getItem('jwt')).toBeNull();
+    });
+  
+    expect(toast.error).toHaveBeenCalledWith(
+      'Invalid email address. Please enter a valid email.', 
+      { position: toast.POSITION.BOTTOM_LEFT, autoClose: 900 }
+    );
+  });

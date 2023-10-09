@@ -29,7 +29,7 @@ describe('App Component', () => {
 
   it('navigates to HomePage when no token is in localStorage', async () => {
     render(
-      <MemoryRouter initialEntries={['/homepage']}>
+      <MemoryRouter initialEntries={['/homepage/*']}>
         <Routes>
           <Route path="/homepage" element={<App />} />
           <Route path="/" element={<HomePage />} />
