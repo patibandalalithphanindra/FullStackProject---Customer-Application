@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/11</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/11</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -145,37 +145,37 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -222,37 +222,37 @@ import axios from 'axios';
 import { Typography, Grid, Paper, Box, Divider } from '@mui/material';
 import { MonetizationOn, AttachMoney, MoneyOff } from '@mui/icons-material';
 &nbsp;
-const Rewards = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span> id }) =&gt; {</span>
-  const [rewardsData, setRewardsData] = <span class="cstat-no" title="statement not covered" >useState({</span>
+const Rewards = ({ id }) =&gt; {
+  const [rewardsData, setRewardsData] = useState({
     rewardsEarned: 0.0,
     rewardsRedeemed: 0.0,
     rewardsBalance: 0.0,
   });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-    const response = <span class="cstat-no" title="statement not covered" >localStorage.getItem('jwt');</span>
-    const headers = <span class="cstat-no" title="statement not covered" >{</span>
+  useEffect(() =&gt; {
+    const response = localStorage.getItem('jwt');
+    const headers = {
       Authorization: `Bearer ${response}`,
       'Content-Type': 'application/json',
     };
-    const apiUrl = <span class="cstat-no" title="statement not covered" >`http://localhost:8080/rewards/rewardDetails/${id}`;</span>
+    const apiUrl = `http://localhost:8080/rewards/rewardDetails/${id}`;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    axios</span>
+    axios
       .get(apiUrl, { headers })
-      .then(<span class="fstat-no" title="function not covered" >(r</span>esponse) =&gt; {
-        const { data } = <span class="cstat-no" title="statement not covered" >response;</span>
-<span class="cstat-no" title="statement not covered" >        setRewardsData({</span>
+      .then((response) =&gt; {
+        const { data } = response;
+        setRewardsData({
           rewardsEarned: data[0],
           rewardsRedeemed: data[1],
           rewardsBalance: data[2],
         });
       })
-      .catch(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
-<span class="cstat-no" title="statement not covered" >        console.error('Error fetching reward details:', error);</span>
+      .catch((error) =&gt; {
+        console.error('Error fetching reward details:', error);
       });
   }, [id]);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;Paper elevation={3} sx={{ p: 2 }} &gt;
       &lt;Grid container spacing={2} &gt;
         &lt;Grid item xs={4}&gt;
@@ -301,7 +301,7 @@ export default Rewards;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-09T07:31:48.063Z
+                at 2023-10-09T09:55:47.848Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

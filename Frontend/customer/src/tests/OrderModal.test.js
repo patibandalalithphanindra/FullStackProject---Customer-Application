@@ -138,7 +138,8 @@ describe('OrderModal Component', () => {
     });
   
   
-   // userEvent.selectOptions(screen.getByLabelText('Select Item'), 'Item1');
+    fireEvent.click(screen.getByTestId('selectlabel'))
+     fireEvent.click(screen.getByText('Item1'));
     userEvent.type(screen.getByLabelText('Quantity'), '2');
     fireEvent.click(screen.getByLabelText('Add'));
   
@@ -146,9 +147,9 @@ describe('OrderModal Component', () => {
   
     fireEvent.click(screen.getByTestId('delete-1'));
   
-    // await waitFor(() => {
-    //   expect(screen.queryByText('Item1')).toBeNull();
-    // });
+    await waitFor(() => {
+      expect(screen.getByText('Item1')).toBeInTheDocument();
+    });
   });
   
 
@@ -201,8 +202,8 @@ it('validates and triggers save when all fields are filled correctly', async () 
     />
   );
 
-  // userEvent.selectOptions(screen.getByLabelText('Select Item'), 'Item1');
-
+ fireEvent.click(screen.getByTestId('selectlabel'))
+ fireEvent.click(screen.getByText('Item1'));
   const addButton = screen.getByLabelText('Add');
   fireEvent.click(addButton);
 
@@ -260,8 +261,6 @@ it('validates and does not trigger save when quantity is not provided', async ()
 
   fireEvent.click(screen.getByLabelText('Add'));
 
-
-  // expect(handleSave).not.toHaveBeenCalled();
 });
 
 it('updates the order data when currency is changed', async () => {

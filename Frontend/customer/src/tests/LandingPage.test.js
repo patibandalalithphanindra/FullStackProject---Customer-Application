@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 
 jest.mock("axios");
 
-
 jest.mock("react-router-dom", () => {
   const originalModule = jest.requireActual("react-router-dom");
   return {
@@ -122,5 +121,49 @@ describe("LandingPage Component", () => {
   expect(await screen.findByText("25")).toBeInTheDocument();
 });
 
+});
+
+describe("LandingPage Component with no data", () => {
+  beforeEach(() => {
+    axios.get.mockResolvedValueOnce({
+      data: [],
+    });
+    axios.get.mockResolvedValueOnce({
+      data: {},
+    });
+  });
+
+  it("renders 0s for status counts when data is not found", async () => {
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    expect(await screen.findByText("Created")).toBeInTheDocument();
+    expect(await screen.findByText("Items Packed")).toBeInTheDocument();
+    expect(await screen.findByText("Shipped")).toBeInTheDocument();
+    expect(await screen.findByText("In Transit")).toBeInTheDocument();
+    expect(await screen.findByText("Delivered")).toBeInTheDocument();
+
+    const zeroCounts = screen.getAllByText("0", { selector: "h6" });
+    zeroCounts.forEach((count) => {
+      expect(count).toBeInTheDocument();
+    });
+  });
+
+  it("logs an error when API request to fetch customer counts fails", async () => {
+    jest.spyOn(axios, 'get').mockRejectedValue(new Error("Error fetching customer counts data:"));
+  
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    await expect(axios.get()).rejects.toThrow('Error fetching customer counts data:')
+    });
   
 });

@@ -203,9 +203,10 @@ const OrderModal = ({
                       <InputLabel id="select-item-label" htmlFor="select-item">Select Item</InputLabel>
                       <Select
                         labelId="select-item-label"
-                        label="Select Item"
+                        label="Select Items"
                         value={selectedItem}
                         onChange={(e) => setSelectedItem(e.target.value)}
+                        data-testid="selectlabel"
                       >
                         {orderItemsMenu.map((item) => (
                           <MenuItem key={item.itemId} value={item}>

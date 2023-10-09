@@ -28,9 +28,11 @@ function LandingPage() {
     axios
       .get("http://localhost:8080/customers/counts", { headers })
       .then((response) => {
+        console.log('inthen');
         setCounts(response.data);
       })
       .catch((error) => {
+        console.log('inCatch');
         console.error("Error fetching customer counts data:", error);
       });
 
