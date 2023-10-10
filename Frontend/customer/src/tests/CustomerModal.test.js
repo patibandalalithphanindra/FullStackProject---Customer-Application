@@ -674,11 +674,4 @@ describe('CustomerModal Component', () => {
     });
   });
   
-  
-  
-  
-  
-  
-  
-  
 });

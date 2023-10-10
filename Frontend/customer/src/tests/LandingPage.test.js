@@ -165,5 +165,18 @@ describe("LandingPage Component with no data", () => {
     );
     await expect(axios.get()).rejects.toThrow('Error fetching customer counts data:')
     });
+
+    it("logs an error when API request to fetch status counts fails", async () => {
+      jest.spyOn(axios, 'get').mockRejectedValue(new Error("Error fetching status counts data:"));
+    
+      render(
+        <MemoryRouter initialEntries={["/"]}>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+          </Routes>
+        </MemoryRouter>
+      );
+      await expect(axios.get()).rejects.toThrow('Error fetching status counts data:')
+      });
   
 });
