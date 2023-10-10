@@ -172,7 +172,7 @@ function LandingPage() {
               <div>
                 <Typography variant="h6">Shipped</Typography>
                 <Typography variant="subtitle1">
-                  {statusCounts?.Shipped}
+                  {statusCounts?.Shipped || 0}
                 </Typography>
               </div>
             </Box>
