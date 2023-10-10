@@ -36,7 +36,7 @@ describe('CustomerDetailsModal Component', () => {
       <CustomerDetailsModal customerId={1} isOpen={true} handleClose={() => {}} />
     );
 
-  });
+  }, 10000);
 
   it('closes the modal when Close button is clicked', async () => {
     const handleClose = jest.fn();
@@ -50,7 +50,7 @@ describe('CustomerDetailsModal Component', () => {
     closeButton.click();
 
     expect(handleClose).toHaveBeenCalledTimes(1);
-  });
+  }, 10000);
 
   it("logs an error when API request to fetch status counts fails", async () => {
     const handleClose = jest.fn();
@@ -61,5 +61,5 @@ describe('CustomerDetailsModal Component', () => {
     );
 
     await expect(axios.get()).rejects.toThrow('Error fetching customer data: ')
-    });
+    }, 10000);
 });

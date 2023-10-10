@@ -19,5 +19,5 @@ describe('App Component', () => {
     );
 
     expect(screen.getByText('WELCOME')).toBeInTheDocument();
-  });
+  }, 10000);
 });

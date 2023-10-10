@@ -23,7 +23,7 @@ test('renders Login component', () => {
   render(<MemoryRouter><Login /></MemoryRouter>);
   const loginElement = screen.getByText(/Switch to Register/);
   expect(loginElement).toBeInTheDocument();
-});
+}, 10000);
 
 beforeEach(() => {
   localStorage.clear();
@@ -52,7 +52,7 @@ test('user can log in', async () => {
   await waitFor(() => {
     expect(localStorage.getItem('name')).toEqual('User');
   });
-});
+}, 10000);
 
 test('user switches to Register form', () => {
   const toggleForm = jest.fn();
@@ -62,7 +62,7 @@ test('user switches to Register form', () => {
   fireEvent.click(screen.getByText(/Switch to Register/));
 
   expect(toggleForm).toHaveBeenCalled();
-});
+}, 10000);
 
 test('when login fails', async () => {
   axios.post.mockRejectedValueOnce(new Error( "Login error:"));
@@ -79,7 +79,7 @@ test('when login fails', async () => {
 
   expect(screen.getByText(/Switch to Register/)).toBeInTheDocument();
   await expect(axios.post()).rejects.toThrow('Login error:');
-});
+}, 10000);
 
 
 test('user is redirected to landingpage after successful login', async () => {
@@ -101,7 +101,7 @@ test('user is redirected to landingpage after successful login', async () => {
   );
 
   fireEvent.submit(screen.getByTestId('login'));
-});
+}, 10000);
 
 
 

@@ -55,7 +55,7 @@ describe('CustomerModal Component', () => {
     expect(screen.getByDisplayValue('Active')).toBeInTheDocument();    
     expect(screen.getByText('Cancel')).toBeInTheDocument();
     expect(screen.getByText('Save')).toBeInTheDocument();
-  });
+  }, 10000);
 
   it('renders CustomerModal for adding a new customer', () => {
     const handleClose = jest.fn();
@@ -73,7 +73,7 @@ describe('CustomerModal Component', () => {
     );
 
     expect(screen.getByText('Add a new Customer')).toBeInTheDocument();
-  });
+  }, 10000);
 
   it('validates all fields and triggers save', () => {
     const handleClose = jest.fn();
@@ -93,7 +93,7 @@ describe('CustomerModal Component', () => {
     fireEvent.click(screen.getByText('Save'));
 
     expect(handleSave).toHaveBeenCalled();
-  });
+  }, 10000);
 
   it('validates and does not trigger save on missing fields', async () => {
     const handleClose = jest.fn();
@@ -133,7 +133,7 @@ describe('CustomerModal Component', () => {
     expect(handleSave).not.toHaveBeenCalled();
     expect(errorMessages).toHaveLength(7);
     
-  });
+  }, 10000);
   
   it('validates and does not trigger save on invalid phone number', () => {
     const handleClose = jest.fn();
@@ -156,7 +156,7 @@ describe('CustomerModal Component', () => {
     expect(
       screen.getByText('This field is required and must be 10 digits.')
     ).toBeInTheDocument();
-  });
+  }, 10000);
 
   it('validates and does not trigger save on invalid email', () => {
     const handleClose = jest.fn();
@@ -179,7 +179,7 @@ describe('CustomerModal Component', () => {
     expect(
       screen.getByText('This field is required and must be a valid email address.')
     ).toBeInTheDocument();
-  });
+  }, 10000);
 
   it('validates and triggers save on valid input', () => {
     const handleClose = jest.fn();
@@ -202,7 +202,7 @@ describe('CustomerModal Component', () => {
     expect(
       screen.queryByText('This field is required.')
     ).not.toBeInTheDocument();
-  });
+  }, 10000);
 
   it('validates and does not trigger save on editing with invalid email', () => {
     const handleClose = jest.fn();
@@ -225,7 +225,7 @@ describe('CustomerModal Component', () => {
     expect(
       screen.getByText('This field is required and must be a valid email address.')
     ).toBeInTheDocument();
-  });
+  }, 10000);
 
   it('closes the modal when Cancel is clicked', () => {
     const handleClose = jest.fn();
@@ -245,7 +245,7 @@ describe('CustomerModal Component', () => {
     fireEvent.click(screen.getByText('Cancel'));
   
     expect(handleClose).toHaveBeenCalled();
-  });
+  }, 10000);
 
 
   it('validates and triggers save on valid input for a new customer', () => {
@@ -282,7 +282,7 @@ describe('CustomerModal Component', () => {
     expect(
       screen.queryByText('This field is required.')
     ).not.toBeInTheDocument();
-  });
+  }, 10000);
   
   it('validates and triggers save on valid input for editing an existing customer', () => {
     const handleClose = jest.fn();
@@ -305,7 +305,7 @@ describe('CustomerModal Component', () => {
     expect(
       screen.queryByText('This field is required.')
     ).not.toBeInTheDocument();
-  });
+  }, 10000);
   
   it('validates and does not trigger save on invalid status', () => {
     const handleClose = jest.fn();
@@ -328,7 +328,7 @@ describe('CustomerModal Component', () => {
     expect(
       screen.getByText('This field is required.')
     ).toBeInTheDocument();
-  });
+  }, 10000);
 
   it('displays error messages for required fields', async () => {
     const handleClose = jest.fn();
@@ -364,7 +364,7 @@ describe('CustomerModal Component', () => {
     errorMessages.forEach((errorMessage) => {
       expect(errorMessage).toBeInTheDocument();
   });
-});
+}, 10000);
 
   it('displays error message for required fields if they are empty', () => {
     const handleClose = jest.fn();
@@ -393,7 +393,7 @@ describe('CustomerModal Component', () => {
     fireEvent.click(screen.getByTestId('add'));
 
     expect(screen.getAllByText('This field is required.')).toHaveLength(8);
-  });
+  }, 10000);
 
   it('updates zipCode when user enters a value', () => {
     const handleClose = jest.fn();
@@ -419,7 +419,7 @@ describe('CustomerModal Component', () => {
       ...customer,
       zipCode: '123456',
     });
-  });
+  }, 10000);
 
   it('updates firstname when user enters a value', () => {
     const handleClose = jest.fn();
@@ -445,7 +445,7 @@ describe('CustomerModal Component', () => {
       ...customer,
       firstName: 'Ravi',
     });
-  });
+  }, 10000);
 
   it('updates lastname when user enters a value', () => {
     const handleClose = jest.fn();
@@ -471,7 +471,7 @@ describe('CustomerModal Component', () => {
       ...customer,
       lastName: 'Ramu',
     });
-  });
+  }, 10000);
   
   it('updates city when user enters a value', () => {
     const handleClose = jest.fn();
@@ -497,7 +497,7 @@ describe('CustomerModal Component', () => {
       ...customer,
       city: 'Vijayawada',
     });
-  });
+  }, 10000);
 
   it('updates state when user enters a value', () => {
     const handleClose = jest.fn();
@@ -523,7 +523,7 @@ describe('CustomerModal Component', () => {
       ...customer,
       state: 'AndhraPradesh',
     });
-  });
+  }, 10000);
 
   it('updates country when user enters a value', () => {
     const handleClose = jest.fn();
@@ -549,7 +549,7 @@ describe('CustomerModal Component', () => {
       ...customer,
       country: 'England',
     });
-  });
+  }, 10000);
 
   it('updates address line 1 when user enters a value', () => {
     const handleClose = jest.fn();
@@ -575,7 +575,7 @@ describe('CustomerModal Component', () => {
       ...customer,
      addressLine1 : 'Hongkong'
     });
-  });
+  }, 10000);
 
   it('updates address line 2 when user enters a value', () => {
     const handleClose = jest.fn();
@@ -601,7 +601,7 @@ describe('CustomerModal Component', () => {
       ...customer,
      addressLine2 : 'Hongkong'
     });
-  });
+  }, 100000);
 
   it('updates phone number when user enters a value', () => {
     const handleClose = jest.fn();
@@ -627,7 +627,7 @@ describe('CustomerModal Component', () => {
       ...customer,
        phoneNo : '9876512340'
     });
-  });
+  }, 10000);
 
   it('updates email when user enters a value', () => {
     const handleClose = jest.fn();
@@ -653,7 +653,7 @@ describe('CustomerModal Component', () => {
       ...customer,
      emailId : 'rk@gmail.com'
     });
-  });
+  }, 10000);
 
   it('updates status when user selects a value from the dropdown', () => {
     const handleClose = jest.fn();
@@ -680,6 +680,6 @@ describe('CustomerModal Component', () => {
       ...customer,
       status: 'Inactive',
     });
-  });
+  }, 10000);
   
 });

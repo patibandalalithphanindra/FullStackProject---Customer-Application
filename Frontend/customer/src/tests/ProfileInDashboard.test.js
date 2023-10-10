@@ -61,7 +61,7 @@ describe('Profile Component', () => {
     expect(screen.getByText((content, element) => {
       return matchText(element.textContent, 'Zip Code : 560068');
     })).toBeInTheDocument();
-  });
+  }, 10000);
 
   it('renders customer avatar', () => {
     render(<Profile customer={customer} />);

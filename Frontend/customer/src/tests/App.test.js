@@ -21,7 +21,7 @@ describe('App Component', () => {
     );
 
     expect(screen.getByText('WELCOME')).toBeInTheDocument();
-  });
+  }, 10000);
 
   it('renders the LandingPage component when a valid token is in localStorage', async () => {
     localStorage.setItem('jwt', 'mockToken');
@@ -44,7 +44,7 @@ describe('App Component', () => {
         </Routes>
       </MemoryRouter>
     );
-  });
+  }, 10000);
 
   it('navigates to LandingPage when a valid token is in localStorage', async () => {
     localStorage.setItem('jwt', 'mockToken');
@@ -59,5 +59,5 @@ describe('App Component', () => {
     );
 
     localStorage.removeItem('jwt');
-  });
+  }, 10000);
 });

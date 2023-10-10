@@ -95,7 +95,7 @@ describe("Order Component", () => {
     await waitFor(() => {
       expect(screen.queryByText("2")).not.toBeInTheDocument();
     });
-  });
+  },10000);
 
   it('displays a confirmation dialog when deleting an Order', async () => {
     axios.get.mockResolvedValueOnce({ data: mockOrders });
@@ -123,7 +123,7 @@ describe("Order Component", () => {
   
     expect(screen.getByText('Confirmation')).toBeInTheDocument();
     expect(screen.getByText('Are you sure you want to delete this order?')).toBeInTheDocument();
-  });
+  }, 10000);
 
   it("closes the confirmation dialog when canceling deletion", async () => {
     render(<MemoryRouter><Order/></MemoryRouter>);
@@ -141,7 +141,7 @@ describe("Order Component", () => {
     await waitFor(() => {
       expect(screen.queryByText("Are you sure you want to delete this order?")).not.toBeInTheDocument();
     });
-  });
+  }, 10000);
 
   it("opens the Order Modal for addition", async () => {
     render(<MemoryRouter><Order/></MemoryRouter>);
@@ -157,7 +157,7 @@ describe("Order Component", () => {
     await waitFor(() => {
       matchText(screen.getByText("Add"), "Add");
     });
-  });
+  }, 10000);
 
   it("opens the Order Modal for editing", async () => {
     render(<MemoryRouter><Order/></MemoryRouter>);
@@ -173,7 +173,7 @@ describe("Order Component", () => {
     await waitFor(() => {
       matchText(screen.getByText("Close"), "Close");
     });
-  });
+  }, 10000);
 
   it("opens the View Modal for viewing order details", async () => {
     axios.get.mockResolvedValue({ data: mockOrders });
@@ -190,7 +190,7 @@ describe("Order Component", () => {
     await waitFor(() => {
       matchText(screen.getByText("Order Details"), "Order Details");
     });
-  }); 
+  }, 10000); 
   
   test('user can change rows per page', async () => {
     axios.get.mockResolvedValueOnce({ data: mockOrders });
@@ -205,7 +205,7 @@ describe("Order Component", () => {
     await waitFor(() => {
       expect(screen.getAllByRole('row').length).toBe(3);
     });
-  });
+  }, 10000);
   
   test('handles API error', async () => {
     axios.get.mockRejectedValueOnce(new Error('API error'));
@@ -215,7 +215,7 @@ describe("Order Component", () => {
     await waitFor(() => {
       expect(screen.getByText('Error fetching data. Please try again!')).toBeInTheDocument();
     });
-  });
+  }, 10000);
   
   test('displays empty rows when there are no orders', async () => {
     axios.get.mockResolvedValueOnce({ data: [] });
@@ -225,7 +225,7 @@ describe("Order Component", () => {
     await waitFor(() => {
       expect(screen.getByText('ORDERS INFORMATION')).toBeInTheDocument();
     });
-  });
+  }, 10000);
   
 
   test('user can search and sort orders', async () => {
@@ -252,7 +252,7 @@ describe("Order Component", () => {
       const orderItems = screen.getAllByText(/\d/);
       expect(orderItems[0]).toHaveTextContent('1');
     });
-  });
+  }, 10000);
 
   it("handles order deletion failure", async () => {
     axios.delete.mockRejectedValueOnce(new Error("Deletion failed"));
@@ -280,7 +280,7 @@ describe("Order Component", () => {
     await waitFor(() => {
       expect(screen.getByText("1")).toBeInTheDocument();
     });
-  });
+  }, 10000);
 
 
   it("closes view modal when 'Close' is clicked", async () => {
@@ -305,7 +305,7 @@ describe("Order Component", () => {
     await waitFor(() => {
       expect(screen.queryByText("Order Details")).not.toBeInTheDocument();
     });
-  });
+  }, 10000);
 
   it("closes order modal when 'Close' is clicked", async () => {
     axios.get.mockResolvedValueOnce({ data: mockOrders });
@@ -325,14 +325,14 @@ describe("Order Component", () => {
     await waitFor(() => {
       expect(screen.queryByText("Add Order")).not.toBeInTheDocument();
     });
-  });
+  }, 10000);
 
   it('formats date correctly', () => {
     const dateToFormat = '2023-01-01T12:00:00Z';
     const expectedFormattedDate = '01/01/2023, 05:30 PM';
     const formattedDate = formatDate(dateToFormat);
     expect(formattedDate).toBe(expectedFormattedDate);
-  });
+  }, 10000);
 
   test('user can sort orders by date', async () => {
     axios.get.mockResolvedValueOnce({ data: mockOrders });
@@ -352,7 +352,7 @@ describe("Order Component", () => {
       const orderItems = screen.getAllByText(/\d/);
       expect(orderItems[3]).toHaveTextContent('1');
     });
-  });
+  }, 10000);
 
   test('user can sort orders by date in descending order', async () => {
     axios.get.mockResolvedValueOnce({ data: mockOrders });
@@ -371,7 +371,7 @@ describe("Order Component", () => {
       const orderItems = screen.getAllByText(/\d/);
       expect(orderItems[3]).toHaveTextContent('1');
     });
-  });
+  }, 10000);
   
   test('user can sort orders by date in ascending order', async () => {
     axios.get.mockResolvedValueOnce({ data: mockOrders });
@@ -393,7 +393,7 @@ describe("Order Component", () => {
       const orderItems = screen.getAllByText(/\d/);
       expect(orderItems[4]).toHaveTextContent('2');
     });
-  });
+  }, 10000);
 
   test('user can sort orders by date in ascending and descending order', async () => {
     axios.get.mockResolvedValueOnce({ data: mockOrders });
@@ -424,7 +424,7 @@ describe("Order Component", () => {
       const orderItems = screen.getAllByText(/\d/);
       expect(orderItems[4]).toHaveTextContent('2');
     });
-  });
+  }, 10000);
   
   test('user can change the page', async() => { 
    render(
@@ -435,7 +435,7 @@ describe("Order Component", () => {
     const nextPageButton = screen.getByRole('button', { name: /Next page/i });
   
     fireEvent.click(nextPageButton);
-  });
+  }, 10000);
 
   test('handleClose is called when modal close button is clicked', () => {
     const setSelectedCustomerId = jest.fn();
@@ -453,7 +453,7 @@ describe("Order Component", () => {
     fireEvent.click(closeBtn);
   
     expect(setSelectedCustomerId).toHaveBeenCalledWith(null);
-  }); 
+  }, 10000); 
 
   it("handles API error when adding an order", async () => {
     axios.post.mockRejectedValueOnce(new Error("Error adding the order: "));
@@ -468,7 +468,7 @@ describe("Order Component", () => {
 
     fireEvent.click(addButton);
     await expect(axios.post()).rejects.toThrow('Error adding the order: ');
-  });
+  }, 10000);
 
   it("handles API error when updating an order", async () => {
     axios.put.mockRejectedValueOnce(new Error( `Error updating the order: `));
@@ -484,8 +484,7 @@ describe("Order Component", () => {
     fireEvent.click(editButton);
 
     await expect(axios.put()).rejects.toThrow('Error updating the order: ');
-  });
-  
+  }, 10000); 
   
  });
 

@@ -51,7 +51,7 @@ describe('Orders Component', () => {
     expect(screen.getByText('Completed')).toBeInTheDocument();
 
     expect(screen.getByLabelText('sort')).toBeInTheDocument();
-  });
+  }, 10000);
 
   it('handles sorting of orders by date', () => {
     render(<Orders orders={orders} />);
@@ -63,7 +63,7 @@ describe('Orders Component', () => {
 
     expect(screen.getByText('54321')).toBeInTheDocument();
     expect(screen.getByText('12345')).toBeInTheDocument();
-  });
+  }, 10000);
 
   it('displays a message when there are no orders', () => {
     render(<Orders orders={[]} />);

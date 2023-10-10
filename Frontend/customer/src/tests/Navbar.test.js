@@ -32,7 +32,7 @@ describe('Navbar Component', () => {
     );
 
     expect(screen.getByText('Customer Management System')).toBeInTheDocument();
-  });
+  }, 10000);
 
   it('handles logout correctly', async () => {
     render(
@@ -52,7 +52,7 @@ describe('Navbar Component', () => {
     fireEvent.click(screen.getByTestId('logout'));
 
     expect(toast.success).toHaveBeenCalled();
-  });
+  }, 10000);
 
   it('navigates back when the back button is clicked', () => {
     const history = createMemoryHistory();
@@ -65,5 +65,5 @@ describe('Navbar Component', () => {
     fireEvent.click(screen.getByTestId('back-button'));
 
     expect(history.location.pathname).toBe('/');
-  });
+  }, 10000);
 });

@@ -88,6 +88,7 @@ const OrderModal = ({
         const newItem = {
           itemId: selectedItem.itemId,
           itemName: selectedItem.itemName,
+          itemPrice: selectedItem.itemPrice,
           quantity: Number(quantity),
         };
         setOrderItemsD([...orderItemsD, newItem]);
@@ -210,7 +211,7 @@ const OrderModal = ({
                       >
                         {orderItemsMenu.map((item) => (
                           <MenuItem key={item.itemId} value={item}>
-                            {item.itemName}
+                              {`${item.itemName} - INR ${item.itemPrice}`} 
                           </MenuItem>
                         ))}
                       </Select>
@@ -252,6 +253,7 @@ const OrderModal = ({
                       <TableHead>
                         <TableRow>
                           <TableCell>Item Name</TableCell>
+                          <TableCell>Item Price</TableCell>
                           <TableCell>Item Quantity</TableCell>
                           <TableCell>Actions</TableCell>
                         </TableRow>
@@ -260,6 +262,7 @@ const OrderModal = ({
                         {orderItemsD.map((item) => (
                           <TableRow key={item.itemId}>
                             <TableCell>{item.itemName}</TableCell>
+                            <TableCell> {item.itemPrice} INR</TableCell>
                             <TableCell>{item.quantity}</TableCell>
                             <TableCell>
                               <IconButton

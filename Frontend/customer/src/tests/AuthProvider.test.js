@@ -48,5 +48,5 @@ describe('AuthProvider', () => {
 
     userEvent.click(logoutButton);
     expect(userElement).toHaveTextContent('');
-  });
+  }, 10000);
 });

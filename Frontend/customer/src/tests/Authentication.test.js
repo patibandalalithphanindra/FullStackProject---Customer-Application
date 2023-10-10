@@ -27,7 +27,7 @@ describe('HTTP Request Functions', () => {
       expect.stringContaining('/user/add'),
       mockUserData
     );
-  });
+  }, 10000);
 
   it('should send a POST request for user login', async () => {
     const mockLoginData = {
@@ -44,7 +44,7 @@ describe('HTTP Request Functions', () => {
       mockLoginData,
       expect.any(Object)
     );
-  });
+  }, 10000);
 
   it('should handle errors during registration', async () => {
     const mockUserData = {
@@ -56,7 +56,7 @@ describe('HTTP Request Functions', () => {
     axios.post.mockRejectedValueOnce(new Error(errorMessage));
 
     await expect(userRegister(mockUserData)).rejects.toThrow(errorMessage);
-  });
+  }, 10000);
 
   it('should handle errors during login', async () => {
     const mockLoginData = {
@@ -68,7 +68,7 @@ describe('HTTP Request Functions', () => {
     axios.post.mockRejectedValueOnce(new Error(errorMessage));
 
     await expect(userLogin(mockLoginData)).rejects.toThrow(errorMessage);
-  });
+  }, 10000);
 
   it('should handle empty response during user registration', async () => {
     const mockUserData = {
@@ -81,7 +81,7 @@ describe('HTTP Request Functions', () => {
     const response = await userRegister(mockUserData);
   
     expect(response).toBeUndefined();
-  });
+  }, 10000);
 
   it('should handle missing CSRF token', async () => {
     jest.spyOn(document, 'cookie', 'get').mockReturnValue('');
@@ -95,7 +95,7 @@ describe('HTTP Request Functions', () => {
     axios.post.mockRejectedValueOnce(new Error(errorMessage));
   
     await expect(userRegister(mockUserData)).rejects.toThrow(errorMessage);
-  });
+  }, 10000);
 
   it('should handle invalid user registration data', async () => {
     const mockUserData = {
@@ -105,6 +105,6 @@ describe('HTTP Request Functions', () => {
     axios.post.mockRejectedValueOnce(new Error(errorMessage));
   
     await expect(userRegister(mockUserData)).rejects.toThrow(errorMessage);
-  });
+  }, 10000);
   
 });

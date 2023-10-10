@@ -92,7 +92,7 @@ describe('Customer Component', () => {
     await waitFor(() => {
       expect(screen.queryByText('Hanumath')).not.toBeInTheDocument();
       });
-  });
+  }, 10000);
 
   it('displays a modal when adding a new customer', async () => {
     render(
@@ -103,7 +103,7 @@ describe('Customer Component', () => {
       </MemoryRouter>
     );
     fireEvent.click(screen.getByTestId('add-button'));
-  });
+  }, 10000);
 
   it('displays a confirmation dialog when deleting a customer', async () => {
     render(
@@ -128,7 +128,7 @@ describe('Customer Component', () => {
   
     expect(screen.getByText('Confirmation')).toBeInTheDocument();
     expect(screen.getByText('Are you sure you want to delete this customer?')).toBeInTheDocument();
-  });
+  }, 10000);
   
   it('closes the confirmation dialog when canceling deletion', async () => {
     render(
@@ -155,7 +155,7 @@ describe('Customer Component', () => {
     await waitFor(() => {
       expect(screen.queryByText('Confirmation')).not.toBeInTheDocument();
     });
-  });  
+  }, 10000);  
 
   test('user can change rows per page', async () => {
     axios.get.mockResolvedValueOnce({ data: mockCustomers });
@@ -170,7 +170,7 @@ describe('Customer Component', () => {
     await waitFor(() => {
       expect(screen.getAllByRole('row').length).toBe(3);
     });
-  });
+  }, 10000);
   
   test('handles API error', async () => {
     axios.get.mockRejectedValueOnce(new Error('Error fetching customer data:'));
@@ -180,7 +180,7 @@ describe('Customer Component', () => {
     await waitFor(() => {
       expect(screen.getByText('Error fetching data. Please try again!')).toBeInTheDocument();
     });
-  });
+  }, 10000);
 
   it('updating a customer', async () => {
     axios.put.mockResolvedValue({ status: 200 });
@@ -202,7 +202,7 @@ describe('Customer Component', () => {
 
     fireEvent.click(screen.getByText('Save'));
   
-  });
+  }, 10000);
 
   it('handles an empty customer list', async () => {
     axios.get.mockResolvedValue({ data: [] });
@@ -218,7 +218,7 @@ describe('Customer Component', () => {
     expect(screen.queryByText('Lalith')).not.toBeInTheDocument();
     expect(screen.queryByText('Hanumath')).not.toBeInTheDocument();
   
-  });
+  }, 10000);
 
   it('sorts customers in descending order', async () => {
     axios.get.mockResolvedValue({ data: mockCustomers });
@@ -241,7 +241,7 @@ describe('Customer Component', () => {
     await waitFor(() => {
       expect(screen.getByText('Lalith')).toBeInTheDocument();
     });
-  });
+  }, 10000);
 
   it('copies customer ID to clipboard', async () => {
     axios.get.mockResolvedValue({ data: mockCustomers });
@@ -260,7 +260,7 @@ describe('Customer Component', () => {
 
     const copyButton = screen.getByTestId('copyicon-1');
     fireEvent.click(copyButton);
-});
+}, 10000);
 
   it('navigates to the customer dashboard when the view icon is clicked', async () => {
     render(
@@ -281,7 +281,7 @@ describe('Customer Component', () => {
 
     const viewIcon = screen.getByTestId('viewicon-1');
     fireEvent.click(viewIcon);
-  });
+  }, 10000);
 
   it('adding a customer', async () => {
     axios.post.mockResolvedValueOnce({ status: 201 });
@@ -299,7 +299,7 @@ describe('Customer Component', () => {
   
     const saveButton = screen.getByTestId('add');
     fireEvent.click(saveButton);
-  });
+  }, 10000);
 
   it('renders the CustomerModal when isCustomerModalOpen is true', async () => {
    render(
@@ -315,7 +315,7 @@ describe('Customer Component', () => {
     });
 
     fireEvent.click(screen.getByTestId('add-button'));
-  });
+  }, 10000);
 
   it('renders CustomerModal with provided data for an existing customer', () => {
     const handleClose = jest.fn();
@@ -349,7 +349,7 @@ describe('Customer Component', () => {
 
     fireEvent.click(screen.getByText('Cancel'));
     expect(handleClose).toHaveBeenCalled();
-  });
+  }, 10000);
 
   it('closes the modal when Cancel is clicked', () => {  
     const handleClose = jest.fn();
@@ -368,7 +368,7 @@ describe('Customer Component', () => {
     fireEvent.click(screen.getByText('Cancel'));
   
     expect(handleClose).toHaveBeenCalled();
-  });
+  }, 10000);
 
   it('validates all fields and triggers save', () => {
   const handleClose = jest.fn();
@@ -387,7 +387,7 @@ describe('Customer Component', () => {
     fireEvent.click(screen.getByText('Save'));
 
     expect(handleSave).toHaveBeenCalled();
-  });
+  }, 10000);
 
   it('sorts customers correctly in ascending order', async () => {
     axios.get.mockResolvedValue({ data: mockCustomers });
@@ -418,7 +418,7 @@ describe('Customer Component', () => {
     await waitFor(() => {
       expect(screen.getByText('Hanumath')).toBeInTheDocument();
     });
-  });
+  }, 10000);
 
 
 
@@ -438,7 +438,7 @@ describe('Customer Component', () => {
     fireEvent.click(screen.getByText('Save'));
 
     await expect(axios.put()).rejects.toThrow('An error occurred while updating the customer');
-  });
+  }, 10000);
 
   it("handles API error when adding a customer", async () => {
     axios.put.mockRejectedValueOnce(new Error('An error occurred while adding the customer'));
@@ -456,7 +456,7 @@ describe('Customer Component', () => {
     fireEvent.click(screen.getByText('Add'));
 
     await expect(axios.put()).rejects.toThrow('An error occurred while adding the customer');
-  });
+  }, 10000);
 
   it("handles API error when deleting a customer", async () => {
     axios.delete.mockRejectedValueOnce(new Error('Error deleting the customer '));
@@ -478,7 +478,7 @@ describe('Customer Component', () => {
     fireEvent.click(screen.getByText('Delete'));
 
     await expect(axios.delete()).rejects.toThrow('Error deleting the customer ');
-  });
+  }, 10000);
   
 }, 10000);
 

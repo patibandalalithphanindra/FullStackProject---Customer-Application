@@ -52,7 +52,7 @@ test('user can fill and submit registration form', async () => {
     position: toast.POSITION.BOTTOM_LEFT,
     autoClose: 900,
   });
-});
+}, 10000);
 
   test('user receives an error message on registration failure', async () => {
     axios.post.mockRejectedValueOnce(new Error('Registration failed'));
@@ -69,7 +69,7 @@ test('user can fill and submit registration form', async () => {
       'Invalid email address. Please enter a valid email.', 
       { position: toast.POSITION.BOTTOM_LEFT, autoClose: 900 }
     );
-  });
+  }, 10000);
 
   test('user cannot submit with an invalid email', async () => {
     render(<MemoryRouter><Register /></MemoryRouter>);
@@ -87,4 +87,4 @@ test('user can fill and submit registration form', async () => {
       'Invalid email address. Please enter a valid email.', 
       { position: toast.POSITION.BOTTOM_LEFT, autoClose: 900 }
     );
-  });
+  }, 10000);

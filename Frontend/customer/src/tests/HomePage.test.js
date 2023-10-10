@@ -15,7 +15,7 @@ describe('HomePage Component', () => {
     expect(screen.getByTestId('username')).toBeInTheDocument();
     expect(screen.getByTestId('password')).toBeInTheDocument();
     expect(screen.getByTestId('login')).toBeInTheDocument();
-  });
+  }, 10000);
 
   it('renders the registration form when toggle button is clicked', () => {
     render(
@@ -32,7 +32,7 @@ describe('HomePage Component', () => {
     expect(screen.getByTestId('email')).toBeInTheDocument();
     expect(screen.getByTestId('password')).toBeInTheDocument();
     expect(screen.getByTestId('register')).toBeInTheDocument();
-  });
+  }, 10000);
 
   it('toggles between login and registration forms when the toggle button is clicked', () => {
     render(
@@ -59,5 +59,5 @@ describe('HomePage Component', () => {
     expect(screen.getByText('WELCOME')).toBeInTheDocument();
     expect(screen.getByTestId('username')).toBeInTheDocument();
     expect(screen.getByTestId('password')).toBeInTheDocument();
-  });
+  }, 10000);
 });

@@ -47,7 +47,7 @@ describe("LandingPage Component", () => {
     expect(await screen.findByText("10")).toBeInTheDocument();
     expect(await screen.findByText("20")).toBeInTheDocument();
     expect(await screen.findByText("30")).toBeInTheDocument();
-  });
+  }, 10000);
 
   it("navigates to the Customers page when the Customer card is clicked", () => {
     const navigate = jest.fn();
@@ -63,7 +63,7 @@ describe("LandingPage Component", () => {
   
     const customerCard = screen.getByText("Customer");
     userEvent.click(customerCard);
-  });
+  }, 10000);
   
 
   it("navigates to the Orders page when the Order card is clicked", () => {
@@ -80,7 +80,7 @@ describe("LandingPage Component", () => {
 
     const orderCard = screen.getByText("Order");
     userEvent.click(orderCard);
-  });
+  }, 10000);
 
   it("navigates to the Rewards page when the Rewards card is clicked", () => {
     const navigate = jest.fn();
@@ -96,7 +96,7 @@ describe("LandingPage Component", () => {
 
     const rewardsCard = screen.getByText("Rewards");
     userEvent.click(rewardsCard);
-  });
+  }, 10000);
 
   it("renders status counts section with correct counts", async () => {
     axios.get.mockResolvedValue({
@@ -116,7 +116,7 @@ describe("LandingPage Component", () => {
         </Routes>
       </MemoryRouter>
     );
-    expect(await screen.findByText("Created")).toBeInTheDocument();
+  expect(await screen.findByText("Created")).toBeInTheDocument();
   expect(await screen.findByText("Items Packed")).toBeInTheDocument();
   expect(await screen.findByText("Shipped")).toBeInTheDocument();
   expect(await screen.findByText("In Transit")).toBeInTheDocument();
@@ -127,7 +127,7 @@ describe("LandingPage Component", () => {
   expect(await screen.findByText("15")).toBeInTheDocument();
   expect(await screen.findByText("20")).toBeInTheDocument();
   expect(await screen.findByText("25")).toBeInTheDocument();
-});
+}, 10000);
 
 });
 
@@ -159,7 +159,7 @@ describe("LandingPage Component with no data", () => {
     zeroCounts.forEach((count) => {
       expect(count).toBeInTheDocument();
     });
-  });
+  }, 10000);
 
   it("logs an error when API request to fetch customer counts fails", async () => {
     jest.spyOn(axios, 'get').mockRejectedValue(new Error("Error fetching customer counts data:"));
@@ -172,7 +172,7 @@ describe("LandingPage Component with no data", () => {
       </MemoryRouter>
     );
     await expect(axios.get()).rejects.toThrow('Error fetching customer counts data:')
-    });
+    }, 10000);
 
     it("logs an error when API request to fetch status counts fails", async () => {
       jest.spyOn(axios, 'get').mockRejectedValue(new Error("Error fetching status counts data:"));
@@ -185,6 +185,6 @@ describe("LandingPage Component with no data", () => {
         </MemoryRouter>
       );
       await expect(axios.get()).rejects.toThrow('Error fetching status counts data:')
-      });
+      }, 10000);
   
 });

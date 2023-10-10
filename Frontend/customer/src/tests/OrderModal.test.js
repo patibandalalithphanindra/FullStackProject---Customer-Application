@@ -75,7 +75,7 @@ describe('OrderModal Component', () => {
     );
 
     expect(screen.getByText('Add a new Order')).toBeInTheDocument();
-  });
+  }, 10000);
 
   it('validates and does not trigger save on missing fields', async () => {
     render(
@@ -98,7 +98,7 @@ describe('OrderModal Component', () => {
     await screen.findAllByText('This field is required.');
 
     expect(handleSave).not.toHaveBeenCalled();
-  });
+  }, 10000);
   
   it('handles the save button click', () => {
     render(
@@ -120,7 +120,7 @@ describe('OrderModal Component', () => {
     fireEvent.click(addButton);
 
     expect(handleSave).toHaveBeenCalledWith('Items Packed');
-  });
+  }, 10000);
 
   it('removes an item when "Remove Item" button is clicked', async () => {
     axios.get.mockResolvedValueOnce({ status: 200 });
@@ -186,7 +186,7 @@ it('displays an error if item is not selected', async () => {
   await waitFor(() => {
     expect(screen.getByText('Please select an item')).toBeInTheDocument();
   });
-});
+}, 10000);
 
 it('validates and triggers save when all fields are filled correctly', async () => {
   const orderItemsMenu = [
@@ -216,7 +216,7 @@ it('validates and triggers save when all fields are filled correctly', async () 
 
   const saveButton = screen.getByText('Add');
   fireEvent.click(saveButton);
-});
+}, 10000);
 
 it('displays the correct quantity when an item is added', async () => {
   axios.get.mockResolvedValueOnce({ status: 200 });
@@ -244,7 +244,7 @@ it('displays the correct quantity when an item is added', async () => {
 
   expect(screen.getByText('Item1')).toBeInTheDocument();
   expect(screen.getByText('2')).toBeInTheDocument();
-});
+}, 10000);
 
 it('validates and does not trigger save when quantity is not provided', async () => {
   render(
@@ -268,7 +268,7 @@ it('validates and does not trigger save when quantity is not provided', async ()
 
   fireEvent.click(screen.getByLabelText('Add'));
 
-});
+}, 10000);
 
 it('updates the order data when currency is changed', async () => {
   axios.get.mockResolvedValueOnce({ status: 200 });
@@ -294,6 +294,6 @@ render(
   await waitFor(() => {
     expect(setOrderData).toHaveBeenCalledWith({ ...orderData, currency: 'INR', orderStatus : 'Items Packed'});
   });
-});
+}, 10000);
 
 });

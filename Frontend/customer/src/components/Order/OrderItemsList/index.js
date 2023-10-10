@@ -14,11 +14,12 @@ function OrderItemsList({ orderItems }) {
 
   return (
     <div style={{ marginTop: "8px" }}>
-      <Typography variant="p"><b>Ordered Items and quantities : </b></Typography>
+      <Typography variant="p"><b>Ordered Items Information : </b></Typography>
       <ul style={{ listStyle: "none", padding: 0 }}>
         {orderItems.map((item) => (
           <li key={item.itemId} style={listItemStyle} data-testid="order-item">
             <span>{item.itemName}</span>
+            <span>INR {item.itemPrice}</span>
             <span>Quantity: {item.quantity}</span>
           </li>
         ))}
