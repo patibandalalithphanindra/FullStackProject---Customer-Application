@@ -173,7 +173,7 @@ describe('Customer Component', () => {
   });
   
   test('handles API error', async () => {
-    axios.get.mockRejectedValueOnce(new Error('API error'));
+    axios.get.mockRejectedValueOnce(new Error('Error fetching customer data:'));
   
     render(<MemoryRouter><Customer/></MemoryRouter>);
   
@@ -346,6 +346,9 @@ describe('Customer Component', () => {
     expect(screen.getByDisplayValue('Active')).toBeInTheDocument();    
     expect(screen.getByText('Cancel')).toBeInTheDocument();
     expect(screen.getByText('Save')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByText('Cancel'));
+    expect(handleClose).toHaveBeenCalled();
   });
 
   it('closes the modal when Cancel is clicked', () => {  
