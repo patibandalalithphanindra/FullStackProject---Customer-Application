@@ -15,6 +15,10 @@ beforeAll(() => {
   jest.spyOn(console, 'debug').mockImplementation(() => {});
 });
 
+afterEach(() => {
+  localStorage.clear();
+});
+
 test('renders Login component', () => {
   render(<MemoryRouter><Login /></MemoryRouter>);
   const loginElement = screen.getByText(/Switch to Register/);
@@ -61,7 +65,7 @@ test('user switches to Register form', () => {
 });
 
 test('when login fails', async () => {
-  axios.post.mockRejectedValueOnce(new Error('Login failed'));
+  axios.post.mockRejectedValueOnce(new Error( "Login error:"));
 
   render(<MemoryRouter><Login /></MemoryRouter>);
 
@@ -74,7 +78,7 @@ test('when login fails', async () => {
   fireEvent.click(screen.getByTestId('login'));
 
   expect(screen.getByText(/Switch to Register/)).toBeInTheDocument();
-  await expect(axios.post()).rejects.toThrow('Login failed');
+  await expect(axios.post()).rejects.toThrow('Login error:');
 });
 
 
@@ -98,7 +102,6 @@ test('user is redirected to landingpage after successful login', async () => {
 
   fireEvent.submit(screen.getByTestId('login'));
 });
-
 
 
 

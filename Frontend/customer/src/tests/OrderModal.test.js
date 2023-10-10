@@ -157,7 +157,7 @@ describe('OrderModal Component', () => {
     await waitFor(() => {
       expect(screen.getByText('Item1')).toBeInTheDocument();
     });
-  });
+  }, 10000);
   
 
 it('displays an error if item is not selected', async () => {

@@ -226,3 +226,19 @@ it('logs an error when API request fails', async () => {
   consoleErrorSpy.mockRestore();
 }, 10000);
 
+it('changes page when user selects a different page', async () => {
+  axios.get.mockResolvedValueOnce({ data: mockRewardsData });
+
+  render(<MemoryRouter><Reward/></MemoryRouter>);
+
+  const rowsPerPageSelect = screen.getByLabelText(/Rows per page/i);
+  fireEvent.mouseDown(rowsPerPageSelect);
+  const option = screen.getByText('10'); 
+  fireEvent.click(option);
+
+  const nextPageButton = screen.getByRole('button', { name: /next page/i });
+  fireEvent.click(nextPageButton);
+
+}, 10000);
+
+
