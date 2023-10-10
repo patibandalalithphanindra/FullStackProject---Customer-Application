@@ -41,8 +41,8 @@ public class OrderItemTest {
 
     @Test
     public void testEqualsAndHashCode() {
-        OrderItem orderItem1 = new OrderItem("I123", "Test Item", 5);
-        OrderItem orderItem2 = new OrderItem("I123", "Test Item", 5);
+        OrderItem orderItem1 = new OrderItem("I123", "Test Item", 20.0, 5);
+        OrderItem orderItem2 = new OrderItem("I123", "Test Item",20.0, 5);
 
         assertTrue(orderItem1.equals(orderItem2));
         assertTrue(orderItem2.equals(orderItem1));
@@ -51,8 +51,8 @@ public class OrderItemTest {
 
     @Test
     public void testNotEquals() {
-        OrderItem orderItem1 = new OrderItem("I123", "Test Item", 5);
-        OrderItem orderItem2 = new OrderItem("I456", "Another Item", 3);
+        OrderItem orderItem1 = new OrderItem("I123", "Test Item",20.0, 5);
+        OrderItem orderItem2 = new OrderItem("I456", "Another Item",20.0, 3);
 
         assertFalse(orderItem1.equals(orderItem2));
         assertFalse(orderItem2.equals(orderItem1));
@@ -60,8 +60,8 @@ public class OrderItemTest {
 
     @Test
     public void testToString() {
-        OrderItem orderItem = new OrderItem("I123", "Test Item", 5);
-        String expected = "OrderItem(itemId=I123, itemName=Test Item, quantity=5)";
+        OrderItem orderItem = new OrderItem("I123", "Test Item",20.0, 5);
+        String expected = "OrderItem(itemId=I123, itemName=Test Item, itemPrice=20.0, quantity=5)";
         assertEquals(expected, orderItem.toString());
     }
 }

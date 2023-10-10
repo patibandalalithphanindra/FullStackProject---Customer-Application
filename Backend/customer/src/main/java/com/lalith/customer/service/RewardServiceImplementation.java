@@ -52,7 +52,7 @@ public class RewardServiceImplementation implements RewardService {
     }
 
     public Reward createRewardWithRedeem(String customerId, double orderTotal, String orderNo, double redeemedCoins) {
-        int rewardAmount = (int) Math.round(0.05 * orderTotal);
+        int rewardAmount = (int) Math.round(0.05 * (orderTotal-redeemedCoins));
 
         Reward reward = new Reward();
         reward.setCustomerId(customerId);
@@ -63,7 +63,6 @@ public class RewardServiceImplementation implements RewardService {
         reward.setRewardsDate(LocalDateTime.now());
         reward.setOrderNo(orderNo);
         rewardRepository.save(reward);
-
         return reward;
     }
 

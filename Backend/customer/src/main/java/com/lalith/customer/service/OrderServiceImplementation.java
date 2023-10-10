@@ -48,6 +48,10 @@ public class OrderServiceImplementation implements OrderService {
             orderItem.setItemId(itemData.getItemId());
             orderItem.setItemName(itemData.getItemName());
             orderItem.setQuantity(itemData.getQuantity());
+            Item item = itemService.getItem(itemData.getItemId());
+            if (item != null) {
+                orderItem.setItemPrice(item.getItemPrice());
+            }
             formattedOrderItems.add(orderItem);
         }
         return formattedOrderItems;
@@ -85,7 +89,7 @@ public class OrderServiceImplementation implements OrderService {
                 Item item = itemService.getItem(oItem.getItemId());
                 double itemTotalPrice = oItem.getQuantity() * item.getItemPrice();
                 orderTotal += itemTotalPrice;
-                orderItemDtos.add(new OrderItem(item.getItemId(), item.getItemName(), oItem.getQuantity()));
+                orderItemDtos.add(new OrderItem(item.getItemId(), item.getItemName(), item.getItemPrice(), oItem.getQuantity()));
             }
 
             Reward reward = rewardService.createReward(customerId, orderTotal, order.getOrderNo());
@@ -134,25 +138,15 @@ public class OrderServiceImplementation implements OrderService {
                 Item item = itemService.getItem(oItem.getItemId());
                 double itemTotalPrice = oItem.getQuantity() * item.getItemPrice();
                 orderTotal += itemTotalPrice;
-                orderItemDtos.add(new OrderItem(item.getItemId(), item.getItemName(), oItem.getQuantity()));
+                orderItemDtos.add(new OrderItem(item.getItemId(), item.getItemName(), item.getItemPrice(), oItem.getQuantity()));
             }
 
             double maxRedeemableAmount = Math.min(rewardCoins, orderTotal);
 
-            double grandTotal;
-
-            if (rewardCoins >= 1000 && orderTotal >= 1000) {
-                grandTotal = orderTotal - maxRedeemableAmount;
-            } else {
-                grandTotal = orderTotal;
-            }
-
-            double remainingRewards = rewardCoins - maxRedeemableAmount;
-
             order.setTotalItems(orderItemDtos.size());
             order.setOrderItems(orderItemDtos);
-            order.setOrderTotal(grandTotal);
-            order.setReward(rewardService.createRewardWithRedeem(customerId, grandTotal, orderNo, maxRedeemableAmount));
+            order.setOrderTotal(orderTotal);
+            order.setReward(rewardService.createRewardWithRedeem(customerId, orderTotal, orderNo, maxRedeemableAmount));
 
             order.setOrderDate(LocalDateTime.now());
             order.setLastModifiedTS(LocalDateTime.now());

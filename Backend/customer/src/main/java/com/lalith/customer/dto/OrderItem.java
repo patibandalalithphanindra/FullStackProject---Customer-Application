@@ -9,5 +9,6 @@ import lombok.*;
 public class OrderItem {
     private String itemId;
     private String itemName;
+    private double itemPrice;
     private int quantity;
 }
