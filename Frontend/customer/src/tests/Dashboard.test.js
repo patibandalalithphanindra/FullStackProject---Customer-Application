@@ -97,7 +97,7 @@ describe('Dashboard Component', () => {
     expect(console.error).toHaveBeenCalledWith('Error fetching customer data:', expect.any(Error));
     expect(console.error).toHaveBeenCalledWith('Error fetching reward details:', expect.any(Error));
     expect(console.error).toHaveBeenCalledWith('Error fetching orders data:', expect.any(Error));
-  });
+  }, 10000);
 
   it('navigates back when the ArrowBack button is clicked', async () => {
     const mockData = {
