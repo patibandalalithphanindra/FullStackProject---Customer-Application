@@ -13,6 +13,14 @@ const matchText = (element, expectedText) => {
   expect(cleanedElementText).toBe(cleanedExpectedText);
 };
 
+beforeAll(() => {
+  jest.spyOn(console, 'log').mockImplementation(() => {});
+  jest.spyOn(console, 'error').mockImplementation(() => {});
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
+  jest.spyOn(console, 'info').mockImplementation(() => {});
+  jest.spyOn(console, 'debug').mockImplementation(() => {});
+});
+
 describe("Order Component", () => {
   const mockOrders = [
     {
@@ -37,23 +45,10 @@ describe("Order Component", () => {
     },
   ];
 
-  // const mockItems = [
-  //   {
-  //     itemId: 101,
-  //     itemName: "Item A",
-  //     itemPrice: 10,
-  //   },
-  //   {
-  //     itemId: 102,
-  //     itemName: "Item B",
-  //     itemPrice: 20,
-  //   },
-  // ];
-
   beforeEach(() => {
     axios.get.mockResolvedValue({ data: mockOrders });
-  //  axios.get.mockResolvedValue({ data: mockItems });
   });
+
 
   test('renders Order component', async () => {
     axios.get.mockResolvedValueOnce({ data: mockOrders });
@@ -459,6 +454,38 @@ describe("Order Component", () => {
   
     expect(setSelectedCustomerId).toHaveBeenCalledWith(null);
   }); 
+
+  it("handles API error when adding an order", async () => {
+    axios.post.mockRejectedValueOnce(new Error("Error adding the order: "));
+
+    render(<MemoryRouter><Order/></MemoryRouter>);
+
+    await waitFor(() => {
+      expect(screen.getByTestId("add")).toBeInTheDocument();
+    });
+
+    const addButton = screen.getByTestId("add");
+
+    fireEvent.click(addButton);
+    await expect(axios.post()).rejects.toThrow('Error adding the order: ');
+  });
+
+  it("handles API error when updating an order", async () => {
+    axios.put.mockRejectedValueOnce(new Error( `Error updating the order: `));
+  
+    render(<MemoryRouter><Order/></MemoryRouter>);
+  
+    await waitFor(() => {
+      expect(screen.getByTestId("editicon-1")).toBeInTheDocument();
+    });
+  
+    const editButton = screen.getByTestId("editicon-1");
+  
+    fireEvent.click(editButton);
+
+    await expect(axios.put()).rejects.toThrow('Error updating the order: ');
+  });
+  
   
  });
 

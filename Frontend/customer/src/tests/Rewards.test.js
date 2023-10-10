@@ -6,6 +6,14 @@ import { MemoryRouter } from 'react-router-dom';
 
 jest.mock('axios');
 
+beforeAll(() => {
+  jest.spyOn(console, 'log').mockImplementation(() => {});
+  jest.spyOn(console, 'error').mockImplementation(() => {});
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
+  jest.spyOn(console, 'info').mockImplementation(() => {});
+  jest.spyOn(console, 'debug').mockImplementation(() => {});
+});
+
 const mockRewardsData = [
   {
     rewardsId: 1,

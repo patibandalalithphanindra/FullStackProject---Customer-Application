@@ -4,6 +4,14 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import App from '../App';
 import HomePage from '../components/HomePage';
 
+beforeAll(() => {
+  jest.spyOn(console, 'log').mockImplementation(() => {});
+  jest.spyOn(console, 'error').mockImplementation(() => {});
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
+  jest.spyOn(console, 'info').mockImplementation(() => {});
+  jest.spyOn(console, 'debug').mockImplementation(() => {});
+});
+
 describe('App Component', () => {
   it('renders the HomePage component by default', () => {
     render(

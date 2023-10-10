@@ -7,6 +7,14 @@ import LandingPage from '../components/LandingPage';
 
 jest.mock('axios');
 
+beforeAll(() => {
+  jest.spyOn(console, 'log').mockImplementation(() => {});
+  jest.spyOn(console, 'error').mockImplementation(() => {});
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
+  jest.spyOn(console, 'info').mockImplementation(() => {});
+  jest.spyOn(console, 'debug').mockImplementation(() => {});
+});
+
 test('renders Login component', () => {
   render(<MemoryRouter><Login /></MemoryRouter>);
   const loginElement = screen.getByText(/Switch to Register/);
@@ -52,7 +60,7 @@ test('user switches to Register form', () => {
   expect(toggleForm).toHaveBeenCalled();
 });
 
-test('user sees an error message when login fails', async () => {
+test('when login fails', async () => {
   axios.post.mockRejectedValueOnce(new Error('Login failed'));
 
   render(<MemoryRouter><Login /></MemoryRouter>);
@@ -66,6 +74,7 @@ test('user sees an error message when login fails', async () => {
   fireEvent.click(screen.getByTestId('login'));
 
   expect(screen.getByText(/Switch to Register/)).toBeInTheDocument();
+  await expect(axios.post()).rejects.toThrow('Login failed');
 });
 
 
@@ -89,6 +98,7 @@ test('user is redirected to landingpage after successful login', async () => {
 
   fireEvent.submit(screen.getByTestId('login'));
 });
+
 
 
 

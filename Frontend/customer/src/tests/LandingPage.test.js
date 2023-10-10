@@ -9,6 +9,14 @@ import { useNavigate } from "react-router-dom";
 
 jest.mock("axios");
 
+beforeAll(() => {
+  jest.spyOn(console, 'log').mockImplementation(() => {});
+  jest.spyOn(console, 'error').mockImplementation(() => {});
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
+  jest.spyOn(console, 'info').mockImplementation(() => {});
+  jest.spyOn(console, 'debug').mockImplementation(() => {});
+});
+
 jest.mock("react-router-dom", () => {
   const originalModule = jest.requireActual("react-router-dom");
   return {

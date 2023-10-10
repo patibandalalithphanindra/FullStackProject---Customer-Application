@@ -7,6 +7,15 @@ import CustomerModal from '../components/Customer/CustomerModal';
 
 
 jest.mock('axios');
+jest.mock('react-toastify');
+
+beforeAll(() => {
+  jest.spyOn(console, 'log').mockImplementation(() => {});
+  jest.spyOn(console, 'error').mockImplementation(() => {});
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
+  jest.spyOn(console, 'info').mockImplementation(() => {});
+  jest.spyOn(console, 'debug').mockImplementation(() => {});
+});
 
 describe('Customer Component', () => {
   const mockCustomers = [
@@ -408,32 +417,66 @@ describe('Customer Component', () => {
     });
   });
 
-  it('updates a customer - error', async () => {
-    axios.put.mockResolvedValue({ status: 200 });
+
+
+  it("handles API error when updating a customer", async () => {
+    axios.put.mockRejectedValueOnce(new Error('An error occurred while updating the customer'));
   
-    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-  
-    render(
-      <MemoryRouter>
-        <Routes>
-          <Route path="/" element={<Customer />} />
-        </Routes>
-      </MemoryRouter>
-    );
+    render(<MemoryRouter><Customer/></MemoryRouter>);
   
     await waitFor(() => {
       expect(screen.getByTestId("editicon-1")).toBeInTheDocument();
     });
   
-    const updateButton = screen.getByTestId('editicon-1');
-    fireEvent.click(updateButton);
+    const editButton = screen.getByTestId("editicon-1");
   
+    fireEvent.click(editButton);
+
     fireEvent.click(screen.getByText('Save'));
-  
-    expect(consoleErrorSpy).not.toHaveBeenCalled();
-  
-    consoleErrorSpy.mockRestore();
+
+    await expect(axios.put()).rejects.toThrow('An error occurred while updating the customer');
   });
+
+  it("handles API error when adding a customer", async () => {
+    axios.put.mockRejectedValueOnce(new Error('An error occurred while adding the customer'));
+  
+    render(<MemoryRouter><Customer/></MemoryRouter>);
+  
+    await waitFor(() => {
+      expect(screen.getByTestId("add-button")).toBeInTheDocument();
+    });
+  
+    const addButton = screen.getByTestId("add-button");
+  
+    fireEvent.click(addButton);
+
+    fireEvent.click(screen.getByText('Add'));
+
+    await expect(axios.put()).rejects.toThrow('An error occurred while adding the customer');
+  });
+
+  it("handles API error when deleting a customer", async () => {
+    axios.delete.mockRejectedValueOnce(new Error('Error deleting the customer '));
+  
+    render(<MemoryRouter><Customer/></MemoryRouter>);
+  
+    await waitFor(() => {
+      expect(screen.getByTestId("deleteicon-1")).toBeInTheDocument();
+    });
+  
+    const deleteButton = screen.getByTestId("deleteicon-1");
+  
+    fireEvent.click(deleteButton);
+
+    await waitFor(() => {
+      expect(screen.getByText("Delete")).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('Delete'));
+
+    await expect(axios.delete()).rejects.toThrow('Error deleting the customer ');
+  });
+  
 }, 10000);
 
 

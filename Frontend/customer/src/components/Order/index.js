@@ -360,6 +360,7 @@ function Order() {
                   </InputAdornment>
                 ),
               }}
+              data-testid="searchCustomerId"
             />
           </div>
           <Button

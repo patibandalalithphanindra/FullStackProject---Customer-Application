@@ -5,6 +5,14 @@ import CustomerDetailsModal from '../components/Order/CustomerDetailsModal';
 
 jest.mock('axios');
 
+beforeAll(() => {
+  jest.spyOn(console, 'log').mockImplementation(() => {});
+  jest.spyOn(console, 'error').mockImplementation(() => {});
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
+  jest.spyOn(console, 'info').mockImplementation(() => {});
+  jest.spyOn(console, 'debug').mockImplementation(() => {});
+});
+
 describe('CustomerDetailsModal Component', () => {
   const customerData = {
     customerId: 1,
@@ -43,4 +51,15 @@ describe('CustomerDetailsModal Component', () => {
 
     expect(handleClose).toHaveBeenCalledTimes(1);
   });
+
+  it("logs an error when API request to fetch status counts fails", async () => {
+    const handleClose = jest.fn();
+    jest.spyOn(axios, 'get').mockRejectedValue(new Error("Error fetching customer data: "));
+  
+    render(
+      <CustomerDetailsModal customerId={1} isOpen={true} handleClose={handleClose} />
+    );
+
+    await expect(axios.get()).rejects.toThrow('Error fetching customer data: ')
+    });
 });

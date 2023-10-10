@@ -3,6 +3,14 @@ import { userRegister, userLogin } from '../service/Authentication';
 
 jest.mock('axios');
 
+beforeAll(() => {
+  jest.spyOn(console, 'log').mockImplementation(() => {});
+  jest.spyOn(console, 'error').mockImplementation(() => {});
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
+  jest.spyOn(console, 'info').mockImplementation(() => {});
+  jest.spyOn(console, 'debug').mockImplementation(() => {});
+});
+
 describe('HTTP Request Functions', () => {
   it('should send a POST request for user registration', async () => {
     const mockUserData = {
