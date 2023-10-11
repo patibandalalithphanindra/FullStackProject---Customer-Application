@@ -58,6 +58,7 @@ function Customer() {
   const [sortedCustomers, setSortedCustomers] = useState([]);
   const [copiedCustomerId, setCopiedCustomerId] = useState(null);
   const [error, setError] = useState(null); 
+  const [redirectToOrders, setRedirectToOrders] = useState(false);
 
   const fetchCustomerData = () => {
     const response = localStorage.getItem('jwt');
@@ -81,6 +82,14 @@ function Customer() {
   useEffect(() => {
     fetchCustomerData();
   }, []);
+
+  useEffect(() => {
+    if (redirectToOrders) {
+      console.log(redirectToOrders, 'redirect')
+      navigate('/orders', { state: { redirectToOrders: true } });
+    }
+  }, [redirectToOrders, navigate]);
+  
 
   const handleView = async (customerId) => {
     navigate(`/dashboard/${customerId}`);
@@ -398,7 +407,7 @@ function Customer() {
                     text={customer.customerId}
                     onCopy={() => {
                       setCopiedCustomerId(customer.customerId);
-                      navigate('/orders');
+                      setRedirectToOrders(true); 
                     }}
                   >
                     <Button
@@ -454,7 +463,7 @@ function Customer() {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-    </>
+    </> 
   );
 }
 

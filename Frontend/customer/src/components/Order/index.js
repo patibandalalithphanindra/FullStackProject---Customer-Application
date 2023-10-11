@@ -32,6 +32,7 @@ import CustomerDetailsModal from "./CustomerDetailsModal";
 import OrderModal from "./OrderModal";
 import { ArrowDownward, ArrowUpward, Search } from "@mui/icons-material";
 import OrderItemsList from "./OrderItemsList";
+import { useLocation } from "react-router-dom";
 
 
 export const formatDate = (dateString) => {
@@ -47,6 +48,8 @@ export const formatDate = (dateString) => {
 };
 
 function Order() {
+  const location = useLocation();
+  const redirectToOrders = location.state ? location.state.redirectToOrders : false;
   const [orders, setOrders] = useState([]);
   const [searchCustomerId, setSearchCustomerId] = useState("");
   const [deleteOrderId, setDeleteOrderId] = useState(null);
@@ -90,13 +93,17 @@ function Order() {
   }
 
   useEffect(() => {
+    console.log("redirectToOrders:", redirectToOrders); 
     const response = localStorage.getItem("jwt");
     const headers = {
       Authorization: `Bearer ${response}`,
       "Content-Type": "application/json",
     };
    refetchOrders(headers);
-  }, []);
+   if (redirectToOrders) {
+    setIsOrderModalOpen(true);
+  }
+  }, [redirectToOrders]);
 
   const handleAddition = () => {
     setOrderModalData({
