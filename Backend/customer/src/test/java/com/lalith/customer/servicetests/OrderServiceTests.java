@@ -558,4 +558,36 @@ public class OrderServiceTests {
         assertEquals(1, statusCounts.get("Shipped").intValue());
     }
 
+    @Test
+    public void testGetOrdersCount() {
+        List<Order> orders = new ArrayList<>();
+        orders.add(createSampleOrder("ORDER123"));
+        orders.add(createSampleOrder("ORDER456"));
+
+        when(orderRepository.findAll()).thenReturn(orders);
+
+        int ordersCount = orderService.getOrdersCount();
+
+        assertEquals(orders.size(), ordersCount);
+    }
+
+    @Test
+    public void testGetOrderItemsByOrderNo() {
+        String orderNo = "ORDER123";
+        List<OrderItem> orderItems = new ArrayList<>();
+        orderItems.add(createSampleOrderItem("ITEM123"));
+
+        Order order = createSampleOrder(orderNo, orderItems);
+
+        when(orderRepository.findByOrderNo(orderNo)).thenReturn(order);
+
+        List<OrderItem> result = orderService.getOrderItemsByOrderNo(orderNo);
+
+        verify(orderRepository, times(1)).findByOrderNo(orderNo);
+
+        assertEquals(orderItems.size(), result.size());
+        assertEquals("ITEM123", result.get(0).getItemId());
+    }
+
+
 }
