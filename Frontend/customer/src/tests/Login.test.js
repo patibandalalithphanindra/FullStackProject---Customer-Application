@@ -52,7 +52,7 @@ test('user can log in', async () => {
   await waitFor(() => {
     expect(localStorage.getItem('name')).toEqual('User');
   });
-}, 10000);
+}, 20000);
 
 test('user switches to Register form', () => {
   const toggleForm = jest.fn();

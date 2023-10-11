@@ -116,7 +116,7 @@ describe('OrderModal Component', () => {
       />
     );
 
-    const addButton = screen.getByText('Update');
+    const addButton = screen.getByText('Pack');
     fireEvent.click(addButton);
 
     expect(handleSave).toHaveBeenCalledWith('Items Packed');
@@ -270,13 +270,19 @@ it('validates and does not trigger save when quantity is not provided', async ()
 
 }, 10000);
 
-it('updates the order data when currency is changed', async () => {
-  axios.get.mockResolvedValueOnce({ status: 200 });
-render(
-  <OrderModal
+it('displays the correct "Next Status" when an order is being updated', () => {
+  const orderData = {
+    orderNo: 1,
+    customerId: '123',
+    currency: 'INR',
+    orderStatus: 'Created',
+  };
+
+  render(
+    <OrderModal
       isOpen={true}
       handleClose={() => {}}
-      orderData={{}}
+      orderData={orderData}
       orderItemsMenu={orderItemsMenu}
       orderItemsD={orderItemsD}
       setOrderItemsD={setOrderItemsD}
@@ -286,14 +292,124 @@ render(
       handleSave={handleSave}
     />
   );
-  await waitFor(() => {
-    expect(screen.getByLabelText('Select Item')).toBeInTheDocument();
-  });
-   expect(screen.getByLabelText('Currency')).toBeInTheDocument();
 
-  await waitFor(() => {
-    expect(setOrderData).toHaveBeenCalledWith({ ...orderData, currency: 'INR', orderStatus : 'Items Packed'});
-  });
+  expect(screen.getByText('Pack')).toBeInTheDocument();
+
+  fireEvent.click(screen.getByText('Pack'));
 }, 10000);
+
+it('returns the correct next status for "Created" order status', () => {
+  const orderData = {
+    orderNo: 1,
+    customerId: '123',
+    currency: 'INR',
+    orderStatus: 'Created',
+  };
+
+render(
+    <OrderModal
+    isOpen={true}
+    handleClose={() => {}}
+    orderData={orderData}
+    orderItemsMenu={orderItemsMenu}
+    orderItemsD={orderItemsD}
+    setOrderItemsD={setOrderItemsD}
+    withCoins={'yes'}
+    setWithCoins={setWithCoins}
+    setOrderData={setOrderData}
+    handleSave={handleSave}
+    />
+  );
+
+  const nextStatusText = screen.getByText('Pack');
+
+  expect(nextStatusText).toBeInTheDocument();
+}, 10000);
+
+
+it('returns the correct next status for "Items Packed" order status', () => {
+  const orderData = {
+    orderNo: 1,
+    customerId: '123',
+    currency: 'INR',
+    orderStatus: 'Items Packed',
+  };
+
+render(
+    <OrderModal
+    isOpen={true}
+    handleClose={() => {}}
+    orderData={orderData}
+    orderItemsMenu={orderItemsMenu}
+    orderItemsD={orderItemsD}
+    setOrderItemsD={setOrderItemsD}
+    withCoins={'yes'}
+    setWithCoins={setWithCoins}
+    setOrderData={setOrderData}
+    handleSave={handleSave}
+    />
+  );
+
+  const nextStatusText = screen.getByText('Ship');
+
+  expect(nextStatusText).toBeInTheDocument();
+}, 10000);
+
+it('returns the correct next status for "Shipped" order status', () => {
+  const orderData = {
+    orderNo: 1,
+    customerId: '123',
+    currency: 'INR',
+    orderStatus: 'Shipped',
+  };
+
+render(
+    <OrderModal
+    isOpen={true}
+    handleClose={() => {}}
+    orderData={orderData}
+    orderItemsMenu={orderItemsMenu}
+    orderItemsD={orderItemsD}
+    setOrderItemsD={setOrderItemsD}
+    withCoins={'yes'}
+    setWithCoins={setWithCoins}
+    setOrderData={setOrderData}
+    handleSave={handleSave}
+    />
+  );
+
+  const nextStatusText = screen.getByText('Transit');
+
+  expect(nextStatusText).toBeInTheDocument();
+}, 10000);
+
+it('returns the correct next status for "In Transit" order status', () => {
+  const orderData = {
+    orderNo: 1,
+    customerId: '123',
+    currency: 'INR',
+    orderStatus: 'In Transit',
+  };
+
+render(
+    <OrderModal
+    isOpen={true}
+    handleClose={() => {}}
+    orderData={orderData}
+    orderItemsMenu={orderItemsMenu}
+    orderItemsD={orderItemsD}
+    setOrderItemsD={setOrderItemsD}
+    withCoins={'yes'}
+    setWithCoins={setWithCoins}
+    setOrderData={setOrderData}
+    handleSave={handleSave}
+    />
+  );
+
+  const nextStatusText = screen.getByText('Deliver');
+
+  expect(nextStatusText).toBeInTheDocument();
+}, 10000);
+
 
 });

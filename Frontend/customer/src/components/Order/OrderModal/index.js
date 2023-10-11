@@ -72,6 +72,31 @@ const OrderModal = ({
     }
   }, [isOpen, orderData]);
 
+  const getNextStatus = () => {
+    const currentStatusIndex = orderStatusStages.indexOf(orderData.orderStatus);
+    if (currentStatusIndex < orderStatusStages.length - 1) {
+      return orderStatusStages[currentStatusIndex + 1];
+    } else {
+      return orderData.orderStatus;
+    }
+  };
+
+  const getNextStatusText = () => {
+    const nextStatus = getNextStatus();
+    switch (nextStatus) {
+      case 'Items Packed':
+        return 'Pack';
+      case 'Shipped':
+        return 'Ship';
+      case 'In Transit':
+        return 'Transit';
+      case 'Delivered':
+        return 'Deliver';
+      default:
+        return 'Update';
+    }
+  };
+
   const addItemWithQuantity = () => {
     if (selectedItem && quantity > 0) {
       setItemDetailsValid(true);
@@ -303,7 +328,7 @@ const OrderModal = ({
             color="primary"
             variant="contained"
           >
-            {orderData.orderNo ? 'Update' : 'Add'}
+            {orderData.orderNo ? getNextStatusText() : 'Add'}
           </Button>
         ) : (
             null
