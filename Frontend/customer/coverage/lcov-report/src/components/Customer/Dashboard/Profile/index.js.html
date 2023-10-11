@@ -131,7 +131,12 @@
 <a name='L66'></a><a href='#L66'>66</a>
 <a name='L67'></a><a href='#L67'>67</a>
 <a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
@@ -199,9 +204,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
 import { Card, CardContent, Avatar, Typography, Grid } from '@mui/material';
 import styles from './styles.module.css';
+&nbsp;
 const Profile = ({ customer }) =&gt; {
   const {
     firstName,
@@ -222,43 +231,46 @@ const Profile = ({ customer }) =&gt; {
       &lt;CardContent&gt;
         &lt;Grid container spacing={2} alignItems="center"&gt;
           &lt;Grid item xs={2} marginLeft={2}&gt;
-            &lt;Avatar src={"https://www.pngitem.com/pimgs/m/62-625606_computer-icons-suit-image-avatar-clip-art-customer.png"}
-             alt="Customer Avatar" sx={{ width: 150, height: 150 }} /&gt;
+            &lt;Avatar
+              src="https://www.pngitem.com/pimgs/m/62-625606_computer-icons-suit-image-avatar-clip-art-customer.png"
+              alt="Customer Avatar"
+              sx={{ width: 150, height: 150 }}
+            /&gt;
           &lt;/Grid&gt;
           &lt;Grid item xs={5} className={styles.head}&gt;
-            &lt;Typography color="textPrimary" className={styles.profile}&gt;
-            &lt;b&gt; Name : &lt;/b&gt; {firstName} {lastName}
-            &lt;/Typography&gt;
-            &lt;Typography color="textPrimary" className={styles.profile}&gt;
-            &lt;b&gt; Mobile Number : &lt;/b&gt; {phoneNo}
-            &lt;/Typography&gt;
-            &lt;Typography color="textPrimary" className={styles.profile}&gt;
-            &lt;b&gt; Email Id : &lt;/b&gt;{emailId}
-            &lt;/Typography&gt;
-            &lt;Typography color="textPrimary" className={styles.profile}&gt;
-            &lt;b&gt; Status : &lt;/b&gt;{status}
-            &lt;/Typography&gt;
+            &lt;div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}&gt;
+              &lt;Typography color="textPrimary" className={styles.profile}&gt;
+                &lt;b&gt; Name : &lt;/b&gt; {firstName} {lastName}
+              &lt;/Typography&gt;
+              &lt;Typography color="textPrimary" className={styles.profile}&gt;
+                &lt;b&gt; Mobile Number : &lt;/b&gt; {phoneNo}
+              &lt;/Typography&gt;
+              &lt;Typography color="textPrimary" className={styles.profile}&gt;
+                &lt;b&gt; Email Id : &lt;/b&gt; {emailId}
+              &lt;/Typography&gt;
+              &lt;Typography color="textPrimary" className={styles.profile}&gt;
+                &lt;b&gt; Status : &lt;/b&gt; {status}
+              &lt;/Typography&gt;
+            &lt;/div&gt;
           &lt;/Grid&gt;
           &lt;Grid item xs={3}&gt;
-            &lt;Typography color="textPrimary" className={styles.address}&gt;
-              &lt;b&gt;Address : &lt;/b&gt; {addressLine1}, {addressLine2}
-            &lt;/Typography&gt;
-            &lt;br/&gt;
-            &lt;Typography color="textPrimary" className={styles.address}&gt;
-              &lt;b&gt;City : &lt;/b&gt; {city}
-            &lt;/Typography&gt;
-            &lt;br/&gt;
-            &lt;Typography color="textPrimary" className={styles.address}&gt;
-             &lt;b&gt; State : &lt;/b&gt; {state}
-            &lt;/Typography&gt;
-            &lt;br/&gt;
-            &lt;Typography color="textPrimary" className={styles.address}&gt;
-             &lt;b&gt;Country : &lt;/b&gt; {country}
-            &lt;/Typography&gt;
-            &lt;br/&gt;
-            &lt;Typography color="textPrimary" className={styles.address}&gt;
-             &lt;b&gt; Zip Code : &lt;/b&gt;{zipCode}
-            &lt;/Typography&gt;
+            &lt;div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}&gt;
+              &lt;Typography color="textPrimary" className={styles.address} style={{marginTop:'18px'}}&gt;
+                &lt;b&gt;Address : &lt;/b&gt; {addressLine1}, {addressLine2}
+              &lt;/Typography&gt;
+              &lt;Typography color="textPrimary" className={styles.address}&gt;
+                &lt;b&gt;City : &lt;/b&gt; {city}
+              &lt;/Typography&gt;
+              &lt;Typography color="textPrimary" className={styles.address}&gt;
+                &lt;b&gt; State : &lt;/b&gt; {state}
+              &lt;/Typography&gt;
+              &lt;Typography color="textPrimary" className={styles.address}&gt;
+                &lt;b&gt;Country : &lt;/b&gt; {country}
+              &lt;/Typography&gt;
+              &lt;Typography color="textPrimary" className={styles.address}&gt;
+                &lt;b&gt; Zip Code : &lt;/b&gt; {zipCode}
+              &lt;/Typography&gt;
+            &lt;/div&gt;
           &lt;/Grid&gt;
         &lt;/Grid&gt;
       &lt;/CardContent&gt;
@@ -274,7 +286,7 @@ export default Profile;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-11T04:40:30.010Z
+                at 2023-10-11T12:53:15.137Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>
