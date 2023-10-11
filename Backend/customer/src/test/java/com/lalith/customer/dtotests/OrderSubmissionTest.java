@@ -22,6 +22,7 @@ public class OrderSubmissionTest {
         OrderItem item1 = new OrderItem();
         item1.setItemId("I123");
         item1.setItemName("Test Item 1");
+        item1.setItemPrice(20.0);
         item1.setQuantity(2);
 
         orderItems.add(item1);
@@ -58,6 +59,7 @@ public class OrderSubmissionTest {
         OrderItem item1 = new OrderItem();
         item1.setItemId("I123");
         item1.setItemName("Test Item 1");
+        item1.setItemPrice(20.0);
         item1.setQuantity(2);
 
         orderItems.add(item1);

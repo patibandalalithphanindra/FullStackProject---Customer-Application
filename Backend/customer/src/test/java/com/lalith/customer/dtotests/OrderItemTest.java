@@ -26,6 +26,13 @@ public class OrderItemTest {
     }
 
     @Test
+    public void testItemPriceSetterGetter() {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItemPrice(20.0);
+        assertEquals(20.0, orderItem.getItemPrice());
+    }
+
+    @Test
     public void testItemNameSetterGetter() {
         OrderItem orderItem = new OrderItem();
         orderItem.setItemName("Another Item");

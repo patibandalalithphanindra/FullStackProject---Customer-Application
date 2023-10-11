@@ -2,6 +2,12 @@ package com.lalith.customer.ModelTests;
 
 import com.lalith.customer.model.Customer;
 import org.junit.jupiter.api.Test;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CustomerTest {
@@ -11,30 +17,31 @@ public class CustomerTest {
         Customer customer = new Customer();
         customer.setCustomerKey("C123");
         customer.setCustomerId("CUST001");
-        customer.setFirstName("John");
-        customer.setLastName("Doe");
+        customer.setFirstName("Lalith");
+        customer.setLastName("Phanindra");
         customer.setAddressLine1("123 Main St");
         customer.setAddressLine2("Apt 456");
-        customer.setCity("New York");
-        customer.setState("NY");
-        customer.setZipCode("10001");
-        customer.setCountry("USA");
-        customer.setPhoneNo("+1 123-456-7890");
-        customer.setEmailId("johndoe@example.com");
+        customer.setCity("Khammam");
+        customer.setState("Telangana");
+        customer.setZipCode("507002");
+        customer.setCountry("India");
+        customer.setPhoneNo("7891234550");
+        customer.setEmailId("plp@gmail.com");
         customer.setStatus("Active");
 
         assertEquals("C123", customer.getCustomerKey());
         assertEquals("CUST001", customer.getCustomerId());
-        assertEquals("John", customer.getFirstName());
-        assertEquals("Doe", customer.getLastName());
+        assertEquals("Lalith", customer.getFirstName());
+        assertEquals("Phanindra", customer.getLastName());
         assertEquals("123 Main St", customer.getAddressLine1());
         assertEquals("Apt 456", customer.getAddressLine2());
-        assertEquals("New York", customer.getCity());
-        assertEquals("NY", customer.getState());
-        assertEquals("10001", customer.getZipCode());
-        assertEquals("USA", customer.getCountry());
-        assertEquals("+1 123-456-7890", customer.getPhoneNo());
-        assertEquals("johndoe@example.com", customer.getEmailId());
+        assertEquals("Khammam", customer.getCity());
+        assertEquals("Telangana", customer.getState());
+        assertEquals("507002", customer.getZipCode());
+        assertEquals("India", customer.getCountry());
+        assertEquals("7891234550", customer.getPhoneNo());
+        assertEquals("plp@gmail.com", customer.getEmailId());
         assertEquals("Active", customer.getStatus());
     }
+
 }

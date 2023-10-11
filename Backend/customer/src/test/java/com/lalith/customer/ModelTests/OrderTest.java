@@ -33,11 +33,13 @@ public class OrderTest {
         OrderItem item1 = new OrderItem();
         item1.setItemId("I123");
         item1.setItemName("Test Item 1");
+        item1.setItemPrice(20.0);
         item1.setQuantity(2);
 
         OrderItem item2 = new OrderItem();
         item2.setItemId("I124");
         item2.setItemName("Test Item 2");
+        item2.setItemPrice(30.0);
         item2.setQuantity(3);
 
         orderItems.add(item1);
