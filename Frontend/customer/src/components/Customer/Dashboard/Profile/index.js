@@ -46,7 +46,7 @@ const Profile = ({ customer }) => {
           </Grid>
           <Grid item xs={3}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-              <Typography color="textPrimary" className={styles.address} style={{marginTop:'18px'}}>
+              <Typography color="textPrimary" className={styles.address} style={{marginTop:'26px'}}>
                 <b>Address : </b> {addressLine1}, {addressLine2}
               </Typography>
               <Typography color="textPrimary" className={styles.address}>
