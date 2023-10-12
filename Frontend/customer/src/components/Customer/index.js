@@ -85,7 +85,6 @@ function Customer() {
 
   useEffect(() => {
     if (redirectToOrders) {
-      console.log(redirectToOrders, 'redirect')
       navigate('/orders', { state: { redirectToOrders: true } });
     }
   }, [redirectToOrders, navigate]);
@@ -330,8 +329,8 @@ function Customer() {
       </div>
       <TableContainer component={Paper} className={styles.container}>
         <Table>
-          <TableHead>
-            <TableRow>
+          <TableHead style={{backgroundColor:'skyblue'}}>
+            <TableRow >
               <TableCell>
                 <b>Customer ID</b>
               </TableCell>

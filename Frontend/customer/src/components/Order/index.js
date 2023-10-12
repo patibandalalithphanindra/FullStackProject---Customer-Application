@@ -383,7 +383,7 @@ function Order() {
       </div>
       <TableContainer component={Paper} className={styles.container} data-testid="table">
         <Table>
-          <TableHead>
+          <TableHead style={{backgroundColor:'lightgreen'}}>
             <TableRow>
               <TableCell>
                 <b>Order No</b>
