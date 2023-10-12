@@ -38,7 +38,7 @@ describe("Order Component", () => {
       customerId: "456",
       orderDate: "2023-10-02T09:30:00Z",
       orderTotal: 150,
-      currency: "INR",
+      currency: "₹",
       orderStatus: "Delivered",
       totalItems : 2,
       lastModified : "2023-10-02T09:30:00Z"

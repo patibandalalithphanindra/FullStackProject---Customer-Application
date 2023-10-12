@@ -19,7 +19,7 @@ function OrderItemsList({ orderItems }) {
         {orderItems.map((item) => (
           <li key={item.itemId} style={listItemStyle} data-testid="order-item">
             <span>{item.itemName}</span>
-            <span>INR {item.itemPrice}</span>
+            <span>₹ {item.itemPrice}</span>
             <span>Quantity: {item.quantity}</span>
           </li>
         ))}

@@ -60,7 +60,7 @@ function Order() {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orderModalData, setOrderModalData] = useState({
     customerId: "",
-    currency: "INR",
+    currency: "₹",
     orderStatus: "Created",
   });
   const [page, setPage] = useState(0);
@@ -108,7 +108,7 @@ function Order() {
   const handleAddition = () => {
     setOrderModalData({
       customerId: "",
-      currency: "INR",
+      currency: "₹",
       orderStatus: "Created",
     });
 
@@ -224,7 +224,7 @@ function Order() {
     setIsOrderModalOpen(false);
     setOrderModalData({
       customerId: "",
-      currency: "INR",
+      currency: "₹",
       orderStatus: "Created",
     });
     setOrderItemsData([]);

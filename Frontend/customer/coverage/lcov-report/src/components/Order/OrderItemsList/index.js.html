@@ -146,7 +146,7 @@ function OrderItemsList({ orderItems }) {
         {orderItems.map((item) =&gt; (
           &lt;li key={item.itemId} style={listItemStyle} data-testid="order-item"&gt;
             &lt;span&gt;{item.itemName}&lt;/span&gt;
-            &lt;span&gt;INR {item.itemPrice}&lt;/span&gt;
+            &lt;span&gt;₹ {item.itemPrice}&lt;/span&gt;
             &lt;span&gt;Quantity: {item.quantity}&lt;/span&gt;
           &lt;/li&gt;
         ))}

@@ -947,7 +947,7 @@ const OrderModal = ({
                   onChange={<span class="fstat-no" title="function not covered" >(e</span>) =&gt; <span class="cstat-no" title="statement not covered" >setOrderData({ ...orderData, currency: e.target.value })}</span>
                   disabled={orderData.orderNo !== undefined}
                 &gt;
-                  &lt;MenuItem value="INR"&gt;INR&lt;/MenuItem&gt;
+                  &lt;MenuItem value="₹"&gt;₹&lt;/MenuItem&gt;
                 &lt;/Select&gt;
                 {!currencyValid &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;FormHelperText error&gt;This field is required.&lt;/FormHelperText&gt;}</span>
               &lt;/FormControl&gt;
@@ -983,7 +983,7 @@ const OrderModal = ({
                       &gt;
                         {orderItemsMenu.map((item) =&gt; (
                           &lt;MenuItem key={item.itemId} value={item}&gt;
-                              {`${item.itemName} - INR ${item.itemPrice}`} 
+                              {`${item.itemName} - ₹ ${item.itemPrice}`} 
                           &lt;/MenuItem&gt;
                         ))}
                       &lt;/Select&gt;
@@ -1034,7 +1034,7 @@ const OrderModal = ({
                         {orderItemsD.map((item) =&gt; (
                           &lt;TableRow key={item.itemId}&gt;
                             &lt;TableCell&gt;{item.itemName}&lt;/TableCell&gt;
-                            &lt;TableCell&gt;INR {item.itemPrice}&lt;/TableCell&gt;
+                            &lt;TableCell&gt;₹ {item.itemPrice}&lt;/TableCell&gt;
                             &lt;TableCell&gt;{item.quantity}&lt;/TableCell&gt;
                             &lt;TableCell&gt;
                               &lt;IconButton

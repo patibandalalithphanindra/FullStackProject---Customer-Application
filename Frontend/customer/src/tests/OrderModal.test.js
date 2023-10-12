@@ -17,7 +17,7 @@ describe('OrderModal Component', () => {
   const orderData = {
     orderNo: 1,
     customerId: '123',
-    currency: 'INR',
+    currency: '₹',
     orderStatus: 'Created',
   };
 
@@ -54,7 +54,7 @@ describe('OrderModal Component', () => {
 
     expect(screen.getByText('Edit an existing Order')).toBeInTheDocument();
     expect(screen.getByDisplayValue('123')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('INR')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('₹')).toBeInTheDocument();
     expect(screen.getByText('Created')).toBeInTheDocument();
   });
 
@@ -274,7 +274,7 @@ it('displays the correct "Next Status" when an order is being updated', () => {
   const orderData = {
     orderNo: 1,
     customerId: '123',
-    currency: 'INR',
+    currency: '₹',
     orderStatus: 'Created',
   };
 
@@ -302,7 +302,7 @@ it('returns the correct next status for "Created" order status', () => {
   const orderData = {
     orderNo: 1,
     customerId: '123',
-    currency: 'INR',
+    currency: '₹',
     orderStatus: 'Created',
   };
 
@@ -331,7 +331,7 @@ it('returns the correct next status for "Packed" order status', () => {
   const orderData = {
     orderNo: 1,
     customerId: '123',
-    currency: 'INR',
+    currency: '₹',
     orderStatus: 'Packed',
   };
 
@@ -359,7 +359,7 @@ it('returns the correct next status for "Shipped" order status', () => {
   const orderData = {
     orderNo: 1,
     customerId: '123',
-    currency: 'INR',
+    currency: '₹',
     orderStatus: 'Shipped',
   };
 
@@ -387,7 +387,7 @@ it('returns the correct next status for "In Transit" order status', () => {
   const orderData = {
     orderNo: 1,
     customerId: '123',
-    currency: 'INR',
+    currency: '₹',
     orderStatus: 'In Transit',
   };
 

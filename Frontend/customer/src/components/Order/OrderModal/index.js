@@ -200,7 +200,7 @@ const OrderModal = ({
                   onChange={(e) => setOrderData({ ...orderData, currency: e.target.value })}
                   disabled={orderData.orderNo !== undefined}
                 >
-                  <MenuItem value="INR">INR</MenuItem>
+                  <MenuItem value="₹">₹</MenuItem>
                 </Select>
                 {!currencyValid && <FormHelperText error>This field is required.</FormHelperText>}
               </FormControl>
@@ -236,7 +236,7 @@ const OrderModal = ({
                       >
                         {orderItemsMenu.map((item) => (
                           <MenuItem key={item.itemId} value={item}>
-                              {`${item.itemName} - INR ${item.itemPrice}`} 
+                              {`${item.itemName} - ₹ ${item.itemPrice}`} 
                           </MenuItem>
                         ))}
                       </Select>
@@ -287,7 +287,7 @@ const OrderModal = ({
                         {orderItemsD.map((item) => (
                           <TableRow key={item.itemId}>
                             <TableCell>{item.itemName}</TableCell>
-                            <TableCell>INR {item.itemPrice}</TableCell>
+                            <TableCell>₹ {item.itemPrice}</TableCell>
                             <TableCell>{item.quantity}</TableCell>
                             <TableCell>
                               <IconButton
