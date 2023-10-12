@@ -125,9 +125,9 @@ function LandingPage() {
                 <LocalMall color="primary" sx={{ fontSize: 60 }} />
                 &nbsp;
                 <div>
-                  <Typography variant="h6">Items Packed</Typography>
+                  <Typography variant="h6">Packed</Typography>
                   <Typography variant="subtitle1">
-                    {statusCounts?.["Items Packed"] || 0}
+                    {statusCounts?.["Packed"] || 0}
                   </Typography>
                 </div>
               </Box>

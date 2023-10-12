@@ -49,7 +49,7 @@ const OrderModal = ({
   const [quantityError, setQuantityError] = useState('');
   const [activeStep, setActiveStep] = useState(0);
 
-  const orderStatusStages = ["Created", "Items Packed", "Shipped", "In Transit", "Delivered"];
+  const orderStatusStages = ["Created", "Packed", "Shipped", "In Transit", "Delivered"];
 
   const resetState = () => {
     setCustomerIdValid(true);
@@ -84,7 +84,7 @@ const OrderModal = ({
   const getNextStatusText = () => {
     const nextStatus = getNextStatus();
     switch (nextStatus) {
-      case 'Items Packed':
+      case 'Packed':
         return 'Pack';
       case 'Shipped':
         return 'Ship';

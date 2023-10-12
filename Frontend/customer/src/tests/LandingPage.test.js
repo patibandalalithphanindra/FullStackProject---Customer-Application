@@ -102,7 +102,7 @@ describe("LandingPage Component", () => {
     axios.get.mockResolvedValue({
       data: {
         Created: 5,
-        "Items Packed": 10,
+        "Packed": 10,
         Shipped: 15,
         "In Transit": 20,
         Delivered: 25,
@@ -117,7 +117,7 @@ describe("LandingPage Component", () => {
       </MemoryRouter>
     );
   expect(await screen.findByText("Created")).toBeInTheDocument();
-  expect(await screen.findByText("Items Packed")).toBeInTheDocument();
+  expect(await screen.findByText("Packed")).toBeInTheDocument();
   expect(await screen.findByText("Shipped")).toBeInTheDocument();
   expect(await screen.findByText("In Transit")).toBeInTheDocument();
   expect(await screen.findByText("Delivered")).toBeInTheDocument();
@@ -150,7 +150,7 @@ describe("LandingPage Component with no data", () => {
       </MemoryRouter>
     );
     expect(await screen.findByText("Created")).toBeInTheDocument();
-    expect(await screen.findByText("Items Packed")).toBeInTheDocument();
+    expect(await screen.findByText("Packed")).toBeInTheDocument();
     expect(await screen.findByText("Shipped")).toBeInTheDocument();
     expect(await screen.findByText("In Transit")).toBeInTheDocument();
     expect(await screen.findByText("Delivered")).toBeInTheDocument();

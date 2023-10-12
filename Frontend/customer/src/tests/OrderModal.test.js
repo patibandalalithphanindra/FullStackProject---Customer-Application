@@ -119,7 +119,7 @@ describe('OrderModal Component', () => {
     const addButton = screen.getByText('Pack');
     fireEvent.click(addButton);
 
-    expect(handleSave).toHaveBeenCalledWith('Items Packed');
+    expect(handleSave).toHaveBeenCalledWith('Packed');
   }, 10000);
 
   it('removes an item when "Remove Item" button is clicked', async () => {
@@ -327,12 +327,12 @@ render(
 }, 10000);
 
 
-it('returns the correct next status for "Items Packed" order status', () => {
+it('returns the correct next status for "Packed" order status', () => {
   const orderData = {
     orderNo: 1,
     customerId: '123',
     currency: 'INR',
-    orderStatus: 'Items Packed',
+    orderStatus: 'Packed',
   };
 
 render(
