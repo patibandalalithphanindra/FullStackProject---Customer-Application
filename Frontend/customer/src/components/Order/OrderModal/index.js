@@ -287,7 +287,7 @@ const OrderModal = ({
                         {orderItemsD.map((item) => (
                           <TableRow key={item.itemId}>
                             <TableCell>{item.itemName}</TableCell>
-                            <TableCell> {item.itemPrice} INR</TableCell>
+                            <TableCell>INR {item.itemPrice}</TableCell>
                             <TableCell>{item.quantity}</TableCell>
                             <TableCell>
                               <IconButton
