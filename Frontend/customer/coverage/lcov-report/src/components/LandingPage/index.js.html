@@ -263,26 +263,9 @@
 <a name='L198'></a><a href='#L198'>198</a>
 <a name='L199'></a><a href='#L199'>199</a>
 <a name='L200'></a><a href='#L200'>200</a>
-<a name='L201'></a><a href='#L201'>201</a>
-<a name='L202'></a><a href='#L202'>202</a>
-<a name='L203'></a><a href='#L203'>203</a>
-<a name='L204'></a><a href='#L204'>204</a>
-<a name='L205'></a><a href='#L205'>205</a>
-<a name='L206'></a><a href='#L206'>206</a>
-<a name='L207'></a><a href='#L207'>207</a>
-<a name='L208'></a><a href='#L208'>208</a>
-<a name='L209'></a><a href='#L209'>209</a>
-<a name='L210'></a><a href='#L210'>210</a>
-<a name='L211'></a><a href='#L211'>211</a>
-<a name='L212'></a><a href='#L212'>212</a>
-<a name='L213'></a><a href='#L213'>213</a>
-<a name='L214'></a><a href='#L214'>214</a>
-<a name='L215'></a><a href='#L215'>215</a>
-<a name='L216'></a><a href='#L216'>216</a>
-<a name='L217'></a><a href='#L217'>217</a>
-<a name='L218'></a><a href='#L218'>218</a>
-<a name='L219'></a><a href='#L219'>219</a>
-<a name='L220'></a><a href='#L220'>220</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L201'></a><a href='#L201'>201</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -480,30 +463,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Grid, Paper, Box, Divider } from "@mui/material";
+import { Grid, Paper, Box } from "@mui/material";
 import {
   CheckCircleOutline,
   FlightTakeoff,
@@ -511,6 +473,8 @@ import {
   People,
   ShoppingCart,
   Star,
+  LocalMall,
+  DescriptionTwoTone
 } from "@mui/icons-material";
 import { Card, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -554,60 +518,126 @@ function LandingPage() {
   return (
     &lt;div className={styles.container}&gt;
       &lt;Navbar /&gt;
-      &lt;Paper
-        elevation={3}
-        sx={{
-          p: 2,
-          width: "300",
-          marginTop: "20px",
-          marginLeft: "200px",
-          marginRight: "200px",
-        }}&gt;
-        &lt;Grid align="center" container spacing={6}&gt;
-          &lt;Grid item xs={4}&gt;
-            &lt;Box display="flex" alignItems="center"&gt;
-              &lt;People sx={{ fontSize: 60 }} /&gt;
-              &amp;nbsp; &amp;nbsp;
-              &lt;div&gt;
-                &lt;Typography variant="h6"&gt;Customers Onboarded&lt;/Typography&gt;
-                &lt;Typography variant="subtitle1"&gt;{counts[0]} &lt;/Typography&gt;
-              &lt;/div&gt;
-            &lt;/Box&gt;
+      &lt;div&gt;
+        &lt;Paper
+          elevation={3}
+          sx={{
+            p: 2,
+            width: "300",
+            marginTop: "20px",
+            marginLeft: "200px",
+            marginRight: "200px",
+            backgroundColor: " #e0e0f4",
+          }}
+        &gt;
+          &lt;Grid align="center" container spacing={6}&gt;
+            &lt;Grid item xs={4}&gt;
+              &lt;Box display="flex" alignItems="center"&gt;
+                &lt;People sx={{ fontSize: 60 }} /&gt;
+                &amp;nbsp; &amp;nbsp;
+                &lt;div&gt;
+                  &lt;Typography variant="h6"&gt;Customers Onboarded&lt;/Typography&gt;
+                  &lt;Typography variant="subtitle1"&gt;{counts[0]} &lt;/Typography&gt;
+                &lt;/div&gt;
+              &lt;/Box&gt;
+            &lt;/Grid&gt;
+            &lt;Grid item xs={4}&gt;
+              &lt;Box display="flex" alignItems="center"&gt;
+                &lt;ShoppingCart color="primary" sx={{ fontSize: 60 }} /&gt;
+                &amp;nbsp;
+                &lt;div&gt;
+                  &lt;Typography variant="h6"&gt;Orders Placed&lt;/Typography&gt;
+                  &lt;Typography variant="subtitle1"&gt;{counts[1]} &lt;/Typography&gt;
+                &lt;/div&gt;
+              &lt;/Box&gt;
+            &lt;/Grid&gt;
+            &lt;Grid item xs={4}&gt;
+              &lt;Box display="flex" alignItems="center"&gt;
+                &lt;Star color="gold" sx={{ fontSize: 60 }} /&gt;
+                &amp;nbsp;
+                &lt;div&gt;
+                  &lt;Typography variant="h6"&gt;Rewards Issued&lt;/Typography&gt;
+                  &lt;Typography variant="subtitle1"&gt;{counts[2]} &lt;/Typography&gt;
+                &lt;/div&gt;
+              &lt;/Box&gt;
+            &lt;/Grid&gt;
           &lt;/Grid&gt;
-          &lt;Grid item xs={4}&gt;
-            &lt;Box display="flex" alignItems="center"&gt;
-              &lt;ShoppingCart color="primary" sx={{ fontSize: 60 }} /&gt;
-              &amp;nbsp;
-              &lt;div&gt;
-                &lt;Typography variant="h6"&gt;Orders Placed&lt;/Typography&gt;
-                &lt;Typography variant="subtitle1"&gt;{counts[1]} &lt;/Typography&gt;
-              &lt;/div&gt;
-            &lt;/Box&gt;
+        &lt;/Paper&gt;
+        &lt;Paper
+          elevation={3}
+          sx={{
+            p: 2,
+            width: "300",
+            marginTop: "20px",
+            marginLeft: "200px",
+            marginRight: "200px",
+            backgroundColor: "#c7ebd3",
+          }}
+        &gt;
+          &lt;Grid align="center" container spacing={6}&gt;
+            &lt;Grid item xs={4}&gt;
+              &lt;Box display="flex" alignItems="center"&gt;
+                &lt;DescriptionTwoTone color="primary" sx={{ fontSize: 60 }} /&gt;
+                &amp;nbsp;
+                &lt;div&gt;
+                  &lt;Typography variant="h6"&gt;Created&lt;/Typography&gt;
+                  &lt;Typography variant="subtitle1"&gt;{statusCounts?.Created || 0}&lt;/Typography&gt;
+                &lt;/div&gt;
+              &lt;/Box&gt;
+            &lt;/Grid&gt;
+            &lt;Grid item xs={4}&gt;
+              &lt;Box display="flex" alignItems="center"&gt;
+                &lt;LocalMall color="primary" sx={{ fontSize: 60 }} /&gt;
+                &amp;nbsp;
+                &lt;div&gt;
+                  &lt;Typography variant="h6"&gt;Items Packed&lt;/Typography&gt;
+                  &lt;Typography variant="subtitle1"&gt;
+                    {statusCounts?.["Items Packed"] || 0}
+                  &lt;/Typography&gt;
+                &lt;/div&gt;
+              &lt;/Box&gt;
+            &lt;/Grid&gt;
+            &lt;Grid item xs={4}&gt;
+              &lt;Box display="flex" alignItems="center"&gt;
+                &lt;FlightTakeoff color="secondary" sx={{ fontSize: 60 }} /&gt;
+                &amp;nbsp;
+                &lt;div&gt;
+                  &lt;Typography variant="h6"&gt;Shipped&lt;/Typography&gt;
+                  &lt;Typography variant="subtitle1"&gt;{statusCounts?.Shipped || 0}&lt;/Typography&gt;
+                &lt;/div&gt;
+              &lt;/Box&gt;
+            &lt;/Grid&gt;
+            &lt;Grid item xs={4}&gt;
+              &lt;Box display="flex" alignItems="center"&gt;
+                &lt;LocalShipping color="action" sx={{ fontSize: 60 }} /&gt;
+                &amp;nbsp;
+                &lt;div&gt;
+                  &lt;Typography variant="h6"&gt;In Transit&lt;/Typography&gt;
+                  &lt;Typography variant="subtitle1"&gt;
+                    {statusCounts?.["In Transit"] || 0}
+                  &lt;/Typography&gt;
+                &lt;/div&gt;
+              &lt;/Box&gt;
+            &lt;/Grid&gt;
+            &lt;Grid item xs={4}&gt;
+              &lt;Box display="flex" alignItems="center"&gt;
+                &lt;CheckCircleOutline color="success" sx={{ fontSize: 60 }} /&gt;
+                &amp;nbsp;
+                &lt;div&gt;
+                  &lt;Typography variant="h6"&gt;Delivered&lt;/Typography&gt;
+                  &lt;Typography variant="subtitle1"&gt;{statusCounts?.Delivered || 0}&lt;/Typography&gt;
+                &lt;/div&gt;
+              &lt;/Box&gt;
+            &lt;/Grid&gt;
           &lt;/Grid&gt;
-          &lt;Grid item xs={4}&gt;
-            &lt;Box display="flex" alignItems="center"&gt;
-              &lt;Star color="gold" sx={{ fontSize: 60 }} /&gt;
-              &amp;nbsp;
-              &lt;div&gt;
-                &lt;Typography variant="h6"&gt;Rewards Issued&lt;/Typography&gt;
-                &lt;Typography variant="subtitle1"&gt;{counts[2]} &lt;/Typography&gt;
-              &lt;/div&gt;
-            &lt;/Box&gt;
-          &lt;/Grid&gt;
-        &lt;/Grid&gt;
-        &lt;Divider sx={{ my: 2 }} /&gt;
-        &lt;Typography variant="body2" color="textPrimary"&gt;
-          &lt;b&gt;Welcome! Click on respective card to know more detailed info. &lt;/b&gt;
-        &lt;/Typography&gt;
-      &lt;/Paper&gt;
+        &lt;/Paper&gt;
+      &lt;/div&gt;
       &lt;div className={styles.cardContainer}&gt;
         &lt;Link to="/customers/" className={styles.cardLink}&gt;
           &lt;Card className={styles.card}&gt;
             &lt;div className={styles.cardContent}&gt;
               &lt;Typography variant="h5"&gt;Customer&lt;/Typography&gt;
-              &lt;Typography variant="body2"&gt;
-                Click here to view Customer information.
-              &lt;/Typography&gt;
+              &lt;Typography variant="body2"&gt;Click here to view Customer information.&lt;/Typography&gt;
             &lt;/div&gt;
           &lt;/Card&gt;
         &lt;/Link&gt;
@@ -615,9 +645,7 @@ function LandingPage() {
           &lt;Card className={styles.card}&gt;
             &lt;div className={styles.cardContent}&gt;
               &lt;Typography variant="h5"&gt;Order&lt;/Typography&gt;
-              &lt;Typography variant="body2"&gt;
-                Click here to view Order details.
-              &lt;/Typography&gt;
+              &lt;Typography variant="body2"&gt;Click here to view Order details.&lt;/Typography&gt;
             &lt;/div&gt;
           &lt;/Card&gt;
         &lt;/Link&gt;
@@ -625,96 +653,11 @@ function LandingPage() {
           &lt;Card className={styles.card}&gt;
             &lt;div className={styles.cardContent}&gt;
               &lt;Typography variant="h5"&gt;Rewards&lt;/Typography&gt;
-              &lt;Typography variant="body2"&gt;
-                Click here to check Rewards status.
-              &lt;/Typography&gt;
+              &lt;Typography variant="body2"&gt;Click here to check Rewards status.&lt;/Typography&gt;
             &lt;/div&gt;
           &lt;/Card&gt;
         &lt;/Link&gt;
       &lt;/div&gt;
-      &lt;Paper
-        elevation={3}
-        sx={{
-          p: 2,
-          width: "300",
-          marginTop: "20px",
-          marginLeft: "200px",
-          marginRight: "200px",
-        }}&gt;
-        &lt;Grid align="center" container spacing={6}&gt;
-          &lt;Grid item xs={4}&gt;
-            &lt;Box display="flex" alignItems="center"&gt;
-              &lt;Star color="gold" sx={{ fontSize: 60 }} /&gt;
-              &amp;nbsp;
-              &lt;div&gt;
-                &lt;Typography variant="h6"&gt;Created&lt;/Typography&gt;
-                &lt;Typography variant="subtitle1"&gt;
-                  {statusCounts?.Created || 0}
-                &lt;/Typography&gt;
-              &lt;/div&gt;
-            &lt;/Box&gt;
-          &lt;/Grid&gt;
-&nbsp;
-          &lt;Grid item xs={4}&gt;
-            &lt;Box display="flex" alignItems="center"&gt;
-              &lt;ShoppingCart color="primary" sx={{ fontSize: 60 }} /&gt;
-              &amp;nbsp;
-              &lt;div&gt;
-                &lt;Typography variant="h6"&gt;Items Packed&lt;/Typography&gt;
-                &lt;Typography variant="subtitle1"&gt;
-                  {statusCounts?.["Items Packed"] || 0}
-                &lt;/Typography&gt;
-              &lt;/div&gt;
-            &lt;/Box&gt;
-          &lt;/Grid&gt;
-&nbsp;
-          &lt;Grid item xs={4}&gt;
-            &lt;Box display="flex" alignItems="center"&gt;
-              &lt;FlightTakeoff color="secondary" sx={{ fontSize: 60 }} /&gt;
-              &amp;nbsp;
-              &lt;div&gt;
-                &lt;Typography variant="h6"&gt;Shipped&lt;/Typography&gt;
-                &lt;Typography variant="subtitle1"&gt;
-                  {statusCounts?.Shipped || 0}
-                &lt;/Typography&gt;
-              &lt;/div&gt;
-            &lt;/Box&gt;
-          &lt;/Grid&gt;
-&nbsp;
-          &lt;Grid item xs={4}&gt;
-            &lt;Box display="flex" alignItems="center"&gt;
-              &lt;LocalShipping color="action" sx={{ fontSize: 60 }} /&gt;
-              &amp;nbsp;
-              &lt;div&gt;
-                &lt;Typography variant="h6"&gt;In Transit&lt;/Typography&gt;
-                &lt;Typography variant="subtitle1"&gt;
-                  {statusCounts?.["In Transit"] || 0}
-                &lt;/Typography&gt;
-              &lt;/div&gt;
-            &lt;/Box&gt;
-          &lt;/Grid&gt;
-&nbsp;
-          &lt;Grid item xs={4}&gt;
-            &lt;Box display="flex" alignItems="center"&gt;
-              &lt;CheckCircleOutline color="success" sx={{ fontSize: 60 }} /&gt;
-              &amp;nbsp;
-              &lt;div&gt;
-                &lt;Typography variant="h6"&gt;Delivered&lt;/Typography&gt;
-                &lt;Typography variant="subtitle1"&gt;
-                  {statusCounts?.Delivered || 0}
-                &lt;/Typography&gt;
-              &lt;/div&gt;
-            &lt;/Box&gt;
-          &lt;/Grid&gt;
-        &lt;/Grid&gt;
-        &lt;Divider sx={{ my: 2 }} /&gt;
-        &lt;Typography variant="body2" color="textPrimary"&gt;
-          &lt;b&gt;
-            This represents the Status Information of Orders Placed by the
-            Customers
-          &lt;/b&gt;
-        &lt;/Typography&gt;
-      &lt;/Paper&gt;
     &lt;/div&gt;
   );
 }
@@ -727,7 +670,7 @@ export default LandingPage;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-12T05:12:39.772Z
+                at 2023-10-12T08:37:03.635Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
