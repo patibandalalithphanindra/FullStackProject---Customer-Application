@@ -329,7 +329,7 @@ function Customer() {
       </div>
       <TableContainer component={Paper} className={styles.container}>
         <Table>
-          <TableHead style={{backgroundColor:'skyblue'}}>
+          <TableHead style={{backgroundColor:'lightgray'}}>
             <TableRow >
               <TableCell>
                 <b>Customer ID</b>
