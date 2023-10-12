@@ -79,7 +79,7 @@ function LandingPage() {
             <Grid item xs={4}>
               <Box display="flex" alignItems="center">
                 <ShoppingCart color="primary" sx={{ fontSize: 60 }} />
-                &nbsp;
+                &nbsp; &nbsp;
                 <div>
                   <Typography variant="h6">Orders Placed</Typography>
                   <Typography variant="subtitle1">{counts[1]} </Typography>
@@ -89,7 +89,7 @@ function LandingPage() {
             <Grid item xs={4}>
               <Box display="flex" alignItems="center">
                 <Star color="gold" sx={{ fontSize: 60 }} />
-                &nbsp;
+                &nbsp; &nbsp;
                 <div>
                   <Typography variant="h6">Rewards Issued</Typography>
                   <Typography variant="subtitle1">{counts[2]} </Typography>
@@ -113,7 +113,7 @@ function LandingPage() {
             <Grid item xs={4}>
               <Box display="flex" alignItems="center">
                 <DescriptionTwoTone color="primary" sx={{ fontSize: 60 }} />
-                &nbsp;
+                &nbsp; &nbsp;
                 <div>
                   <Typography variant="h6">Created</Typography>
                   <Typography variant="subtitle1">{statusCounts?.Created || 0}</Typography>
@@ -123,7 +123,7 @@ function LandingPage() {
             <Grid item xs={4}>
               <Box display="flex" alignItems="center">
                 <LocalMall color="primary" sx={{ fontSize: 60 }} />
-                &nbsp;
+                &nbsp; &nbsp;
                 <div>
                   <Typography variant="h6">Packed</Typography>
                   <Typography variant="subtitle1">
@@ -135,7 +135,7 @@ function LandingPage() {
             <Grid item xs={4}>
               <Box display="flex" alignItems="center">
                 <FlightTakeoff color="secondary" sx={{ fontSize: 60 }} />
-                &nbsp;
+                &nbsp; &nbsp;
                 <div>
                   <Typography variant="h6">Shipped</Typography>
                   <Typography variant="subtitle1">{statusCounts?.Shipped || 0}</Typography>
@@ -145,7 +145,7 @@ function LandingPage() {
             <Grid item xs={4}>
               <Box display="flex" alignItems="center">
                 <LocalShipping color="action" sx={{ fontSize: 60 }} />
-                &nbsp;
+                &nbsp; &nbsp;
                 <div>
                   <Typography variant="h6">In Transit</Typography>
                   <Typography variant="subtitle1">
@@ -157,7 +157,7 @@ function LandingPage() {
             <Grid item xs={4}>
               <Box display="flex" alignItems="center">
                 <CheckCircleOutline color="success" sx={{ fontSize: 60 }} />
-                &nbsp;
+                &nbsp; &nbsp;
                 <div>
                   <Typography variant="h6">Delivered</Typography>
                   <Typography variant="subtitle1">{statusCounts?.Delivered || 0}</Typography>
