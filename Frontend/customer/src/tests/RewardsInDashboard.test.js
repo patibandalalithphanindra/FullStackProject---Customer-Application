@@ -24,13 +24,13 @@ describe('Rewards Component', () => {
   it('renders SVG icons', () => {
     render(<Rewards id="1" />);
 
-    const monetizationOnIcon = screen.getByTestId('MonetizationOnIcon');
+    const monetizationOnIcon = screen.getByTestId('earned');
     expect(monetizationOnIcon).toBeInTheDocument();
 
-    const moneyOffIcon = screen.getByTestId('MoneyOffIcon');
+    const moneyOffIcon = screen.getByTestId('redeemed');
     expect(moneyOffIcon).toBeInTheDocument();
 
-    const attachMoneyIcon = screen.getByTestId('AttachMoneyIcon');
+    const attachMoneyIcon = screen.getByTestId('balance');
     expect(attachMoneyIcon).toBeInTheDocument();
   }, 10000);
 
