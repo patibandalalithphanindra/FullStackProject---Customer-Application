@@ -109,7 +109,7 @@ const Rewards = ({ id }) => {
         <Grid item xs={4}>
           <Box display="flex" alignItems="center">
             <RedeemedCoinsIcon />
-            &nbsp;
+            &nbsp; &nbsp;
             <div>
               <Typography variant="h6">Redeemed Coins</Typography>
               <Typography variant="subtitle1">
@@ -121,7 +121,7 @@ const Rewards = ({ id }) => {
         <Grid item xs={4}>
           <Box display="flex" alignItems="center">
             <BalanceCoinsIcon />
-            &nbsp;
+            &nbsp; &nbsp;
             <div>
               <Typography variant="h6">Balance Coins</Typography>
               <Typography variant="subtitle1">
