@@ -8,6 +8,8 @@ import {
   People,
   ShoppingCart,
   Star,
+  LocalMall,
+  DescriptionTwoTone
 } from "@mui/icons-material";
 import { Card, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -141,7 +143,7 @@ function LandingPage() {
         <Grid align="center" container spacing={6}>
           <Grid item xs={4}>
             <Box display="flex" alignItems="center">
-              <Star color="gold" sx={{ fontSize: 60 }} />
+            <DescriptionTwoTone color="primary" sx={{ fontSize: 60 }} /> 
               &nbsp;
               <div>
                 <Typography variant="h6">Created</Typography>
@@ -154,7 +156,7 @@ function LandingPage() {
 
           <Grid item xs={4}>
             <Box display="flex" alignItems="center">
-              <ShoppingCart color="primary" sx={{ fontSize: 60 }} />
+            <LocalMall color="primary" sx={{ fontSize: 60 }} />
               &nbsp;
               <div>
                 <Typography variant="h6">Items Packed</Typography>
