@@ -518,8 +518,8 @@ function Order() {
                 </div>
                 <div>
                   <Typography variant="body1">
-                    <b>Total Order Amount : </b> {selectedOrder.orderTotal}{" "}
-                    {selectedOrder.currency}
+                    <b>Total Order Amount : </b> {selectedOrder.currency} {selectedOrder.orderTotal}
+                   
                   </Typography>
                 </div>
                 <div>
