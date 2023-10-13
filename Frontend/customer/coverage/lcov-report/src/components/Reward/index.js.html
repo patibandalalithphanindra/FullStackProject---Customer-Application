@@ -271,7 +271,32 @@
 <a name='L206'></a><a href='#L206'>206</a>
 <a name='L207'></a><a href='#L207'>207</a>
 <a name='L208'></a><a href='#L208'>208</a>
-<a name='L209'></a><a href='#L209'>209</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L209'></a><a href='#L209'>209</a>
+<a name='L210'></a><a href='#L210'>210</a>
+<a name='L211'></a><a href='#L211'>211</a>
+<a name='L212'></a><a href='#L212'>212</a>
+<a name='L213'></a><a href='#L213'>213</a>
+<a name='L214'></a><a href='#L214'>214</a>
+<a name='L215'></a><a href='#L215'>215</a>
+<a name='L216'></a><a href='#L216'>216</a>
+<a name='L217'></a><a href='#L217'>217</a>
+<a name='L218'></a><a href='#L218'>218</a>
+<a name='L219'></a><a href='#L219'>219</a>
+<a name='L220'></a><a href='#L220'>220</a>
+<a name='L221'></a><a href='#L221'>221</a>
+<a name='L222'></a><a href='#L222'>222</a>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a>
+<a name='L227'></a><a href='#L227'>227</a>
+<a name='L228'></a><a href='#L228'>228</a>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -358,6 +383,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">26x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">26x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -393,8 +420,16 @@
 <span class="cline-any cline-yes">26x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -479,7 +514,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState, useEffect } from 'react';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -492,48 +534,52 @@ import {
   InputAdornment,
   TablePagination,
   IconButton,
-} from '@mui/material';
-import axios from 'axios';
-import styles from './styles.module.css'; 
-import Navbar from '../common/Navbar';
-import { Search, ArrowUpward as ArrowUpwardIcon, ArrowDownward as ArrowDownwardIcon } from '@mui/icons-material';
+} from "@mui/material";
+import axios from "axios";
+import styles from "./styles.module.css";
+import Navbar from "../common/Navbar";
+import {
+  Search,
+  ArrowUpward as ArrowUpwardIcon,
+  ArrowDownward as ArrowDownwardIcon,
+} from "@mui/icons-material";
 &nbsp;
 export const formatDate = (dateString) =&gt; {
   const options = {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
     hour12: true,
   };
-  return new Date(dateString).toLocaleDateString('en-US', options);
+  return new Date(dateString).toLocaleDateString("en-US", options);
 };
 &nbsp;
 function Reward() {
   const [rewards, setRewards] = useState([]);
-  const [searchCustomerId, setSearchCustomerId] = useState('');
+  const [searchCustomerId, setSearchCustomerId] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [sortOrder, setSortOrder] = useState('asc');
-  const [error, setError] = useState(null); 
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [error, setError] = useState(null);
 &nbsp;
   useEffect(() =&gt; {
-    const response = localStorage.getItem('jwt');
+    const response = localStorage.getItem("jwt");
     const headers = {
       Authorization: `Bearer ${response}`,
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     };
 &nbsp;
     axios
-      .get('http://localhost:8080/rewards', { headers })
+      .get("http://localhost:8080/rewards", { headers })
       .then((response) =&gt; {
         setRewards(response.data);
         setError(null);
       })
       .catch((error) =&gt; {
-        console.error('Error fetching reward data:', error);
-        setError('Error fetching data. Please try again!');
+        console.error("Error fetching reward data:", error);
+        setError("Error fetching data. Please try again!");
       });
   }, []);
 &nbsp;
@@ -542,14 +588,14 @@ function Reward() {
   };
 &nbsp;
   const handleSort = () =&gt; {
-    const newSortOrder = sortOrder === 'asc' ? 'desc' : <span class="branch-1 cbranch-no" title="branch not covered" >'asc';</span>
+    const newSortOrder = sortOrder === "asc" ? "desc" : <span class="branch-1 cbranch-no" title="branch not covered" >"asc";</span>
     setSortOrder(newSortOrder);
 &nbsp;
     const sortedRewards = [...rewards].sort((a, b) =&gt; {
       const dateA = new Date(a.rewardsDate);
       const dateB = new Date(b.rewardsDate);
 &nbsp;
-      <span class="missing-if-branch" title="if path not taken" >I</span>if (newSortOrder === 'asc') {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (newSortOrder === "asc") {
 <span class="cstat-no" title="statement not covered" >        return dateA - dateB;</span>
       } else {
         return dateB - dateA;
@@ -564,7 +610,9 @@ function Reward() {
   );
 &nbsp;
   const emptyRows =
-    page &gt; 0 ? <span class="branch-0 cbranch-no" title="branch not covered" >Math.max(0, (1 + page) * rowsPerPage - filteredRewards.length) </span>: 0;
+    page &gt; 0
+      ? <span class="branch-0 cbranch-no" title="branch not covered" >Math.max(0, (1 + page) * rowsPerPage - filteredRewards.length)</span>
+      : 0;
 &nbsp;
   const handleChangePage = <span class="fstat-no" title="function not covered" >(e</span>vent, newPage) =&gt; {
 <span class="cstat-no" title="statement not covered" >    setPage(newPage);</span>
@@ -578,9 +626,9 @@ function Reward() {
   const getVisibleRewards = () =&gt; {
     const startIndex = page * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
-  
+&nbsp;
     let filteredAndSortedRewards = [...rewards];
-  
+&nbsp;
     if (searchCustomerId) {
       filteredAndSortedRewards = filteredAndSortedRewards.filter((reward) =&gt;
         reward.customerId.includes(searchCustomerId)
@@ -589,24 +637,25 @@ function Reward() {
       filteredAndSortedRewards = filteredAndSortedRewards.sort((a, b) =&gt; {
         const dateA = new Date(a.rewardsDate);
         const dateB = new Date(b.rewardsDate);
-  
-        if (sortOrder === 'asc') {
+&nbsp;
+        if (sortOrder === "asc") {
           return dateA - dateB;
         } else {
           return dateB - dateA;
         }
       });
     }
-  
+&nbsp;
     return filteredAndSortedRewards.slice(startIndex, endIndex);
   };
-  
 &nbsp;
   return (
     &lt;&gt;
       &lt;Navbar /&gt;
-      &lt;div className={styles.headerpart}&gt; 
-        &lt;h3 className={styles.heading}&gt;&lt;b&gt;REWARDS INFORMATION&lt;/b&gt;&lt;/h3&gt;
+      &lt;div className={styles.headerpart}&gt;
+        &lt;h3 className={styles.heading}&gt;
+          &lt;b&gt;REWARDS INFORMATION&lt;/b&gt;
+        &lt;/h3&gt;
         &lt;div className={styles.search}&gt;
           &lt;label className={styles.label}&gt;Search for a Customer : &lt;/label&gt;
           &lt;TextField
@@ -615,7 +664,7 @@ function Reward() {
             variant="outlined"
             value={searchCustomerId}
             onChange={handleSearch}
-            style={{maxWidth:'250px'}}
+            style={{ maxWidth: "250px" }}
             InputProps={{
               endAdornment: (
                 &lt;InputAdornment position="end"&gt;
@@ -626,24 +675,31 @@ function Reward() {
           /&gt;
         &lt;/div&gt;
       &lt;/div&gt;
-     
+&nbsp;
       &lt;TableContainer component={Paper} className={styles.container}&gt;
         &lt;Table&gt;
-          &lt;TableHead style={{backgroundColor:'orange'}}&gt;
+          &lt;TableHead style={{ backgroundColor: "orange" }}&gt;
             &lt;TableRow&gt;
-              &lt;TableCell&gt;&lt;b&gt;Reward ID&lt;/b&gt;&lt;/TableCell&gt;
-              &lt;TableCell&gt;&lt;b&gt;Customer Id&lt;/b&gt;&lt;/TableCell&gt;
-              &lt;TableCell&gt;&lt;b&gt;Order No&lt;/b&gt;&lt;/TableCell&gt;
-              &lt;TableCell&gt;&lt;b&gt;Rewards Earned&lt;/b&gt;&lt;/TableCell&gt;
+              &lt;TableCell&gt;
+                &lt;b&gt;Reward ID&lt;/b&gt;
+              &lt;/TableCell&gt;
+              &lt;TableCell&gt;
+                &lt;b&gt;Customer Id&lt;/b&gt;
+              &lt;/TableCell&gt;
+              &lt;TableCell&gt;
+                &lt;b&gt;Order No&lt;/b&gt;
+              &lt;/TableCell&gt;
+              &lt;TableCell&gt;
+                &lt;b&gt;Rewards Earned&lt;/b&gt;
+              &lt;/TableCell&gt;
               &lt;TableCell&gt;
                 &lt;b&gt;Date&lt;/b&gt;
                 &lt;IconButton
                   onClick={handleSort}
                   color="inherit"
                   size="small"
-                  aria-label="sort"
-                &gt;
-                  {sortOrder === 'asc' ? (
+                  aria-label="sort"&gt;
+                  {sortOrder === "asc" ? (
                     &lt;ArrowUpwardIcon /&gt;
                   ) : (
                     &lt;ArrowDownwardIcon /&gt;
@@ -669,12 +725,19 @@ function Reward() {
             )}
           &lt;/TableBody&gt;
         &lt;/Table&gt;
-        {error &amp;&amp; &lt;h4 style={{display:"flex", justifyContent:"center"}}&gt;{error}&lt;/h4&gt;}
+        {error &amp;&amp; (
+          &lt;h4 style={{ display: "flex", justifyContent: "center" }}&gt;{error}&lt;/h4&gt;
+        )}
       &lt;/TableContainer&gt;
 &nbsp;
-      
       &lt;TablePagination
-        rowsPerPageOptions={[5, 10, 25, 50, { label: 'All', value: filteredRewards.length }]}
+        rowsPerPageOptions={[
+          5,
+          10,
+          25,
+          50,
+          { label: "All", value: filteredRewards.length },
+        ]}
         component="div"
         count={filteredRewards.length}
         rowsPerPage={rowsPerPage}
@@ -694,7 +757,7 @@ export default Reward;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-13T06:12:06.104Z
+                at 2023-10-13T07:09:31.471Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

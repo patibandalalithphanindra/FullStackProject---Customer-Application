@@ -147,7 +147,18 @@
 <a name='L82'></a><a href='#L82'>82</a>
 <a name='L83'></a><a href='#L83'>83</a>
 <a name='L84'></a><a href='#L84'>84</a>
-<a name='L85'></a><a href='#L85'>85</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -173,17 +184,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -231,18 +247,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from 'react';
-import { Button, Container, TextField, Typography } from '@mui/material';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import styles from './styles.module.css';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from "react";
+import { Button, Container, TextField, Typography } from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import styles from "./styles.module.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 &nbsp;
 function Login({ toggleForm }) {
   const [formData, setFormData] = useState({
-    name: '',
-    password: ''
+    name: "",
+    password: "",
   });
 &nbsp;
   const navigate = useNavigate();
@@ -254,22 +276,27 @@ function Login({ toggleForm }) {
 &nbsp;
   const handleLogin = async (e) =&gt; {
     e.preventDefault();
-  
+&nbsp;
     try {
-      const response = await axios.post('http://localhost:8080/user/authenticate', formData);
+      const response = await axios.post(
+        "http://localhost:8080/user/authenticate",
+        formData
+      );
       <span class="missing-if-branch" title="else path not taken" >E</span>if (response.status === 200) {
-        localStorage.setItem('jwt', response?.data?.token);
-        localStorage.setItem('name', response?.data?.name);
-        navigate('/homepage');
-        toast.success('Logged in Successfully!', {
-          position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
-        }); 
-      } 
+        localStorage.setItem("jwt", response?.data?.token);
+        localStorage.setItem("name", response?.data?.name);
+        navigate("/homepage");
+        toast.success("Logged in Successfully!", {
+          position: toast.POSITION.BOTTOM_LEFT,
+          autoClose: 900,
+        });
+      }
     } catch (error) {
-<span class="cstat-no" title="statement not covered" >      console.error('Login error:', error);</span>
-<span class="cstat-no" title="statement not covered" >      toast.error('Login failed. Please check your credentials.', {</span>
+<span class="cstat-no" title="statement not covered" >      console.error("Login error:", error);</span>
+<span class="cstat-no" title="statement not covered" >      toast.error("Login failed. Please check your credentials.", {</span>
         position: toast.POSITION.BOTTOM_LEFT,
-        autoClose: 900});
+        autoClose: 900,
+      });
     }
   };
 &nbsp;
@@ -298,13 +325,19 @@ function Login({ toggleForm }) {
           margin="normal"
           data-testid="password"
         /&gt;
-        &lt;Button type="submit" variant="contained" color="primary" data-testid="login" fullWidth className={styles.loginButton}&gt;
+        &lt;Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          data-testid="login"
+          fullWidth
+          className={styles.loginButton}&gt;
           Login
         &lt;/Button&gt;
       &lt;/form&gt;
       &lt;div className={styles.switchLink}&gt;
         &lt;Typography variant="body2"&gt;
-          New user?{' '}
+          New user?{" "}
           &lt;span className={styles.switchButton} onClick={toggleForm}&gt;
             Switch to Register
           &lt;/span&gt;
@@ -322,7 +355,7 @@ export default Login;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-13T06:12:06.104Z
+                at 2023-10-13T07:09:31.471Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

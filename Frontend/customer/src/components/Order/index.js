@@ -94,7 +94,6 @@ function Order() {
   };
 
   useEffect(() => {
-    console.log("redirectToOrders:", redirectToOrders);
     const response = localStorage.getItem("jwt");
     const headers = {
       Authorization: `Bearer ${response}`,
@@ -232,7 +231,6 @@ function Order() {
   };
 
   const handleOrderModalSave = (updatedStatus) => {
-    console.log(updatedStatus);
     const response = localStorage.getItem("jwt");
     const headers = {
       Authorization: `Bearer ${response}`,

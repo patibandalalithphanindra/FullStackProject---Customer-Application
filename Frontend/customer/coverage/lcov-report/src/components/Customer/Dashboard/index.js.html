@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>21/21</span>
+                <span class='fraction'>20/20</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>21/21</span>
+                <span class='fraction'>20/20</span>
             </div>
         
             
@@ -144,7 +144,19 @@
 <a name='L79'></a><a href='#L79'>79</a>
 <a name='L80'></a><a href='#L80'>80</a>
 <a name='L81'></a><a href='#L81'>81</a>
-<a name='L82'></a><a href='#L82'>82</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -155,7 +167,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
@@ -165,7 +176,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
@@ -176,6 +186,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -183,6 +196,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -190,7 +206,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
@@ -225,67 +240,87 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState, useEffect } from 'react';
-import { Container, Paper, Typography } from '@mui/material';
-import { ArrowBack } from '@mui/icons-material';
-import Profile from './Profile';
-import Orders from './Orders';
-import Rewards from './Rewards';
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
-import styles from './styles.module.css';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState, useEffect } from "react";
+import { Container, Paper, Typography } from "@mui/material";
+import { ArrowBack } from "@mui/icons-material";
+import Profile from "./Profile";
+import Orders from "./Orders";
+import Rewards from "./Rewards";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import styles from "./styles.module.css";
 &nbsp;
-&nbsp;
-const Dashboard = () =&gt; {
+function Dashboard() {
   const navigate = useNavigate();
   const { customerId } = useParams();
   const [orders, setOrders] = useState([]);
   const [customer, setCustomer] = useState({});
 &nbsp;
   const goBack = () =&gt; {
-		navigate(-1);
-	}
-&nbsp;
+    navigate(-1);
+  };
 &nbsp;
   useEffect(() =&gt; {
     const fetchData = async () =&gt; {
-      const response = localStorage.getItem('jwt');
+      const response = localStorage.getItem("jwt");
       const headers = {
         Authorization: `Bearer ${response}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       };
-  
+&nbsp;
       try {
-        const customerResponse = await axios.get(`http://localhost:8080/customers/${customerId}`, { headers });
+        const customerResponse = await axios.get(
+          `http://localhost:8080/customers/${customerId}`,
+          { headers }
+        );
         setCustomer(customerResponse.data);
       } catch (error) {
-        console.error('Error fetching customer data:', error);
+        console.error("Error fetching customer data:", error);
       }
-  
+&nbsp;
       try {
-        const ordersResponse = await axios.get(`http://localhost:8080/orders/${customerId}`, { headers });
+        const ordersResponse = await axios.get(
+          `http://localhost:8080/orders/${customerId}`,
+          { headers }
+        );
         setOrders(ordersResponse.data);
       } catch (error) {
-        console.error('Error fetching orders data:', error);
+        console.error("Error fetching orders data:", error);
       }
     };
-  
+&nbsp;
     fetchData();
   }, [customerId]);
-  
 &nbsp;
   return (
     &lt;Container maxWidth="lg" className={styles.container}&gt;
-        &lt;Container&gt;
-         &lt;Typography variant="h5" className={styles.heading} align="center" marginBottom={2}&gt;
-          &lt;ArrowBack onClick={goBack} className={styles.back} data-testid="arrow-back"/&gt;
+      &lt;Container&gt;
+        &lt;Typography
+          variant="h5"
+          className={styles.heading}
+          align="center"
+          marginBottom={2}&gt;
+          &lt;ArrowBack
+            onClick={goBack}
+            className={styles.back}
+            data-testid="arrow-back"
+          /&gt;
           &lt;b&gt;CUSTOMER DASHBOARD&lt;/b&gt;
         &lt;/Typography&gt;
-        &lt;/Container&gt;
+      &lt;/Container&gt;
       &lt;Paper className={styles.paper}&gt;
-      &lt;Typography variant="h5" className={styles.heading} marginBottom={2} &gt;
-        Profile
-      &lt;/Typography&gt;
+        &lt;Typography variant="h5" className={styles.heading} marginBottom={2}&gt;
+          Profile
+        &lt;/Typography&gt;
         &lt;Profile customer={customer} /&gt;
       &lt;/Paper&gt;
 &nbsp;
@@ -296,7 +331,7 @@ const Dashboard = () =&gt; {
         &lt;Rewards id={customerId} /&gt;
       &lt;/Paper&gt;
 &nbsp;
-      &lt;Paper className={styles.paper} &gt;
+      &lt;Paper className={styles.paper}&gt;
         &lt;Typography variant="h5" className={styles.heading} marginBottom={2}&gt;
           Order History
         &lt;/Typography&gt;
@@ -304,16 +339,17 @@ const Dashboard = () =&gt; {
       &lt;/Paper&gt;
     &lt;/Container&gt;
   );
-};
+}
 &nbsp;
-export default Dashboard;</pre></td></tr></table></pre>
+export default Dashboard;
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-13T06:12:06.104Z
+                at 2023-10-13T07:09:31.471Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

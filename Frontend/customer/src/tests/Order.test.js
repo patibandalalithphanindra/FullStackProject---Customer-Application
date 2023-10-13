@@ -344,7 +344,6 @@ describe("Order Component", () => {
   
     await waitFor(() => {
       const orderItems = screen.getAllByText(/\d/);
-      console.log(orderItems);
       expect(orderItems[0]).toHaveTextContent('2');
     });
   
@@ -385,7 +384,6 @@ describe("Order Component", () => {
   
     await waitFor(() => {
       const orderItems = screen.getAllByText(/\d/);
-      console.log(orderItems.map(item => item.textContent));
       expect(orderItems[0]).toHaveTextContent('1');
     });
 
