@@ -24,7 +24,6 @@ const CustomerModal = ({
   const [firstNameValid, setFirstNameValid] = useState(true);
   const [lastNameValid, setLastNameValid] = useState(true);
   const [addressLine1Valid, setAddressLine1Valid] = useState(true);
-  const [addressLine2Valid, setAddressLine2Valid] = useState(true);
   const [cityValid, setCityValid] = useState(true);
   const [stateValid, setStateValid] = useState(true);
   const [zipCodeValid, setZipCodeValid] = useState(true);
@@ -38,7 +37,6 @@ const CustomerModal = ({
       setFirstNameValid(true);
       setLastNameValid(true);
       setAddressLine1Valid(true);
-      setAddressLine2Valid(true);
       setCityValid(true);
       setStateValid(true);
       setZipCodeValid(true);
