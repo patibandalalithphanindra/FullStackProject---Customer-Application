@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   Dialog,
   DialogActions,
@@ -49,13 +49,13 @@ const OrderModal = ({
   const [quantityError, setQuantityError] = useState("");
   const [activeStep, setActiveStep] = useState(0);
 
-  const orderStatusStages = [
+  const orderStatusStages = useMemo(() => [
     "Created",
     "Packed",
     "Shipped",
     "In Transit",
     "Delivered",
-  ];
+  ], []);
 
   const resetState = () => {
     setCustomerIdValid(true);
@@ -76,8 +76,7 @@ const OrderModal = ({
         setActiveStep(0);
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen, orderData]);
+  }, [isOpen, orderData, orderStatusStages]);
 
   const getNextStatus = () => {
     const currentStatusIndex = orderStatusStages.indexOf(orderData.orderStatus);
