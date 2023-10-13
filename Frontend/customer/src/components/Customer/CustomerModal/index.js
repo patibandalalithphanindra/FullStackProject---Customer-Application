@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogActions,
@@ -12,7 +12,7 @@ import {
   InputLabel,
   Grid,
   FormHelperText,
-} from '@mui/material';
+} from "@mui/material";
 
 const CustomerModal = ({
   isOpen,
@@ -88,9 +88,11 @@ const CustomerModal = ({
   return (
     <Dialog open={isOpen} onClose={handleClose}>
       <DialogTitle>
-        {customer.customerId ? 'Edit an existing Customer' : 'Add a new Customer'}
+        {customer.customerId
+          ? "Edit an existing Customer"
+          : "Add a new Customer"}
       </DialogTitle>
-      <DialogContent style={{ paddingTop: '8px' }}>
+      <DialogContent style={{ paddingTop: "8px" }}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
@@ -99,10 +101,14 @@ const CustomerModal = ({
               fullWidth
               required
               value={customer.firstName}
-              onChange={(e) => setCustomer({ ...customer, firstName: e.target.value })}
+              onChange={(e) =>
+                setCustomer({ ...customer, firstName: e.target.value })
+              }
               inputProps={{ "data-testid": "firstname" }}
             />
-            {!firstNameValid && <FormHelperText error>This field is required.</FormHelperText>}
+            {!firstNameValid && (
+              <FormHelperText error>This field is required.</FormHelperText>
+            )}
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -111,10 +117,14 @@ const CustomerModal = ({
               fullWidth
               required
               value={customer.lastName}
-              onChange={(e) => setCustomer({ ...customer, lastName: e.target.value })}
+              onChange={(e) =>
+                setCustomer({ ...customer, lastName: e.target.value })
+              }
               inputProps={{ "data-testid": "lastname" }}
             />
-            {!lastNameValid && <FormHelperText error>This field is required.</FormHelperText>}
+            {!lastNameValid && (
+              <FormHelperText error>This field is required.</FormHelperText>
+            )}
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -123,10 +133,14 @@ const CustomerModal = ({
               fullWidth
               required
               value={customer.addressLine1}
-              onChange={(e) => setCustomer({ ...customer, addressLine1: e.target.value })}
+              onChange={(e) =>
+                setCustomer({ ...customer, addressLine1: e.target.value })
+              }
               inputProps={{ "data-testid": "add1" }}
             />
-            {!addressLine1Valid && <FormHelperText error>This field is required.</FormHelperText>}
+            {!addressLine1Valid && (
+              <FormHelperText error>This field is required.</FormHelperText>
+            )}
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -134,7 +148,9 @@ const CustomerModal = ({
               variant="outlined"
               fullWidth
               value={customer.addressLine2}
-              onChange={(e) => setCustomer({ ...customer, addressLine2: e.target.value })}
+              onChange={(e) =>
+                setCustomer({ ...customer, addressLine2: e.target.value })
+              }
               inputProps={{ "data-testid": "add2" }}
             />
           </Grid>
@@ -145,10 +161,14 @@ const CustomerModal = ({
               fullWidth
               required
               value={customer.city}
-              onChange={(e) => setCustomer({ ...customer, city: e.target.value })}
+              onChange={(e) =>
+                setCustomer({ ...customer, city: e.target.value })
+              }
               inputProps={{ "data-testid": "city" }}
             />
-            {!cityValid && <FormHelperText error>This field is required.</FormHelperText>}
+            {!cityValid && (
+              <FormHelperText error>This field is required.</FormHelperText>
+            )}
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -157,10 +177,14 @@ const CustomerModal = ({
               fullWidth
               required
               value={customer.state}
-              onChange={(e) => setCustomer({ ...customer, state: e.target.value })}
+              onChange={(e) =>
+                setCustomer({ ...customer, state: e.target.value })
+              }
               inputProps={{ "data-testid": "state" }}
             />
-            {!stateValid && <FormHelperText error>This field is required.</FormHelperText>}
+            {!stateValid && (
+              <FormHelperText error>This field is required.</FormHelperText>
+            )}
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -169,10 +193,14 @@ const CustomerModal = ({
               fullWidth
               required
               value={customer.zipCode}
-              onChange={(e) => setCustomer({ ...customer, zipCode: e.target.value })}
+              onChange={(e) =>
+                setCustomer({ ...customer, zipCode: e.target.value })
+              }
               inputProps={{ "data-testid": "zipcode" }}
             />
-            {!zipCodeValid && <FormHelperText error>This field is required.</FormHelperText>}
+            {!zipCodeValid && (
+              <FormHelperText error>This field is required.</FormHelperText>
+            )}
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -181,10 +209,14 @@ const CustomerModal = ({
               fullWidth
               required
               value={customer.country}
-              onChange={(e) => setCustomer({ ...customer, country: e.target.value })}
+              onChange={(e) =>
+                setCustomer({ ...customer, country: e.target.value })
+              }
               inputProps={{ "data-testid": "country" }}
             />
-            {!countryValid && <FormHelperText error>This field is required.</FormHelperText>}
+            {!countryValid && (
+              <FormHelperText error>This field is required.</FormHelperText>
+            )}
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -193,11 +225,17 @@ const CustomerModal = ({
               fullWidth
               required
               value={customer.phoneNo}
-              disabled={customer.customerId!== undefined}
-              onChange={(e) => setCustomer({ ...customer, phoneNo: e.target.value })}
+              disabled={customer.customerId !== undefined}
+              onChange={(e) =>
+                setCustomer({ ...customer, phoneNo: e.target.value })
+              }
               inputProps={{ "data-testid": "phonenumber" }}
             />
-            {!phoneNoValid && <FormHelperText error>This field is required and must be 10 digits.</FormHelperText>}
+            {!phoneNoValid && (
+              <FormHelperText error>
+                This field is required and must be 10 digits.
+              </FormHelperText>
+            )}
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -206,11 +244,17 @@ const CustomerModal = ({
               fullWidth
               required
               value={customer.emailId}
-              disabled={customer.customerId!== undefined}
-              onChange={(e) => setCustomer({ ...customer, emailId: e.target.value })}
+              disabled={customer.customerId !== undefined}
+              onChange={(e) =>
+                setCustomer({ ...customer, emailId: e.target.value })
+              }
               inputProps={{ "data-testid": "email" }}
             />
-            {!emailIdValid && <FormHelperText error>This field is required and must be a valid email address.</FormHelperText>}
+            {!emailIdValid && (
+              <FormHelperText error>
+                This field is required and must be a valid email address.
+              </FormHelperText>
+            )}
           </Grid>
           <Grid item xs={6}>
             <FormControl variant="outlined" fullWidth>
@@ -218,13 +262,16 @@ const CustomerModal = ({
               <Select
                 label="Status"
                 value={customer.status}
-                onChange={(e) => setCustomer({ ...customer, status: e.target.value })}
-                inputProps={{ "data-testid": "status" }}
-              >
+                onChange={(e) =>
+                  setCustomer({ ...customer, status: e.target.value })
+                }
+                inputProps={{ "data-testid": "status" }}>
                 <MenuItem value="Active">Active</MenuItem>
                 <MenuItem value="Inactive">Inactive</MenuItem>
               </Select>
-              {!statusValid && <FormHelperText error>This field is required.</FormHelperText>}
+              {!statusValid && (
+                <FormHelperText error>This field is required.</FormHelperText>
+              )}
             </FormControl>
           </Grid>
         </Grid>
@@ -234,7 +281,7 @@ const CustomerModal = ({
           Cancel
         </Button>
         <Button onClick={handleSaveClick} color="primary" data-testid="add">
-          {customer.customerId ? 'Save' : 'Add'}
+          {customer.customerId ? "Save" : "Add"}
         </Button>
       </DialogActions>
     </Dialog>

@@ -9,7 +9,7 @@ import {
   ShoppingCart,
   Star,
   LocalMall,
-  DescriptionTwoTone
+  DescriptionTwoTone,
 } from "@mui/icons-material";
 import { Card, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -63,8 +63,7 @@ function LandingPage() {
             marginLeft: "200px",
             marginRight: "200px",
             backgroundColor: " #e0e0f4",
-          }}
-        >
+          }}>
           <Grid align="center" container spacing={6}>
             <Grid item xs={4}>
               <Box display="flex" alignItems="center">
@@ -107,8 +106,7 @@ function LandingPage() {
             marginLeft: "200px",
             marginRight: "200px",
             backgroundColor: "#c7ebd3",
-          }}
-        >
+          }}>
           <Grid align="center" container spacing={6}>
             <Grid item xs={4}>
               <Box display="flex" alignItems="center">
@@ -116,7 +114,9 @@ function LandingPage() {
                 &nbsp; &nbsp;
                 <div>
                   <Typography variant="h6">Created</Typography>
-                  <Typography variant="subtitle1">{statusCounts?.Created || 0}</Typography>
+                  <Typography variant="subtitle1">
+                    {statusCounts?.Created || 0}
+                  </Typography>
                 </div>
               </Box>
             </Grid>
@@ -138,7 +138,9 @@ function LandingPage() {
                 &nbsp; &nbsp;
                 <div>
                   <Typography variant="h6">Shipped</Typography>
-                  <Typography variant="subtitle1">{statusCounts?.Shipped || 0}</Typography>
+                  <Typography variant="subtitle1">
+                    {statusCounts?.Shipped || 0}
+                  </Typography>
                 </div>
               </Box>
             </Grid>
@@ -160,7 +162,9 @@ function LandingPage() {
                 &nbsp; &nbsp;
                 <div>
                   <Typography variant="h6">Delivered</Typography>
-                  <Typography variant="subtitle1">{statusCounts?.Delivered || 0}</Typography>
+                  <Typography variant="subtitle1">
+                    {statusCounts?.Delivered || 0}
+                  </Typography>
                 </div>
               </Box>
             </Grid>
@@ -172,7 +176,9 @@ function LandingPage() {
           <Card className={styles.card}>
             <div className={styles.cardContent}>
               <Typography variant="h5">Customer</Typography>
-              <Typography variant="body2">Click here to view Customer information.</Typography>
+              <Typography variant="body2">
+                Click here to view Customer information.
+              </Typography>
             </div>
           </Card>
         </Link>
@@ -180,7 +186,9 @@ function LandingPage() {
           <Card className={styles.card}>
             <div className={styles.cardContent}>
               <Typography variant="h5">Order</Typography>
-              <Typography variant="body2">Click here to view Order details.</Typography>
+              <Typography variant="body2">
+                Click here to view Order details.
+              </Typography>
             </div>
           </Card>
         </Link>
@@ -188,7 +196,9 @@ function LandingPage() {
           <Card className={styles.card}>
             <div className={styles.cardContent}>
               <Typography variant="h5">Rewards</Typography>
-              <Typography variant="body2">Click here to check Rewards status.</Typography>
+              <Typography variant="body2">
+                Click here to check Rewards status.
+              </Typography>
             </div>
           </Card>
         </Link>

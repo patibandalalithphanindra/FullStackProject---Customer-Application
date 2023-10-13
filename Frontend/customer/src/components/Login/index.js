@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { Button, Container, TextField, Typography } from '@mui/material';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import styles from './styles.module.css';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from "react";
+import { Button, Container, TextField, Typography } from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import styles from "./styles.module.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login({ toggleForm }) {
   const [formData, setFormData] = useState({
-    name: '',
-    password: ''
+    name: "",
+    password: "",
   });
 
   const navigate = useNavigate();
@@ -21,22 +21,27 @@ function Login({ toggleForm }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  
+
     try {
-      const response = await axios.post('http://localhost:8080/user/authenticate', formData);
+      const response = await axios.post(
+        "http://localhost:8080/user/authenticate",
+        formData
+      );
       if (response.status === 200) {
-        localStorage.setItem('jwt', response?.data?.token);
-        localStorage.setItem('name', response?.data?.name);
-        navigate('/homepage');
-        toast.success('Logged in Successfully!', {
-          position: toast.POSITION.BOTTOM_LEFT,autoClose: 900
-        }); 
-      } 
+        localStorage.setItem("jwt", response?.data?.token);
+        localStorage.setItem("name", response?.data?.name);
+        navigate("/homepage");
+        toast.success("Logged in Successfully!", {
+          position: toast.POSITION.BOTTOM_LEFT,
+          autoClose: 900,
+        });
+      }
     } catch (error) {
-      console.error('Login error:', error);
-      toast.error('Login failed. Please check your credentials.', {
+      console.error("Login error:", error);
+      toast.error("Login failed. Please check your credentials.", {
         position: toast.POSITION.BOTTOM_LEFT,
-        autoClose: 900});
+        autoClose: 900,
+      });
     }
   };
 
@@ -65,13 +70,19 @@ function Login({ toggleForm }) {
           margin="normal"
           data-testid="password"
         />
-        <Button type="submit" variant="contained" color="primary" data-testid="login" fullWidth className={styles.loginButton}>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          data-testid="login"
+          fullWidth
+          className={styles.loginButton}>
           Login
         </Button>
       </form>
       <div className={styles.switchLink}>
         <Typography variant="body2">
-          New user?{' '}
+          New user?{" "}
           <span className={styles.switchButton} onClick={toggleForm}>
             Switch to Register
           </span>

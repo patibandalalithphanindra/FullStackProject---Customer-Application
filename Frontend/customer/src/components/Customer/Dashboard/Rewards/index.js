@@ -133,7 +133,9 @@ const Rewards = ({ id }) => {
       </Grid>
       <Divider sx={{ my: 2 }} />
       <Typography variant="body2" color="textPrimary">
-        Note : Earned Coins represent the total coins earned, Redeemed Coins represent the coins spent or redeemed, and Balance Coins represent the remaining coins.
+        Note : Earned Coins represent the total coins earned, Redeemed Coins
+        represent the coins spent or redeemed, and Balance Coins represent the
+        remaining coins.
       </Typography>
     </Paper>
   );

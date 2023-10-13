@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogActions,
@@ -24,7 +24,7 @@ import {
   TableRow,
   IconButton,
   Grid,
-} from '@mui/material';
+} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -44,20 +44,26 @@ const OrderModal = ({
   const [currencyValid, setCurrencyValid] = useState(true);
   const [withCoinsValid, setWithCoinsValid] = useState(true);
   const [itemDetailsValid, setItemDetailsValid] = useState(true);
-  const [selectedItem, setSelectedItem] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [quantityError, setQuantityError] = useState('');
+  const [selectedItem, setSelectedItem] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [quantityError, setQuantityError] = useState("");
   const [activeStep, setActiveStep] = useState(0);
 
-  const orderStatusStages = ["Created", "Packed", "Shipped", "In Transit", "Delivered"];
+  const orderStatusStages = [
+    "Created",
+    "Packed",
+    "Shipped",
+    "In Transit",
+    "Delivered",
+  ];
 
   const resetState = () => {
     setCustomerIdValid(true);
     setCurrencyValid(true);
     setWithCoinsValid(true);
-    setSelectedItem('');
-    setQuantity('');
-    setQuantityError('');
+    setSelectedItem("");
+    setQuantity("");
+    setQuantityError("");
     setItemDetailsValid(true);
   };
 
@@ -84,16 +90,16 @@ const OrderModal = ({
   const getNextStatusText = () => {
     const nextStatus = getNextStatus();
     switch (nextStatus) {
-      case 'Packed':
-        return 'Pack';
-      case 'Shipped':
-        return 'Ship';
-      case 'In Transit':
-        return 'Transit';
-      case 'Delivered':
-        return 'Deliver';
+      case "Packed":
+        return "Pack";
+      case "Shipped":
+        return "Ship";
+      case "In Transit":
+        return "Transit";
+      case "Delivered":
+        return "Deliver";
       default:
-        return 'Update';
+        return "Update";
     }
   };
 
@@ -119,19 +125,19 @@ const OrderModal = ({
         setOrderItemsD([...orderItemsD, newItem]);
       }
 
-      setSelectedItem('');
-      setQuantity('');
-      setQuantityError('');
+      setSelectedItem("");
+      setQuantity("");
+      setQuantityError("");
     } else {
       if (!selectedItem) {
         setItemDetailsValid(false);
       }
       if (!quantity) {
-        setQuantityError('Enter quantity');
+        setQuantityError("Enter quantity");
       } else if (quantity <= 0) {
-        setQuantityError('Should be greater than zero');
+        setQuantityError("Should be greater than zero");
       } else {
-        setQuantityError('');
+        setQuantityError("");
       }
     }
   };
@@ -146,12 +152,12 @@ const OrderModal = ({
     const isWithCoinsValid = !!withCoins;
     const isOrderItemsValid = !!orderItemsD && orderItemsD.length > 0;
     const isQuantityValid = !!quantity && quantity > 0;
-    if (!isOrderItemsValid  || !isQuantityValid ) {
+    if (!isOrderItemsValid || !isQuantityValid) {
       setItemDetailsValid(false);
     }
     setCustomerIdValid(isCustomerIdValid);
     setWithCoinsValid(isWithCoinsValid);
-  
+
     if (!orderNoExists) {
       if (isCustomerIdValid && isWithCoinsValid && isOrderItemsValid) {
         setItemDetailsValid(true);
@@ -168,12 +174,13 @@ const OrderModal = ({
       }
     }
   };
-  
 
   return (
     <Dialog open={isOpen} onClose={handleClose}>
-      <DialogTitle>{orderData.orderNo ? 'Edit an existing Order' : 'Add a new Order'}</DialogTitle>
-      <DialogContent style={{ paddingTop: '8px' }}>
+      <DialogTitle>
+        {orderData.orderNo ? "Edit an existing Order" : "Add a new Order"}
+      </DialogTitle>
+      <DialogContent style={{ paddingTop: "8px" }}>
         <DialogContentText>
           <Grid container spacing={2}>
             <Grid item xs={6}>
@@ -184,7 +191,9 @@ const OrderModal = ({
                 required
                 value={orderData.customerId}
                 disabled={orderData.orderNo !== undefined}
-                onChange={(e) => setOrderData({ ...orderData, customerId: e.target.value })}
+                onChange={(e) =>
+                  setOrderData({ ...orderData, customerId: e.target.value })
+                }
               />
               {!customerIdValid && (
                 <FormHelperText error>This field is required.</FormHelperText>
@@ -197,12 +206,15 @@ const OrderModal = ({
                   label="Currency"
                   value={orderData.currency}
                   aria-label="Currency"
-                  onChange={(e) => setOrderData({ ...orderData, currency: e.target.value })}
-                  disabled={orderData.orderNo !== undefined}
-                >
+                  onChange={(e) =>
+                    setOrderData({ ...orderData, currency: e.target.value })
+                  }
+                  disabled={orderData.orderNo !== undefined}>
                   <MenuItem value="₹">₹</MenuItem>
                 </Select>
-                {!currencyValid && <FormHelperText error>This field is required.</FormHelperText>}
+                {!currencyValid && (
+                  <FormHelperText error>This field is required.</FormHelperText>
+                )}
               </FormControl>
             </Grid>
             <Grid item xs={6}>
@@ -212,12 +224,13 @@ const OrderModal = ({
                   label="withCoins"
                   value={withCoins}
                   onChange={(e) => setWithCoins(e.target.value)}
-                  disabled={orderData.orderNo !== undefined}
-                >
+                  disabled={orderData.orderNo !== undefined}>
                   <MenuItem value="yes">Yes</MenuItem>
                   <MenuItem value="no">No</MenuItem>
                 </Select>
-                {!withCoinsValid && <FormHelperText error>This field is required.</FormHelperText>}
+                {!withCoinsValid && (
+                  <FormHelperText error>This field is required.</FormHelperText>
+                )}
               </FormControl>
             </Grid>
             {!orderData.orderNo && (
@@ -225,23 +238,29 @@ const OrderModal = ({
                 <Typography variant="p"> Select Items </Typography>
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
-                    <FormControl variant="outlined" fullWidth style={{ marginTop: '10px' }}>
-                      <InputLabel id="select-item-label" htmlFor="select-item">Select Item</InputLabel>
+                    <FormControl
+                      variant="outlined"
+                      fullWidth
+                      style={{ marginTop: "10px" }}>
+                      <InputLabel id="select-item-label" htmlFor="select-item">
+                        Select Item
+                      </InputLabel>
                       <Select
                         labelId="select-item-label"
                         label="Select Items"
                         value={selectedItem}
                         onChange={(e) => setSelectedItem(e.target.value)}
-                        data-testid="selectlabel"
-                      >
+                        data-testid="selectlabel">
                         {orderItemsMenu.map((item) => (
                           <MenuItem key={item.itemId} value={item}>
-                              {`${item.itemName} - ₹ ${item.itemPrice}`} 
+                            {`${item.itemName} - ₹ ${item.itemPrice}`}
                           </MenuItem>
                         ))}
                       </Select>
                       {!itemDetailsValid && (
-                        <FormHelperText error>Please select an item</FormHelperText>
+                        <FormHelperText error>
+                          Please select an item
+                        </FormHelperText>
                       )}
                     </FormControl>
                   </Grid>
@@ -254,20 +273,22 @@ const OrderModal = ({
                       value={quantity}
                       onChange={(e) => setQuantity(e.target.value)}
                       error={!!quantityError}
-                      style={{ marginTop: '10px' }}
+                      style={{ marginTop: "10px" }}
                     />
                     {quantityError && (
                       <FormHelperText error>{quantityError}</FormHelperText>
                     )}
                   </Grid>
-                  <Grid item xs={3} style={{ display: 'flex', alignItems: 'center' }}>
+                  <Grid
+                    item
+                    xs={3}
+                    style={{ display: "flex", alignItems: "center" }}>
                     <Button
                       aria-label="Add"
-                      color='success'
-                      variant='contained'
+                      color="success"
+                      variant="contained"
                       onClick={addItemWithQuantity}
-                      style={{ marginTop: '10px' }}
-                    >
+                      style={{ marginTop: "10px" }}>
                       <AddIcon />
                     </Button>
                   </Grid>
@@ -293,8 +314,7 @@ const OrderModal = ({
                               <IconButton
                                 aria-label="Delete"
                                 onClick={() => removeItem(item.itemId)}
-                                data-testid={`delete-${item.itemId}`} 
-                              >
+                                data-testid={`delete-${item.itemId}`}>
                                 <DeleteIcon />
                               </IconButton>
                             </TableCell>
@@ -310,7 +330,10 @@ const OrderModal = ({
         </DialogContentText>
       </DialogContent>
       {orderData.orderNo && (
-        <Stepper activeStep={activeStep} alternativeLabel style={{ marginTop: '16px' }}>
+        <Stepper
+          activeStep={activeStep}
+          alternativeLabel
+          style={{ marginTop: "16px" }}>
           {orderStatusStages.map((label) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
@@ -318,7 +341,7 @@ const OrderModal = ({
           ))}
         </Stepper>
       )}
-      <DialogActions style={{ marginTop: '16px' }}>
+      <DialogActions style={{ marginTop: "16px" }}>
         <Button onClick={handleClose} color="primary">
           Close
         </Button>
@@ -326,13 +349,10 @@ const OrderModal = ({
           <Button
             onClick={() => handleSaveClick(!!orderData.orderNo)}
             color="primary"
-            variant="contained"
-          >
-            {orderData.orderNo ? getNextStatusText() : 'Add'}
+            variant="contained">
+            {orderData.orderNo ? getNextStatusText() : "Add"}
           </Button>
-        ) : (
-            null
-        )}
+        ) : null}
       </DialogActions>
     </Dialog>
   );

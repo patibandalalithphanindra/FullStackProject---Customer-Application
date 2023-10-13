@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableHead,
@@ -7,11 +7,11 @@ import {
   TableBody,
   Paper,
   TableContainer,
-  IconButton
-} from '@mui/material';
+  IconButton,
+} from "@mui/material";
 import { ArrowDownward, ArrowUpward } from "@mui/icons-material";
 
-import styles from './styles.module.css';
+import styles from "./styles.module.css";
 
 const Orders = ({ orders }) => {
   const [sortedOrders, setSortedOrders] = useState(orders);
@@ -19,20 +19,24 @@ const Orders = ({ orders }) => {
 
   const formatDate = (dateString) => {
     const options = {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
       hour12: true,
     };
-    return new Date(dateString).toLocaleDateString('en-US', options);
+    return new Date(dateString).toLocaleDateString("en-US", options);
   };
 
   const toggleSort = () => {
     const newOrder = ascending
-      ? [...sortedOrders].sort((a, b) => new Date(a.orderDate) - new Date(b.orderDate))
-      : [...sortedOrders].sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
+      ? [...sortedOrders].sort(
+          (a, b) => new Date(a.orderDate) - new Date(b.orderDate)
+        )
+      : [...sortedOrders].sort(
+          (a, b) => new Date(b.orderDate) - new Date(a.orderDate)
+        );
 
     setAscending(!ascending);
     setSortedOrders(newOrder);
@@ -51,23 +55,34 @@ const Orders = ({ orders }) => {
           <Table>
             <TableHead className={styles.header}>
               <TableRow>
-                <TableCell><b>Order No</b></TableCell>
+                <TableCell>
+                  <b>Order No</b>
+                </TableCell>
                 <TableCell>
                   <b>Date</b>
                   <IconButton
                     onClick={toggleSort}
                     color="inherit"
                     size="small"
-                    aria-label="sort"
-                  >
+                    aria-label="sort">
                     {sortIcon}
                   </IconButton>
                 </TableCell>
-                <TableCell><b>Rewards Earned</b></TableCell>
-                <TableCell><b>Rewards Redeemed</b></TableCell>
-                <TableCell><b>Total Items</b></TableCell>
-                <TableCell><b>Total Order Value</b></TableCell>
-                <TableCell><b>Order Status</b></TableCell>
+                <TableCell>
+                  <b>Rewards Earned</b>
+                </TableCell>
+                <TableCell>
+                  <b>Rewards Redeemed</b>
+                </TableCell>
+                <TableCell>
+                  <b>Total Items</b>
+                </TableCell>
+                <TableCell>
+                  <b>Total Order Value</b>
+                </TableCell>
+                <TableCell>
+                  <b>Order Status</b>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -78,7 +93,9 @@ const Orders = ({ orders }) => {
                   <TableCell>{order.reward.rewardsEarned}</TableCell>
                   <TableCell>{order.reward.rewardsRedeemed}</TableCell>
                   <TableCell>{order.totalItems}</TableCell>
-                  <TableCell>{order.currency} {order.orderTotal}</TableCell>
+                  <TableCell>
+                    {order.currency} {order.orderTotal}
+                  </TableCell>
                   <TableCell>{order.orderStatus}</TableCell>
                 </TableRow>
               ))}
@@ -86,7 +103,9 @@ const Orders = ({ orders }) => {
           </Table>
         </TableContainer>
       ) : (
-        <h3 className={styles.nodata}>No orders have been placed by the customer!</h3>
+        <h3 className={styles.nodata}>
+          No orders have been placed by the customer!
+        </h3>
       )}
     </Paper>
   );

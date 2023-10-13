@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { Button, Container, TextField, Typography } from '@mui/material';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import styles from './styles.module.css';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from "react";
+import { Button, Container, TextField, Typography } from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import styles from "./styles.module.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Register({ toggleForm }) {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    roles: 'ROLE_ADMIN',
+    name: "",
+    email: "",
+    password: "",
+    roles: "ROLE_ADMIN",
   });
 
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ function Register({ toggleForm }) {
     e.preventDefault();
 
     if (!isEmailValid(formData.email)) {
-      toast.error('Invalid email address. Please enter a valid email.', {
+      toast.error("Invalid email address. Please enter a valid email.", {
         position: toast.POSITION.BOTTOM_LEFT,
         autoClose: 900,
       });
@@ -38,19 +38,22 @@ function Register({ toggleForm }) {
     }
 
     try {
-      const response = await axios.post('http://localhost:8080/user/add', formData);
+      const response = await axios.post(
+        "http://localhost:8080/user/add",
+        formData
+      );
       if (response.status === 200) {
-        localStorage.setItem('jwt', response?.data?.token);
-        localStorage.setItem('name', response?.data?.name);
-        navigate('/homepage');
-        toast.success('Registered Successfully!', {
+        localStorage.setItem("jwt", response?.data?.token);
+        localStorage.setItem("name", response?.data?.name);
+        navigate("/homepage");
+        toast.success("Registered Successfully!", {
           position: toast.POSITION.BOTTOM_LEFT,
           autoClose: 900,
         });
       }
     } catch (error) {
-      console.error('Registration error:', error);
-      toast.error('Registration failed. Please try again.', {
+      console.error("Registration error:", error);
+      toast.error("Registration failed. Please try again.", {
         position: toast.POSITION.BOTTOM_LEFT,
         autoClose: 900,
       });
@@ -93,13 +96,19 @@ function Register({ toggleForm }) {
           margin="normal"
           data-testid="password"
         />
-        <Button type="submit" variant="contained" color="success" data-testid="register" fullWidth className={styles.registerButton}>
+        <Button
+          type="submit"
+          variant="contained"
+          color="success"
+          data-testid="register"
+          fullWidth
+          className={styles.registerButton}>
           Register
         </Button>
       </form>
       <div className={styles.switchLink}>
         <Typography variant="body2">
-          Already have an account?{' '}
+          Already have an account?{" "}
           <span className={styles.switchButton} onClick={toggleForm}>
             Switch to Login
           </span>

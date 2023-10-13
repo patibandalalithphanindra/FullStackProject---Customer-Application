@@ -34,7 +34,6 @@ import { ArrowDownward, ArrowUpward, Search } from "@mui/icons-material";
 import OrderItemsList from "./OrderItemsList";
 import { useLocation } from "react-router-dom";
 
-
 export const formatDate = (dateString) => {
   const options = {
     day: "2-digit",
@@ -49,7 +48,9 @@ export const formatDate = (dateString) => {
 
 function Order() {
   const location = useLocation();
-  const redirectToOrders = location.state ? location.state.redirectToOrders : false;
+  const redirectToOrders = location.state
+    ? location.state.redirectToOrders
+    : false;
   const [orders, setOrders] = useState([]);
   const [searchCustomerId, setSearchCustomerId] = useState("");
   const [deleteOrderId, setDeleteOrderId] = useState(null);
@@ -69,7 +70,7 @@ function Order() {
   const [withCoinsData, setWithCoinsData] = useState("yes");
   const [orderItemsData, setOrderItemsData] = useState([]);
   const [orderItemsMenu, setOrderItemsBcknd] = useState([]);
-  const [error, setError] = useState(null); 
+  const [error, setError] = useState(null);
 
   const refetchOrders = (headers) => {
     axios
@@ -80,7 +81,7 @@ function Order() {
       })
       .catch((error) => {
         console.error("Error fetching order data:", error);
-        setError('Error fetching data. Please try again!');
+        setError("Error fetching data. Please try again!");
       });
     axios
       .get("http://localhost:8080/items", { headers })
@@ -90,19 +91,19 @@ function Order() {
       .catch((error) => {
         console.error("Error fetching order items data:", error);
       });
-  }
+  };
 
   useEffect(() => {
-    console.log("redirectToOrders:", redirectToOrders); 
+    console.log("redirectToOrders:", redirectToOrders);
     const response = localStorage.getItem("jwt");
     const headers = {
       Authorization: `Bearer ${response}`,
       "Content-Type": "application/json",
     };
-   refetchOrders(headers);
-   if (redirectToOrders) {
-    setIsOrderModalOpen(true);
-  }
+    refetchOrders(headers);
+    if (redirectToOrders) {
+      setIsOrderModalOpen(true);
+    }
   }, [redirectToOrders]);
 
   const handleAddition = () => {
@@ -231,7 +232,7 @@ function Order() {
   };
 
   const handleOrderModalSave = (updatedStatus) => {
-    console.log(updatedStatus)
+    console.log(updatedStatus);
     const response = localStorage.getItem("jwt");
     const headers = {
       Authorization: `Bearer ${response}`,
@@ -259,7 +260,7 @@ function Order() {
                 order.orderNo === orderModalData.orderNo
                   ? orderModalData
                   : order
-              ) 
+              )
             );
             refetchOrders(headers);
           } else {
@@ -310,12 +311,14 @@ function Order() {
     }
   };
 
-  const filteredOrders = orders.filter((order) =>
-  order.customerId && order.customerId.includes(searchCustomerId)
-);
+  const filteredOrders = orders.filter(
+    (order) => order.customerId && order.customerId.includes(searchCustomerId)
+  );
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - filteredOrders.length) : 0;
+    page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - filteredOrders.length)
+      : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -375,15 +378,17 @@ function Order() {
             variant="contained"
             className={`${styles.button} ${styles.addOrderButton}`}
             onClick={handleAddition}
-            data-testid="add"
-          >
+            data-testid="add">
             <AddIcon />
           </Button>
         </div>
       </div>
-      <TableContainer component={Paper} className={styles.container} data-testid="table">
+      <TableContainer
+        component={Paper}
+        className={styles.container}
+        data-testid="table">
         <Table>
-          <TableHead style={{backgroundColor:'lightgreen'}}>
+          <TableHead style={{ backgroundColor: "lightgreen" }}>
             <TableRow>
               <TableCell>
                 <b>Order No</b>
@@ -397,8 +402,7 @@ function Order() {
                   onClick={handleSort}
                   color="inherit"
                   size="small"
-                  aria-label="sort"
-                >
+                  aria-label="sort">
                   {sortOrder === "asc" ? <ArrowUpward /> : <ArrowDownward />}
                 </IconButton>
               </TableCell>
@@ -419,15 +423,14 @@ function Order() {
                 <TableCell>{order.orderNo}</TableCell>
                 <TableCell>
                   <span
-                    style={{ cursor: "pointer", textDecoration:'underline' }}
-                    onClick={() => setSelectedCustomerId(order.customerId)}
-                  >
+                    style={{ cursor: "pointer", textDecoration: "underline" }}
+                    onClick={() => setSelectedCustomerId(order.customerId)}>
                     {order.customerId}
                   </span>
                 </TableCell>
                 <TableCell>{formatDate(order.orderDate)}</TableCell>
                 <TableCell>
-                {order.currency} {order.orderTotal}
+                  {order.currency} {order.orderTotal}
                 </TableCell>
                 <TableCell>{order.orderStatus}</TableCell>
                 <TableCell>
@@ -437,8 +440,7 @@ function Order() {
                     color="primary"
                     className={`${styles.button} ${styles.primaryButton}`}
                     onClick={() => handleView(order.orderNo)}
-                    data-testid={`viewicon-${order.orderNo}`} 
-                  >
+                    data-testid={`viewicon-${order.orderNo}`}>
                     <VisibilityIcon />
                   </Button>
                   <Button
@@ -447,8 +449,7 @@ function Order() {
                     color="success"
                     className={`${styles.button} ${styles.secondaryButton}`}
                     onClick={() => handleUpdate(order.orderNo)}
-                    data-testid={`editicon-${order.orderNo}`} 
-                  >
+                    data-testid={`editicon-${order.orderNo}`}>
                     <EditIcon />
                   </Button>
                   <Button
@@ -456,8 +457,7 @@ function Order() {
                     color="error"
                     className={`${styles.button} ${styles.tertiaryButton}`}
                     onClick={() => handleDelete(order.orderNo)}
-                    data-testid={`deleteicon-${order.orderNo}`} 
-                  >
+                    data-testid={`deleteicon-${order.orderNo}`}>
                     <DeleteIcon />
                   </Button>
                 </TableCell>
@@ -470,7 +470,9 @@ function Order() {
             )}
           </TableBody>
         </Table>
-        {error && <h4 style={{display:"flex", justifyContent:"center"}}>{error}</h4>}
+        {error && (
+          <h4 style={{ display: "flex", justifyContent: "center" }}>{error}</h4>
+        )}
       </TableContainer>
       <Dialog open={isDeleteModalOpen} onClose={handleDeleteCancel}>
         <DialogTitle>Confirmation</DialogTitle>
@@ -481,10 +483,16 @@ function Order() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDeleteCancel} color="primary" data-testid="cancel">
+          <Button
+            onClick={handleDeleteCancel}
+            color="primary"
+            data-testid="cancel">
             Cancel
           </Button>
-          <Button onClick={handleDeleteConfirmation} color="error" data-testid="deletebutton">
+          <Button
+            onClick={handleDeleteConfirmation}
+            color="error"
+            data-testid="deletebutton">
             Delete
           </Button>
         </DialogActions>
@@ -531,14 +539,18 @@ function Order() {
                   {formatDate(selectedOrder.lastModifiedTS)}
                 </Typography>
               </DialogContentText>
-              {selectedOrder.orderItems && selectedOrder.orderItems.length > 0 && (
-                <>
-              <OrderItemsList orderItems={selectedOrder.orderItems} />
-              </>
-               )}
+              {selectedOrder.orderItems &&
+                selectedOrder.orderItems.length > 0 && (
+                  <>
+                    <OrderItemsList orderItems={selectedOrder.orderItems} />
+                  </>
+                )}
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleViewModalClose} color="primary" data-testid="close">
+              <Button
+                onClick={handleViewModalClose}
+                color="primary"
+                data-testid="close">
                 Close
               </Button>
             </DialogActions>

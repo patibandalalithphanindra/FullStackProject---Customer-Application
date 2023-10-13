@@ -1,6 +1,6 @@
-import React from 'react';
-import { Card, CardContent, Avatar, Typography, Grid } from '@mui/material';
-import styles from './styles.module.css';
+import React from "react";
+import { Card, CardContent, Avatar, Typography, Grid } from "@mui/material";
+import styles from "./styles.module.css";
 
 const Profile = ({ customer }) => {
   const {
@@ -14,7 +14,7 @@ const Profile = ({ customer }) => {
     state,
     zipCode,
     country,
-    status
+    status,
   } = customer;
 
   return (
@@ -29,7 +29,12 @@ const Profile = ({ customer }) => {
             />
           </Grid>
           <Grid item xs={5} className={styles.head}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}>
               <Typography color="textPrimary" className={styles.profile}>
                 <b> Name : </b> {firstName} {lastName}
               </Typography>
@@ -45,8 +50,16 @@ const Profile = ({ customer }) => {
             </div>
           </Grid>
           <Grid item xs={3}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-              <Typography color="textPrimary" className={styles.address} style={{marginTop:'26px'}}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}>
+              <Typography
+                color="textPrimary"
+                className={styles.address}
+                style={{ marginTop: "26px" }}>
                 <b>Address : </b> {addressLine1}, {addressLine2}
               </Typography>
               <Typography color="textPrimary" className={styles.address}>
