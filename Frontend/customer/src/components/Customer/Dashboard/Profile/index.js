@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardContent, Avatar, Typography, Grid } from "@mui/material";
 import styles from "./styles.module.css";
 
-const Profile = ({ customer }) => {
+function Profile({ customer }) {
   const {
     firstName,
     lastName,
@@ -80,6 +80,6 @@ const Profile = ({ customer }) => {
       </CardContent>
     </Card>
   );
-};
+}
 
 export default Profile;

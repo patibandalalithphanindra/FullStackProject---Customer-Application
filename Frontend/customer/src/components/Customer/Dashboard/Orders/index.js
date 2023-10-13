@@ -13,7 +13,7 @@ import { ArrowDownward, ArrowUpward } from "@mui/icons-material";
 
 import styles from "./styles.module.css";
 
-const Orders = ({ orders }) => {
+function Orders({ orders }) {
   const [sortedOrders, setSortedOrders] = useState(orders);
   const [ascending, setAscending] = useState(true);
 
@@ -109,6 +109,6 @@ const Orders = ({ orders }) => {
       )}
     </Paper>
   );
-};
+}
 
 export default Orders;

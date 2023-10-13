@@ -8,7 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import styles from "./styles.module.css";
 
-const Dashboard = () => {
+function Dashboard() {
   const navigate = useNavigate();
   const { customerId } = useParams();
   const [orders, setOrders] = useState([]);
@@ -88,6 +88,6 @@ const Dashboard = () => {
       </Paper>
     </Container>
   );
-};
+}
 
 export default Dashboard;

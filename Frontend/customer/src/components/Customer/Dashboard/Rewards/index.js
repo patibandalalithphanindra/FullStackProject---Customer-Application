@@ -61,7 +61,7 @@ const BalanceCoinsIcon = () => (
   </svg>
 );
 
-const Rewards = ({ id }) => {
+function Rewards({ id }) {
   const [rewardsData, setRewardsData] = useState({
     rewardsEarned: 0.0,
     rewardsRedeemed: 0.0,
@@ -139,6 +139,6 @@ const Rewards = ({ id }) => {
       </Typography>
     </Paper>
   );
-};
+}
 
 export default Rewards;
