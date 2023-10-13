@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1697103144482" clover="3.2.0">
-  <project timestamp="1697103144482" name="All files">
+<coverage generated="1697175330569" clover="3.2.0">
+  <project timestamp="1697175330569" name="All files">
     <metrics statements="647" coveredstatements="546" conditionals="241" coveredconditionals="180" methods="189" coveredmethods="154" elements="1077" coveredelements="880" complexity="0" loc="647" ncloc="647" packages="18" files="21" classes="21"/>
     <package name="src">
       <metrics statements="11" coveredstatements="8" conditionals="18" coveredconditionals="17" methods="2" coveredmethods="2"/>
@@ -275,9 +275,9 @@
       <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Customer/Dashboard/Rewards/index.js">
         <metrics statements="17" coveredstatements="17" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="7"/>
         <line num="5" count="4" type="stmt"/>
-        <line num="6" count="8" type="stmt"/>
+        <line num="6" count="6" type="stmt"/>
         <line num="22" count="4" type="stmt"/>
-        <line num="23" count="8" type="stmt"/>
+        <line num="23" count="6" type="stmt"/>
         <line num="39" count="4" type="stmt"/>
         <line num="40" count="6" type="stmt"/>
         <line num="64" count="4" type="stmt"/>
