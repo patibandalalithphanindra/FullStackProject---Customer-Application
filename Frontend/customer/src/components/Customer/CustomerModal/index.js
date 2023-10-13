@@ -139,7 +139,6 @@ const CustomerModal = ({
               onChange={(e) => setCustomer({ ...customer, addressLine2: e.target.value })}
               inputProps={{ "data-testid": "add2" }}
             />
-            {!addressLine2Valid && <FormHelperText error>This field is required.</FormHelperText>}
           </Grid>
           <Grid item xs={6}>
             <TextField
