@@ -146,7 +146,6 @@ public class CustomerServiceImplementation implements CustomerService {
         if (updatedCustomer.getStatus() != null) {
             existingCustomer.setStatus(updatedCustomer.getStatus());
         }
-        System.out.println(existingCustomer);
         customerRepository.save(existingCustomer);
         return existingCustomer;
     }
