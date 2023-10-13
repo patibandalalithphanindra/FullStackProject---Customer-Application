@@ -76,6 +76,7 @@ const OrderModal = ({
         setActiveStep(0);
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, orderData]);
 
   const getNextStatus = () => {
