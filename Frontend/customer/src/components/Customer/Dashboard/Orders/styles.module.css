@@ -1,0 +1,42 @@
+.container {
+    margin-bottom: 20px;
+  }
+  
+  .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px;
+    background: lightslategray;
+    color: white;
+    border-radius: 4px 4px 0 0;
+  }
+
+  .sortButton {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  
+  .titleText {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-left: 10px; 
+  }
+
+  .table {
+    max-height: 280px;
+    overflow-y: scroll;
+  }
+
+  .nodata {
+    padding-top: 14px;
+    padding-left: 16px;
+    padding-bottom: 14px;
+  }
+
+  .header {
+    background-color: lightgrey;
+    width: fit-content;
+  }
+  

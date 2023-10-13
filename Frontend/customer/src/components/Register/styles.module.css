@@ -1,0 +1,29 @@
+.loginButton {
+    background-color: #2196F3;
+    color: white;
+    margin-top: 16px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .registerButton {
+    background-color: #4CAF50;
+    color: white;
+    margin-top: 16px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .switchButton {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .switchLink {
+    margin-top: 8px;
+  }
+  

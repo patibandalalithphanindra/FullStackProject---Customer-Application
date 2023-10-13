@@ -1,15 +1,19 @@
 package com.lalith.customer.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
+@Getter
+@Setter
 @Document(collection = "rewards")
 public class Reward {
     @Id
@@ -20,7 +24,6 @@ public class Reward {
     private String customerId;
     private double rewardsEarned;
     private double rewardsRedeemed;
-    private double rewardsBalance;
-    private Date rewardsDate;
+    private LocalDateTime rewardsDate;
 }
 
