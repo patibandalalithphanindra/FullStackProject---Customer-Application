@@ -53,7 +53,10 @@ function Orders({ orders }) {
       {sortedOrders.length > 0 ? (
         <TableContainer component={Paper} className={styles.table}>
           <Table>
-            <TableHead className={styles.header}>
+            <TableHead
+              className={styles.header}
+              style={{ backgroundColor: "#CCD7C1" }}
+            >
               <TableRow>
                 <TableCell>
                   <b>Order No</b>
@@ -64,7 +67,8 @@ function Orders({ orders }) {
                     onClick={toggleSort}
                     color="inherit"
                     size="small"
-                    aria-label="sort">
+                    aria-label="sort"
+                  >
                     {sortIcon}
                   </IconButton>
                 </TableCell>

@@ -18,7 +18,7 @@ function Profile({ customer }) {
   } = customer;
 
   return (
-    <Card>
+    <Card style={{ backgroundColor: "#f0f0f0" }}>
       <CardContent>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={2} marginLeft={2}>
@@ -34,7 +34,8 @@ function Profile({ customer }) {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-start",
-              }}>
+              }}
+            >
               <Typography color="textPrimary" className={styles.profile}>
                 <b> Name : </b> {firstName} {lastName}
               </Typography>
@@ -55,11 +56,13 @@ function Profile({ customer }) {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-start",
-              }}>
+              }}
+            >
               <Typography
                 color="textPrimary"
                 className={styles.address}
-                style={{ marginTop: "26px" }}>
+                style={{ marginTop: "26px" }}
+              >
                 <b>Address : </b> {addressLine1}, {addressLine2}
               </Typography>
               <Typography color="textPrimary" className={styles.address}>

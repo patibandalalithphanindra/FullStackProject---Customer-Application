@@ -1,14 +1,12 @@
 body {
-  background-color: #f0f0f0;
+  background-color : #F0F6E4;
   margin: 0;
   padding: 0;
 }
 
 .container {
   text-align: center;
-  background-color: #f0f0f0;
   min-height: 100vh;
-  background-color: lightgrey;
 }
 
 .cardContainer {
