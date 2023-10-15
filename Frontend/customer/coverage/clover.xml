@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1697343218889" clover="3.2.0">
-  <project timestamp="1697343218889" name="All files">
+<coverage generated="1697347829872" clover="3.2.0">
+  <project timestamp="1697347829873" name="All files">
     <metrics statements="640" coveredstatements="540" conditionals="239" coveredconditionals="179" methods="190" coveredmethods="155" elements="1069" coveredelements="874" complexity="0" loc="640" ncloc="640" packages="18" files="21" classes="21"/>
     <package name="src">
       <metrics statements="11" coveredstatements="8" conditionals="18" coveredconditionals="17" methods="2" coveredmethods="2"/>
@@ -255,7 +255,7 @@
         <line num="47" count="10" type="stmt"/>
         <line num="48" count="7" type="stmt"/>
         <line num="51" count="10" type="stmt"/>
-        <line num="90" count="8" type="stmt"/>
+        <line num="94" count="8" type="stmt"/>
       </file>
     </package>
     <package name="src.components.Customer.Dashboard.Profile">
