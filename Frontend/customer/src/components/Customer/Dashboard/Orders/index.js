@@ -55,7 +55,7 @@ function Orders({ orders }) {
           <Table>
             <TableHead
               className={styles.header}
-              style={{ backgroundColor: "#CCD7C1" }}
+              style={{ backgroundColor: "lightcoral" }}
             >
               <TableRow>
                 <TableCell>
@@ -91,7 +91,7 @@ function Orders({ orders }) {
             </TableHead>
             <TableBody>
               {sortedOrders.map((order) => (
-                <TableRow key={order.orderKey}>
+                <TableRow key={order.orderKey}  style={{ backgroundColor: "#f0f0f0" }}>
                   <TableCell>{order.orderNo}</TableCell>
                   <TableCell>{formatDate(order.orderDate)}</TableCell>
                   <TableCell style={{textAlign:"center"}}>{order.reward.rewardsEarned}</TableCell>
