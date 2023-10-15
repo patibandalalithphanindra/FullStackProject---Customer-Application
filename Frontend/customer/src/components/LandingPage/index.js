@@ -63,14 +63,15 @@ function LandingPage() {
             marginLeft: "200px",
             marginRight: "200px",
             backgroundColor: " #e0e0f4",
-          }}>
+          }}
+        >
           <Grid align="center" container spacing={6}>
             <Grid item xs={4}>
               <Box display="flex" alignItems="center">
                 <People sx={{ fontSize: 60 }} />
                 &nbsp; &nbsp;
                 <div>
-                  <Typography variant="h6">Customers Onboarded</Typography>
+                  <Typography variant="h6">Customers</Typography>
                   <Typography variant="subtitle1">{counts[0]} </Typography>
                 </div>
               </Box>
@@ -106,7 +107,8 @@ function LandingPage() {
             marginLeft: "200px",
             marginRight: "200px",
             backgroundColor: "#c7ebd3",
-          }}>
+          }}
+        >
           <Grid align="center" container spacing={6}>
             <Grid item xs={4}>
               <Box display="flex" alignItems="center">
