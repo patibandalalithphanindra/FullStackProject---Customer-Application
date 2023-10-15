@@ -404,7 +404,7 @@ function Order() {
                   {sortOrder === "asc" ? <ArrowUpward /> : <ArrowDownward />}
                 </IconButton>
               </TableCell>
-              <TableCell>
+              <TableCell style={{textAlign:"center"}}>
                 <b>Total Order Amount</b>
               </TableCell>
               <TableCell>
@@ -427,7 +427,7 @@ function Order() {
                   </span>
                 </TableCell>
                 <TableCell>{formatDate(order.orderDate)}</TableCell>
-                <TableCell>
+                <TableCell style={{textAlign:"center"}}>
                   {order.currency} {order.orderTotal}
                 </TableCell>
                 <TableCell>{order.orderStatus}</TableCell>
