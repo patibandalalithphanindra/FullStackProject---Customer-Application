@@ -1,5 +1,6 @@
-package com.lalith.customer.exception;
+package com.lalith.customer.exceptiontests;
 
+import com.lalith.customer.exception.CustomErrorResponse;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
