@@ -74,14 +74,14 @@ function Dashboard() {
         <Profile customer={customer} />
       </Paper>
 
-      <Paper className={styles.paper} style={{ backgroundColor: "#CCFDCC" }}>
+      <Paper className={styles.paper} style={{ backgroundColor: "lightgreen" }}>
         <Typography variant="h5" className={styles.heading} marginBottom={2}>
           Rewards Summary
         </Typography>
         <Rewards id={customerId} />
       </Paper>
 
-      <Paper className={styles.paper} style={{ backgroundColor: "#FEECA1" }}>
+      <Paper className={styles.paper} style={{ backgroundColor: "#FFDBAC" }}>
         <Typography variant="h5" className={styles.heading} marginBottom={2}>
           Order History
         </Typography>

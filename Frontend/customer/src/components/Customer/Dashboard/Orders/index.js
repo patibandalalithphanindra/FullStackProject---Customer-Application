@@ -55,7 +55,7 @@ function Orders({ orders }) {
           <Table>
             <TableHead
               className={styles.header}
-              style={{ backgroundColor: "lightcoral" }}
+              style={{ backgroundColor: "#9687B6" }}
             >
               <TableRow>
                 <TableCell>
