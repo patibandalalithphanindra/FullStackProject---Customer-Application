@@ -155,7 +155,7 @@ function Reward() {
 
       <TableContainer component={Paper} className={styles.container}>
         <Table>
-          <TableHead style={{ backgroundColor: "#A4C9A4" }}>
+          <TableHead style={{ backgroundColor: "#B9C0C7" }}>
             <TableRow>
               <TableCell>
                 <b>Reward ID</b>
