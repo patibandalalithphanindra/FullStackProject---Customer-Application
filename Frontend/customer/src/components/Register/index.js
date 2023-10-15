@@ -102,7 +102,8 @@ function Register({ toggleForm }) {
           color="success"
           data-testid="register"
           fullWidth
-          className={styles.registerButton}>
+          className={styles.registerButton}
+        >
           Register
         </Button>
       </form>

@@ -76,7 +76,8 @@ function Login({ toggleForm }) {
           color="primary"
           data-testid="login"
           fullWidth
-          className={styles.loginButton}>
+          className={styles.loginButton}
+        >
           Login
         </Button>
       </form>

@@ -376,7 +376,8 @@ function Order() {
             variant="contained"
             className={`${styles.button} ${styles.addOrderButton}`}
             onClick={handleAddition}
-            data-testid="add">
+            data-testid="add"
+          >
             <AddIcon />
           </Button>
         </div>
@@ -384,7 +385,8 @@ function Order() {
       <TableContainer
         component={Paper}
         className={styles.container}
-        data-testid="table">
+        data-testid="table"
+      >
         <Table>
           <TableHead style={{ backgroundColor: "lightgreen" }}>
             <TableRow>
@@ -400,11 +402,12 @@ function Order() {
                   onClick={handleSort}
                   color="inherit"
                   size="small"
-                  aria-label="sort">
+                  aria-label="sort"
+                >
                   {sortOrder === "asc" ? <ArrowUpward /> : <ArrowDownward />}
                 </IconButton>
               </TableCell>
-              <TableCell style={{textAlign:"center"}}>
+              <TableCell style={{ textAlign: "center" }}>
                 <b>Total Order Amount</b>
               </TableCell>
               <TableCell>
@@ -422,12 +425,13 @@ function Order() {
                 <TableCell>
                   <span
                     style={{ cursor: "pointer", textDecoration: "underline" }}
-                    onClick={() => setSelectedCustomerId(order.customerId)}>
+                    onClick={() => setSelectedCustomerId(order.customerId)}
+                  >
                     {order.customerId}
                   </span>
                 </TableCell>
                 <TableCell>{formatDate(order.orderDate)}</TableCell>
-                <TableCell style={{textAlign:"center"}}>
+                <TableCell style={{ textAlign: "center" }}>
                   {order.currency} {order.orderTotal}
                 </TableCell>
                 <TableCell>{order.orderStatus}</TableCell>
@@ -438,7 +442,8 @@ function Order() {
                     color="primary"
                     className={`${styles.button} ${styles.primaryButton}`}
                     onClick={() => handleView(order.orderNo)}
-                    data-testid={`viewicon-${order.orderNo}`}>
+                    data-testid={`viewicon-${order.orderNo}`}
+                  >
                     <VisibilityIcon />
                   </Button>
                   <Button
@@ -447,7 +452,8 @@ function Order() {
                     color="success"
                     className={`${styles.button} ${styles.secondaryButton}`}
                     onClick={() => handleUpdate(order.orderNo)}
-                    data-testid={`editicon-${order.orderNo}`}>
+                    data-testid={`editicon-${order.orderNo}`}
+                  >
                     <EditIcon />
                   </Button>
                   <Button
@@ -455,7 +461,8 @@ function Order() {
                     color="error"
                     className={`${styles.button} ${styles.tertiaryButton}`}
                     onClick={() => handleDelete(order.orderNo)}
-                    data-testid={`deleteicon-${order.orderNo}`}>
+                    data-testid={`deleteicon-${order.orderNo}`}
+                  >
                     <DeleteIcon />
                   </Button>
                 </TableCell>
@@ -484,13 +491,15 @@ function Order() {
           <Button
             onClick={handleDeleteCancel}
             color="primary"
-            data-testid="cancel">
+            data-testid="cancel"
+          >
             Cancel
           </Button>
           <Button
             onClick={handleDeleteConfirmation}
             color="error"
-            data-testid="deletebutton">
+            data-testid="deletebutton"
+          >
             Delete
           </Button>
         </DialogActions>
@@ -548,7 +557,8 @@ function Order() {
               <Button
                 onClick={handleViewModalClose}
                 color="primary"
-                data-testid="close">
+                data-testid="close"
+              >
                 Close
               </Button>
             </DialogActions>

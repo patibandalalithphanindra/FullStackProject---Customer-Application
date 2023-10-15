@@ -19,7 +19,8 @@ function HomePage() {
       justifyContent="center"
       alignItems="center"
       height="100vh"
-      style={{ backgroundImage: `url(/loginimage.jpg)` }}>
+      style={{ backgroundImage: `url(/loginimage.jpg)` }}
+    >
       <Grid item xs={12} sm={6}>
         <Paper elevation={3} className={styles.paperStyle}>
           <Typography variant="h4" gutterBottom className={styles.headerText}>

@@ -58,10 +58,7 @@ function Profile({ customer }) {
                 alignItems: "flex-start",
               }}
             >
-              <Typography
-                color="textPrimary"
-                className={styles.address}
-              >
+              <Typography color="textPrimary" className={styles.address}>
                 <b>Address : </b> {addressLine1}, {addressLine2}
               </Typography>
               <Typography color="textPrimary" className={styles.address}>

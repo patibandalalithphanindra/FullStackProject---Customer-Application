@@ -348,7 +348,8 @@ function Customer() {
             variant="contained"
             className={`${styles.button} ${styles.addCustomerButton}`}
             onClick={handleAddition}
-            data-testid="add-button">
+            data-testid="add-button"
+          >
             <AddIcon />
           </Button>
         </div>
@@ -366,7 +367,8 @@ function Customer() {
                   onClick={handleSort}
                   color="inherit"
                   size="small"
-                  aria-label="sort">
+                  aria-label="sort"
+                >
                   {sortOrder === "asc" ? (
                     <ArrowUpwardIcon />
                   ) : (
@@ -377,7 +379,7 @@ function Customer() {
               <TableCell>
                 <b>Email</b>
               </TableCell>
-              <TableCell style={{textAlign:"center"}}>
+              <TableCell style={{ textAlign: "center" }}>
                 <b>Phone Number</b>
               </TableCell>
               <TableCell>
@@ -396,7 +398,9 @@ function Customer() {
                   {customer.firstName}
                 </TableCell>
                 <TableCell>{customer.emailId}</TableCell>
-                <TableCell style={{textAlign:"center"}}>{customer.phoneNo}</TableCell>
+                <TableCell style={{ textAlign: "center" }}>
+                  {customer.phoneNo}
+                </TableCell>
                 <TableCell>
                   <Button
                     sx={{ mr: 2 }}
@@ -404,7 +408,8 @@ function Customer() {
                     color="primary"
                     className={`${styles.button} ${styles.primaryButton}`}
                     onClick={() => handleView(customer.customerId)}
-                    data-testid={`viewicon-${customer.customerId}`}>
+                    data-testid={`viewicon-${customer.customerId}`}
+                  >
                     <VisibilityIcon />
                   </Button>
                   <Button
@@ -413,7 +418,8 @@ function Customer() {
                     color="success"
                     className={`${styles.button} ${styles.secondaryButton}`}
                     onClick={() => handleUpdate(customer.customerId)}
-                    data-testid={`editicon-${customer.customerId}`}>
+                    data-testid={`editicon-${customer.customerId}`}
+                  >
                     <EditIcon />
                   </Button>
                   <Button
@@ -421,7 +427,8 @@ function Customer() {
                     color="error"
                     className={`${styles.button} ${styles.tertiaryButton}`}
                     onClick={() => handleDelete(customer.customerId)}
-                    data-testid={`deleteicon-${customer.customerId}`}>
+                    data-testid={`deleteicon-${customer.customerId}`}
+                  >
                     <DeleteIcon />
                   </Button>
                 </TableCell>
@@ -431,12 +438,14 @@ function Customer() {
                     onCopy={() => {
                       setCopiedCustomerId(customer.customerId);
                       setRedirectToOrders(true);
-                    }}>
+                    }}
+                  >
                     <Button
                       variant="contained"
                       color="secondary"
                       className={`${styles.button}`}
-                      data-testid={`copyicon-${customer.customerId}`}>
+                      data-testid={`copyicon-${customer.customerId}`}
+                    >
                       <AddIcon />
                     </Button>
                   </CopyToClipboard>
@@ -470,13 +479,15 @@ function Customer() {
           <Button
             onClick={handleDeleteCancel}
             color="primary"
-            data-testid="cancel">
+            data-testid="cancel"
+          >
             Cancel
           </Button>
           <Button
             onClick={handleDeleteConfirmation}
             color="error"
-            data-testid="delete">
+            data-testid="delete"
+          >
             Delete
           </Button>
         </DialogActions>

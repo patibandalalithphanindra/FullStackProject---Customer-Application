@@ -72,16 +72,16 @@ function Orders({ orders }) {
                     {sortIcon}
                   </IconButton>
                 </TableCell>
-                <TableCell style={{textAlign:"right"}}>
+                <TableCell style={{ textAlign: "right" }}>
                   <b>Rewards Earned</b>
                 </TableCell>
-                <TableCell style={{textAlign:"right"}}>
+                <TableCell style={{ textAlign: "right" }}>
                   <b>Rewards Redeemed</b>
                 </TableCell>
-                <TableCell style={{textAlign:"right"}}>
+                <TableCell style={{ textAlign: "right" }}>
                   <b>Total Items</b>
                 </TableCell>
-                <TableCell style={{textAlign:"right"}}>
+                <TableCell style={{ textAlign: "right" }}>
                   <b>Total Order Value</b>
                 </TableCell>
                 <TableCell>
@@ -91,13 +91,22 @@ function Orders({ orders }) {
             </TableHead>
             <TableBody>
               {sortedOrders.map((order) => (
-                <TableRow key={order.orderKey}  style={{ backgroundColor: "#f0f0f0" }}>
+                <TableRow
+                  key={order.orderKey}
+                  style={{ backgroundColor: "#f0f0f0" }}
+                >
                   <TableCell>{order.orderNo}</TableCell>
                   <TableCell>{formatDate(order.orderDate)}</TableCell>
-                  <TableCell style={{textAlign:"center"}}>{order.reward.rewardsEarned}</TableCell>
-                  <TableCell style={{textAlign:"center"}}>{order.reward.rewardsRedeemed}</TableCell>
-                  <TableCell style={{textAlign:"center"}}>{order.totalItems}</TableCell>
-                  <TableCell style={{textAlign:"center"}}>
+                  <TableCell style={{ textAlign: "center" }}>
+                    {order.reward.rewardsEarned}
+                  </TableCell>
+                  <TableCell style={{ textAlign: "center" }}>
+                    {order.reward.rewardsRedeemed}
+                  </TableCell>
+                  <TableCell style={{ textAlign: "center" }}>
+                    {order.totalItems}
+                  </TableCell>
+                  <TableCell style={{ textAlign: "center" }}>
                     {order.currency} {order.orderTotal}
                   </TableCell>
                   <TableCell>{order.orderStatus}</TableCell>

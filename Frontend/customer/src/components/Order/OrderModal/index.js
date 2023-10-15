@@ -49,13 +49,10 @@ const OrderModal = ({
   const [quantityError, setQuantityError] = useState("");
   const [activeStep, setActiveStep] = useState(0);
 
-  const orderStatusStages = useMemo(() => [
-    "Created",
-    "Packed",
-    "Shipped",
-    "In Transit",
-    "Delivered",
-  ], []);
+  const orderStatusStages = useMemo(
+    () => ["Created", "Packed", "Shipped", "In Transit", "Delivered"],
+    []
+  );
 
   const resetState = () => {
     setCustomerIdValid(true);
@@ -209,7 +206,8 @@ const OrderModal = ({
                   onChange={(e) =>
                     setOrderData({ ...orderData, currency: e.target.value })
                   }
-                  disabled={orderData.orderNo !== undefined}>
+                  disabled={orderData.orderNo !== undefined}
+                >
                   <MenuItem value="₹">₹</MenuItem>
                 </Select>
                 {!currencyValid && (
@@ -224,7 +222,8 @@ const OrderModal = ({
                   label="withCoins"
                   value={withCoins}
                   onChange={(e) => setWithCoins(e.target.value)}
-                  disabled={orderData.orderNo !== undefined}>
+                  disabled={orderData.orderNo !== undefined}
+                >
                   <MenuItem value="yes">Yes</MenuItem>
                   <MenuItem value="no">No</MenuItem>
                 </Select>
@@ -241,7 +240,8 @@ const OrderModal = ({
                     <FormControl
                       variant="outlined"
                       fullWidth
-                      style={{ marginTop: "10px" }}>
+                      style={{ marginTop: "10px" }}
+                    >
                       <InputLabel id="select-item-label" htmlFor="select-item">
                         Select Item
                       </InputLabel>
@@ -250,7 +250,8 @@ const OrderModal = ({
                         label="Select Items"
                         value={selectedItem}
                         onChange={(e) => setSelectedItem(e.target.value)}
-                        data-testid="selectlabel">
+                        data-testid="selectlabel"
+                      >
                         {orderItemsMenu.map((item) => (
                           <MenuItem key={item.itemId} value={item}>
                             {`${item.itemName} - ₹ ${item.itemPrice}`}
@@ -282,13 +283,15 @@ const OrderModal = ({
                   <Grid
                     item
                     xs={3}
-                    style={{ display: "flex", alignItems: "center" }}>
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
                     <Button
                       aria-label="Add"
                       color="success"
                       variant="contained"
                       onClick={addItemWithQuantity}
-                      style={{ marginTop: "10px" }}>
+                      style={{ marginTop: "10px" }}
+                    >
                       <AddIcon />
                     </Button>
                   </Grid>
@@ -314,7 +317,8 @@ const OrderModal = ({
                               <IconButton
                                 aria-label="Delete"
                                 onClick={() => removeItem(item.itemId)}
-                                data-testid={`delete-${item.itemId}`}>
+                                data-testid={`delete-${item.itemId}`}
+                              >
                                 <DeleteIcon />
                               </IconButton>
                             </TableCell>
@@ -333,7 +337,8 @@ const OrderModal = ({
         <Stepper
           activeStep={activeStep}
           alternativeLabel
-          style={{ marginTop: "16px" }}>
+          style={{ marginTop: "16px" }}
+        >
           {orderStatusStages.map((label) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
@@ -349,7 +354,8 @@ const OrderModal = ({
           <Button
             onClick={() => handleSaveClick(!!orderData.orderNo)}
             color="primary"
-            variant="contained">
+            variant="contained"
+          >
             {orderData.orderNo ? getNextStatusText() : "Add"}
           </Button>
         ) : null}

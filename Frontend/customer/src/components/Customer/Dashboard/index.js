@@ -57,7 +57,8 @@ function Dashboard() {
           variant="h5"
           className={styles.heading}
           align="center"
-          marginBottom={2}>
+          marginBottom={2}
+        >
           <ArrowBack
             onClick={goBack}
             className={styles.back}
@@ -66,14 +67,14 @@ function Dashboard() {
           <b>CUSTOMER DASHBOARD</b>
         </Typography>
       </Container>
-      <Paper className={styles.paper} style={{backgroundColor:"lightblue"}}>
+      <Paper className={styles.paper} style={{ backgroundColor: "lightblue" }}>
         <Typography variant="h5" className={styles.heading} marginBottom={2}>
           Profile
         </Typography>
         <Profile customer={customer} />
       </Paper>
 
-      <Paper className={styles.paper} style={{backgroundColor:"#CCFDCC"}}>
+      <Paper className={styles.paper} style={{ backgroundColor: "#CCFDCC" }}>
         <Typography variant="h5" className={styles.heading} marginBottom={2}>
           Rewards Summary
         </Typography>

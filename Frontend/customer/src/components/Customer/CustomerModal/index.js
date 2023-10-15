@@ -265,7 +265,8 @@ const CustomerModal = ({
                 onChange={(e) =>
                   setCustomer({ ...customer, status: e.target.value })
                 }
-                inputProps={{ "data-testid": "status" }}>
+                inputProps={{ "data-testid": "status" }}
+              >
                 <MenuItem value="Active">Active</MenuItem>
                 <MenuItem value="Inactive">Inactive</MenuItem>
               </Select>
