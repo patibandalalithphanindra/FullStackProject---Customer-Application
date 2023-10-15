@@ -568,7 +568,18 @@
 <a name='L503'></a><a href='#L503'>503</a>
 <a name='L504'></a><a href='#L504'>504</a>
 <a name='L505'></a><a href='#L505'>505</a>
-<a name='L506'></a><a href='#L506'>506</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L506'></a><a href='#L506'>506</a>
+<a name='L507'></a><a href='#L507'>507</a>
+<a name='L508'></a><a href='#L508'>508</a>
+<a name='L509'></a><a href='#L509'>509</a>
+<a name='L510'></a><a href='#L510'>510</a>
+<a name='L511'></a><a href='#L511'>511</a>
+<a name='L512'></a><a href='#L512'>512</a>
+<a name='L513'></a><a href='#L513'>513</a>
+<a name='L514'></a><a href='#L514'>514</a>
+<a name='L515'></a><a href='#L515'>515</a>
+<a name='L516'></a><a href='#L516'>516</a>
+<a name='L517'></a><a href='#L517'>517</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -960,6 +971,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">47x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -973,7 +986,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -990,6 +1006,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -999,8 +1016,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1423,7 +1445,8 @@ function Customer() {
             variant="contained"
             className={`${styles.button} ${styles.addCustomerButton}`}
             onClick={handleAddition}
-            data-testid="add-button"&gt;
+            data-testid="add-button"
+          &gt;
             &lt;AddIcon /&gt;
           &lt;/Button&gt;
         &lt;/div&gt;
@@ -1441,7 +1464,8 @@ function Customer() {
                   onClick={handleSort}
                   color="inherit"
                   size="small"
-                  aria-label="sort"&gt;
+                  aria-label="sort"
+                &gt;
                   {sortOrder === "asc" ? (
                     &lt;ArrowUpwardIcon /&gt;
                   ) : (
@@ -1452,7 +1476,7 @@ function Customer() {
               &lt;TableCell&gt;
                 &lt;b&gt;Email&lt;/b&gt;
               &lt;/TableCell&gt;
-              &lt;TableCell style={{textAlign:"center"}}&gt;
+              &lt;TableCell style={{ textAlign: "center" }}&gt;
                 &lt;b&gt;Phone Number&lt;/b&gt;
               &lt;/TableCell&gt;
               &lt;TableCell&gt;
@@ -1471,7 +1495,9 @@ function Customer() {
                   {customer.firstName}
                 &lt;/TableCell&gt;
                 &lt;TableCell&gt;{customer.emailId}&lt;/TableCell&gt;
-                &lt;TableCell style={{textAlign:"center"}}&gt;{customer.phoneNo}&lt;/TableCell&gt;
+                &lt;TableCell style={{ textAlign: "center" }}&gt;
+                  {customer.phoneNo}
+                &lt;/TableCell&gt;
                 &lt;TableCell&gt;
                   &lt;Button
                     sx={{ mr: 2 }}
@@ -1479,7 +1505,8 @@ function Customer() {
                     color="primary"
                     className={`${styles.button} ${styles.primaryButton}`}
                     onClick={() =&gt; handleView(customer.customerId)}
-                    data-testid={`viewicon-${customer.customerId}`}&gt;
+                    data-testid={`viewicon-${customer.customerId}`}
+                  &gt;
                     &lt;VisibilityIcon /&gt;
                   &lt;/Button&gt;
                   &lt;Button
@@ -1488,7 +1515,8 @@ function Customer() {
                     color="success"
                     className={`${styles.button} ${styles.secondaryButton}`}
                     onClick={() =&gt; handleUpdate(customer.customerId)}
-                    data-testid={`editicon-${customer.customerId}`}&gt;
+                    data-testid={`editicon-${customer.customerId}`}
+                  &gt;
                     &lt;EditIcon /&gt;
                   &lt;/Button&gt;
                   &lt;Button
@@ -1496,7 +1524,8 @@ function Customer() {
                     color="error"
                     className={`${styles.button} ${styles.tertiaryButton}`}
                     onClick={() =&gt; handleDelete(customer.customerId)}
-                    data-testid={`deleteicon-${customer.customerId}`}&gt;
+                    data-testid={`deleteicon-${customer.customerId}`}
+                  &gt;
                     &lt;DeleteIcon /&gt;
                   &lt;/Button&gt;
                 &lt;/TableCell&gt;
@@ -1506,12 +1535,14 @@ function Customer() {
                     onCopy={() =&gt; {
                       setCopiedCustomerId(customer.customerId);
                       setRedirectToOrders(true);
-                    }}&gt;
+                    }}
+                  &gt;
                     &lt;Button
                       variant="contained"
                       color="secondary"
                       className={`${styles.button}`}
-                      data-testid={`copyicon-${customer.customerId}`}&gt;
+                      data-testid={`copyicon-${customer.customerId}`}
+                    &gt;
                       &lt;AddIcon /&gt;
                     &lt;/Button&gt;
                   &lt;/CopyToClipboard&gt;
@@ -1545,13 +1576,15 @@ function Customer() {
           &lt;Button
             onClick={handleDeleteCancel}
             color="primary"
-            data-testid="cancel"&gt;
+            data-testid="cancel"
+          &gt;
             Cancel
           &lt;/Button&gt;
           &lt;Button
             onClick={handleDeleteConfirmation}
             color="error"
-            data-testid="delete"&gt;
+            data-testid="delete"
+          &gt;
             Delete
           &lt;/Button&gt;
         &lt;/DialogActions&gt;
@@ -1585,7 +1618,7 @@ export default Customer;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-15T06:35:45.894Z
+                at 2023-10-15T13:17:25.764Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

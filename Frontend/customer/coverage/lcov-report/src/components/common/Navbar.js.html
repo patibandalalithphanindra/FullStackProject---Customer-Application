@@ -136,7 +136,21 @@
 <a name='L71'></a><a href='#L71'>71</a>
 <a name='L72'></a><a href='#L72'>72</a>
 <a name='L73'></a><a href='#L73'>73</a>
-<a name='L74'></a><a href='#L74'>74</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -176,6 +190,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">156x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -209,8 +224,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Typography,
   Button,
@@ -219,19 +247,19 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-} from '@mui/material';
-import LogoutIcon from '@mui/icons-material/Logout';
-import styles from './styles.module.css';
-import { toast } from 'react-toastify';
-import { ArrowBack } from '@mui/icons-material';
+} from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
+import styles from "./styles.module.css";
+import { toast } from "react-toastify";
+import { ArrowBack } from "@mui/icons-material";
 &nbsp;
 function Navbar() {
   const navigate = useNavigate();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 &nbsp;
   const goBack = () =&gt; {
-		navigate(-1);
-	}
+    navigate(-1);
+  };
 &nbsp;
   const openLogoutModal = () =&gt; {
     setIsLogoutModalOpen(true);
@@ -243,22 +271,36 @@ function Navbar() {
 &nbsp;
   const handleLogout = () =&gt; {
     localStorage.clear();
-    navigate('/');
-    toast.success('Logged out successfully!', {
-      position: toast.POSITION.BOTTOM_LEFT
-    , autoClose: 900 });
+    navigate("/");
+    toast.success("Logged out successfully!", {
+      position: toast.POSITION.BOTTOM_LEFT,
+      autoClose: 900,
+    });
   };
 &nbsp;
   return (
     &lt;div className={styles.header}&gt;
-      &lt;Typography variant="h6" style={{ color: '#fff' }} className={styles.whole}&gt;
-      &lt;ArrowBack onClick={goBack} className={styles.left} data-testid="back-button"/&gt;
-        &lt;Link to="/homepage" style={{ textDecoration: 'none', color: 'white' }}&gt;
+      &lt;Typography
+        variant="h6"
+        style={{ color: "#fff" }}
+        className={styles.whole}
+      &gt;
+        &lt;ArrowBack
+          onClick={goBack}
+          className={styles.left}
+          data-testid="back-button"
+        /&gt;
+        &lt;Link to="/homepage" style={{ textDecoration: "none", color: "white" }}&gt;
           Customer Management System
         &lt;/Link&gt;
       &lt;/Typography&gt;
-      &lt;Button variant="contained" color="error" onClick={openLogoutModal} data-testid="logout-button"&gt;
-        &lt;LogoutIcon/&gt;
+      &lt;Button
+        variant="contained"
+        color="error"
+        onClick={openLogoutModal}
+        data-testid="logout-button"
+      &gt;
+        &lt;LogoutIcon /&gt;
       &lt;/Button&gt;
 &nbsp;
       &lt;Dialog open={isLogoutModalOpen} onClose={closeLogoutModal}&gt;
@@ -289,7 +331,7 @@ export default Navbar;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-15T06:35:45.894Z
+                at 2023-10-15T13:17:25.764Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
