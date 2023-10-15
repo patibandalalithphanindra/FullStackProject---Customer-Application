@@ -61,7 +61,6 @@ function Profile({ customer }) {
               <Typography
                 color="textPrimary"
                 className={styles.address}
-                style={{ marginTop: "26px" }}
               >
                 <b>Address : </b> {addressLine1}, {addressLine2}
               </Typography>
