@@ -166,7 +166,7 @@ function Reward() {
               <TableCell>
                 <b>Order No</b>
               </TableCell>
-              <TableCell>
+              <TableCell style={{textAlign:"center"}}>
                 <b>Rewards Earned</b>
               </TableCell>
               <TableCell>
@@ -191,7 +191,7 @@ function Reward() {
                 <TableCell>{reward.rewardsId}</TableCell>
                 <TableCell>{reward.customerId}</TableCell>
                 <TableCell>{reward.orderNo}</TableCell>
-                <TableCell>{reward.rewardsEarned}</TableCell>
+                <TableCell style={{textAlign:"center"}}>{reward.rewardsEarned}</TableCell>
                 <TableCell>{formatDate(reward.rewardsDate)}</TableCell>
               </TableRow>
             ))}

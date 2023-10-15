@@ -72,16 +72,16 @@ function Orders({ orders }) {
                     {sortIcon}
                   </IconButton>
                 </TableCell>
-                <TableCell>
+                <TableCell style={{textAlign:"right"}}>
                   <b>Rewards Earned</b>
                 </TableCell>
-                <TableCell>
+                <TableCell style={{textAlign:"right"}}>
                   <b>Rewards Redeemed</b>
                 </TableCell>
-                <TableCell>
+                <TableCell style={{textAlign:"right"}}>
                   <b>Total Items</b>
                 </TableCell>
-                <TableCell>
+                <TableCell style={{textAlign:"right"}}>
                   <b>Total Order Value</b>
                 </TableCell>
                 <TableCell>
@@ -94,10 +94,10 @@ function Orders({ orders }) {
                 <TableRow key={order.orderKey}>
                   <TableCell>{order.orderNo}</TableCell>
                   <TableCell>{formatDate(order.orderDate)}</TableCell>
-                  <TableCell>{order.reward.rewardsEarned}</TableCell>
-                  <TableCell>{order.reward.rewardsRedeemed}</TableCell>
-                  <TableCell>{order.totalItems}</TableCell>
-                  <TableCell>
+                  <TableCell style={{textAlign:"center"}}>{order.reward.rewardsEarned}</TableCell>
+                  <TableCell style={{textAlign:"center"}}>{order.reward.rewardsRedeemed}</TableCell>
+                  <TableCell style={{textAlign:"center"}}>{order.totalItems}</TableCell>
+                  <TableCell style={{textAlign:"center"}}>
                     {order.currency} {order.orderTotal}
                   </TableCell>
                   <TableCell>{order.orderStatus}</TableCell>

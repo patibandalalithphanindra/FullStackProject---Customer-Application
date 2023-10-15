@@ -377,7 +377,7 @@ function Customer() {
               <TableCell>
                 <b>Email</b>
               </TableCell>
-              <TableCell>
+              <TableCell style={{textAlign:"center"}}>
                 <b>Phone Number</b>
               </TableCell>
               <TableCell>
@@ -396,7 +396,7 @@ function Customer() {
                   {customer.firstName}
                 </TableCell>
                 <TableCell>{customer.emailId}</TableCell>
-                <TableCell>{customer.phoneNo}</TableCell>
+                <TableCell style={{textAlign:"center"}}>{customer.phoneNo}</TableCell>
                 <TableCell>
                   <Button
                     sx={{ mr: 2 }}
