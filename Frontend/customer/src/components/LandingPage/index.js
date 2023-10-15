@@ -60,9 +60,9 @@ function LandingPage() {
             p: 2,
             width: "300",
             marginTop: "20px",
-            marginLeft: "200px",
-            marginRight: "200px",
-            backgroundColor: " #e0e0f4",
+            marginLeft: "134px",
+            marginRight: "134px",
+            backgroundColor: "#ADE7BF",
           }}
         >
           <Grid align="center" container spacing={6}>
@@ -104,9 +104,9 @@ function LandingPage() {
             p: 2,
             width: "300",
             marginTop: "20px",
-            marginLeft: "200px",
-            marginRight: "200px",
-            backgroundColor: "#c7ebd3",
+            marginLeft: "134px",
+            marginRight: "134px",
+            backgroundColor: "#EAEAFA",
           }}
         >
           <Grid align="center" container spacing={6}>
