@@ -1,5 +1,7 @@
-package com.lalith.customer.exception;
+package com.lalith.customer.exceptiontests;
 
+import com.lalith.customer.exception.CustomErrorResponse;
+import com.lalith.customer.exception.CustomExceptionHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
