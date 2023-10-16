@@ -1,6 +1,5 @@
 package com.lalith.customer.servicetests;
 
-import com.lalith.customer.controller.CustomerController;
 import com.lalith.customer.model.Customer;
 import com.lalith.customer.repository.CustomerRepository;
 import com.lalith.customer.service.CustomerServiceImplementation;
@@ -9,9 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;

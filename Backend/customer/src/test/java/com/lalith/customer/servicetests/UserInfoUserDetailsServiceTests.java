@@ -1,14 +1,11 @@
 package com.lalith.customer.servicetests;
 
-import com.lalith.customer.config.UserInfoUserDetails;
-import com.lalith.customer.model.UserInfo;
 import com.lalith.customer.repository.UserInfoRepository;
 import com.lalith.customer.service.UserInfoUserDetailsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Optional;

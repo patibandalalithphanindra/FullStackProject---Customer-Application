@@ -2,12 +2,6 @@ package com.lalith.customer.ModelTests;
 
 import com.lalith.customer.model.Customer;
 import org.junit.jupiter.api.Test;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CustomerTest {

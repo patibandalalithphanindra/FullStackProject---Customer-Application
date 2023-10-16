@@ -2,14 +2,12 @@ package com.lalith.customer.servicetests;
 
 import com.lalith.customer.model.Item;
 import com.lalith.customer.repository.ItemRepository;
-import com.lalith.customer.service.ItemService;
 import com.lalith.customer.service.ItemServiceImplementation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
