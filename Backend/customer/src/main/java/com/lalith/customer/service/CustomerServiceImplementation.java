@@ -64,17 +64,47 @@ public class CustomerServiceImplementation implements CustomerService {
         if (customerRepository.findByEmailId(customer.getEmailId()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Customer with the same email address already exists");
         }
+
         if (customerId == null) {
             customerId = generateCustomerId();
             customer.setCustomerId(customerId);
         }
 
-        if (phoneNo == null || emailId == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "phoneNo, and emailId must not be null");
+        if ((customer.getPhoneNo() == null || customer.getPhoneNo().isEmpty()) && (customer.getEmailId() == null || customer.getEmailId().isEmpty())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email Id and Phone Number cannot be null or empty.");
+        }
+
+        if (customer.getEmailId() == null || customer.getEmailId().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email Id cannot be null or empty.");
+        }
+
+        if (customer.getPhoneNo() == null || customer.getPhoneNo().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Phone Number cannot be null or empty.");
+        }
+
+        if (!isValidPhoneNumber(customer.getPhoneNo()) && !isValidEmail(customer.getEmailId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Phone number should be 10 digits and Email Id should be of proper format");
+        }
+
+        if (!isValidPhoneNumber(customer.getPhoneNo())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Phone number should be 10 digits");
+        }
+
+        if (!isValidEmail(customer.getEmailId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email Id should be in a valid format");
         }
 
         return customerRepository.save(customer);
     }
+
+    private boolean isValidPhoneNumber(String phoneNumber) {
+        return phoneNumber == null || phoneNumber.matches("\\d{10}");
+    }
+
+    private boolean isValidEmail(String email) {
+        return email == null || email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+    }
+
 
     private String generateCustomerId() {
         UUID uuid = UUID.randomUUID();

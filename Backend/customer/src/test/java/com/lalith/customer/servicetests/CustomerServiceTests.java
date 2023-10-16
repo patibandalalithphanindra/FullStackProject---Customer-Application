@@ -87,6 +87,27 @@ public class CustomerServiceTests {
     }
 
     @Test
+    public void testCreateCustomerWithInvalidPhoneNumber() {
+        Customer newCustomer = new Customer();
+        newCustomer.setPhoneNo("12345");
+
+        assertThrows(ResponseStatusException.class, () -> {
+            customerService.createCustomer(newCustomer);
+        });
+    }
+
+    @Test
+    public void testCreateCustomerWithInvalidEmailId() {
+        Customer newCustomer = new Customer();
+        newCustomer.setEmailId("invalid-email");
+
+        assertThrows(ResponseStatusException.class, () -> {
+            customerService.createCustomer(newCustomer);
+        });
+    }
+
+
+    @Test
     public void testCreateCustomerWithExistingCustomerId() {
         Customer existingCustomer = new Customer();
         existingCustomer.setCustomerId("789");
