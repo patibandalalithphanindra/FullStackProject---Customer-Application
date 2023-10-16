@@ -344,7 +344,12 @@ function Customer() {
             />
           </div>
           <Button
-            style={{ maxWidth: "200px", maxHeight: "40px", marginTop: "8px" }}
+            style={{
+              maxWidth: "200px",
+              maxHeight: "40px",
+              marginTop: "8px",
+              marginRight: "10px"
+            }}
             variant="contained"
             className={`${styles.button} ${styles.addCustomerButton}`}
             onClick={handleAddition}

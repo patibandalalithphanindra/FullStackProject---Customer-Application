@@ -372,7 +372,11 @@ function Order() {
             />
           </div>
           <Button
-            style={{ maxWidth: "200px", maxHeight: "40px" }}
+            style={{
+              maxWidth: "200px",
+              maxHeight: "40px",
+              marginRight: "10px",
+            }}
             variant="contained"
             className={`${styles.button} ${styles.addOrderButton}`}
             onClick={handleAddition}
