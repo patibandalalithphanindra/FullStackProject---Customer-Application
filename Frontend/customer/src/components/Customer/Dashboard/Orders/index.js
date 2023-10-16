@@ -116,7 +116,7 @@ function Orders({ orders }) {
           </Table>
         </TableContainer>
       ) : (
-        <h3 className={styles.nodata}>
+        <h3 className={styles.nodata} style={{ backgroundColor: "#f0f0f0" }}>
           No orders have been placed by the customer!
         </h3>
       )}
