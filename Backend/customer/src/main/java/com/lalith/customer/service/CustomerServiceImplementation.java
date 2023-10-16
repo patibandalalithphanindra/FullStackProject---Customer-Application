@@ -28,7 +28,12 @@ public class CustomerServiceImplementation implements CustomerService {
 
     @Override
     public List<Customer> getAllCustomerByStatus(String status) {
-        return customerRepository.findByStatus(status);
+        List<Customer> customers = customerRepository.findByStatus(status);
+        if (!customers.isEmpty()) {
+            return customers;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No customers found with status: " + status);
+        }
     }
 
     @Override
@@ -39,12 +44,22 @@ public class CustomerServiceImplementation implements CustomerService {
 
     @Override
     public Optional<Customer> getCustomerByEmailId(String emailId) {
-        return customerRepository.findByEmailId(emailId);
+        Optional<Customer> customer = customerRepository.findByEmailId(emailId);
+        if (customer.isPresent()) {
+            return customer;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found by email: " + emailId);
+        }
     }
 
     @Override
     public Optional<Customer> getCustomerByPhoneNo(String phoneNo) {
-        return customerRepository.findByPhoneNo(phoneNo);
+        Optional<Customer> customer = customerRepository.findByPhoneNo(phoneNo);
+        if (customer.isPresent()) {
+            return customer;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found by phone number: " + phoneNo);
+        }
     }
 
     @Override
@@ -55,6 +70,10 @@ public class CustomerServiceImplementation implements CustomerService {
 
         if (customerRepository.findByCustomerId(customer.getCustomerId()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Customer with the same id already exists");
+        }
+
+        if (customerRepository.findByPhoneNo(customer.getPhoneNo()).isPresent() && customerRepository.findByEmailId(customer.getEmailId()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Customer with the same phone number and email Id already exists");
         }
 
         if (customerRepository.findByPhoneNo(customer.getPhoneNo()).isPresent()) {
@@ -125,12 +144,8 @@ public class CustomerServiceImplementation implements CustomerService {
     public Customer updateCustomer(String customerId, Customer updatedCustomer) {
         Optional<Customer> optionalExistingCustomer = customerRepository.findByCustomerId(customerId);
 
-        if (optionalExistingCustomer.get().getCustomerId() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "customerId cannot be null.");
-        }
-
-        if (optionalExistingCustomer.get().getCustomerKey() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "customerKey cannot be null.");
+        if (optionalExistingCustomer.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found with customerId: " + customerId);
         }
 
         Customer existingCustomer = optionalExistingCustomer.get();
@@ -139,7 +154,7 @@ public class CustomerServiceImplementation implements CustomerService {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Modification of customerId is not allowed.");
         }
 
-        if (!existingCustomer.getCustomerKey().equals(updatedCustomer.getCustomerKey())) {
+        if (updatedCustomer.getCustomerKey() != null && !existingCustomer.getCustomerKey().equals(updatedCustomer.getCustomerKey())) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Modification of customerKey is not allowed.");
         }
 
@@ -176,9 +191,11 @@ public class CustomerServiceImplementation implements CustomerService {
         if (updatedCustomer.getStatus() != null) {
             existingCustomer.setStatus(updatedCustomer.getStatus());
         }
+
         customerRepository.save(existingCustomer);
         return existingCustomer;
     }
+
 
     @Override
     public String deleteCustomer(String customerId) {

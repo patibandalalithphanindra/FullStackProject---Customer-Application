@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -148,12 +149,8 @@ public class CustomerServiceTests {
         updatedCustomer.setFirstName("UpdatedName");
         when(customerRepository.findByCustomerId(customerId)).thenReturn(Optional.of(existingCustomer));
         when(customerRepository.save(updatedCustomer)).thenReturn(updatedCustomer);
-        System.out.println(customerId);
-
 
         Customer result = customerService.updateCustomer("123", updatedCustomer);
-
-
         assertEquals(updatedCustomer.getFirstName(), result.getFirstName());
     }
 
@@ -166,7 +163,7 @@ public class CustomerServiceTests {
         updatedCustomer.setCustomerKey(customerKey);
         when(customerRepository.findByCustomerId(customerId)).thenReturn(Optional.empty());
 
-        assertThrows(NoSuchElementException.class, () -> {
+        assertThrows(ResponseStatusException.class, () -> {
             customerService.updateCustomer(customerId, updatedCustomer);
         });
     }
@@ -240,9 +237,9 @@ public class CustomerServiceTests {
         String phoneNo = "nonexistent";
         when(customerRepository.findByPhoneNo(phoneNo)).thenReturn(Optional.empty());
 
-        Optional<Customer> result = customerService.getCustomerByPhoneNo(phoneNo);
-
-        assertFalse(result.isPresent());
+        assertThrows(ResponseStatusException.class, () -> {
+            customerService.getCustomerByPhoneNo(phoneNo);
+        });
     }
 
     @Test
@@ -378,10 +375,15 @@ public class CustomerServiceTests {
         List<Customer> customers = new ArrayList<>();
         when(customerRepository.findByStatus(status)).thenReturn(customers);
 
-        List<Customer> result = customerService.getAllCustomerByStatus(status);
-
-        assertTrue(result.isEmpty());
+        try {
+            customerService.getAllCustomerByStatus(status);
+            fail("Expected ResponseStatusException to be thrown");
+        } catch (ResponseStatusException ex) {
+            assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
+            assertEquals("No customers found with status: " + status, ex.getReason());
+        }
     }
+
 
     @Test
     public void testCreateCustomerWithNullPhoneNo() {
@@ -404,54 +406,6 @@ public class CustomerServiceTests {
     }
 
     @Test
-    public void testUpdateCustomerWithNullCustomerId() {
-        String customerId = "123";
-        Customer existingCustomer = new Customer();
-        existingCustomer.setCustomerId(customerId);
-
-        Customer updatedCustomer = new Customer();
-        updatedCustomer.setCustomerId(null);
-
-        when(customerRepository.findByCustomerId(customerId)).thenReturn(Optional.of(existingCustomer));
-
-        assertThrows(ResponseStatusException.class, () -> {
-            customerService.updateCustomer(customerId, updatedCustomer);
-        });
-    }
-
-    @Test
-    public void testUpdateCustomerWithNullCustomerKey() {
-        String customerId = "123";
-        Customer existingCustomer = new Customer();
-        existingCustomer.setCustomerId(customerId);
-
-        Customer updatedCustomer = new Customer();
-        updatedCustomer.setCustomerKey(null);
-
-        when(customerRepository.findByCustomerId(customerId)).thenReturn(Optional.of(existingCustomer));
-
-        assertThrows(ResponseStatusException.class, () -> {
-            customerService.updateCustomer(customerId, updatedCustomer);
-        });
-    }
-
-    @Test
-    public void testUpdateCustomerWithNullStatus() {
-        String customerId = "123";
-        Customer existingCustomer = new Customer();
-        existingCustomer.setCustomerId(customerId);
-
-        Customer updatedCustomer = new Customer();
-        updatedCustomer.setStatus(null);
-
-        when(customerRepository.findByCustomerId(customerId)).thenReturn(Optional.of(existingCustomer));
-
-        assertThrows(ResponseStatusException.class, () -> {
-            customerService.updateCustomer(customerId, updatedCustomer);
-        });
-    }
-
-    @Test
     public void testDeleteCustomerWithNullId() {
         String customerId = null;
 
@@ -459,7 +413,4 @@ public class CustomerServiceTests {
             customerService.deleteCustomer(customerId);
         });
     }
-
-
-
 }

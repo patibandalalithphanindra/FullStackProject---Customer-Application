@@ -220,7 +220,7 @@ public class OrderServiceImplementation implements OrderService {
             if (monthsDifference >= 3) {
                 orderRepository.delete(existingOrder);
             } else {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order cannot be deleted as it is not in Shipped status or the difference between the current date and last order modified date is less than 3 months.");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order cannot be deleted as the difference between the current date and last order modified date is less than 3 months.");
             }
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order cannot be deleted as it is not in Shipped status.");

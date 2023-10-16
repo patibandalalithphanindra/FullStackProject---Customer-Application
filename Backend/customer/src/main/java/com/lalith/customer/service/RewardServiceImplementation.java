@@ -84,8 +84,8 @@ public class RewardServiceImplementation implements RewardService {
         int totalRedeemed = 0;
 
         for (Reward reward : rewards) {
-            totalEarned += reward.getRewardsEarned();
-            totalRedeemed += reward.getRewardsRedeemed();
+            totalEarned += (int) reward.getRewardsEarned();
+            totalRedeemed += (int) reward.getRewardsRedeemed();
         }
         return totalEarned - totalRedeemed;
     }
@@ -97,8 +97,8 @@ public class RewardServiceImplementation implements RewardService {
         int totalRedeemed = 0;
 
         for (Reward reward : rewards) {
-            totalEarned += reward.getRewardsEarned();
-            totalRedeemed += reward.getRewardsRedeemed();
+            totalEarned += (int) reward.getRewardsEarned();
+            totalRedeemed += (int) reward.getRewardsRedeemed();
         }
 
         int totalBalance = totalEarned - totalRedeemed;

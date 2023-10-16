@@ -39,7 +39,7 @@ public class RewardControllerTests {
 
         when(rewardService.getAllRewards()).thenReturn(rewards);
 
-        ResponseEntity<?> responseEntity = rewardController.getAllCustomers();
+        ResponseEntity<?> responseEntity = rewardController.getAllRewards();
 
         verify(rewardService, times(1)).getAllRewards();
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
@@ -80,7 +80,7 @@ public class RewardControllerTests {
     public void testGetAllCustomersWithException() {
         when(rewardService.getAllRewards()).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Rewards not found"));
 
-        ResponseEntity<?> responseEntity = rewardController.getAllCustomers();
+        ResponseEntity<?> responseEntity = rewardController.getAllRewards();
 
         verify(rewardService, times(1)).getAllRewards();
         assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());

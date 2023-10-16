@@ -79,7 +79,7 @@ public class UserAdditionServiceTests {
         AuthenticationResponse response = userAdditionService.addUser(userInfo);
 
         verify(passwordEncoder, times(1)).encode("password");
-        verify(repository, times(1)).findByName(userInfo.getName());
+        verify(repository, times(2)).findByName(userInfo.getName());
         verify(repository, times(1)).findByEmail(userInfo.getEmail());
         verify(repository, times(1)).save(userInfo);
         verify(jwtService, times(1)).generateToken(userInfo.getName());
@@ -124,7 +124,7 @@ public class UserAdditionServiceTests {
 
         assertThrows(IllegalArgumentException.class, () -> userAdditionService.addUser(userInfo));
 
-        verify(repository, times(1)).findByName(userInfo.getName());
+        verify(repository, times(2)).findByName(userInfo.getName());
         verifyNoMoreInteractions(passwordEncoder, jwtService);
     }
 

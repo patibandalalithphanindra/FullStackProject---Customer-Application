@@ -3,11 +3,15 @@ package com.lalith.customer.servicetests;
 import com.lalith.customer.model.Item;
 import com.lalith.customer.repository.ItemRepository;
 import com.lalith.customer.service.ItemServiceImplementation;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,5 +69,19 @@ public class ItemServiceTests {
 
         assertEquals(newItem.getItemId(), result.getItemId());
     }
+
+    @Test
+    public void testCreateItem_ItemAlreadyExists() {
+        Item newItem = new Item("item456", "Existing Item", 25.0);
+        Mockito.when(itemRepository.findByItemName(newItem.getItemName())).thenReturn(newItem);
+
+        ResponseStatusException exception = Assertions.assertThrows(ResponseStatusException.class, () -> {
+            itemService.createItem(newItem);
+        });
+
+        Assertions.assertEquals(HttpStatus.CONFLICT, exception.getStatusCode());
+        Assertions.assertTrue(exception.getReason().contains("An item with the same name already exists: " + newItem.getItemName()));
+    }
+
 
 }

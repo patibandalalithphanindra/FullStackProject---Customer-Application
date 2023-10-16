@@ -27,6 +27,10 @@ public class UserAdditionService {
                 throw new IllegalArgumentException("Invalid email format.");
             }
 
+        if (repository.findByName(userInfo.getName()).isPresent() && repository.findByEmail(userInfo.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Username and email already exists.");
+        }
+
             if (repository.findByName(userInfo.getName()).isPresent()) {
                 throw new IllegalArgumentException("Username already exists.");
             }

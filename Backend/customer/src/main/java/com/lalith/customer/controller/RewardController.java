@@ -22,10 +22,10 @@ public class RewardController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> getAllCustomers() {
+    public ResponseEntity<?> getAllRewards() {
         try {
-            List<Reward> customers = rewardService.getAllRewards();
-            return ResponseEntity.ok(customers);
+            List<Reward> rewards = rewardService.getAllRewards();
+            return ResponseEntity.ok(rewards);
         } catch (ResponseStatusException e) {
             CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
             return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
