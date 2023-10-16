@@ -1,50 +1,49 @@
-import React from 'react';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import Dashboard from '../components/Customer/Dashboard';
-import axios from 'axios';
+import React from "react";
+import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
+import Dashboard from "../components/Customer/Dashboard";
+import axios from "axios";
 
-jest.mock('axios');
-jest.spyOn(console, 'error');
+jest.mock("axios");
+jest.spyOn(console, "error");
 
 beforeAll(() => {
-  jest.spyOn(console, 'log').mockImplementation(() => {});
-  jest.spyOn(console, 'error').mockImplementation(() => {});
-  jest.spyOn(console, 'warn').mockImplementation(() => {});
-  jest.spyOn(console, 'info').mockImplementation(() => {});
-  jest.spyOn(console, 'debug').mockImplementation(() => {});
+  jest.spyOn(console, "log").mockImplementation(() => {});
+  jest.spyOn(console, "error").mockImplementation(() => {});
+  jest.spyOn(console, "warn").mockImplementation(() => {});
+  jest.spyOn(console, "info").mockImplementation(() => {});
+  jest.spyOn(console, "debug").mockImplementation(() => {});
 });
 
-describe('Dashboard Component', () => {
+describe("Dashboard Component", () => {
   beforeEach(() => {
     axios.get.mockReset();
   });
 
   const matchText = (element, expectedText) => {
-    const cleanedElementText = element.textContent.replace(/\s+/g, ' ').trim();
-    const cleanedExpectedText = expectedText.replace(/\s+/g, ' ').trim();
+    const cleanedElementText = element.textContent.replace(/\s+/g, " ").trim();
+    const cleanedExpectedText = expectedText.replace(/\s+/g, " ").trim();
     expect(cleanedElementText).toBe(cleanedExpectedText);
   };
 
-
-  it('renders customer profile, orders, and rewards components', async () => {
+  it("renders customer profile, orders, and rewards components", async () => {
     const mockData = {
       customer: {
-        firstName: 'Lalith',
-        lastName: 'Phanindra',
-        emailId: 'plp@gmail.com',
-        phoneNo: '1234567890',
+        firstName: "Lalith",
+        lastName: "Phanindra",
+        emailId: "plp@gmail.com",
+        phoneNo: "1234567890",
       },
       orders: [
         {
-          orderNo: '123',
-          orderDate: '2023-01-15T12:00:00Z',
+          orderNo: "123",
+          orderDate: "2023-01-15T12:00:00Z",
           rewardsEarned: 10,
           rewardsRedeemed: 5,
           totalItems: 3,
-          currency: 'USD',
+          currency: "USD",
           orderTotal: 100,
-          orderStatus: 'Delivered',
+          orderStatus: "Delivered",
         },
       ],
       rewards: {
@@ -60,7 +59,7 @@ describe('Dashboard Component', () => {
       .mockResolvedValueOnce({ data: mockData.rewards });
 
     render(
-      <MemoryRouter initialEntries={['/dashboard/1']}>
+      <MemoryRouter initialEntries={["/dashboard/1"]}>
         <Routes>
           <Route path="/dashboard/:customerId" element={<Dashboard />} />
         </Routes>
@@ -68,55 +67,63 @@ describe('Dashboard Component', () => {
     );
 
     await waitFor(() => {
-        matchText(screen.getByText('CUSTOMER DASHBOARD'), 'CUSTOMER DASHBOARD');
-      });
+      matchText(screen.getByText("CUSTOMER DASHBOARD"), "CUSTOMER DASHBOARD");
+    });
 
     await waitFor(() => {
-        matchText(screen.getByText('Order History'), 'Order History');
-      });
-  
-      await waitFor(() => {
-        matchText(screen.getByText('Rewards Summary'), 'Rewards Summary');
-      });
+      matchText(screen.getByText("Order History"), "Order History");
+    });
+
+    await waitFor(() => {
+      matchText(screen.getByText("Rewards Summary"), "Rewards Summary");
+    });
   });
 
-  it('logs errors when fetching data', async () => {
-
-    axios.get.mockRejectedValueOnce(new Error('Test error'));
+  it("logs errors when fetching data", async () => {
+    axios.get.mockRejectedValueOnce(new Error("Test error"));
 
     render(
-      <MemoryRouter initialEntries={['/dashboard/1']}>
+      <MemoryRouter initialEntries={["/dashboard/1"]}>
         <Routes>
           <Route path="/dashboard/:customerId" element={<Dashboard />} />
         </Routes>
       </MemoryRouter>
     );
 
-    await screen.findByText('CUSTOMER DASHBOARD');
+    await screen.findByText("CUSTOMER DASHBOARD");
 
-    expect(console.error).toHaveBeenCalledWith('Error fetching customer data:', expect.any(Error));
-    expect(console.error).toHaveBeenCalledWith('Error fetching reward details:', expect.any(Error));
-    expect(console.error).toHaveBeenCalledWith('Error fetching orders data:', expect.any(Error));
+    expect(console.error).toHaveBeenCalledWith(
+      "Error fetching customer data:",
+      expect.any(Error)
+    );
+    expect(console.error).toHaveBeenCalledWith(
+      "Error fetching reward details:",
+      expect.any(Error)
+    );
+    expect(console.error).toHaveBeenCalledWith(
+      "Error fetching orders data:",
+      expect.any(Error)
+    );
   }, 10000);
 
-  it('navigates back when the ArrowBack button is clicked', async () => {
+  it("navigates back when the ArrowBack button is clicked", async () => {
     const mockData = {
       customer: {
-        firstName: 'Lalith',
-        lastName: 'Phanindra',
-        emailId: 'plp@gmail.com',
-        phoneNo: '1234567890',
+        firstName: "Lalith",
+        lastName: "Phanindra",
+        emailId: "plp@gmail.com",
+        phoneNo: "1234567890",
       },
       orders: [
         {
-          orderNo: '123',
-          orderDate: '2023-01-15T12:00:00Z',
+          orderNo: "123",
+          orderDate: "2023-01-15T12:00:00Z",
           rewardsEarned: 10,
           rewardsRedeemed: 5,
           totalItems: 3,
-          currency: 'USD',
+          currency: "USD",
           orderTotal: 100,
-          orderStatus: 'Delivered',
+          orderStatus: "Delivered",
         },
       ],
       rewards: {
@@ -132,18 +139,14 @@ describe('Dashboard Component', () => {
       .mockResolvedValueOnce({ data: mockData.rewards });
 
     render(
-      <MemoryRouter initialEntries={['/dashboard/1']}>
+      <MemoryRouter initialEntries={["/dashboard/1"]}>
         <Routes>
-          <Route path="/dashboard/:customerId" element={<Dashboard /> } />
+          <Route path="/dashboard/:customerId" element={<Dashboard />} />
         </Routes>
       </MemoryRouter>
     );
 
-    const arrowBackButton = screen.getByTestId('arrow-back');
+    const arrowBackButton = screen.getByTestId("arrow-back");
     fireEvent.click(arrowBackButton);
   }, 10000);
-
-  
 });
-
-

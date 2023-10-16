@@ -1,34 +1,34 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import OrderModal from '../components/Order/OrderModal';
-import axios from 'axios';
+import React from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import OrderModal from "../components/Order/OrderModal";
+import axios from "axios";
 
-jest.mock('axios');
+jest.mock("axios");
 beforeAll(() => {
-  jest.spyOn(console, 'log').mockImplementation(() => {});
-  jest.spyOn(console, 'error').mockImplementation(() => {});
-  jest.spyOn(console, 'warn').mockImplementation(() => {});
-  jest.spyOn(console, 'info').mockImplementation(() => {});
-  jest.spyOn(console, 'debug').mockImplementation(() => {});
+  jest.spyOn(console, "log").mockImplementation(() => {});
+  jest.spyOn(console, "error").mockImplementation(() => {});
+  jest.spyOn(console, "warn").mockImplementation(() => {});
+  jest.spyOn(console, "info").mockImplementation(() => {});
+  jest.spyOn(console, "debug").mockImplementation(() => {});
 });
 
-describe('OrderModal Component', () => {
+describe("OrderModal Component", () => {
   const orderData = {
     orderNo: 1,
-    customerId: '123',
-    currency: '₹',
-    orderStatus: 'Created',
+    customerId: "123",
+    currency: "₹",
+    orderStatus: "Created",
   };
 
   const orderItemsMenu = [
-    { itemId: 1, itemName: 'Item1' },
-    { itemId: 2, itemName: 'Item2' },
+    { itemId: 1, itemName: "Item1" },
+    { itemId: 2, itemName: "Item2" },
   ];
 
   const orderItemsD = [
-    { itemId: 1, itemName: 'Item1', quantity: 2 },
-    { itemId: 2, itemName: 'Item2', quantity: 3 },
+    { itemId: 1, itemName: "Item1", quantity: 2 },
+    { itemId: 2, itemName: "Item2", quantity: 3 },
   ];
 
   const setOrderItemsD = jest.fn();
@@ -36,7 +36,7 @@ describe('OrderModal Component', () => {
   const setOrderData = jest.fn();
   const handleSave = jest.fn();
 
-  it('renders OrderModal for editing an existing order', () => {
+  it("renders OrderModal for editing an existing order", () => {
     render(
       <OrderModal
         isOpen={true}
@@ -45,20 +45,20 @@ describe('OrderModal Component', () => {
         orderItemsMenu={orderItemsMenu}
         orderItemsD={orderItemsD}
         setOrderItemsD={setOrderItemsD}
-        withCoins={'yes'}
+        withCoins={"yes"}
         setWithCoins={setWithCoins}
         setOrderData={setOrderData}
         handleSave={handleSave}
       />
     );
 
-    expect(screen.getByText('Edit an existing Order')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('123')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('₹')).toBeInTheDocument();
-    expect(screen.getByText('Created')).toBeInTheDocument();
+    expect(screen.getByText("Edit an existing Order")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("123")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("₹")).toBeInTheDocument();
+    expect(screen.getByText("Created")).toBeInTheDocument();
   });
 
-  it('renders OrderModal for adding a new order', () => {
+  it("renders OrderModal for adding a new order", () => {
     render(
       <OrderModal
         isOpen={true}
@@ -67,17 +67,17 @@ describe('OrderModal Component', () => {
         orderItemsMenu={orderItemsMenu}
         orderItemsD={orderItemsD}
         setOrderItemsD={setOrderItemsD}
-        withCoins={'yes'}
+        withCoins={"yes"}
         setWithCoins={setWithCoins}
         setOrderData={setOrderData}
         handleSave={handleSave}
       />
     );
 
-    expect(screen.getByText('Add a new Order')).toBeInTheDocument();
+    expect(screen.getByText("Add a new Order")).toBeInTheDocument();
   }, 10000);
 
-  it('validates and does not trigger save on missing fields', async () => {
+  it("validates and does not trigger save on missing fields", async () => {
     render(
       <OrderModal
         isOpen={true}
@@ -86,21 +86,21 @@ describe('OrderModal Component', () => {
         orderItemsMenu={orderItemsMenu}
         orderItemsD={[]}
         setOrderItemsD={setOrderItemsD}
-        withCoins={'yes'}
+        withCoins={"yes"}
         setWithCoins={setWithCoins}
         setOrderData={setOrderData}
         handleSave={handleSave}
       />
     );
 
-    fireEvent.click(screen.getByText('Add'));
+    fireEvent.click(screen.getByText("Add"));
 
-    await screen.findAllByText('This field is required.');
+    await screen.findAllByText("This field is required.");
 
     expect(handleSave).not.toHaveBeenCalled();
   }, 10000);
-  
-  it('handles the save button click', () => {
+
+  it("handles the save button click", () => {
     render(
       <OrderModal
         isOpen={true}
@@ -109,307 +109,301 @@ describe('OrderModal Component', () => {
         orderItemsMenu={orderItemsMenu}
         orderItemsD={orderItemsD}
         setOrderItemsD={setOrderItemsD}
-        withCoins={'yes'}
+        withCoins={"yes"}
         setWithCoins={setWithCoins}
         setOrderData={setOrderData}
         handleSave={handleSave}
       />
     );
 
-    const addButton = screen.getByText('Pack');
+    const addButton = screen.getByText("Pack");
     fireEvent.click(addButton);
 
-    expect(handleSave).toHaveBeenCalledWith('Packed');
+    expect(handleSave).toHaveBeenCalledWith("Packed");
   }, 10000);
 
   it('removes an item when "Remove Item" button is clicked', async () => {
     axios.get.mockResolvedValueOnce({ status: 200 });
-  
+
     render(
       <OrderModal
-      isOpen={true}
-      handleClose={() => {}}
-      orderData={{}}
-      orderItemsMenu={orderItemsMenu}
-      orderItemsD={orderItemsD}
-      setOrderItemsD={setOrderItemsD}
-      withCoins={'yes'}
-      setWithCoins={setWithCoins}
-      setOrderData={setOrderData}
-      handleSave={handleSave}
+        isOpen={true}
+        handleClose={() => {}}
+        orderData={{}}
+        orderItemsMenu={orderItemsMenu}
+        orderItemsD={orderItemsD}
+        setOrderItemsD={setOrderItemsD}
+        withCoins={"yes"}
+        setWithCoins={setWithCoins}
+        setOrderData={setOrderData}
+        handleSave={handleSave}
       />
     );
 
     await waitFor(() => {
-      expect(screen.getByLabelText('Select Item')).toBeInTheDocument();
+      expect(screen.getByLabelText("Select Item")).toBeInTheDocument();
     });
-  
-  
-    fireEvent.click(screen.getByTestId('selectlabel'))
-     fireEvent.click(screen.getByText('Item1'));
-    userEvent.type(screen.getByLabelText('Quantity'), '2');
-    fireEvent.click(screen.getByLabelText('Add'));
-  
-    expect(screen.getByText('Item1')).toBeInTheDocument();
-  
-    fireEvent.click(screen.getByTestId('delete-1'));
-  
+
+    fireEvent.click(screen.getByTestId("selectlabel"));
+    fireEvent.click(screen.getByText("Item1"));
+    userEvent.type(screen.getByLabelText("Quantity"), "2");
+    fireEvent.click(screen.getByLabelText("Add"));
+
+    expect(screen.getByText("Item1")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId("delete-1"));
+
     await waitFor(() => {
-      expect(screen.getByText('Item1')).toBeInTheDocument();
+      expect(screen.getByText("Item1")).toBeInTheDocument();
     });
   }, 10000);
-  
 
-it('displays an error if item is not selected', async () => {
-  render(
-    <OrderModal
-    isOpen={true}
-    handleClose={() => {}}
-    orderData={{}}
-    orderItemsMenu={orderItemsMenu}
-    orderItemsD={orderItemsD}
-    setOrderItemsD={setOrderItemsD}
-    withCoins={'yes'}
-    setWithCoins={setWithCoins}
-    setOrderData={setOrderData}
-    handleSave={handleSave}
-    />
-  );
+  it("displays an error if item is not selected", async () => {
+    render(
+      <OrderModal
+        isOpen={true}
+        handleClose={() => {}}
+        orderData={{}}
+        orderItemsMenu={orderItemsMenu}
+        orderItemsD={orderItemsD}
+        setOrderItemsD={setOrderItemsD}
+        withCoins={"yes"}
+        setWithCoins={setWithCoins}
+        setOrderData={setOrderData}
+        handleSave={handleSave}
+      />
+    );
 
-  await waitFor(() => {
-    expect(screen.getByLabelText('Select Item')).toBeInTheDocument();
-  });
+    await waitFor(() => {
+      expect(screen.getByLabelText("Select Item")).toBeInTheDocument();
+    });
 
-  const addItemButton = screen.getByLabelText('Add');
-  fireEvent.click(addItemButton);
+    const addItemButton = screen.getByLabelText("Add");
+    fireEvent.click(addItemButton);
 
-  await waitFor(() => {
-    expect(screen.getByText('Please select an item')).toBeInTheDocument();
-  });
-}, 10000);
+    await waitFor(() => {
+      expect(screen.getByText("Please select an item")).toBeInTheDocument();
+    });
+  }, 10000);
 
-it('validates and triggers save when all fields are filled correctly', async () => {
-  const orderItemsMenu = [
-    { itemId: 1, itemName: 'Item1' },
-    { itemId: 2, itemName: 'Item2' },
-  ];
+  it("validates and triggers save when all fields are filled correctly", async () => {
+    const orderItemsMenu = [
+      { itemId: 1, itemName: "Item1" },
+      { itemId: 2, itemName: "Item2" },
+    ];
 
-  render(
-    <OrderModal
-      isOpen={true}
-      handleClose={() => {}}
-      orderData={{}}
-      orderItemsMenu={orderItemsMenu}
-      orderItemsD={orderItemsD}
-      setOrderItemsD={setOrderItemsD}
-      withCoins={'yes'}
-      setWithCoins={setWithCoins}
-      setOrderData={setOrderData}
-      handleSave={handleSave}
-    />
-  );
+    render(
+      <OrderModal
+        isOpen={true}
+        handleClose={() => {}}
+        orderData={{}}
+        orderItemsMenu={orderItemsMenu}
+        orderItemsD={orderItemsD}
+        setOrderItemsD={setOrderItemsD}
+        withCoins={"yes"}
+        setWithCoins={setWithCoins}
+        setOrderData={setOrderData}
+        handleSave={handleSave}
+      />
+    );
 
- fireEvent.click(screen.getByTestId('selectlabel'))
- fireEvent.click(screen.getByText('Item1'));
-  const addButton = screen.getByLabelText('Add');
-  fireEvent.click(addButton);
+    fireEvent.click(screen.getByTestId("selectlabel"));
+    fireEvent.click(screen.getByText("Item1"));
+    const addButton = screen.getByLabelText("Add");
+    fireEvent.click(addButton);
 
-  const saveButton = screen.getByText('Add');
-  fireEvent.click(saveButton);
-}, 10000);
+    const saveButton = screen.getByText("Add");
+    fireEvent.click(saveButton);
+  }, 10000);
 
-it('displays the correct quantity when an item is added', async () => {
-  axios.get.mockResolvedValueOnce({ status: 200 });
+  it("displays the correct quantity when an item is added", async () => {
+    axios.get.mockResolvedValueOnce({ status: 200 });
 
-  render(
-    <OrderModal
-      isOpen={true}
-      handleClose={() => {}}
-      orderData={{}}
-      orderItemsMenu={orderItemsMenu}
-      orderItemsD={orderItemsD}
-      setOrderItemsD={setOrderItemsD}
-      withCoins={'yes'}
-      setWithCoins={setWithCoins}
-      setOrderData={setOrderData}
-      handleSave={handleSave}
-    />
-  );
+    render(
+      <OrderModal
+        isOpen={true}
+        handleClose={() => {}}
+        orderData={{}}
+        orderItemsMenu={orderItemsMenu}
+        orderItemsD={orderItemsD}
+        setOrderItemsD={setOrderItemsD}
+        withCoins={"yes"}
+        setWithCoins={setWithCoins}
+        setOrderData={setOrderData}
+        handleSave={handleSave}
+      />
+    );
 
-  await waitFor(() => {
-    expect(screen.getByLabelText('Select Item')).toBeInTheDocument();
-  });
-  userEvent.type(screen.getByLabelText('Quantity'), '2');
-  fireEvent.click(screen.getByLabelText('Add'));
+    await waitFor(() => {
+      expect(screen.getByLabelText("Select Item")).toBeInTheDocument();
+    });
+    userEvent.type(screen.getByLabelText("Quantity"), "2");
+    fireEvent.click(screen.getByLabelText("Add"));
 
-  expect(screen.getByText('Item1')).toBeInTheDocument();
-  expect(screen.getByText('2')).toBeInTheDocument();
-}, 10000);
+    expect(screen.getByText("Item1")).toBeInTheDocument();
+    expect(screen.getByText("2")).toBeInTheDocument();
+  }, 10000);
 
-it('validates and does not trigger save when quantity is not provided', async () => {
-  render(
-    <OrderModal
-      isOpen={true}
-      handleClose={() => {}}
-      orderData={{}}
-      orderItemsMenu={orderItemsMenu}
-      orderItemsD={orderItemsD}
-      setOrderItemsD={setOrderItemsD}
-      withCoins={'yes'}
-      setWithCoins={setWithCoins}
-      setOrderData={setOrderData}
-      handleSave={handleSave}
-    />
-  );
+  it("validates and does not trigger save when quantity is not provided", async () => {
+    render(
+      <OrderModal
+        isOpen={true}
+        handleClose={() => {}}
+        orderData={{}}
+        orderItemsMenu={orderItemsMenu}
+        orderItemsD={orderItemsD}
+        setOrderItemsD={setOrderItemsD}
+        withCoins={"yes"}
+        setWithCoins={setWithCoins}
+        setOrderData={setOrderData}
+        handleSave={handleSave}
+      />
+    );
 
-  await waitFor(() => {
-    expect(screen.getByLabelText('Select Item')).toBeInTheDocument();
-  });
+    await waitFor(() => {
+      expect(screen.getByLabelText("Select Item")).toBeInTheDocument();
+    });
 
-  fireEvent.click(screen.getByLabelText('Add'));
+    fireEvent.click(screen.getByLabelText("Add"));
+  }, 10000);
 
-}, 10000);
+  it('displays the correct "Next Status" when an order is being updated', () => {
+    const orderData = {
+      orderNo: 1,
+      customerId: "123",
+      currency: "₹",
+      orderStatus: "Created",
+    };
 
-it('displays the correct "Next Status" when an order is being updated', () => {
-  const orderData = {
-    orderNo: 1,
-    customerId: '123',
-    currency: '₹',
-    orderStatus: 'Created',
-  };
+    render(
+      <OrderModal
+        isOpen={true}
+        handleClose={() => {}}
+        orderData={orderData}
+        orderItemsMenu={orderItemsMenu}
+        orderItemsD={orderItemsD}
+        setOrderItemsD={setOrderItemsD}
+        withCoins={"yes"}
+        setWithCoins={setWithCoins}
+        setOrderData={setOrderData}
+        handleSave={handleSave}
+      />
+    );
 
-  render(
-    <OrderModal
-      isOpen={true}
-      handleClose={() => {}}
-      orderData={orderData}
-      orderItemsMenu={orderItemsMenu}
-      orderItemsD={orderItemsD}
-      setOrderItemsD={setOrderItemsD}
-      withCoins={'yes'}
-      setWithCoins={setWithCoins}
-      setOrderData={setOrderData}
-      handleSave={handleSave}
-    />
-  );
+    expect(screen.getByText("Pack")).toBeInTheDocument();
 
-  expect(screen.getByText('Pack')).toBeInTheDocument();
+    fireEvent.click(screen.getByText("Pack"));
+  }, 10000);
 
-  fireEvent.click(screen.getByText('Pack'));
-}, 10000);
+  it('returns the correct next status for "Created" order status', () => {
+    const orderData = {
+      orderNo: 1,
+      customerId: "123",
+      currency: "₹",
+      orderStatus: "Created",
+    };
 
-it('returns the correct next status for "Created" order status', () => {
-  const orderData = {
-    orderNo: 1,
-    customerId: '123',
-    currency: '₹',
-    orderStatus: 'Created',
-  };
+    render(
+      <OrderModal
+        isOpen={true}
+        handleClose={() => {}}
+        orderData={orderData}
+        orderItemsMenu={orderItemsMenu}
+        orderItemsD={orderItemsD}
+        setOrderItemsD={setOrderItemsD}
+        withCoins={"yes"}
+        setWithCoins={setWithCoins}
+        setOrderData={setOrderData}
+        handleSave={handleSave}
+      />
+    );
 
-render(
-    <OrderModal
-    isOpen={true}
-    handleClose={() => {}}
-    orderData={orderData}
-    orderItemsMenu={orderItemsMenu}
-    orderItemsD={orderItemsD}
-    setOrderItemsD={setOrderItemsD}
-    withCoins={'yes'}
-    setWithCoins={setWithCoins}
-    setOrderData={setOrderData}
-    handleSave={handleSave}
-    />
-  );
+    const nextStatusText = screen.getByText("Pack");
 
-  const nextStatusText = screen.getByText('Pack');
+    expect(nextStatusText).toBeInTheDocument();
+  }, 10000);
 
-  expect(nextStatusText).toBeInTheDocument();
-}, 10000);
+  it('returns the correct next status for "Packed" order status', () => {
+    const orderData = {
+      orderNo: 1,
+      customerId: "123",
+      currency: "₹",
+      orderStatus: "Packed",
+    };
 
+    render(
+      <OrderModal
+        isOpen={true}
+        handleClose={() => {}}
+        orderData={orderData}
+        orderItemsMenu={orderItemsMenu}
+        orderItemsD={orderItemsD}
+        setOrderItemsD={setOrderItemsD}
+        withCoins={"yes"}
+        setWithCoins={setWithCoins}
+        setOrderData={setOrderData}
+        handleSave={handleSave}
+      />
+    );
 
-it('returns the correct next status for "Packed" order status', () => {
-  const orderData = {
-    orderNo: 1,
-    customerId: '123',
-    currency: '₹',
-    orderStatus: 'Packed',
-  };
+    const nextStatusText = screen.getByText("Ship");
 
-render(
-    <OrderModal
-    isOpen={true}
-    handleClose={() => {}}
-    orderData={orderData}
-    orderItemsMenu={orderItemsMenu}
-    orderItemsD={orderItemsD}
-    setOrderItemsD={setOrderItemsD}
-    withCoins={'yes'}
-    setWithCoins={setWithCoins}
-    setOrderData={setOrderData}
-    handleSave={handleSave}
-    />
-  );
+    expect(nextStatusText).toBeInTheDocument();
+  }, 10000);
 
-  const nextStatusText = screen.getByText('Ship');
+  it('returns the correct next status for "Shipped" order status', () => {
+    const orderData = {
+      orderNo: 1,
+      customerId: "123",
+      currency: "₹",
+      orderStatus: "Shipped",
+    };
 
-  expect(nextStatusText).toBeInTheDocument();
-}, 10000);
+    render(
+      <OrderModal
+        isOpen={true}
+        handleClose={() => {}}
+        orderData={orderData}
+        orderItemsMenu={orderItemsMenu}
+        orderItemsD={orderItemsD}
+        setOrderItemsD={setOrderItemsD}
+        withCoins={"yes"}
+        setWithCoins={setWithCoins}
+        setOrderData={setOrderData}
+        handleSave={handleSave}
+      />
+    );
 
-it('returns the correct next status for "Shipped" order status', () => {
-  const orderData = {
-    orderNo: 1,
-    customerId: '123',
-    currency: '₹',
-    orderStatus: 'Shipped',
-  };
+    const nextStatusText = screen.getByText("Transit");
 
-render(
-    <OrderModal
-    isOpen={true}
-    handleClose={() => {}}
-    orderData={orderData}
-    orderItemsMenu={orderItemsMenu}
-    orderItemsD={orderItemsD}
-    setOrderItemsD={setOrderItemsD}
-    withCoins={'yes'}
-    setWithCoins={setWithCoins}
-    setOrderData={setOrderData}
-    handleSave={handleSave}
-    />
-  );
+    expect(nextStatusText).toBeInTheDocument();
+  }, 10000);
 
-  const nextStatusText = screen.getByText('Transit');
+  it('returns the correct next status for "In Transit" order status', () => {
+    const orderData = {
+      orderNo: 1,
+      customerId: "123",
+      currency: "₹",
+      orderStatus: "In Transit",
+    };
 
-  expect(nextStatusText).toBeInTheDocument();
-}, 10000);
+    render(
+      <OrderModal
+        isOpen={true}
+        handleClose={() => {}}
+        orderData={orderData}
+        orderItemsMenu={orderItemsMenu}
+        orderItemsD={orderItemsD}
+        setOrderItemsD={setOrderItemsD}
+        withCoins={"yes"}
+        setWithCoins={setWithCoins}
+        setOrderData={setOrderData}
+        handleSave={handleSave}
+      />
+    );
 
-it('returns the correct next status for "In Transit" order status', () => {
-  const orderData = {
-    orderNo: 1,
-    customerId: '123',
-    currency: '₹',
-    orderStatus: 'In Transit',
-  };
+    const nextStatusText = screen.getByText("Deliver");
 
-render(
-    <OrderModal
-    isOpen={true}
-    handleClose={() => {}}
-    orderData={orderData}
-    orderItemsMenu={orderItemsMenu}
-    orderItemsD={orderItemsD}
-    setOrderItemsD={setOrderItemsD}
-    withCoins={'yes'}
-    setWithCoins={setWithCoins}
-    setOrderData={setOrderData}
-    handleSave={handleSave}
-    />
-  );
-
-  const nextStatusText = screen.getByText('Deliver');
-
-  expect(nextStatusText).toBeInTheDocument();
-}, 10000);
-
-
+    expect(nextStatusText).toBeInTheDocument();
+  }, 10000);
 });

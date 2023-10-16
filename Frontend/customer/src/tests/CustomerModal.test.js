@@ -1,32 +1,32 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import CustomerModal from '../components/Customer/CustomerModal';
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import CustomerModal from "../components/Customer/CustomerModal";
 
-describe('CustomerModal Component', () => {
+describe("CustomerModal Component", () => {
   const customer = {
     customerId: 1,
-    firstName: 'Lalith',
-    lastName: 'Phanindra',
-    emailId: 'plp@gmail.com',
-    phoneNo: '1234567890',
-    addressLine1: '123 Main St',
-    addressLine2: 'Apt 4B',
-    city: 'Bangalore',
-    state: 'Karnataka',
-    zipCode: '560068',
-    country: 'India',
-    status: 'Active',
+    firstName: "Lalith",
+    lastName: "Phanindra",
+    emailId: "plp@gmail.com",
+    phoneNo: "1234567890",
+    addressLine1: "123 Main St",
+    addressLine2: "Apt 4B",
+    city: "Bangalore",
+    state: "Karnataka",
+    zipCode: "560068",
+    country: "India",
+    status: "Active",
   };
 
   beforeAll(() => {
-    jest.spyOn(console, 'log').mockImplementation(() => {});
-    jest.spyOn(console, 'error').mockImplementation(() => {});
-    jest.spyOn(console, 'warn').mockImplementation(() => {});
-    jest.spyOn(console, 'info').mockImplementation(() => {});
-    jest.spyOn(console, 'debug').mockImplementation(() => {});
-});
+    jest.spyOn(console, "log").mockImplementation(() => {});
+    jest.spyOn(console, "error").mockImplementation(() => {});
+    jest.spyOn(console, "warn").mockImplementation(() => {});
+    jest.spyOn(console, "info").mockImplementation(() => {});
+    jest.spyOn(console, "debug").mockImplementation(() => {});
+  });
 
-  it('renders CustomerModal for editing an existing customer', () => {
+  it("renders CustomerModal for editing an existing customer", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
@@ -41,23 +41,23 @@ describe('CustomerModal Component', () => {
       />
     );
 
-    expect(screen.getByText('Edit an existing Customer')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('Lalith')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('Phanindra')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('123 Main St')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('Apt 4B')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('Bangalore')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('Karnataka')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('560068')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('India')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('1234567890')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('plp@gmail.com')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('Active')).toBeInTheDocument();    
-    expect(screen.getByText('Cancel')).toBeInTheDocument();
-    expect(screen.getByText('Save')).toBeInTheDocument();
+    expect(screen.getByText("Edit an existing Customer")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("Lalith")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("Phanindra")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("123 Main St")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("Apt 4B")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("Bangalore")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("Karnataka")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("560068")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("India")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("1234567890")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("plp@gmail.com")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("Active")).toBeInTheDocument();
+    expect(screen.getByText("Cancel")).toBeInTheDocument();
+    expect(screen.getByText("Save")).toBeInTheDocument();
   }, 10000);
 
-  it('renders CustomerModal for adding a new customer', () => {
+  it("renders CustomerModal for adding a new customer", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
@@ -72,10 +72,10 @@ describe('CustomerModal Component', () => {
       />
     );
 
-    expect(screen.getByText('Add a new Customer')).toBeInTheDocument();
+    expect(screen.getByText("Add a new Customer")).toBeInTheDocument();
   }, 10000);
 
-  it('validates all fields and triggers save', () => {
+  it("validates all fields and triggers save", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
@@ -90,29 +90,29 @@ describe('CustomerModal Component', () => {
       />
     );
 
-    fireEvent.click(screen.getByText('Save'));
+    fireEvent.click(screen.getByText("Save"));
 
     expect(handleSave).toHaveBeenCalled();
   }, 10000);
 
-  it('validates and does not trigger save on missing fields', async () => {
+  it("validates and does not trigger save on missing fields", async () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     const initialCustomer = {
-      firstName: '',
-      lastName: '',
-      addressLine1: '',
-      city: '',
-      state: '',
-      zipCode: '',
-      country: '',
-      phoneNo: '',
-      emailId: '',
-      status: 'Active',
+      firstName: "",
+      lastName: "",
+      addressLine1: "",
+      city: "",
+      state: "",
+      zipCode: "",
+      country: "",
+      phoneNo: "",
+      emailId: "",
+      status: "Active",
     };
-  
+
     render(
       <CustomerModal
         isOpen={true}
@@ -122,20 +122,19 @@ describe('CustomerModal Component', () => {
         handleSave={handleSave}
       />
     );
-  
-    fireEvent.click(screen.getByRole('button', { name: 'Add' }));
-  
-    await screen.findAllByText('This field is required.');
-  
+
+    fireEvent.click(screen.getByRole("button", { name: "Add" }));
+
+    await screen.findAllByText("This field is required.");
+
     expect(handleSave).not.toHaveBeenCalled();
-    const errorMessages = screen.queryAllByText('This field is required.');
+    const errorMessages = screen.queryAllByText("This field is required.");
 
     expect(handleSave).not.toHaveBeenCalled();
     expect(errorMessages).toHaveLength(7);
-    
   }, 10000);
-  
-  it('validates and does not trigger save on invalid phone number', () => {
+
+  it("validates and does not trigger save on invalid phone number", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
@@ -144,21 +143,21 @@ describe('CustomerModal Component', () => {
       <CustomerModal
         isOpen={true}
         handleClose={handleClose}
-        customer={{ ...customer, phoneNo: '1234' }}
+        customer={{ ...customer, phoneNo: "1234" }}
         setCustomer={setCustomer}
         handleSave={handleSave}
       />
     );
 
-    fireEvent.click(screen.getByText('Save'));
+    fireEvent.click(screen.getByText("Save"));
 
     expect(handleSave).not.toHaveBeenCalled();
     expect(
-      screen.getByText('This field is required and must be 10 digits.')
+      screen.getByText("This field is required and must be 10 digits.")
     ).toBeInTheDocument();
   }, 10000);
 
-  it('validates and does not trigger save on invalid email', () => {
+  it("validates and does not trigger save on invalid email", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
@@ -167,25 +166,27 @@ describe('CustomerModal Component', () => {
       <CustomerModal
         isOpen={true}
         handleClose={handleClose}
-        customer={{ ...customer, emailId: 'invalid-email' }}
+        customer={{ ...customer, emailId: "invalid-email" }}
         setCustomer={setCustomer}
         handleSave={handleSave}
       />
     );
 
-    fireEvent.click(screen.getByText('Save'));
+    fireEvent.click(screen.getByText("Save"));
 
     expect(handleSave).not.toHaveBeenCalled();
     expect(
-      screen.getByText('This field is required and must be a valid email address.')
+      screen.getByText(
+        "This field is required and must be a valid email address."
+      )
     ).toBeInTheDocument();
   }, 10000);
 
-  it('validates and triggers save on valid input', () => {
+  it("validates and triggers save on valid input", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     render(
       <CustomerModal
         isOpen={true}
@@ -195,43 +196,45 @@ describe('CustomerModal Component', () => {
         handleSave={handleSave}
       />
     );
-  
-    fireEvent.click(screen.getByText('Save'));
-  
+
+    fireEvent.click(screen.getByText("Save"));
+
     expect(handleSave).toHaveBeenCalled();
     expect(
-      screen.queryByText('This field is required.')
+      screen.queryByText("This field is required.")
     ).not.toBeInTheDocument();
   }, 10000);
 
-  it('validates and does not trigger save on editing with invalid email', () => {
+  it("validates and does not trigger save on editing with invalid email", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     render(
       <CustomerModal
         isOpen={true}
         handleClose={handleClose}
-        customer={{ ...customer, emailId: 'invalid-email' }}
+        customer={{ ...customer, emailId: "invalid-email" }}
         setCustomer={setCustomer}
         handleSave={handleSave}
       />
     );
-  
-    fireEvent.click(screen.getByText('Save'));
-  
+
+    fireEvent.click(screen.getByText("Save"));
+
     expect(handleSave).not.toHaveBeenCalled();
     expect(
-      screen.getByText('This field is required and must be a valid email address.')
+      screen.getByText(
+        "This field is required and must be a valid email address."
+      )
     ).toBeInTheDocument();
   }, 10000);
 
-  it('closes the modal when Cancel is clicked', () => {
+  it("closes the modal when Cancel is clicked", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     render(
       <CustomerModal
         isOpen={true}
@@ -241,31 +244,30 @@ describe('CustomerModal Component', () => {
         handleSave={handleSave}
       />
     );
-  
-    fireEvent.click(screen.getByText('Cancel'));
-  
+
+    fireEvent.click(screen.getByText("Cancel"));
+
     expect(handleClose).toHaveBeenCalled();
   }, 10000);
 
-
-  it('validates and triggers save on valid input for a new customer', () => {
+  it("validates and triggers save on valid input for a new customer", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     const newCustomer = {
-      firstName: 'Ramu',
-      lastName: 'Ravi',
-      addressLine1: '456 B',
-      city: 'Chennai',
-      state: 'TamilNadu',
-      zipCode: '613401',
-      country: 'India',
-      phoneNo: '9876513220',
-      emailId: 'ramuravi@gmail.com',
-      status: 'Active',
+      firstName: "Ramu",
+      lastName: "Ravi",
+      addressLine1: "456 B",
+      city: "Chennai",
+      state: "TamilNadu",
+      zipCode: "613401",
+      country: "India",
+      phoneNo: "9876513220",
+      emailId: "ramuravi@gmail.com",
+      status: "Active",
     };
-  
+
     render(
       <CustomerModal
         isOpen={true}
@@ -275,20 +277,20 @@ describe('CustomerModal Component', () => {
         handleSave={handleSave}
       />
     );
-  
-    fireEvent.click(screen.getByText('Add'));
-  
+
+    fireEvent.click(screen.getByText("Add"));
+
     expect(handleSave).toHaveBeenCalled();
     expect(
-      screen.queryByText('This field is required.')
+      screen.queryByText("This field is required.")
     ).not.toBeInTheDocument();
   }, 10000);
-  
-  it('validates and triggers save on valid input for editing an existing customer', () => {
+
+  it("validates and triggers save on valid input for editing an existing customer", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     render(
       <CustomerModal
         isOpen={true}
@@ -298,56 +300,54 @@ describe('CustomerModal Component', () => {
         handleSave={handleSave}
       />
     );
-  
-    fireEvent.click(screen.getByText('Save'));
-  
+
+    fireEvent.click(screen.getByText("Save"));
+
     expect(handleSave).toHaveBeenCalled();
     expect(
-      screen.queryByText('This field is required.')
+      screen.queryByText("This field is required.")
     ).not.toBeInTheDocument();
   }, 10000);
-  
-  it('validates and does not trigger save on invalid status', () => {
+
+  it("validates and does not trigger save on invalid status", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     render(
       <CustomerModal
         isOpen={true}
         handleClose={handleClose}
-        customer={{ ...customer, status: '' }}
+        customer={{ ...customer, status: "" }}
         setCustomer={setCustomer}
         handleSave={handleSave}
       />
     );
-  
-    fireEvent.click(screen.getByText('Save'));
-  
+
+    fireEvent.click(screen.getByText("Save"));
+
     expect(handleSave).not.toHaveBeenCalled();
-    expect(
-      screen.getByText('This field is required.')
-    ).toBeInTheDocument();
+    expect(screen.getByText("This field is required.")).toBeInTheDocument();
   }, 10000);
 
-  it('displays error messages for required fields', async () => {
+  it("displays error messages for required fields", async () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     const initialCustomer = {
-      firstName: '',
-      lastName: '',
-      addressLine1: '',
-      city: '',
-      state: '',
-      zipCode: '',
-      country: '',
-      phoneNo: '',
-      emailId: '',
-      status: '',
+      firstName: "",
+      lastName: "",
+      addressLine1: "",
+      city: "",
+      state: "",
+      zipCode: "",
+      country: "",
+      phoneNo: "",
+      emailId: "",
+      status: "",
     };
-  
+
     render(
       <CustomerModal
         isOpen={true}
@@ -357,16 +357,16 @@ describe('CustomerModal Component', () => {
         handleSave={handleSave}
       />
     );
-  
-    fireEvent.click(screen.getByText('Add'));
-  
-    const errorMessages = screen.getAllByText('This field is required.');
+
+    fireEvent.click(screen.getByText("Add"));
+
+    const errorMessages = screen.getAllByText("This field is required.");
     errorMessages.forEach((errorMessage) => {
       expect(errorMessage).toBeInTheDocument();
-  });
-}, 10000);
+    });
+  }, 10000);
 
-  it('displays error message for required fields if they are empty', () => {
+  it("displays error message for required fields if they are empty", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
@@ -375,31 +375,31 @@ describe('CustomerModal Component', () => {
         isOpen={true}
         handleClose={handleClose}
         customer={{
-          firstName: '',
-          lastName: '',
-          addressLine1: '',
-          city: '',
-          state: '',
-          zipCode: '',
-          country: '',
-          phoneNo: '',
-          emailId: '',
-          status: '',
+          firstName: "",
+          lastName: "",
+          addressLine1: "",
+          city: "",
+          state: "",
+          zipCode: "",
+          country: "",
+          phoneNo: "",
+          emailId: "",
+          status: "",
         }}
         setCustomer={setCustomer}
         handleSave={handleSave}
       />
     );
-    fireEvent.click(screen.getByTestId('add'));
+    fireEvent.click(screen.getByTestId("add"));
 
-    expect(screen.getAllByText('This field is required.')).toHaveLength(8);
+    expect(screen.getAllByText("This field is required.")).toHaveLength(8);
   }, 10000);
 
-  it('updates zipCode when user enters a value', () => {
+  it("updates zipCode when user enters a value", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     render(
       <CustomerModal
         isOpen={true}
@@ -409,23 +409,23 @@ describe('CustomerModal Component', () => {
         handleSave={handleSave}
       />
     );
-    const zipCodeInput = screen.getByTestId('zipcode');
-  
+    const zipCodeInput = screen.getByTestId("zipcode");
+
     fireEvent.change(zipCodeInput, {
-      target: { value: "123456" }
+      target: { value: "123456" },
     });
-  
+
     expect(setCustomer).toHaveBeenCalledWith({
       ...customer,
-      zipCode: '123456',
+      zipCode: "123456",
     });
   }, 10000);
 
-  it('updates firstname when user enters a value', () => {
+  it("updates firstname when user enters a value", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     render(
       <CustomerModal
         isOpen={true}
@@ -435,23 +435,23 @@ describe('CustomerModal Component', () => {
         handleSave={handleSave}
       />
     );
-    const firstNameInput = screen.getByTestId('firstname');
-  
+    const firstNameInput = screen.getByTestId("firstname");
+
     fireEvent.change(firstNameInput, {
-      target: { value: "Ravi" }
+      target: { value: "Ravi" },
     });
-  
+
     expect(setCustomer).toHaveBeenCalledWith({
       ...customer,
-      firstName: 'Ravi',
+      firstName: "Ravi",
     });
   }, 10000);
 
-  it('updates lastname when user enters a value', () => {
+  it("updates lastname when user enters a value", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     render(
       <CustomerModal
         isOpen={true}
@@ -461,23 +461,23 @@ describe('CustomerModal Component', () => {
         handleSave={handleSave}
       />
     );
-    const lastNameInput = screen.getByTestId('lastname');
-  
+    const lastNameInput = screen.getByTestId("lastname");
+
     fireEvent.change(lastNameInput, {
-      target: { value: "Ramu" }
+      target: { value: "Ramu" },
     });
-  
+
     expect(setCustomer).toHaveBeenCalledWith({
       ...customer,
-      lastName: 'Ramu',
+      lastName: "Ramu",
     });
   }, 10000);
-  
-  it('updates city when user enters a value', () => {
+
+  it("updates city when user enters a value", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     render(
       <CustomerModal
         isOpen={true}
@@ -487,23 +487,23 @@ describe('CustomerModal Component', () => {
         handleSave={handleSave}
       />
     );
-    const cityInput = screen.getByTestId('city');
-  
+    const cityInput = screen.getByTestId("city");
+
     fireEvent.change(cityInput, {
-      target: { value: "Vijayawada" }
+      target: { value: "Vijayawada" },
     });
-  
+
     expect(setCustomer).toHaveBeenCalledWith({
       ...customer,
-      city: 'Vijayawada',
+      city: "Vijayawada",
     });
   }, 10000);
 
-  it('updates state when user enters a value', () => {
+  it("updates state when user enters a value", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     render(
       <CustomerModal
         isOpen={true}
@@ -513,23 +513,23 @@ describe('CustomerModal Component', () => {
         handleSave={handleSave}
       />
     );
-    const stateInput = screen.getByTestId('state');
-  
+    const stateInput = screen.getByTestId("state");
+
     fireEvent.change(stateInput, {
-      target: { value: "AndhraPradesh" }
+      target: { value: "AndhraPradesh" },
     });
-  
+
     expect(setCustomer).toHaveBeenCalledWith({
       ...customer,
-      state: 'AndhraPradesh',
+      state: "AndhraPradesh",
     });
   }, 10000);
 
-  it('updates country when user enters a value', () => {
+  it("updates country when user enters a value", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     render(
       <CustomerModal
         isOpen={true}
@@ -539,23 +539,23 @@ describe('CustomerModal Component', () => {
         handleSave={handleSave}
       />
     );
-    const countryInput = screen.getByTestId('country');
-  
+    const countryInput = screen.getByTestId("country");
+
     fireEvent.change(countryInput, {
-      target: { value: "England" }
+      target: { value: "England" },
     });
-  
+
     expect(setCustomer).toHaveBeenCalledWith({
       ...customer,
-      country: 'England',
+      country: "England",
     });
   }, 10000);
 
-  it('updates address line 1 when user enters a value', () => {
+  it("updates address line 1 when user enters a value", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     render(
       <CustomerModal
         isOpen={true}
@@ -565,23 +565,23 @@ describe('CustomerModal Component', () => {
         handleSave={handleSave}
       />
     );
-    const addressInput1 = screen.getByTestId('add1');
-  
+    const addressInput1 = screen.getByTestId("add1");
+
     fireEvent.change(addressInput1, {
-      target: { value: "Hongkong" }
+      target: { value: "Hongkong" },
     });
 
     expect(setCustomer).toHaveBeenCalledWith({
       ...customer,
-     addressLine1 : 'Hongkong'
+      addressLine1: "Hongkong",
     });
   }, 10000);
 
-  it('updates address line 2 when user enters a value', () => {
+  it("updates address line 2 when user enters a value", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     render(
       <CustomerModal
         isOpen={true}
@@ -591,23 +591,23 @@ describe('CustomerModal Component', () => {
         handleSave={handleSave}
       />
     );
-    const addressInput2 = screen.getByTestId('add2');
-  
+    const addressInput2 = screen.getByTestId("add2");
+
     fireEvent.change(addressInput2, {
-      target: { value: "Hongkong" }
+      target: { value: "Hongkong" },
     });
 
     expect(setCustomer).toHaveBeenCalledWith({
       ...customer,
-     addressLine2 : 'Hongkong'
+      addressLine2: "Hongkong",
     });
   }, 100000);
 
-  it('updates phone number when user enters a value', () => {
+  it("updates phone number when user enters a value", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     render(
       <CustomerModal
         isOpen={true}
@@ -617,23 +617,23 @@ describe('CustomerModal Component', () => {
         handleSave={handleSave}
       />
     );
-    const mobileInput = screen.getByTestId('phonenumber');
-  
+    const mobileInput = screen.getByTestId("phonenumber");
+
     fireEvent.change(mobileInput, {
-      target: { value: "9876512340" }
+      target: { value: "9876512340" },
     });
 
     expect(setCustomer).toHaveBeenCalledWith({
       ...customer,
-       phoneNo : '9876512340'
+      phoneNo: "9876512340",
     });
   }, 10000);
 
-  it('updates email when user enters a value', () => {
+  it("updates email when user enters a value", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     render(
       <CustomerModal
         isOpen={true}
@@ -643,23 +643,23 @@ describe('CustomerModal Component', () => {
         handleSave={handleSave}
       />
     );
-    const emailInput = screen.getByTestId('email');
-  
+    const emailInput = screen.getByTestId("email");
+
     fireEvent.change(emailInput, {
-      target: { value: "rk@gmail.com" }
+      target: { value: "rk@gmail.com" },
     });
 
     expect(setCustomer).toHaveBeenCalledWith({
       ...customer,
-     emailId : 'rk@gmail.com'
+      emailId: "rk@gmail.com",
     });
   }, 10000);
 
-  it('updates status when user selects a value from the dropdown', () => {
+  it("updates status when user selects a value from the dropdown", () => {
     const handleClose = jest.fn();
     const setCustomer = jest.fn();
     const handleSave = jest.fn();
-  
+
     render(
       <CustomerModal
         isOpen={true}
@@ -669,17 +669,16 @@ describe('CustomerModal Component', () => {
         handleSave={handleSave}
       />
     );
-    
-    const statusSelect = screen.getByTestId('status');
-  
+
+    const statusSelect = screen.getByTestId("status");
+
     fireEvent.change(statusSelect, {
-      target: { value: 'Inactive' }
+      target: { value: "Inactive" },
     });
-  
+
     expect(setCustomer).toHaveBeenCalledWith({
       ...customer,
-      status: 'Inactive',
+      status: "Inactive",
     });
   }, 10000);
-  
 });

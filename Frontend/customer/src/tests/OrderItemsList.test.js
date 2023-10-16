@@ -23,5 +23,5 @@ describe("OrderItemsList Component", () => {
 
     const listItemElements = screen.getAllByTestId("order-item");
     expect(listItemElements.length).toBe(orderItems.length);
-  });  
+  });
 });
