@@ -169,6 +169,9 @@ function Reward() {
               <TableCell style={{ textAlign: "center" }}>
                 <b>Rewards Earned</b>
               </TableCell>
+              <TableCell style={{ textAlign: "center" }}>
+                <b>Rewards Redeemed</b>
+              </TableCell>
               <TableCell>
                 <b>Date</b>
                 <IconButton
@@ -194,6 +197,9 @@ function Reward() {
                 <TableCell>{reward.orderNo}</TableCell>
                 <TableCell style={{ textAlign: "center" }}>
                   {reward.rewardsEarned}
+                </TableCell>
+                <TableCell style={{ textAlign: "center" }}>
+                  {reward.rewardsRedeemed}
                 </TableCell>
                 <TableCell>{formatDate(reward.rewardsDate)}</TableCell>
               </TableRow>

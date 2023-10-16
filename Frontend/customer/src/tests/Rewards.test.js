@@ -119,6 +119,10 @@ it('displays empty rows when there are no rewards', async () => {
   });
 
   await waitFor(() => {
+    expect(screen.getByText('Rewards Redeemed')).toBeInTheDocument();
+  });
+
+  await waitFor(() => {
     expect(screen.getByText('Date')).toBeInTheDocument();
   });
 }, 10000);
