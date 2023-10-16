@@ -348,7 +348,7 @@ function Customer() {
               maxWidth: "200px",
               maxHeight: "40px",
               marginTop: "8px",
-              marginRight: "10px"
+              marginRight: "10px",
             }}
             variant="contained"
             className={`${styles.button} ${styles.addCustomerButton}`}
