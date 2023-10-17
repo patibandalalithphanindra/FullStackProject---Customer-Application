@@ -65,8 +65,6 @@ public class CustomerServiceImplementation implements CustomerService {
     @Override
     public Customer createCustomer(Customer customer) {
         String customerId = customer.getCustomerId();
-        String phoneNo = customer.getPhoneNo();
-        String emailId = customer.getEmailId();
 
         if (customerRepository.findByCustomerId(customer.getCustomerId()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Customer with the same id already exists");
