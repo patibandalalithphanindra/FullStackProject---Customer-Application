@@ -672,7 +672,22 @@
 <a name='L607'></a><a href='#L607'>607</a>
 <a name='L608'></a><a href='#L608'>608</a>
 <a name='L609'></a><a href='#L609'>609</a>
-<a name='L610'></a><a href='#L610'>610</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L610'></a><a href='#L610'>610</a>
+<a name='L611'></a><a href='#L611'>611</a>
+<a name='L612'></a><a href='#L612'>612</a>
+<a name='L613'></a><a href='#L613'>613</a>
+<a name='L614'></a><a href='#L614'>614</a>
+<a name='L615'></a><a href='#L615'>615</a>
+<a name='L616'></a><a href='#L616'>616</a>
+<a name='L617'></a><a href='#L617'>617</a>
+<a name='L618'></a><a href='#L618'>618</a>
+<a name='L619'></a><a href='#L619'>619</a>
+<a name='L620'></a><a href='#L620'>620</a>
+<a name='L621'></a><a href='#L621'>621</a>
+<a name='L622'></a><a href='#L622'>622</a>
+<a name='L623'></a><a href='#L623'>623</a>
+<a name='L624'></a><a href='#L624'>624</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1258,6 +1273,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1301,6 +1329,7 @@ import {
   InputAdornment,
   TablePagination,
   IconButton,
+  Grid,
 } from "@mui/material";
 import axios from "axios";
 import styles from "./styles.module.css";
@@ -1675,7 +1704,7 @@ function Order() {
         data-testid="table"
       &gt;
         &lt;Table&gt;
-          &lt;TableHead style={{ backgroundColor: "lightgreen" }}&gt;
+          &lt;TableHead style={{ backgroundColor: "#CFE2F3" }}&gt;
             &lt;TableRow&gt;
               &lt;TableCell&gt;
                 &lt;b&gt;Order No&lt;/b&gt;
@@ -1797,41 +1826,54 @@ function Order() {
           &lt;&gt;
             &lt;DialogContent&gt;
               &lt;DialogContentText&gt;
-                &lt;div&gt;
-                  &lt;Typography variant="body1"&gt;
-                    &lt;b&gt;Order No : &lt;/b&gt; {selectedOrder.orderNo}
-                  &lt;/Typography&gt;
-                &lt;/div&gt;
-                &lt;div&gt;
-                  &lt;Typography variant="body1"&gt;
-                    &lt;b&gt;Customer ID : &lt;/b&gt; {selectedOrder.customerId}
-                  &lt;/Typography&gt;
-                &lt;/div&gt;
-                &lt;div&gt;
-                  &lt;Typography variant="body1"&gt;
-                    &lt;b&gt;Total No of Items : &lt;/b&gt; {selectedOrder.totalItems}
-                  &lt;/Typography&gt;
-                &lt;/div&gt;
-                &lt;div&gt;
-                  &lt;Typography variant="body1"&gt;
-                    &lt;b&gt;Total Order Amount : &lt;/b&gt; {selectedOrder.currency}{" "}
-                    {selectedOrder.orderTotal}
-                  &lt;/Typography&gt;
-                &lt;/div&gt;
-                &lt;div&gt;
-                  &lt;Typography variant="body1"&gt;
-                    &lt;b&gt;Order Status : &lt;/b&gt; {selectedOrder.orderStatus}
-                  &lt;/Typography&gt;
-                &lt;/div&gt;
-                &lt;div&gt;
-                  &lt;Typography variant="body1"&gt;
-                    &lt;b&gt;Order Date : &lt;/b&gt; {formatDate(selectedOrder.orderDate)}
-                  &lt;/Typography&gt;
-                &lt;/div&gt;
-                &lt;Typography variant="body1"&gt;
-                  &lt;b&gt;Last Modified : &lt;/b&gt;{" "}
-                  {formatDate(selectedOrder.lastModifiedTS)}
-                &lt;/Typography&gt;
+                &lt;Grid container spacing={2}&gt;
+                  &lt;Grid item xs={6}&gt;
+                    &lt;div&gt;
+                      &lt;Typography variant="body1"&gt;
+                        &lt;b&gt;Order No : &lt;/b&gt; {selectedOrder.orderNo}
+                      &lt;/Typography&gt;
+                    &lt;/div&gt;
+                    &lt;div&gt;
+                      &lt;Typography variant="body1"&gt;
+                        &lt;b&gt;Customer ID : &lt;/b&gt; {selectedOrder.customerId}
+                      &lt;/Typography&gt;
+                    &lt;/div&gt;
+                    &lt;div&gt;
+                      &lt;Typography variant="body1"&gt;
+                        &lt;b&gt;Total No of Items : &lt;/b&gt; {selectedOrder.totalItems}
+                      &lt;/Typography&gt;
+                    &lt;/div&gt;
+                    &lt;div&gt;
+                      &lt;Typography variant="body1"&gt;
+                        &lt;b&gt;Total Order Amount : &lt;/b&gt; {selectedOrder.currency}{" "}
+                        {selectedOrder.orderTotal}
+                      &lt;/Typography&gt;
+                    &lt;/div&gt;
+                  &lt;/Grid&gt;
+                  &lt;Grid item xs={6}&gt;
+                    &lt;div&gt;
+                      &lt;Typography variant="body1"&gt;
+                        &lt;b&gt;Order Status : &lt;/b&gt; {selectedOrder.orderStatus}
+                      &lt;/Typography&gt;
+                    &lt;/div&gt;
+                    &lt;div&gt;
+                      &lt;Typography variant="body1"&gt;
+                        &lt;b&gt;Ordered Date : &lt;/b&gt;
+                        &lt;span style={{ whiteSpace: "nowrap" }}&gt;
+                          {formatDate(selectedOrder.orderDate)}
+                        &lt;/span&gt;
+                      &lt;/Typography&gt;
+                    &lt;/div&gt;
+                    &lt;div&gt;
+                      &lt;Typography variant="body1"&gt;
+                        &lt;b&gt;Last Modified : &lt;/b&gt;
+                        &lt;span style={{ whiteSpace: "nowrap" }}&gt;
+                          {formatDate(selectedOrder.lastModifiedTS)}
+                        &lt;/span&gt;
+                      &lt;/Typography&gt;
+                    &lt;/div&gt;
+                  &lt;/Grid&gt;
+                &lt;/Grid&gt;
               &lt;/DialogContentText&gt;
               {selectedOrder.orderItems &amp;&amp;
 <span class="branch-1 cbranch-no" title="branch not covered" >                selectedOrder.orderItems.length &gt; 0 </span>&amp;&amp; (
@@ -1897,7 +1939,7 @@ export default Order;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-17T04:42:02.497Z
+                at 2023-10-17T09:20:59.011Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
