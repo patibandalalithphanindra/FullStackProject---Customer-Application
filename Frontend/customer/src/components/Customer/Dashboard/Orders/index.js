@@ -55,7 +55,7 @@ function Orders({ orders }) {
           <Table>
             <TableHead
               className={styles.header}
-              style={{ backgroundColor: "#9687B6" }}
+              style={{ backgroundColor: "#f0f0f0" }}
             >
               <TableRow>
                 <TableCell>
@@ -91,10 +91,7 @@ function Orders({ orders }) {
             </TableHead>
             <TableBody>
               {sortedOrders.map((order) => (
-                <TableRow
-                  key={order.orderKey}
-                  style={{ backgroundColor: "#f0f0f0" }}
-                >
+                <TableRow key={order.orderKey}>
                   <TableCell>{order.orderNo}</TableCell>
                   <TableCell>{formatDate(order.orderDate)}</TableCell>
                   <TableCell style={{ textAlign: "center" }}>

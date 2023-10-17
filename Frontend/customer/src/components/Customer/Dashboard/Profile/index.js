@@ -18,7 +18,7 @@ function Profile({ customer }) {
   } = customer;
 
   return (
-    <Card style={{ backgroundColor: "#f0f0f0" }}>
+    <Card style={{ backgroundColor: "#f9f9f9" }}>
       <CardContent>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={2} marginLeft={2}>

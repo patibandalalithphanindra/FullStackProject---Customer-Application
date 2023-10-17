@@ -67,21 +67,21 @@ function Dashboard() {
           <b>CUSTOMER DASHBOARD</b>
         </Typography>
       </Container>
-      <Paper className={styles.paper} style={{ backgroundColor: "lightblue" }}>
+      <Paper className={styles.paper} style={{ backgroundColor: "#e0eaf9" }}>
         <Typography variant="h5" className={styles.heading} marginBottom={2}>
           Profile
         </Typography>
         <Profile customer={customer} />
       </Paper>
 
-      <Paper className={styles.paper} style={{ backgroundColor: "lightgreen" }}>
+      <Paper className={styles.paper} style={{ backgroundColor: "#e0eaf9" }}>
         <Typography variant="h5" className={styles.heading} marginBottom={2}>
           Rewards Summary
         </Typography>
         <Rewards id={customerId} />
       </Paper>
 
-      <Paper className={styles.paper} style={{ backgroundColor: "#FFDBAC" }}>
+      <Paper className={styles.paper} style={{ backgroundColor: "#e0eaf9" }}>
         <Typography variant="h5" className={styles.heading} marginBottom={2}>
           Order History
         </Typography>

@@ -16,7 +16,7 @@ describe("OrderItemsList Component", () => {
 
     orderItems.forEach((item) => {
       const itemNameElement = screen.getByText(item.itemName);
-      const quantityElement = screen.getByText(`Quantity: ${item.quantity}`);
+      const quantityElement = screen.getByText(item.quantity);
       expect(itemNameElement).toBeInTheDocument();
       expect(quantityElement).toBeInTheDocument();
     });

@@ -18,6 +18,7 @@ import {
   InputAdornment,
   TablePagination,
   IconButton,
+  Grid,
 } from "@mui/material";
 import axios from "axios";
 import styles from "./styles.module.css";
@@ -392,7 +393,7 @@ function Order() {
         data-testid="table"
       >
         <Table>
-          <TableHead style={{ backgroundColor: "lightgreen" }}>
+          <TableHead style={{ backgroundColor: "#CFE2F3" }}>
             <TableRow>
               <TableCell>
                 <b>Order No</b>
@@ -514,41 +515,54 @@ function Order() {
           <>
             <DialogContent>
               <DialogContentText>
-                <div>
-                  <Typography variant="body1">
-                    <b>Order No : </b> {selectedOrder.orderNo}
-                  </Typography>
-                </div>
-                <div>
-                  <Typography variant="body1">
-                    <b>Customer ID : </b> {selectedOrder.customerId}
-                  </Typography>
-                </div>
-                <div>
-                  <Typography variant="body1">
-                    <b>Total No of Items : </b> {selectedOrder.totalItems}
-                  </Typography>
-                </div>
-                <div>
-                  <Typography variant="body1">
-                    <b>Total Order Amount : </b> {selectedOrder.currency}{" "}
-                    {selectedOrder.orderTotal}
-                  </Typography>
-                </div>
-                <div>
-                  <Typography variant="body1">
-                    <b>Order Status : </b> {selectedOrder.orderStatus}
-                  </Typography>
-                </div>
-                <div>
-                  <Typography variant="body1">
-                    <b>Order Date : </b> {formatDate(selectedOrder.orderDate)}
-                  </Typography>
-                </div>
-                <Typography variant="body1">
-                  <b>Last Modified : </b>{" "}
-                  {formatDate(selectedOrder.lastModifiedTS)}
-                </Typography>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <div>
+                      <Typography variant="body1">
+                        <b>Order No : </b> {selectedOrder.orderNo}
+                      </Typography>
+                    </div>
+                    <div>
+                      <Typography variant="body1">
+                        <b>Customer ID : </b> {selectedOrder.customerId}
+                      </Typography>
+                    </div>
+                    <div>
+                      <Typography variant="body1">
+                        <b>Total No of Items : </b> {selectedOrder.totalItems}
+                      </Typography>
+                    </div>
+                    <div>
+                      <Typography variant="body1">
+                        <b>Total Order Amount : </b> {selectedOrder.currency}{" "}
+                        {selectedOrder.orderTotal}
+                      </Typography>
+                    </div>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <div>
+                      <Typography variant="body1">
+                        <b>Order Status : </b> {selectedOrder.orderStatus}
+                      </Typography>
+                    </div>
+                    <div>
+                      <Typography variant="body1">
+                        <b>Ordered Date : </b>
+                        <span style={{ whiteSpace: "nowrap" }}>
+                          {formatDate(selectedOrder.orderDate)}
+                        </span>
+                      </Typography>
+                    </div>
+                    <div>
+                      <Typography variant="body1">
+                        <b>Last Modified : </b>
+                        <span style={{ whiteSpace: "nowrap" }}>
+                          {formatDate(selectedOrder.lastModifiedTS)}
+                        </span>
+                      </Typography>
+                    </div>
+                  </Grid>
+                </Grid>
               </DialogContentText>
               {selectedOrder.orderItems &&
                 selectedOrder.orderItems.length > 0 && (

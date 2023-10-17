@@ -1,31 +1,55 @@
-import { Typography } from "@mui/material";
+import {
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
 import React from "react";
 
 function OrderItemsList({ orderItems }) {
-  const listItemStyle = {
-    margin: "8px 0",
-    padding: "4px",
-    border: "1px solid #ccc",
-    borderRadius: "4px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
+  const containerStyle = {
+    maxHeight: "250px",
+    overflowY: "auto",
+    marginTop: "12px",
   };
 
   return (
     <div style={{ marginTop: "8px" }}>
-      <Typography variant="p">
+      <Typography variant="body1">
         <b>Ordered Items Information : </b>
       </Typography>
-      <ul style={{ listStyle: "none", padding: 0 }}>
-        {orderItems.map((item) => (
-          <li key={item.itemId} style={listItemStyle} data-testid="order-item">
-            <span>{item.itemName}</span>
-            <span>₹ {item.itemPrice}</span>
-            <span>Quantity: {item.quantity}</span>
-          </li>
-        ))}
-      </ul>
+      <TableContainer component={Paper} style={containerStyle}>
+        <Table>
+          <TableHead style={{ backgroundColor: "#D2E1F2" }}>
+            <TableRow>
+              <TableCell style={{ fontWeight: "bold" }}>Item Name</TableCell>
+              <TableCell style={{ fontWeight: "bold", textAlign: "center" }}>
+                Item Price
+              </TableCell>
+              <TableCell style={{ fontWeight: "bold", textAlign: "center" }}>
+                Quantity
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {orderItems.map((item) => (
+              <TableRow key={item.itemId} data-testid="order-item">
+                <TableCell>{item.itemName}</TableCell>
+                <TableCell style={{ textAlign: "center" }}>
+                  ₹ {item.itemPrice}
+                </TableCell>
+                <TableCell style={{ textAlign: "center" }}>
+                  {item.quantity}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 }

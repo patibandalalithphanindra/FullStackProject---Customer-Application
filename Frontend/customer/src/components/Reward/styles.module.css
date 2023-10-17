@@ -1,7 +1,7 @@
 .headerpart {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .label {
@@ -17,14 +17,13 @@
 }
 
 .heading {
-    margin-left: 8px;
-}  
+  margin-left: 8px;
+}
 
 .tableRow {
-    transition: background-color 0.2s ease;
-  }
-  
+  transition: background-color 0.2s ease;
+}
+
 .tableRow:hover {
-    background-color: #f0f0f0;
-  }
-  
+  background-color: #f9f9f9;
+}

@@ -95,7 +95,7 @@ function Rewards({ id }) {
   }, [id]);
 
   return (
-    <Paper elevation={3} sx={{ p: 2 }} style={{ backgroundColor: "#f0f0f0" }}>
+    <Paper elevation={3} sx={{ p: 2 }} style={{ backgroundColor: "#f9f9f9" }}>
       <Grid container spacing={2}>
         <Grid item xs={4}>
           <Box display="flex" alignItems="center">

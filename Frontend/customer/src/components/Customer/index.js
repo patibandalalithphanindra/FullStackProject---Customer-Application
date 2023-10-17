@@ -361,7 +361,7 @@ function Customer() {
       </div>
       <TableContainer component={Paper} className={styles.container}>
         <Table>
-          <TableHead style={{ backgroundColor: "#FFCC99" }}>
+          <TableHead style={{ backgroundColor: "#CFE2F3" }}>
             <TableRow>
               <TableCell>
                 <b>Customer ID</b>
