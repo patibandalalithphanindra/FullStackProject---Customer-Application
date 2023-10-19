@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableHead,
@@ -14,7 +14,6 @@ import { ArrowDownward, ArrowUpward } from "@mui/icons-material";
 import styles from "./styles.module.css";
 
 function Orders({ orders }) {
-  const [sortedOrders, setSortedOrders] = useState(orders);
   const [ascending, setAscending] = useState(true);
 
   const formatDate = (dateString) => {
@@ -30,20 +29,16 @@ function Orders({ orders }) {
   };
 
   const toggleSort = () => {
-    const newOrder = [...sortedOrders].reverse();
     setAscending(!ascending);
-    setSortedOrders(newOrder);
   };
 
+  const sortedOrders = [...orders].sort((a, b) => {
+    const dateA = new Date(a.orderDate);
+    const dateB = new Date(b.orderDate);
+    return ascending ? dateA - dateB : dateB - dateA;
+  });
+
   const sortIcon = ascending ? <ArrowUpward /> : <ArrowDownward />;
-
-  useEffect(() => {
-    const initialSortedOrders = [...orders].sort(
-      (a, b) => new Date(a.orderDate) - new Date(b.orderDate)
-    );
-
-    setSortedOrders(initialSortedOrders);
-  }, [orders]);
 
   return (
     <Paper elevation={1} className={styles.container}>
@@ -87,8 +82,8 @@ function Orders({ orders }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {sortedOrders.map((order) => (
-                <TableRow key={order.orderKey}>
+              {sortedOrders.map((order, index) => (
+                <TableRow key={index}>
                   <TableCell>{order.orderNo}</TableCell>
                   <TableCell>{formatDate(order.orderDate)}</TableCell>
                   <TableCell style={{ textAlign: "center" }}>
