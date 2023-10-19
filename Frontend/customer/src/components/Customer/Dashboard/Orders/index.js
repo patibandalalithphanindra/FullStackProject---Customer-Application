@@ -30,22 +30,19 @@ function Orders({ orders }) {
   };
 
   const toggleSort = () => {
-    const newOrder = ascending
-      ? [...sortedOrders].sort(
-          (a, b) => new Date(a.orderDate) - new Date(b.orderDate)
-        )
-      : [...sortedOrders].sort(
-          (a, b) => new Date(b.orderDate) - new Date(a.orderDate)
-        );
-
+    const newOrder = [...sortedOrders].reverse();
     setAscending(!ascending);
     setSortedOrders(newOrder);
   };
 
-  const sortIcon = ascending ? <ArrowDownward /> : <ArrowUpward />;
+  const sortIcon = ascending ? <ArrowUpward /> : <ArrowDownward />;
 
   useEffect(() => {
-    setSortedOrders(orders);
+    const initialSortedOrders = [...orders].sort(
+      (a, b) => new Date(a.orderDate) - new Date(b.orderDate)
+    );
+
+    setSortedOrders(initialSortedOrders);
   }, [orders]);
 
   return (
