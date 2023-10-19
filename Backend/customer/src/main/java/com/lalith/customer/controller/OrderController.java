@@ -29,7 +29,6 @@ public class OrderController {
     public ResponseEntity<?> getOrderItemsWithQuantity(@PathVariable String orderNo) {
         try {
             List<OrderItem> orderItems = orderService.getOrderItemsByOrderNo(orderNo);
-
             return ResponseEntity.ok(orderItems);
         } catch (ResponseStatusException e) {
             CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());

@@ -169,7 +169,7 @@ public class OrderServiceImplementation implements OrderService {
     @Override
     public Order updateOrder(String orderNo, Order updatedOrder) {
         Optional<Order> existingOrderOptional = Optional.ofNullable(orderRepository.findByOrderNo(orderNo));
-        if (!existingOrderOptional.isPresent()) {
+        if (existingOrderOptional.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order with orderNo " + orderNo + " not found.");
         }
 
@@ -206,7 +206,7 @@ public class OrderServiceImplementation implements OrderService {
     @Override
     public void deleteOrder(String orderNo) {
         Optional<Order> existingOrderOptional = Optional.ofNullable(orderRepository.findByOrderNo(orderNo));
-        if (!existingOrderOptional.isPresent()) {
+        if (existingOrderOptional.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order with orderNo " + orderNo + " not found.");
         }
 
