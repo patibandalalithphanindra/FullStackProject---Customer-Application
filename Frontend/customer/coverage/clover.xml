@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1697534459173" clover="3.2.0">
-  <project timestamp="1697534459173" name="All files">
-    <metrics statements="641" coveredstatements="541" conditionals="239" coveredconditionals="179" methods="190" coveredmethods="155" elements="1070" coveredelements="875" complexity="0" loc="641" ncloc="641" packages="18" files="21" classes="21"/>
+<coverage generated="1697692190085" clover="3.2.0">
+  <project timestamp="1697692190085" name="All files">
+    <metrics statements="614" coveredstatements="515" conditionals="237" coveredconditionals="178" methods="183" coveredmethods="148" elements="1034" coveredelements="841" complexity="0" loc="614" ncloc="614" packages="17" files="19" classes="19"/>
     <package name="src">
       <metrics statements="11" coveredstatements="8" conditionals="18" coveredconditionals="17" methods="2" coveredmethods="2"/>
-      <file name="App.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/App.js">
+      <file name="App.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/App.js">
         <metrics statements="9" coveredstatements="8" conditionals="18" coveredconditionals="17" methods="2" coveredmethods="2"/>
         <line num="14" count="5" type="stmt"/>
         <line num="15" count="5" type="stmt"/>
@@ -16,18 +16,18 @@
         <line num="23" count="0" type="stmt"/>
         <line num="27" count="5" type="stmt"/>
       </file>
-      <file name="index.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/index.js">
+      <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/index.js">
         <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
       </file>
-      <file name="setupTests.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/setupTests.js">
+      <file name="setupTests.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/setupTests.js">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
     </package>
     <package name="src.components.Customer">
       <metrics statements="119" coveredstatements="92" conditionals="32" coveredconditionals="17" methods="37" coveredmethods="28"/>
-      <file name="index.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Customer/index.js">
+      <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Customer/index.js">
         <metrics statements="119" coveredstatements="92" conditionals="32" coveredconditionals="17" methods="37" coveredmethods="28"/>
         <line num="40" count="49" type="stmt"/>
         <line num="41" count="48" type="stmt"/>
@@ -152,7 +152,7 @@
     </package>
     <package name="src.components.Customer.CustomerModal">
       <metrics statements="54" coveredstatements="54" conditionals="38" coveredconditionals="38" methods="16" coveredmethods="16"/>
-      <file name="index.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Customer/CustomerModal/index.js">
+      <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Customer/CustomerModal/index.js">
         <metrics statements="54" coveredstatements="54" conditionals="38" coveredconditionals="38" methods="16" coveredmethods="16"/>
         <line num="17" count="4" type="stmt"/>
         <line num="24" count="98" type="stmt"/>
@@ -212,7 +212,7 @@
     </package>
     <package name="src.components.Customer.Dashboard">
       <metrics statements="20" coveredstatements="20" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
-      <file name="index.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Customer/Dashboard/index.js">
+      <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Customer/Dashboard/index.js">
         <metrics statements="20" coveredstatements="20" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
         <line num="12" count="5" type="stmt"/>
         <line num="13" count="4" type="stmt"/>
@@ -238,7 +238,7 @@
     </package>
     <package name="src.components.Customer.Dashboard.Orders">
       <metrics statements="16" coveredstatements="15" conditionals="6" coveredconditionals="5" methods="7" coveredmethods="6"/>
-      <file name="index.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Customer/Dashboard/Orders/index.js">
+      <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Customer/Dashboard/Orders/index.js">
         <metrics statements="16" coveredstatements="15" conditionals="6" coveredconditionals="5" methods="7" coveredmethods="6"/>
         <line num="17" count="10" type="stmt"/>
         <line num="18" count="10" type="stmt"/>
@@ -260,7 +260,7 @@
     </package>
     <package name="src.components.Customer.Dashboard.Profile">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-      <file name="index.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Customer/Dashboard/Profile/index.js">
+      <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Customer/Dashboard/Profile/index.js">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="18" count="6" type="stmt"/>
         <line num="20" count="6" type="stmt"/>
@@ -268,7 +268,7 @@
     </package>
     <package name="src.components.Customer.Dashboard.Rewards">
       <metrics statements="16" coveredstatements="16" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="7"/>
-      <file name="index.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Customer/Dashboard/Rewards/index.js">
+      <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Customer/Dashboard/Rewards/index.js">
         <metrics statements="16" coveredstatements="16" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="7"/>
         <line num="5" count="4" type="stmt"/>
         <line num="6" count="6" type="stmt"/>
@@ -284,13 +284,13 @@
         <line num="82" count="5" type="stmt"/>
         <line num="85" count="2" type="stmt"/>
         <line num="86" count="2" type="stmt"/>
-        <line num="93" count="3" type="stmt"/>
+        <line num="93" count="1" type="stmt"/>
         <line num="97" count="6" type="stmt"/>
       </file>
     </package>
     <package name="src.components.HomePage">
       <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
-      <file name="index.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/HomePage/index.js">
+      <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/HomePage/index.js">
         <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
         <line num="10" count="10" type="stmt"/>
         <line num="12" count="10" type="stmt"/>
@@ -300,7 +300,7 @@
     </package>
     <package name="src.components.LandingPage">
       <metrics statements="14" coveredstatements="12" conditionals="10" coveredconditionals="10" methods="7" coveredmethods="5"/>
-      <file name="index.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/LandingPage/index.js">
+      <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/LandingPage/index.js">
         <metrics statements="14" coveredstatements="12" conditionals="10" coveredconditionals="10" methods="7" coveredmethods="5"/>
         <line num="20" count="12" type="stmt"/>
         <line num="21" count="11" type="stmt"/>
@@ -320,7 +320,7 @@
     </package>
     <package name="src.components.Login">
       <metrics statements="17" coveredstatements="13" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="2"/>
-      <file name="index.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Login/index.js">
+      <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Login/index.js">
         <metrics statements="17" coveredstatements="13" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="2"/>
         <line num="10" count="14" type="stmt"/>
         <line num="15" count="14" type="stmt"/>
@@ -343,7 +343,7 @@
     </package>
     <package name="src.components.Order">
       <metrics statements="143" coveredstatements="107" conditionals="39" coveredconditionals="21" methods="45" coveredmethods="30"/>
-      <file name="index.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Order/index.js">
+      <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Order/index.js">
         <metrics statements="143" coveredstatements="107" conditionals="39" coveredconditionals="21" methods="45" coveredmethods="30"/>
         <line num="38" count="3" type="stmt"/>
         <line num="39" count="70" type="stmt"/>
@@ -492,7 +492,7 @@
     </package>
     <package name="src.components.Order.CustomerDetailsModal">
       <metrics statements="13" coveredstatements="13" conditionals="8" coveredconditionals="7" methods="4" coveredmethods="4"/>
-      <file name="index.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Order/CustomerDetailsModal/index.js">
+      <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Order/CustomerDetailsModal/index.js">
         <metrics statements="13" coveredstatements="13" conditionals="8" coveredconditionals="7" methods="4" coveredmethods="4"/>
         <line num="14" count="73" type="stmt"/>
         <line num="15" count="73" type="stmt"/>
@@ -511,7 +511,7 @@
     </package>
     <package name="src.components.Order.OrderItemsList">
       <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-      <file name="index.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Order/OrderItemsList/index.js">
+      <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Order/OrderItemsList/index.js">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="14" count="1" type="stmt"/>
         <line num="20" count="1" type="stmt"/>
@@ -520,7 +520,7 @@
     </package>
     <package name="src.components.Order.OrderModal">
       <metrics statements="93" coveredstatements="71" conditionals="62" coveredconditionals="45" methods="22" coveredmethods="16"/>
-      <file name="index.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Order/OrderModal/index.js">
+      <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Order/OrderModal/index.js">
         <metrics statements="93" coveredstatements="71" conditionals="62" coveredconditionals="45" methods="22" coveredmethods="16"/>
         <line num="31" count="4" type="stmt"/>
         <line num="43" count="102" type="stmt"/>
@@ -619,7 +619,7 @@
     </package>
     <package name="src.components.Register">
       <metrics statements="23" coveredstatements="21" conditionals="4" coveredconditionals="3" methods="4" coveredmethods="4"/>
-      <file name="index.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Register/index.js">
+      <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Register/index.js">
         <metrics statements="23" coveredstatements="21" conditionals="4" coveredconditionals="3" methods="4" coveredmethods="4"/>
         <line num="10" count="11" type="stmt"/>
         <line num="17" count="11" type="stmt"/>
@@ -648,7 +648,7 @@
     </package>
     <package name="src.components.Reward">
       <metrics statements="53" coveredstatements="51" conditionals="16" coveredconditionals="12" methods="15" coveredmethods="14"/>
-      <file name="index.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Reward/index.js">
+      <file name="index.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/Reward/index.js">
         <metrics statements="53" coveredstatements="51" conditionals="16" coveredconditionals="12" methods="15" coveredmethods="14"/>
         <line num="24" count="3" type="stmt"/>
         <line num="25" count="14" type="stmt"/>
@@ -707,7 +707,7 @@
     </package>
     <package name="src.components.common">
       <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
-      <file name="Navbar.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/common/Navbar.js">
+      <file name="Navbar.js" path="/Users/lalithphanindrapatibanda/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/components/common/Navbar.js">
         <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
         <line num="18" count="156" type="stmt"/>
         <line num="19" count="156" type="stmt"/>
@@ -722,42 +722,6 @@
         <line num="35" count="1" type="stmt"/>
         <line num="36" count="1" type="stmt"/>
         <line num="42" count="156" type="stmt"/>
-      </file>
-    </package>
-    <package name="src.service">
-      <metrics statements="27" coveredstatements="26" conditionals="2" coveredconditionals="1" methods="7" coveredmethods="7"/>
-      <file name="AuthContext.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/service/AuthContext.js">
-        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="6" count="3" type="stmt"/>
-        <line num="8" count="3" type="stmt"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="12" count="3" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="16" count="3" type="stmt"/>
-        <line num="24" count="3" type="stmt"/>
-      </file>
-      <file name="Authentication.js" path="/home/lalith/Desktop/FullStackProject---Customer-Application/Frontend/customer/src/service/Authentication.js">
-        <metrics statements="19" coveredstatements="18" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="9" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="18" count="1" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="23" count="5" type="stmt"/>
-        <line num="24" count="5" type="stmt"/>
-        <line num="25" count="2" type="stmt"/>
-        <line num="27" count="3" type="stmt"/>
-        <line num="31" count="1" type="stmt"/>
-        <line num="32" count="2" type="stmt"/>
-        <line num="33" count="2" type="stmt"/>
-        <line num="38" count="1" type="stmt"/>
-        <line num="40" count="1" type="stmt"/>
       </file>
     </package>
   </project>
