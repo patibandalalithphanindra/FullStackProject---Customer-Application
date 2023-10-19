@@ -37,7 +37,7 @@ public class RewardServiceImplementation implements RewardService {
     }
 
     public Reward createReward(String customerId, double orderTotal, String orderNo) {
-        long rewardAmount = Math.round(0.05 * orderTotal);
+        int rewardAmount = (int) Math.round(0.05 * orderTotal);
 
         Reward reward = new Reward();
         reward.setCustomerId(customerId);
