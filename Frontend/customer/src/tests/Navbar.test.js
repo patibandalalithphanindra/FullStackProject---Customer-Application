@@ -28,7 +28,7 @@ describe("Navbar Component", () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText("Customer Management System")).toBeInTheDocument();
+    expect(screen.getByText("Order Management System")).toBeInTheDocument();
   }, 10000);
 
   it("handles logout correctly", async () => {

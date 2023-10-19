@@ -52,7 +52,7 @@ function Navbar() {
           data-testid="back-button"
         />
         <Link to="/homepage" style={{ textDecoration: "none", color: "white" }}>
-          Customer Management System
+          Order Management System
         </Link>
       </Typography>
       <Button
