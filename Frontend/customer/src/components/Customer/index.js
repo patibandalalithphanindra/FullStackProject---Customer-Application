@@ -447,7 +447,7 @@ function Customer() {
                   >
                     <Button
                       variant="contained"
-                      color="secondary"
+                      color="info"
                       className={`${styles.button}`}
                       data-testid={`copyicon-${customer.customerId}`}
                     >
