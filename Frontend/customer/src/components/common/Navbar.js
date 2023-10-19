@@ -57,9 +57,10 @@ function Navbar() {
       </Typography>
       <Button
         variant="contained"
-        color="error"
         onClick={openLogoutModal}
         data-testid="logout-button"
+        style={{ backgroundColor: "black" }}
+        size="small"
       >
         <LogoutIcon />
       </Button>

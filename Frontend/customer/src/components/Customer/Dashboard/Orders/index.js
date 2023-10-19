@@ -64,16 +64,16 @@ function Orders({ orders }) {
                     {sortIcon}
                   </IconButton>
                 </TableCell>
-                <TableCell style={{ textAlign: "right" }}>
+                <TableCell>
                   <b>Rewards Earned</b>
                 </TableCell>
-                <TableCell style={{ textAlign: "right" }}>
+                <TableCell style={{ textAlign: "left" }}>
                   <b>Rewards Redeemed</b>
                 </TableCell>
-                <TableCell style={{ textAlign: "right" }}>
+                <TableCell style={{ textAlign: "left" }}>
                   <b>Total Items</b>
                 </TableCell>
-                <TableCell style={{ textAlign: "right" }}>
+                <TableCell style={{ textAlign: "left" }}>
                   <b>Total Order Value</b>
                 </TableCell>
                 <TableCell>
@@ -86,16 +86,40 @@ function Orders({ orders }) {
                 <TableRow key={index}>
                   <TableCell>{order.orderNo}</TableCell>
                   <TableCell>{formatDate(order.orderDate)}</TableCell>
-                  <TableCell style={{ textAlign: "center" }}>
+                  <TableCell
+                    style={{
+                      whiteSpace: "nowrap",
+                      textAlign: "right",
+                      paddingRight: "40px",
+                    }}
+                  >
                     {order.reward.rewardsEarned}
                   </TableCell>
-                  <TableCell style={{ textAlign: "center" }}>
+                  <TableCell
+                    style={{
+                      whiteSpace: "nowrap",
+                      textAlign: "right",
+                      paddingRight: "40px",
+                    }}
+                  >
                     {order.reward.rewardsRedeemed}
                   </TableCell>
-                  <TableCell style={{ textAlign: "center" }}>
+                  <TableCell
+                    style={{
+                      whiteSpace: "nowrap",
+                      textAlign: "right",
+                      paddingRight: "40px",
+                    }}
+                  >
                     {order.totalItems}
                   </TableCell>
-                  <TableCell style={{ textAlign: "center" }}>
+                  <TableCell
+                    style={{
+                      whiteSpace: "nowrap",
+                      textAlign: "right",
+                      paddingRight: "40px",
+                    }}
+                  >
                     {order.currency} {order.orderTotal}
                   </TableCell>
                   <TableCell>{order.orderStatus}</TableCell>

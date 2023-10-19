@@ -166,10 +166,10 @@ function Reward() {
               <TableCell>
                 <b>Order No</b>
               </TableCell>
-              <TableCell style={{ textAlign: "center" }}>
+              <TableCell style={{ textAlign: "left" }}>
                 <b>Rewards Earned</b>
               </TableCell>
-              <TableCell style={{ textAlign: "center" }}>
+              <TableCell style={{ textAlign: "left" }}>
                 <b>Rewards Redeemed</b>
               </TableCell>
               <TableCell>

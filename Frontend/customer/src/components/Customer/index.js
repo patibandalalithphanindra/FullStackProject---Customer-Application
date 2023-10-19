@@ -349,24 +349,30 @@ function Customer() {
               maxHeight: "40px",
               marginTop: "8px",
               marginRight: "10px",
+              backgroundColor: "palevioletred",
             }}
             variant="contained"
             className={`${styles.button} ${styles.addCustomerButton}`}
             onClick={handleAddition}
             data-testid="add-button"
+            size="small"
           >
             <AddIcon />
           </Button>
         </div>
       </div>
-      <TableContainer component={Paper} className={styles.container}>
+      <TableContainer component={Paper}>
         <Table>
-          <TableHead style={{ backgroundColor: "#CFE2F3" }}>
+          <TableHead
+            style={{
+              backgroundColor: "#CFE2F3",
+            }}
+          >
             <TableRow>
-              <TableCell>
+              <TableCell className={styles.rowheader}>
                 <b>Customer ID</b>
               </TableCell>
-              <TableCell>
+              <TableCell className={styles.rowheader}>
                 <b>Name</b>
                 <IconButton
                   onClick={handleSort}
@@ -381,32 +387,39 @@ function Customer() {
                   )}
                 </IconButton>
               </TableCell>
-              <TableCell>
+              <TableCell className={styles.rowheader}>
                 <b>Email</b>
               </TableCell>
-              <TableCell style={{ textAlign: "center" }}>
+              <TableCell className={styles.rowheader}>
                 <b>Phone Number</b>
               </TableCell>
-              <TableCell>
+              <TableCell className={styles.rowheader}>
                 <b>Actions</b>
               </TableCell>
-              <TableCell>
+              <TableCell className={styles.rowheader}>
                 <b>Place an Order</b>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {getVisibleCustomers().map((customer) => (
-              <TableRow key={customer.customerId} className={styles.tableRow}>
-                <TableCell>{customer.customerId}</TableCell>
-                <TableCell data-testid="customername">
+              <TableRow key={customer.customerId}>
+                <TableCell className={styles.rowheader}>
+                  {customer.customerId}
+                </TableCell>
+                <TableCell
+                  data-testid="customername"
+                  className={styles.rowheader}
+                >
                   {customer.firstName}
                 </TableCell>
-                <TableCell>{customer.emailId}</TableCell>
-                <TableCell style={{ textAlign: "center" }}>
+                <TableCell className={styles.rowheader}>
+                  {customer.emailId}
+                </TableCell>
+                <TableCell className={styles.rowheader}>
                   {customer.phoneNo}
                 </TableCell>
-                <TableCell>
+                <TableCell className={styles.rowheader}>
                   <Button
                     sx={{ mr: 2 }}
                     variant="contained"
@@ -414,6 +427,7 @@ function Customer() {
                     className={`${styles.button} ${styles.primaryButton}`}
                     onClick={() => handleView(customer.customerId)}
                     data-testid={`viewicon-${customer.customerId}`}
+                    size="small"
                   >
                     <VisibilityIcon />
                   </Button>
@@ -424,6 +438,7 @@ function Customer() {
                     className={`${styles.button} ${styles.secondaryButton}`}
                     onClick={() => handleUpdate(customer.customerId)}
                     data-testid={`editicon-${customer.customerId}`}
+                    size="small"
                   >
                     <EditIcon />
                   </Button>
@@ -433,6 +448,7 @@ function Customer() {
                     className={`${styles.button} ${styles.tertiaryButton}`}
                     onClick={() => handleDelete(customer.customerId)}
                     data-testid={`deleteicon-${customer.customerId}`}
+                    size="small"
                   >
                     <DeleteIcon />
                   </Button>
@@ -447,9 +463,10 @@ function Customer() {
                   >
                     <Button
                       variant="contained"
-                      color="info"
                       className={`${styles.button}`}
                       data-testid={`copyicon-${customer.customerId}`}
+                      style={{ backgroundColor: "brown" }}
+                      size="small"
                     >
                       <AddIcon />
                     </Button>

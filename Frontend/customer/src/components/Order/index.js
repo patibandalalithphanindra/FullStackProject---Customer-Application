@@ -377,11 +377,13 @@ function Order() {
               maxWidth: "200px",
               maxHeight: "40px",
               marginRight: "10px",
+              backgroundColor: "palevioletred",
             }}
             variant="contained"
             className={`${styles.button} ${styles.addOrderButton}`}
             onClick={handleAddition}
             data-testid="add"
+            size="small"
           >
             <AddIcon />
           </Button>
@@ -395,13 +397,13 @@ function Order() {
         <Table>
           <TableHead style={{ backgroundColor: "#CFE2F3" }}>
             <TableRow>
-              <TableCell>
+              <TableCell className={styles.rowheader}>
                 <b>Order No</b>
               </TableCell>
-              <TableCell>
+              <TableCell className={styles.rowheader}>
                 <b>Customer ID</b>
               </TableCell>
-              <TableCell>
+              <TableCell className={styles.rowheader}>
                 <b>Order Date</b>
                 <IconButton
                   onClick={handleSort}
@@ -412,13 +414,16 @@ function Order() {
                   {sortOrder === "asc" ? <ArrowUpward /> : <ArrowDownward />}
                 </IconButton>
               </TableCell>
-              <TableCell style={{ textAlign: "center" }}>
+              <TableCell
+                style={{ textAlign: "left" }}
+                className={styles.rowheader}
+              >
                 <b>Total Order Amount</b>
               </TableCell>
-              <TableCell>
+              <TableCell className={styles.rowheader}>
                 <b>Order Status</b>
               </TableCell>
-              <TableCell>
+              <TableCell className={styles.rowheader}>
                 <b>Actions</b>
               </TableCell>
             </TableRow>
@@ -443,6 +448,7 @@ function Order() {
                 <TableCell>
                   <Button
                     sx={{ mr: 2 }}
+                    size="small"
                     variant="contained"
                     color="primary"
                     className={`${styles.button} ${styles.primaryButton}`}
@@ -453,6 +459,7 @@ function Order() {
                   </Button>
                   <Button
                     sx={{ mr: 2 }}
+                    size="small"
                     variant="contained"
                     color="success"
                     className={`${styles.button} ${styles.secondaryButton}`}
@@ -463,6 +470,7 @@ function Order() {
                   </Button>
                   <Button
                     variant="contained"
+                    size="small"
                     color="error"
                     className={`${styles.button} ${styles.tertiaryButton}`}
                     onClick={() => handleDelete(order.orderNo)}
@@ -510,7 +518,9 @@ function Order() {
         </DialogActions>
       </Dialog>
       <Dialog open={isViewModalOpen} onClose={handleViewModalClose}>
-        <DialogTitle>Order Details</DialogTitle>
+        <DialogTitle variant="body1">
+          <b style={{ fontSize: "18px" }}>ORDER DETAILS</b>
+        </DialogTitle>
         {selectedOrder && (
           <>
             <DialogContent>
@@ -546,19 +556,21 @@ function Order() {
                       </Typography>
                     </div>
                     <div>
-                      <Typography variant="body1">
-                        <b>Ordered Date : </b>
-                        <span style={{ whiteSpace: "nowrap" }}>
-                          {formatDate(selectedOrder.orderDate)}
-                        </span>
+                      <Typography
+                        variant="body1"
+                        style={{ whiteSpace: "nowrap", paddingRight: "20px" }}
+                      >
+                        <b>Ordered Date: </b>
+                        {formatDate(selectedOrder.orderDate)}
                       </Typography>
                     </div>
                     <div>
-                      <Typography variant="body1">
-                        <b>Last Modified : </b>
-                        <span style={{ whiteSpace: "nowrap" }}>
-                          {formatDate(selectedOrder.lastModifiedTS)}
-                        </span>
+                      <Typography
+                        variant="body1"
+                        style={{ whiteSpace: "nowrap", paddingRight: "20px" }}
+                      >
+                        <b>Last Modified: </b>
+                        {formatDate(selectedOrder.lastModifiedTS)}
                       </Typography>
                     </div>
                   </Grid>
