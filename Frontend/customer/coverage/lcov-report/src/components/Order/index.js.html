@@ -686,7 +686,20 @@
 <a name='L621'></a><a href='#L621'>621</a>
 <a name='L622'></a><a href='#L622'>622</a>
 <a name='L623'></a><a href='#L623'>623</a>
-<a name='L624'></a><a href='#L624'>624</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L624'></a><a href='#L624'>624</a>
+<a name='L625'></a><a href='#L625'>625</a>
+<a name='L626'></a><a href='#L626'>626</a>
+<a name='L627'></a><a href='#L627'>627</a>
+<a name='L628'></a><a href='#L628'>628</a>
+<a name='L629'></a><a href='#L629'>629</a>
+<a name='L630'></a><a href='#L630'>630</a>
+<a name='L631'></a><a href='#L631'>631</a>
+<a name='L632'></a><a href='#L632'>632</a>
+<a name='L633'></a><a href='#L633'>633</a>
+<a name='L634'></a><a href='#L634'>634</a>
+<a name='L635'></a><a href='#L635'>635</a>
+<a name='L636'></a><a href='#L636'>636</a>
+<a name='L637'></a><a href='#L637'>637</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1113,6 +1126,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">65x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1134,17 +1153,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1154,6 +1176,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1687,12 +1713,15 @@ function Order() {
             style={{
               maxWidth: "200px",
               maxHeight: "40px",
+              marginTop: "8px",
               marginRight: "10px",
+              backgroundColor: "#FF4400",
             }}
             variant="contained"
             className={`${styles.button} ${styles.addOrderButton}`}
             onClick={handleAddition}
             data-testid="add"
+            size="small"
           &gt;
             &lt;AddIcon /&gt;
           &lt;/Button&gt;
@@ -1706,13 +1735,13 @@ function Order() {
         &lt;Table&gt;
           &lt;TableHead style={{ backgroundColor: "#CFE2F3" }}&gt;
             &lt;TableRow&gt;
-              &lt;TableCell&gt;
+              &lt;TableCell className={styles.rowheader}&gt;
                 &lt;b&gt;Order No&lt;/b&gt;
               &lt;/TableCell&gt;
-              &lt;TableCell&gt;
+              &lt;TableCell className={styles.rowheader}&gt;
                 &lt;b&gt;Customer ID&lt;/b&gt;
               &lt;/TableCell&gt;
-              &lt;TableCell&gt;
+              &lt;TableCell className={styles.rowheader}&gt;
                 &lt;b&gt;Order Date&lt;/b&gt;
                 &lt;IconButton
                   onClick={handleSort}
@@ -1723,13 +1752,16 @@ function Order() {
                   {sortOrder === "asc" ? &lt;ArrowUpward /&gt; : &lt;ArrowDownward /&gt;}
                 &lt;/IconButton&gt;
               &lt;/TableCell&gt;
-              &lt;TableCell style={{ textAlign: "center" }}&gt;
+              &lt;TableCell
+                style={{ textAlign: "left" }}
+                className={styles.rowheader}
+              &gt;
                 &lt;b&gt;Total Order Amount&lt;/b&gt;
               &lt;/TableCell&gt;
-              &lt;TableCell&gt;
+              &lt;TableCell className={styles.rowheader}&gt;
                 &lt;b&gt;Order Status&lt;/b&gt;
               &lt;/TableCell&gt;
-              &lt;TableCell&gt;
+              &lt;TableCell className={styles.rowheader}&gt;
                 &lt;b&gt;Actions&lt;/b&gt;
               &lt;/TableCell&gt;
             &lt;/TableRow&gt;
@@ -1754,6 +1786,7 @@ function Order() {
                 &lt;TableCell&gt;
                   &lt;Button
                     sx={{ mr: 2 }}
+                    size="small"
                     variant="contained"
                     color="primary"
                     className={`${styles.button} ${styles.primaryButton}`}
@@ -1764,6 +1797,7 @@ function Order() {
                   &lt;/Button&gt;
                   &lt;Button
                     sx={{ mr: 2 }}
+                    size="small"
                     variant="contained"
                     color="success"
                     className={`${styles.button} ${styles.secondaryButton}`}
@@ -1774,6 +1808,7 @@ function Order() {
                   &lt;/Button&gt;
                   &lt;Button
                     variant="contained"
+                    size="small"
                     color="error"
                     className={`${styles.button} ${styles.tertiaryButton}`}
                     onClick={() =&gt; handleDelete(order.orderNo)}
@@ -1821,7 +1856,9 @@ function Order() {
         &lt;/DialogActions&gt;
       &lt;/Dialog&gt;
       &lt;Dialog open={isViewModalOpen} onClose={handleViewModalClose}&gt;
-        &lt;DialogTitle&gt;Order Details&lt;/DialogTitle&gt;
+        &lt;DialogTitle variant="body1"&gt;
+          &lt;b style={{ fontSize: "18px" }}&gt;ORDER DETAILS&lt;/b&gt;
+        &lt;/DialogTitle&gt;
         {selectedOrder &amp;&amp; (
           &lt;&gt;
             &lt;DialogContent&gt;
@@ -1857,19 +1894,21 @@ function Order() {
                       &lt;/Typography&gt;
                     &lt;/div&gt;
                     &lt;div&gt;
-                      &lt;Typography variant="body1"&gt;
-                        &lt;b&gt;Ordered Date : &lt;/b&gt;
-                        &lt;span style={{ whiteSpace: "nowrap" }}&gt;
-                          {formatDate(selectedOrder.orderDate)}
-                        &lt;/span&gt;
+                      &lt;Typography
+                        variant="body1"
+                        style={{ whiteSpace: "nowrap", paddingRight: "20px" }}
+                      &gt;
+                        &lt;b&gt;Ordered Date: &lt;/b&gt;
+                        {formatDate(selectedOrder.orderDate)}
                       &lt;/Typography&gt;
                     &lt;/div&gt;
                     &lt;div&gt;
-                      &lt;Typography variant="body1"&gt;
-                        &lt;b&gt;Last Modified : &lt;/b&gt;
-                        &lt;span style={{ whiteSpace: "nowrap" }}&gt;
-                          {formatDate(selectedOrder.lastModifiedTS)}
-                        &lt;/span&gt;
+                      &lt;Typography
+                        variant="body1"
+                        style={{ whiteSpace: "nowrap", paddingRight: "20px" }}
+                      &gt;
+                        &lt;b&gt;Last Modified: &lt;/b&gt;
+                        {formatDate(selectedOrder.lastModifiedTS)}
                       &lt;/Typography&gt;
                     &lt;/div&gt;
                   &lt;/Grid&gt;
@@ -1939,7 +1978,7 @@ export default Order;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-19T06:09:33.907Z
+                at 2023-10-20T02:45:43.110Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

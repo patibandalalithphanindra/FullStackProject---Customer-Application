@@ -212,7 +212,7 @@ describe("Order Component", () => {
     fireEvent.click(viewButton);
 
     await waitFor(() => {
-      matchText(screen.getByText("Order Details"), "Order Details");
+      matchText(screen.getByText("ORDER DETAILS"), "ORDER DETAILS");
     });
   }, 10000);
 
