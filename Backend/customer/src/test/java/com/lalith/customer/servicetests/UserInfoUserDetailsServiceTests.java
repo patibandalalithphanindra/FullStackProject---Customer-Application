@@ -23,7 +23,7 @@ public class UserInfoUserDetailsServiceTests {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        userDetailsService = new UserInfoUserDetailsService(userInfoRepository); // Corrected initialization
+        userDetailsService = new UserInfoUserDetailsService(userInfoRepository);
     }
 
     @Test
