@@ -349,7 +349,7 @@ function Customer() {
               maxHeight: "40px",
               marginTop: "8px",
               marginRight: "10px",
-              backgroundColor: "palevioletred",
+              backgroundColor: "#FF4400",
             }}
             variant="contained"
             className={`${styles.button} ${styles.addCustomerButton}`}
