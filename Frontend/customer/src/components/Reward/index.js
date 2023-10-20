@@ -157,22 +157,28 @@ function Reward() {
         <Table>
           <TableHead style={{ backgroundColor: "#CFE2F3" }}>
             <TableRow>
-              <TableCell>
+              <TableCell className={styles.rowheader}>
                 <b>Reward ID</b>
               </TableCell>
-              <TableCell>
+              <TableCell className={styles.rowheader}>
                 <b>Customer Id</b>
               </TableCell>
-              <TableCell>
+              <TableCell className={styles.rowheader}>
                 <b>Order No</b>
               </TableCell>
-              <TableCell style={{ textAlign: "left" }}>
+              <TableCell
+                className={styles.rowheader}
+                style={{ textAlign: "left" }}
+              >
                 <b>Rewards Earned</b>
               </TableCell>
-              <TableCell style={{ textAlign: "left" }}>
+              <TableCell
+                className={styles.rowheader}
+                style={{ textAlign: "left" }}
+              >
                 <b>Rewards Redeemed</b>
               </TableCell>
-              <TableCell>
+              <TableCell className={styles.rowheader}>
                 <b>Date</b>
                 <IconButton
                   onClick={handleSort}

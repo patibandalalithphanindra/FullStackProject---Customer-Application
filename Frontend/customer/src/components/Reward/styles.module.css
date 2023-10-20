@@ -27,3 +27,7 @@
 .tableRow:hover {
   background-color: #f9f9f9;
 }
+
+.rowheader {
+  padding: 10px !important;
+}
