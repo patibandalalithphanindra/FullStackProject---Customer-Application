@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,6 +27,8 @@ public class JwtServiceTests {
     public void setUp() {
         jwtService = new JwtService();
     }
+
+
 
     @Test
     public void testExtractName() {
@@ -104,6 +107,21 @@ public class JwtServiceTests {
         claims.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 300));
         return claims;
     }
+
+    @Test
+    public void testExtractClaim() {
+        String username = "testuser";
+        Claims claims = createClaims(username);
+        String token = Jwts.builder()
+                .setClaims(claims)
+                .signWith(getSignKey(), SignatureAlgorithm.HS256)
+                .compact();
+
+        String extractedName = jwtService.extractClaim(token, Claims::getSubject);
+
+        assertEquals(username, extractedName);
+    }
+
 
     private Key getSignKey() {
         return Keys.hmacShaKeyFor(JwtService.SECRET.getBytes());
