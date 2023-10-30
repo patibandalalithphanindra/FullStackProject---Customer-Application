@@ -35,6 +35,10 @@ public class CustomerController {
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> createCustomer(@Valid @RequestBody Customer customer) {
+        ResponseEntity<?> validationResponse = validateCustomerData(customer);
+        if (validationResponse != null) {
+            return validationResponse;
+        }
         try {
             Customer createdCustomer = customerService.createCustomer(customer);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
