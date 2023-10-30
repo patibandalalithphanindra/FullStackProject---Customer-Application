@@ -141,9 +141,7 @@ public class CustomerController {
         if (updatedCustomer.getCustomerId() != null && !customerId.equals(updatedCustomer.getCustomerId())) {
             return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        if (updatedCustomer.getCustomerKey() != null) {
-            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
-        }
+
         try {
             Customer updated = customerService.updateCustomer(customerId, updatedCustomer);
             return ResponseEntity.ok(updated);
