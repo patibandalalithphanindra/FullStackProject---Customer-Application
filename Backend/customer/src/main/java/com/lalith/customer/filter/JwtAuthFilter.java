@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -24,6 +26,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Autowired
     private UserInfoUserDetailsService userDetailsService;
+    private static final Logger logger = Logger.getLogger(JwtAuthFilter.class.getName());
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -41,6 +44,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+            } else {
+                logger.log(Level.SEVERE, "Token validation failed for user: " + name);
             }
         }
         filterChain.doFilter(request, response);

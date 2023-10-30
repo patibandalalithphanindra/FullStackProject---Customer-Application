@@ -1,10 +1,10 @@
 package com.lalith.customer.servicetests;
 
 import com.lalith.customer.service.JwtService;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,8 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -23,8 +21,6 @@ import static org.mockito.Mockito.when;
 public class JwtServiceTests {
 
     private JwtService jwtService;
-
-    private static final String SECRET = "6A1F4D7E0B2C5A8F3E9D7C8F2A5D7B9C61AE1C6F2B8D9E4F87B9C7D6E5F6A7B5";
 
     @BeforeEach
     public void setUp() {
@@ -44,7 +40,7 @@ public class JwtServiceTests {
     @Test
     public void testExtractExpiration() {
         long currentTimeMillis = System.currentTimeMillis();
-        Date expirationDate = new Date(currentTimeMillis + 1000 * 60 * 150);
+        Date expirationDate = new Date(currentTimeMillis + 1000 * 60 * 300);
         String token = createTestTokenWithExpiration(expirationDate);
 
         Date extractedExpiration = jwtService.extractExpiration(token);
@@ -67,11 +63,10 @@ public class JwtServiceTests {
         assertTrue(isValid);
     }
 
-
     @Test
     public void testValidateTokenExpired() {
         String username = "testuser";
-        Date expirationDate = new Date(System.currentTimeMillis() - 1000*60*150); // Set expiration 1 hour ago
+        Date expirationDate = new Date(System.currentTimeMillis() - 1000 * 60 * 300);
         String token = createTestTokenWithExpiration(expirationDate);
         User userDetails = mock(User.class);
 
@@ -88,26 +83,29 @@ public class JwtServiceTests {
     }
 
     private String createTestToken(String username) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("sub", username);
+        Claims claims = createClaims(username);
         return Jwts.builder()
                 .setClaims(claims)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + +1000*60*150))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
 
     private String createTestTokenWithExpiration(Date expirationDate) {
-        Map<String, Object> claims = new HashMap<>();
+        Claims claims = createClaims("testuser");
         return Jwts.builder()
                 .setClaims(claims)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(expirationDate)
                 .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
 
+    private Claims createClaims(String userName) {
+        Claims claims = Jwts.claims();
+        claims.setSubject(userName);
+        claims.setIssuedAt(new Date());
+        claims.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 300));
+        return claims;
+    }
+
     private Key getSignKey() {
-        byte[] keyBytes= Decoders.BASE64.decode(SECRET);
-        return Keys.hmacShaKeyFor(keyBytes);
+        return Keys.hmacShaKeyFor(JwtService.SECRET.getBytes());
     }
 }
