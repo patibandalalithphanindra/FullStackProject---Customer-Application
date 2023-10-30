@@ -66,62 +66,29 @@ public class CustomerServiceImplementation implements CustomerService {
     public Customer createCustomer(Customer customer) {
         String customerId = customer.getCustomerId();
 
-        if (customerRepository.findByCustomerId(customer.getCustomerId()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Customer with the same id already exists");
-        }
-
-        if (customerRepository.findByPhoneNo(customer.getPhoneNo()).isPresent() && customerRepository.findByEmailId(customer.getEmailId()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Customer with the same phone number and email Id already exists");
-        }
-
-        if (customerRepository.findByPhoneNo(customer.getPhoneNo()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Customer with the same phone number already exists");
-        }
-
-        if (customerRepository.findByEmailId(customer.getEmailId()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Customer with the same email address already exists");
-        }
-
         if (customerId == null) {
             customerId = generateCustomerId();
             customer.setCustomerId(customerId);
         }
 
-        if ((customer.getPhoneNo() == null || customer.getPhoneNo().isEmpty()) && (customer.getEmailId() == null || customer.getEmailId().isEmpty())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email Id and Phone Number cannot be null or empty.");
+        if (customerRepository.findByCustomerId(customer.getCustomerId()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer with the same id already exists");
         }
 
-        if (customer.getEmailId() == null || customer.getEmailId().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email Id cannot be null or empty.");
+        if (customerRepository.findByPhoneNo(customer.getPhoneNo()).isPresent() && customerRepository.findByEmailId(customer.getEmailId()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer with the same phone number and email Id already exists");
         }
 
-        if (customer.getPhoneNo() == null || customer.getPhoneNo().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Phone Number cannot be null or empty.");
+        if (customerRepository.findByPhoneNo(customer.getPhoneNo()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer with the same phone number already exists");
         }
 
-        if (!isValidPhoneNumber(customer.getPhoneNo()) && !isValidEmail(customer.getEmailId())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Phone number should be 10 digits and Email Id should be of proper format");
-        }
-
-        if (!isValidPhoneNumber(customer.getPhoneNo())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Phone number should be 10 digits");
-        }
-
-        if (!isValidEmail(customer.getEmailId())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email Id should be in a valid format");
+        if (customerRepository.findByEmailId(customer.getEmailId()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer with the same email address already exists");
         }
 
         return customerRepository.save(customer);
     }
-
-    private boolean isValidPhoneNumber(String phoneNumber) {
-        return phoneNumber == null || phoneNumber.matches("\\d{10}");
-    }
-
-    private boolean isValidEmail(String email) {
-        return email == null || email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
-    }
-
 
     private String generateCustomerId() {
         UUID uuid = UUID.randomUUID();
@@ -148,14 +115,13 @@ public class CustomerServiceImplementation implements CustomerService {
 
         Customer existingCustomer = optionalExistingCustomer.get();
 
-        if (updatedCustomer.getCustomerId() != null && !customerId.equals(updatedCustomer.getCustomerId())) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Modification of customerId is not allowed.");
-        }
+        updateCustomerFields(existingCustomer, updatedCustomer);
 
-        if (updatedCustomer.getCustomerKey() != null && !existingCustomer.getCustomerKey().equals(updatedCustomer.getCustomerKey())) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Modification of customerKey is not allowed.");
-        }
+        customerRepository.save(existingCustomer);
+        return existingCustomer;
+    }
 
+    private void updateCustomerFields(Customer existingCustomer, Customer updatedCustomer) {
         if (updatedCustomer.getFirstName() != null) {
             existingCustomer.setFirstName(updatedCustomer.getFirstName());
         }
@@ -189,9 +155,6 @@ public class CustomerServiceImplementation implements CustomerService {
         if (updatedCustomer.getStatus() != null) {
             existingCustomer.setStatus(updatedCustomer.getStatus());
         }
-
-        customerRepository.save(existingCustomer);
-        return existingCustomer;
     }
 
 

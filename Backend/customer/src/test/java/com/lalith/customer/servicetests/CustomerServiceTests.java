@@ -88,27 +88,6 @@ public class CustomerServiceTests {
     }
 
     @Test
-    public void testCreateCustomerWithInvalidPhoneNumber() {
-        Customer newCustomer = new Customer();
-        newCustomer.setPhoneNo("12345");
-
-        assertThrows(ResponseStatusException.class, () -> {
-            customerService.createCustomer(newCustomer);
-        });
-    }
-
-    @Test
-    public void testCreateCustomerWithInvalidEmailId() {
-        Customer newCustomer = new Customer();
-        newCustomer.setEmailId("invalid-email");
-
-        assertThrows(ResponseStatusException.class, () -> {
-            customerService.createCustomer(newCustomer);
-        });
-    }
-
-
-    @Test
     public void testCreateCustomerWithExistingCustomerId() {
         Customer existingCustomer = new Customer();
         existingCustomer.setCustomerId("789");
@@ -270,23 +249,6 @@ public class CustomerServiceTests {
         });
     }
 
-    @Test
-    public void testUpdateCustomerWithUnmodifiableFields() {
-        String customerId = "123";
-        String customerKey = "abc";
-        Customer existingCustomer = new Customer();
-        existingCustomer.setCustomerId(customerId);
-        existingCustomer.setCustomerKey(customerKey);
-
-        Customer updatedCustomer = new Customer();
-        updatedCustomer.setCustomerId("456");
-
-        when(customerRepository.findByCustomerId(customerId)).thenReturn(Optional.of(existingCustomer));
-
-        assertThrows(ResponseStatusException.class, () -> {
-            customerService.updateCustomer(customerId, updatedCustomer);
-        });
-    }
 
     @Test
     public void testDeleteCustomerWithNullStatus() {
@@ -385,25 +347,6 @@ public class CustomerServiceTests {
     }
 
 
-    @Test
-    public void testCreateCustomerWithNullPhoneNo() {
-        Customer newCustomer = new Customer();
-        newCustomer.setPhoneNo(null);
-
-        assertThrows(ResponseStatusException.class, () -> {
-            customerService.createCustomer(newCustomer);
-        });
-    }
-
-    @Test
-    public void testCreateCustomerWithNullEmailId() {
-        Customer newCustomer = new Customer();
-        newCustomer.setEmailId(null);
-
-        assertThrows(ResponseStatusException.class, () -> {
-            customerService.createCustomer(newCustomer);
-        });
-    }
 
     @Test
     public void testDeleteCustomerWithNullId() {

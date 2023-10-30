@@ -44,6 +44,34 @@ public class CustomerController {
         }
     }
 
+    public ResponseEntity<?> validateCustomerData(Customer customer) {
+        if (customer.getEmailId() == null || customer.getEmailId().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email Id cannot be null or empty.");
+        }
+
+        if (customer.getPhoneNo() == null || customer.getPhoneNo().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Phone Number cannot be null or empty.");
+        }
+
+        if (!isValidPhoneNumber(customer.getPhoneNo())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Phone number should be 10 digits.");
+        }
+
+        if (!isValidEmail(customer.getEmailId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email Id should be in a valid format.");
+        }
+
+        return null;
+    }
+
+    public boolean isValidPhoneNumber(String phoneNumber) {
+        return phoneNumber == null || phoneNumber.matches("\\d{10}");
+    }
+
+    public boolean isValidEmail(String email) {
+        return email == null || email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+    }
+
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> getAllCustomers() {
@@ -109,9 +137,13 @@ public class CustomerController {
 
     @PutMapping("/{customerId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> updateCustomer(
-            @PathVariable String customerId,
-            @RequestBody Customer updatedCustomer) {
+    public ResponseEntity<?> updateCustomer(@PathVariable String customerId, @RequestBody Customer updatedCustomer) {
+        if (updatedCustomer.getCustomerId() != null && !customerId.equals(updatedCustomer.getCustomerId())) {
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        if (updatedCustomer.getCustomerKey() != null) {
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
         try {
             Customer updated = customerService.updateCustomer(customerId, updatedCustomer);
             return ResponseEntity.ok(updated);
@@ -141,9 +173,9 @@ public class CustomerController {
             int rewardsCount = rewardService.getRewardsCount();
             int ordersCount = orderService.getOrdersCount();
             List<Integer> count = new ArrayList<>();
-            count.add(0,customersCount);
-            count.add(1,rewardsCount);
-            count.add(2,ordersCount);
+            count.add(0, customersCount);
+            count.add(1, rewardsCount);
+            count.add(2, ordersCount);
             return ResponseEntity.ok(count);
         } catch (ResponseStatusException e) {
             CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());

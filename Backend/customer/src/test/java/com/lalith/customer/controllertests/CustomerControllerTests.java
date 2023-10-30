@@ -14,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -50,6 +51,7 @@ public class CustomerControllerTests {
     public void testCreateCustomer() throws Exception {
         Customer newCustomer = new Customer();
         newCustomer.setCustomerId("456");
+
         when(customerService.createCustomer(any(Customer.class))).thenReturn(newCustomer);
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/customers")
@@ -63,6 +65,89 @@ public class CustomerControllerTests {
 
         assertEquals(newCustomer.getCustomerId(), createdCustomer.getCustomerId());
     }
+
+    @Test
+    public void testValidateCustomerDataMissingPhone() {
+        CustomerController customerController = new CustomerController(null, null, null);
+        Customer customer = new Customer();
+        customer.setFirstName("Bob Johnson");
+        customer.setEmailId("bob@example.com");
+
+        ResponseEntity<?> result = customerController.validateCustomerData(customer);
+
+        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+        assertEquals("Phone Number cannot be null or empty.", result.getBody());
+    }
+
+    @Test
+    public void testValidateCustomerDataInvalidPhone() {
+        CustomerController customerController = new CustomerController(null, null, null);
+        Customer customer = new Customer();
+        customer.setFirstName("Vennela");
+        customer.setEmailId("vennela@example.com");
+        customer.setPhoneNo("1234");
+
+        ResponseEntity<?> result = customerController.validateCustomerData(customer);
+
+        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+        assertEquals("Phone number should be 10 digits.", result.getBody());
+    }
+
+    @Test
+    public void testValidateCustomerDataInvalidEmail() {
+        CustomerController customerController = new CustomerController(null, null, null);
+        Customer customer = new Customer();
+        customer.setFirstName("Lalith");
+        customer.setEmailId("lalithgmail.com");
+        customer.setPhoneNo("9876543210");
+
+        ResponseEntity<?> result = customerController.validateCustomerData(customer);
+
+        assert result != null;
+        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+        assertEquals("Email Id should be in a valid format.", result.getBody());
+    }
+
+    @Test
+    public void testValidateCustomerData() {
+        CustomerController customerController = new CustomerController(null, null, null);
+        Customer customer = new Customer();
+        customer.setFirstName("John Doe");
+        customer.setEmailId("john@example.com");
+        customer.setPhoneNo("1234567890");
+
+        ResponseEntity<?> result = customerController.validateCustomerData(customer);
+
+        assertNull(result);
+    }
+
+    @Test
+    public void testIsValidPhoneNumber() {
+        CustomerController customerController = new CustomerController(null, null, null);
+
+        assertTrue(customerController.isValidPhoneNumber("1234567890"));
+        assertTrue(customerController.isValidPhoneNumber(null));
+        assertFalse(customerController.isValidPhoneNumber("12345"));
+        assertFalse(customerController.isValidPhoneNumber("abcdefghij"));
+    }
+
+
+    @Test
+    public void testCreateCustomerInvalidEmailAndPhone() throws Exception {
+        Customer newCustomer = new Customer();
+        newCustomer.setCustomerId("456");
+        newCustomer.setEmailId("invalidEmail");
+        newCustomer.setPhoneNo("123");
+
+        when(customerService.createCustomer(any(Customer.class)))
+                .thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email Id should be in a valid format."));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/customers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(newCustomer)))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
 
     @Test
     public void testGetAllCustomers() throws Exception {
