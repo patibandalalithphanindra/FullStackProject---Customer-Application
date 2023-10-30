@@ -49,12 +49,20 @@ public class CustomerController {
     }
 
     public ResponseEntity<?> validateCustomerData(Customer customer) {
+        if ((customer.getPhoneNo() == null || customer.getPhoneNo().isEmpty()) && (customer.getEmailId() == null || customer.getEmailId().isEmpty())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Phone Number and Email Id cannot be null or empty.");
+        }
+
         if (customer.getEmailId() == null || customer.getEmailId().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email Id cannot be null or empty.");
         }
 
         if (customer.getPhoneNo() == null || customer.getPhoneNo().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Phone Number cannot be null or empty.");
+        }
+
+        if (!isValidPhoneNumber(customer.getPhoneNo()) && !isValidEmail(customer.getEmailId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Phone number should be 10 digits and Email Id should be in a valid format");
         }
 
         if (!isValidPhoneNumber(customer.getPhoneNo())) {

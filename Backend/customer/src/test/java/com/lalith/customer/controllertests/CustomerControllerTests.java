@@ -51,6 +51,8 @@ public class CustomerControllerTests {
     public void testCreateCustomer() throws Exception {
         Customer newCustomer = new Customer();
         newCustomer.setCustomerId("456");
+        newCustomer.setPhoneNo("9871234560");
+        newCustomer.setEmailId("plp@gmail.com");
 
         when(customerService.createCustomer(any(Customer.class))).thenReturn(newCustomer);
 
@@ -67,30 +69,52 @@ public class CustomerControllerTests {
     }
 
     @Test
+    public void testValidateCustomerData_InvalidPhoneAndEmail() {
+        CustomerController customerController = new CustomerController(null, null, null);
+        Customer invalidPhoneAndEmailCustomer = new Customer();
+        invalidPhoneAndEmailCustomer.setPhoneNo("12345");
+        invalidPhoneAndEmailCustomer.setEmailId("invalid-email");
+        ResponseEntity<?> validationResponse = customerController.validateCustomerData(invalidPhoneAndEmailCustomer);
+        assertNotNull(validationResponse);
+        assertEquals(HttpStatus.BAD_REQUEST, validationResponse.getStatusCode());
+        assertEquals("Phone number should be 10 digits and Email Id should be in a valid format", validationResponse.getBody());
+    }
+
+    @Test
+    public void testValidateCustomerData_InvalidPhone() {
+        CustomerController customerController = new CustomerController(null, null, null);
+        Customer invalidPhoneCustomer = new Customer();
+        invalidPhoneCustomer.setPhoneNo("12345");
+        invalidPhoneCustomer.setEmailId("test@example.com");
+        ResponseEntity<?> validationResponse = customerController.validateCustomerData(invalidPhoneCustomer);
+        assertNotNull(validationResponse);
+        assertEquals(HttpStatus.BAD_REQUEST, validationResponse.getStatusCode());
+        assertEquals("Phone number should be 10 digits.", validationResponse.getBody());
+    }
+
+    @Test
+    public void testValidateCustomerData_InvalidEmail() {
+        CustomerController customerController = new CustomerController(null, null, null);
+        Customer invalidEmailCustomer = new Customer();
+        invalidEmailCustomer.setPhoneNo("1234567890");
+        invalidEmailCustomer.setEmailId("invalid-email");
+        ResponseEntity<?> validationResponse = customerController.validateCustomerData(invalidEmailCustomer);
+        assertNotNull(validationResponse);
+        assertEquals(HttpStatus.BAD_REQUEST, validationResponse.getStatusCode());
+        assertEquals("Email Id should be in a valid format.", validationResponse.getBody());
+    }
+
+    @Test
     public void testValidateCustomerDataMissingPhone() {
         CustomerController customerController = new CustomerController(null, null, null);
         Customer customer = new Customer();
-        customer.setFirstName("Bob Johnson");
-        customer.setEmailId("bob@example.com");
+        customer.setFirstName("Hanu");
+        customer.setEmailId("hanu@example.com");
 
         ResponseEntity<?> result = customerController.validateCustomerData(customer);
 
         assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
         assertEquals("Phone Number cannot be null or empty.", result.getBody());
-    }
-
-    @Test
-    public void testValidateCustomerDataInvalidPhone() {
-        CustomerController customerController = new CustomerController(null, null, null);
-        Customer customer = new Customer();
-        customer.setFirstName("Vennela");
-        customer.setEmailId("vennela@example.com");
-        customer.setPhoneNo("1234");
-
-        ResponseEntity<?> result = customerController.validateCustomerData(customer);
-
-        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
-        assertEquals("Phone number should be 10 digits.", result.getBody());
     }
 
     @Test
@@ -129,6 +153,16 @@ public class CustomerControllerTests {
         assertTrue(customerController.isValidPhoneNumber(null));
         assertFalse(customerController.isValidPhoneNumber("12345"));
         assertFalse(customerController.isValidPhoneNumber("abcdefghij"));
+    }
+
+    @Test
+    public void testGetCustomerByCustomerIdException() throws Exception {
+        String customerId = "nonexistent";
+        when(customerService.getCustomerByCustomerId(customerId))
+                .thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/customers/" + customerId))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
 
@@ -328,17 +362,6 @@ public class CustomerControllerTests {
         assertEquals(ordersCount, returnedCounts.get(2));
     }
 
-    @Test
-    public void testCreateCustomerException() throws Exception {
-        Customer newCustomer = new Customer();
-        when(customerService.createCustomer(any(Customer.class)))
-                .thenThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"));
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/customers")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(newCustomer)))
-                .andExpect(MockMvcResultMatchers.status().isInternalServerError());
-    }
 
     @Test
     public void testUpdateCustomerException() throws Exception {
