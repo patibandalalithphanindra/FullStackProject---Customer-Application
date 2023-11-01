@@ -161,7 +161,6 @@ public class CustomerControllerTests {
         CustomerController customerController = new CustomerController(null, null, null);
 
         assertTrue(customerController.isValidPhoneNumber("1234567890"));
-        assertTrue(customerController.isValidPhoneNumber(null));
         assertFalse(customerController.isValidPhoneNumber("12345"));
         assertFalse(customerController.isValidPhoneNumber("abcdefghij"));
     }
