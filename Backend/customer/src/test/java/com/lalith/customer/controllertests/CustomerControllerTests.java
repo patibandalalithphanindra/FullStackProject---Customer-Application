@@ -28,6 +28,8 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = CustomerApplication.class)
 public class CustomerControllerTests {
@@ -59,7 +61,7 @@ public class CustomerControllerTests {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/customers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newCustomer)))
-                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(status().isCreated())
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();
@@ -69,68 +71,77 @@ public class CustomerControllerTests {
     }
 
     @Test
-    public void testValidateCustomerData_InvalidPhoneAndEmail() {
+    public void testValidateCustomerData_InvalidPhoneAndEmail() throws Exception {
         CustomerController customerController = new CustomerController(null, null, null);
         Customer invalidPhoneAndEmailCustomer = new Customer();
         invalidPhoneAndEmailCustomer.setPhoneNo("12345");
         invalidPhoneAndEmailCustomer.setEmailId("invalid-email");
-        ResponseEntity<?> validationResponse = customerController.validateCustomerData(invalidPhoneAndEmailCustomer);
-        assertNotNull(validationResponse);
-        assertEquals(HttpStatus.BAD_REQUEST, validationResponse.getStatusCode());
-        assertEquals("Phone number should be 10 digits and Email Id should be in a valid format", validationResponse.getBody());
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/customers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(invalidPhoneAndEmailCustomer)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().json("{'message': 'Phone number should be 10 digits and Email Id should be in a valid format'}"));
     }
 
+
     @Test
-    public void testValidateCustomerData_InvalidPhone() {
+    public void testValidateCustomerData_InvalidPhone() throws Exception {
         CustomerController customerController = new CustomerController(null, null, null);
         Customer invalidPhoneCustomer = new Customer();
         invalidPhoneCustomer.setPhoneNo("12345");
         invalidPhoneCustomer.setEmailId("test@example.com");
-        ResponseEntity<?> validationResponse = customerController.validateCustomerData(invalidPhoneCustomer);
-        assertNotNull(validationResponse);
-        assertEquals(HttpStatus.BAD_REQUEST, validationResponse.getStatusCode());
-        assertEquals("Phone number should be 10 digits.", validationResponse.getBody());
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/customers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(invalidPhoneCustomer)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().json("{'message': 'Phone number should be 10 digits.'}"));
     }
 
     @Test
-    public void testValidateCustomerData_InvalidEmail() {
+    public void testValidateCustomerData_InvalidEmail() throws Exception {
         CustomerController customerController = new CustomerController(null, null, null);
         Customer invalidEmailCustomer = new Customer();
         invalidEmailCustomer.setPhoneNo("1234567890");
         invalidEmailCustomer.setEmailId("invalid-email");
-        ResponseEntity<?> validationResponse = customerController.validateCustomerData(invalidEmailCustomer);
-        assertNotNull(validationResponse);
-        assertEquals(HttpStatus.BAD_REQUEST, validationResponse.getStatusCode());
-        assertEquals("Email Id should be in a valid format.", validationResponse.getBody());
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/customers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(invalidEmailCustomer)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().json("{'message': 'Email Id should be in a valid format.'}"));
     }
 
     @Test
-    public void testValidateCustomerDataMissingPhone() {
+    public void testValidateCustomerDataMissingPhone() throws Exception {
         CustomerController customerController = new CustomerController(null, null, null);
         Customer customer = new Customer();
         customer.setFirstName("Hanu");
         customer.setEmailId("hanu@example.com");
 
-        ResponseEntity<?> result = customerController.validateCustomerData(customer);
-
-        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
-        assertEquals("Phone Number cannot be null or empty.", result.getBody());
+        mockMvc.perform(MockMvcRequestBuilders.post("/customers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(customer)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().json("{'message': 'Phone Number cannot be null or empty.'}"));
     }
 
     @Test
-    public void testValidateCustomerDataInvalidEmail() {
+    public void testValidateCustomerDataInvalidEmail() throws Exception {
         CustomerController customerController = new CustomerController(null, null, null);
         Customer customer = new Customer();
         customer.setFirstName("Lalith");
         customer.setEmailId("lalithgmail.com");
         customer.setPhoneNo("9876543210");
 
-        ResponseEntity<?> result = customerController.validateCustomerData(customer);
-
-        assert result != null;
-        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
-        assertEquals("Email Id should be in a valid format.", result.getBody());
+        mockMvc.perform(MockMvcRequestBuilders.post("/customers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(customer)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().json("{'message': 'Email Id should be in a valid format.'}"));
     }
+
 
     @Test
     public void testValidateCustomerData() {
@@ -162,7 +173,7 @@ public class CustomerControllerTests {
                 .thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/customers/" + customerId))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
+                .andExpect(status().isNotFound());
     }
 
 
@@ -179,7 +190,7 @@ public class CustomerControllerTests {
         mockMvc.perform(MockMvcRequestBuilders.post("/customers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newCustomer)))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+                .andExpect(status().isBadRequest());
     }
 
 
@@ -191,7 +202,7 @@ public class CustomerControllerTests {
         when(customerService.getAllCustomers()).thenReturn(customers);
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/customers"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();
@@ -208,7 +219,7 @@ public class CustomerControllerTests {
         when(customerService.getCustomerByCustomerId(customerId)).thenReturn(Optional.of(customer));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/customers/" + customerId))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();
@@ -223,7 +234,7 @@ public class CustomerControllerTests {
         when(customerService.getCustomerByCustomerId(customerId)).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/customers/" + customerId))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -234,7 +245,7 @@ public class CustomerControllerTests {
         when(customerService.getCustomerByEmailId(emailId)).thenReturn(Optional.of(customer));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/customers/email?emailId=" + emailId))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();
@@ -249,7 +260,7 @@ public class CustomerControllerTests {
         when(customerService.getCustomerByEmailId(emailId)).thenReturn(Optional.empty());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/customers/email?emailId=" + emailId))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -261,7 +272,7 @@ public class CustomerControllerTests {
         when(customerService.getAllCustomerByStatus(status)).thenReturn(customers);
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/customers/status?status=" + status))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();
@@ -276,7 +287,7 @@ public class CustomerControllerTests {
         when(customerService.getAllCustomerByStatus(status)).thenReturn(new ArrayList<>());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/customers/status?status=" + status))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -290,7 +301,7 @@ public class CustomerControllerTests {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/customers/" + customerId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updatedCustomer)))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();
@@ -309,7 +320,7 @@ public class CustomerControllerTests {
         mockMvc.perform(MockMvcRequestBuilders.put("/customers/" + customerId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updatedCustomer)))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -319,7 +330,7 @@ public class CustomerControllerTests {
         when(customerService.deleteCustomer(customerId)).thenReturn(responseMessage);
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.delete("/customers/" + customerId))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();
@@ -332,7 +343,7 @@ public class CustomerControllerTests {
         when(customerService.deleteCustomer(customerId)).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/customers/" + customerId))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -350,7 +361,7 @@ public class CustomerControllerTests {
         when(orderService.getOrdersCount()).thenReturn(ordersCount);
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/customers/counts"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();
@@ -375,7 +386,7 @@ public class CustomerControllerTests {
         mockMvc.perform(MockMvcRequestBuilders.put("/customers/" + customerId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updatedCustomer)))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -386,7 +397,7 @@ public class CustomerControllerTests {
                 .thenThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"));
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/customers/" + customerId))
-                .andExpect(MockMvcResultMatchers.status().isInternalServerError());
+                .andExpect(status().isInternalServerError());
     }
 
     @Test
@@ -396,7 +407,7 @@ public class CustomerControllerTests {
         when(orderService.getOrdersCount()).thenThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/customers/counts"))
-                .andExpect(MockMvcResultMatchers.status().isInternalServerError());
+                .andExpect(status().isInternalServerError());
     }
 
     @Test
@@ -410,7 +421,7 @@ public class CustomerControllerTests {
         when(orderService.getOrdersCount()).thenReturn(ordersCount);
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/customers/counts"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();

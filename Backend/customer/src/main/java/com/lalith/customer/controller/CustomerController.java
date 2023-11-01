@@ -49,32 +49,37 @@ public class CustomerController {
     }
 
     public ResponseEntity<?> validateCustomerData(Customer customer) {
-        if ((customer.getPhoneNo() == null || customer.getPhoneNo().isEmpty()) && (customer.getEmailId() == null || customer.getEmailId().isEmpty())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Phone Number and Email Id cannot be null or empty.");
-        }
+        try {
+            if ((customer.getPhoneNo() == null || customer.getPhoneNo().isEmpty()) && (customer.getEmailId() == null || customer.getEmailId().isEmpty())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Phone Number and Email Id cannot be null or empty.");
+            }
 
-        if (customer.getEmailId() == null || customer.getEmailId().isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email Id cannot be null or empty.");
-        }
+            if (customer.getEmailId() == null || customer.getEmailId().isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email Id cannot be null or empty.");
+            }
 
-        if (customer.getPhoneNo() == null || customer.getPhoneNo().isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Phone Number cannot be null or empty.");
-        }
+            if (customer.getPhoneNo() == null || customer.getPhoneNo().isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Phone Number cannot be null or empty.");
+            }
 
-        if (!isValidPhoneNumber(customer.getPhoneNo()) && !isValidEmail(customer.getEmailId())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Phone number should be 10 digits and Email Id should be in a valid format");
-        }
+            if (!isValidPhoneNumber(customer.getPhoneNo()) && !isValidEmail(customer.getEmailId())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Phone number should be 10 digits and Email Id should be in a valid format");
+            }
 
-        if (!isValidPhoneNumber(customer.getPhoneNo())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Phone number should be 10 digits.");
-        }
+            if (!isValidPhoneNumber(customer.getPhoneNo())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Phone number should be 10 digits.");
+            }
 
-        if (!isValidEmail(customer.getEmailId())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email Id should be in a valid format.");
+            if (!isValidEmail(customer.getEmailId())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email Id should be in a valid format.");
+            }
+        } catch (ResponseStatusException e) {
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getReason());
+            return ResponseEntity.status(e.getStatusCode()).body(errorResponse);
         }
-
         return null;
     }
+
 
     public boolean isValidPhoneNumber(String phoneNumber) {
         return phoneNumber == null || phoneNumber.matches("\\d{10}");
