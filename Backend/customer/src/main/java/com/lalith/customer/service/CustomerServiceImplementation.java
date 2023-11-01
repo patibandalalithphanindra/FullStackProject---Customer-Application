@@ -168,7 +168,7 @@ public class CustomerServiceImplementation implements CustomerService {
                 customerRepository.deleteById(customer.getCustomerKey());
                 return "Customer with id " + customerId + " has been deleted successfully!";
             } else {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer is not in Inactive status, Hence it cannot be deleted!");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer is not in Inactive status, Hence cannot be deleted!");
             }
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer with Id " + customerId + " cannot be found");
