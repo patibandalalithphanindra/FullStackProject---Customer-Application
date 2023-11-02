@@ -25,10 +25,11 @@ public class UserController {
     private JwtService jwtService;
     @Autowired
     private AuthenticationManager authenticationManager;
-  @PostMapping("/add")
-    public AuthenticationResponse addNewUser(@RequestBody UserInfo userInfo){
-      return userAdditionService.addUser(userInfo);
-  }
+
+    @PostMapping("/add")
+    public AuthenticationResponse addNewUser(@RequestBody UserInfo userInfo) {
+        return userAdditionService.addUser(userInfo);
+    }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
