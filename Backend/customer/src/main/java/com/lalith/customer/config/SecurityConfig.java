@@ -34,13 +34,14 @@ import java.util.List;
 @EnableMethodSecurity
 public class SecurityConfig {
     @Autowired
-   private JwtAuthFilter jwtAuthFilter;
+    private JwtAuthFilter jwtAuthFilter;
     @Autowired
     private UserInfoRepository userInfoRepository;
-  @Bean
+
+    @Bean
     public UserDetailsService userDetailsService() {
-      return new UserInfoUserDetailsService(userInfoRepository);
-   }
+        return new UserInfoUserDetailsService(userInfoRepository);
+    }
 
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
@@ -80,17 +81,18 @@ public class SecurityConfig {
     }
 
     @Bean
-   public PasswordEncoder passwordEncoder(){
-      return new BCryptPasswordEncoder();
-   }
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-   @Bean
-    public AuthenticationProvider authenticationProvider(){
-       DaoAuthenticationProvider aProvider = new DaoAuthenticationProvider();
-       aProvider.setUserDetailsService(userDetailsService());
-       aProvider.setPasswordEncoder(passwordEncoder());
-       return aProvider;
-   }
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider aProvider = new DaoAuthenticationProvider();
+        aProvider.setUserDetailsService(userDetailsService());
+        aProvider.setPasswordEncoder(passwordEncoder());
+        return aProvider;
+    }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
