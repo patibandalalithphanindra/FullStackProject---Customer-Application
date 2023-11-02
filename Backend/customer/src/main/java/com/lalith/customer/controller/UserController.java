@@ -1,7 +1,7 @@
 package com.lalith.customer.controller;
 
 import com.lalith.customer.dto.AuthRequest;
-import com.lalith.customer.model.AuthenticationResponse;
+import com.lalith.customer.dto.AuthenticationResponse;
 import com.lalith.customer.model.UserInfo;
 import com.lalith.customer.service.JwtService;
 import com.lalith.customer.service.UserAdditionService;

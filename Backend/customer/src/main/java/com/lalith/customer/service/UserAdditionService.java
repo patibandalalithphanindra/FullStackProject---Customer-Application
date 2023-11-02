@@ -1,6 +1,6 @@
 package com.lalith.customer.service;
 
-import com.lalith.customer.model.AuthenticationResponse;
+import com.lalith.customer.dto.AuthenticationResponse;
 import com.lalith.customer.model.UserInfo;
 import com.lalith.customer.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

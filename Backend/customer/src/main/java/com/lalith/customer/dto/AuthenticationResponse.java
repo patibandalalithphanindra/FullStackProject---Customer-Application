@@ -1,4 +1,4 @@
-package com.lalith.customer.model;
+package com.lalith.customer.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

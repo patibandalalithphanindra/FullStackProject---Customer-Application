@@ -1,6 +1,6 @@
-package com.lalith.customer.ModelTests;
+package com.lalith.customer.dtotests;
 
-import com.lalith.customer.model.AuthenticationResponse;
+import com.lalith.customer.dto.AuthenticationResponse;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

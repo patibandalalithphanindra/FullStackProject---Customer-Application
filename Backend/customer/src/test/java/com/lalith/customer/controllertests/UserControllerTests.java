@@ -3,7 +3,7 @@ package com.lalith.customer.controllertests;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lalith.customer.controller.UserController;
 import com.lalith.customer.dto.AuthRequest;
-import com.lalith.customer.model.AuthenticationResponse;
+import com.lalith.customer.dto.AuthenticationResponse;
 import com.lalith.customer.model.UserInfo;
 import com.lalith.customer.service.JwtService;
 import com.lalith.customer.service.UserAdditionService;

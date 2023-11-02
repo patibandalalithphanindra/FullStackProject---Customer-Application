@@ -1,6 +1,6 @@
 package com.lalith.customer.servicetests;
 
-import com.lalith.customer.model.AuthenticationResponse;
+import com.lalith.customer.dto.AuthenticationResponse;
 import com.lalith.customer.model.UserInfo;
 import com.lalith.customer.repository.UserInfoRepository;
 import com.lalith.customer.service.JwtService;
