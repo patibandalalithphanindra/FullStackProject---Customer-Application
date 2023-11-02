@@ -18,30 +18,29 @@ public class UserAdditionService {
     private JwtService jwtService;
 
     public AuthenticationResponse addUser(UserInfo userInfo) {
-            if (!userInfo.getName().matches("^[a-zA-Z0-9]+$")) {
-                throw new IllegalArgumentException("Username should contain only letters and numbers.");
-            }
+        if (!userInfo.getName().matches("^[a-zA-Z0-9]+$")) {
+            throw new IllegalArgumentException("Username should contain only letters and numbers.");
+        }
 
-            String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
-            if (!userInfo.getEmail().matches(emailRegex)) {
-                throw new IllegalArgumentException("Invalid email format.");
-            }
+        if (!userInfo.getEmail().matches("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            throw new IllegalArgumentException("Invalid email format.");
+        }
 
         if (repository.findByName(userInfo.getName()).isPresent() && repository.findByEmail(userInfo.getEmail()).isPresent()) {
             throw new IllegalArgumentException("Username and email already exists.");
         }
 
-            if (repository.findByName(userInfo.getName()).isPresent()) {
-                throw new IllegalArgumentException("Username already exists.");
-            }
+        if (repository.findByName(userInfo.getName()).isPresent()) {
+            throw new IllegalArgumentException("Username already exists.");
+        }
 
-            if (repository.findByEmail(userInfo.getEmail()).isPresent()) {
-                throw new IllegalArgumentException("Email already exists.");
-            }
+        if (repository.findByEmail(userInfo.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Email already exists.");
+        }
 
-           userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
-           repository.save(userInfo);
-           String jwt = jwtService.generateToken(userInfo.getName());
-           return new AuthenticationResponse(jwt,userInfo.getName());
+        userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
+        repository.save(userInfo);
+        String jwt = jwtService.generateToken(userInfo.getName());
+        return new AuthenticationResponse(jwt, userInfo.getName());
     }
 }
