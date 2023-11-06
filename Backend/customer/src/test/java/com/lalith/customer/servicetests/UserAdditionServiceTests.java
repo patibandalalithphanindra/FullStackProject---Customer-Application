@@ -90,30 +90,6 @@ public class UserAdditionServiceTests {
     }
 
     @Test
-    public void testAddUserWithInvalidUsername() {
-        UserInfo userInfo = new UserInfo();
-        userInfo.setName("test_user");
-        userInfo.setPassword("password");
-        userInfo.setEmail("testuser@example.com");
-
-        assertThrows(IllegalArgumentException.class, () -> userAdditionService.addUser(userInfo));
-
-        verifyNoInteractions(passwordEncoder, repository, jwtService);
-    }
-
-    @Test
-    public void testAddUserWithInvalidEmail() {
-        UserInfo userInfo = new UserInfo();
-        userInfo.setName("testuser");
-        userInfo.setPassword("password");
-        userInfo.setEmail("invalid_email");
-
-        assertThrows(IllegalArgumentException.class, () -> userAdditionService.addUser(userInfo));
-
-        verifyNoInteractions(passwordEncoder, repository, jwtService);
-    }
-
-    @Test
     public void testAddUserWithDuplicateUsername() {
         UserInfo userInfo = new UserInfo();
         userInfo.setName("testuser");

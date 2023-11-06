@@ -2,6 +2,7 @@ package com.lalith.customer.controller;
 
 import com.lalith.customer.dto.AuthRequest;
 import com.lalith.customer.dto.AuthenticationResponse;
+import com.lalith.customer.exception.CustomErrorResponse;
 import com.lalith.customer.model.UserInfo;
 import com.lalith.customer.service.JwtService;
 import com.lalith.customer.service.UserAdditionService;
@@ -27,15 +28,35 @@ public class UserController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/add")
-    public AuthenticationResponse addNewUser(@RequestBody UserInfo userInfo) {
-        return userAdditionService.addUser(userInfo);
+    public ResponseEntity<?>  addNewUser(@RequestBody UserInfo userInfo) {
+        if (!userInfo.getName().matches("^[a-zA-Z0-9]+$") && !userInfo.getEmail().matches("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            CustomErrorResponse errorResponse = new CustomErrorResponse("Username should contain only letters and numbers and Email should be of valid format");
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+
+        if (!userInfo.getName().matches("^[a-zA-Z0-9]+$")) {
+            CustomErrorResponse errorResponse = new CustomErrorResponse("Username should contain only letters and numbers.");
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+
+        if (!userInfo.getEmail().matches("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            CustomErrorResponse errorResponse = new CustomErrorResponse("Invalid email format.");
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+
+        try {
+            AuthenticationResponse response = userAdditionService.addUser(userInfo);
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            CustomErrorResponse errorResponse = new CustomErrorResponse(e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
         try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getName(), authRequest.getPassword()));
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getName(), authRequest.getPassword()));
             if (authentication.isAuthenticated()) {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 return ResponseEntity.ok(new AuthenticationResponse(jwtService.generateToken(authRequest.getName()), authRequest.getName()));
