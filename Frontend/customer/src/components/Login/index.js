@@ -1,8 +1,23 @@
 import React, { useState } from "react";
-import { Button, Container, TextField, Typography } from "@mui/material";
+import { 
+  Button, 
+  Container, 
+  TextField, 
+  Typography, 
+  Box,
+  InputAdornment,
+  IconButton,
+  Divider,
+  useTheme
+} from "@mui/material";
+import { 
+  Visibility, 
+  VisibilityOff, 
+  Person, 
+  Lock 
+} from "@mui/icons-material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import styles from "./styles.module.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,7 +26,9 @@ function Login({ toggleForm }) {
     name: "",
     password: "",
   });
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const theme = useTheme();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -19,8 +36,13 @@ function Login({ toggleForm }) {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await axios.post(
@@ -32,23 +54,38 @@ function Login({ toggleForm }) {
         localStorage.setItem("name", response?.data?.name);
         navigate("/homepage");
         toast.success("Logged in Successfully!", {
-          position: toast.POSITION.BOTTOM_LEFT,
-          autoClose: 900,
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 3000,
         });
       }
     } catch (error) {
       console.error("Login error:", error);
       toast.error("Login failed. Please check your credentials.", {
-        position: toast.POSITION.BOTTOM_LEFT,
-        autoClose: 900,
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 3000,
       });
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <Container maxWidth="xs">
-      <Typography variant="h4">Login</Typography>
-      <form onSubmit={handleLogin}>
+    <Container maxWidth="xs" sx={{ px: 0 }}>
+      <Box sx={{ mb: 3 }}>
+        <Typography 
+          variant="h5" 
+          component="h2"
+          sx={{ 
+            fontWeight: 600,
+            color: theme.palette.text.primary,
+            mb: 1
+          }}
+        >
+          Sign In
+        </Typography>
+      </Box>
+      
+      <Box component="form" onSubmit={handleLogin} sx={{ mt: 2 }}>
         <TextField
           label="Username"
           name="name"
@@ -58,39 +95,99 @@ function Login({ toggleForm }) {
           required
           margin="normal"
           data-testid="username"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Person color="action" />
+              </InputAdornment>
+            ),
+          }}
+          sx={{ mb: 2 }}
         />
+        
         <TextField
           label="Password"
           name="password"
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           value={formData.password}
           onChange={handleChange}
           fullWidth
           required
           margin="normal"
           data-testid="password"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Lock color="action" />
+              </InputAdornment>
+            ),
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          sx={{ mb: 3 }}
         />
+        
         <Button
           type="submit"
           variant="contained"
           color="primary"
           data-testid="login"
           fullWidth
-          className={styles.loginButton}
+          disabled={loading}
+          sx={{
+            py: 1.5,
+            fontSize: '1rem',
+            fontWeight: 600,
+            mb: 3,
+            background: loading ? undefined : 'linear-gradient(45deg, #1976d2, #42a5f5)',
+            '&:hover': {
+              background: 'linear-gradient(45deg, #1565c0, #1976d2)',
+            },
+          }}
         >
-          Login
+          {loading ? 'Signing In...' : 'Sign In'}
         </Button>
-      </form>
-      <div className={styles.switchLink}>
-        <Typography variant="body2">
-          New user?{" "}
-          <span className={styles.switchButton} onClick={toggleForm}>
-            Switch to Register
-          </span>
-        </Typography>
-      </div>
+        
+        <Divider sx={{ my: 2 }}>
+          <Typography variant="body2" color="text.secondary">
+            or
+          </Typography>
+        </Divider>
+        
+        <Box sx={{ textAlign: 'center' }}>
+          <Typography variant="body2" color="text.secondary">
+            New user?{" "}
+            <Typography
+              component="span"
+              variant="body2"
+              onClick={toggleForm}
+              sx={{
+                color: theme.palette.primary.main,
+                cursor: 'pointer',
+                fontWeight: 600,
+                textDecoration: 'underline',
+                '&:hover': {
+                  color: theme.palette.primary.dark,
+                },
+              }}
+            >
+              Create an account
+            </Typography>
+          </Typography>
+        </Box>
+      </Box>
     </Container>
   );
 }
 
 export default Login;
+
